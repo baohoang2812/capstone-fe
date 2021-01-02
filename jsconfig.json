@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "target": "es2015",
+    "module": "commonjs",
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "paths": {
+      "~/*": [
+        "src/*"
+      ],
+      "CORE_COMPONENTS/*": [
+        "src/Core/Components/Common/*"
+      ],
+      "STORE/*": [
+        "src/Core/Store"
+      ],
+      "STORE_COMMON/*": [
+        "src/Core/Store/common/*"
+      ],
+      "STORE_COMMON_ACTION/*": [
+        "src/Core/Store/common/actions/*"
+      ],
+      "STORE_COMMON_SELECTORS/*": [
+        "src/Core/Store/common/selectors/*"
+      ],
+      "HELPER/*": [
+        "src/Core/utils/helper/*"
+      ],
+      "UTILS/*": [
+        "src/Core/utils/*"
+      ]
+    },
+    "jsx": "react"
+  }
+}

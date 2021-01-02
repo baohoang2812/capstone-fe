@@ -1,0 +1,60 @@
+.file-image-upload {
+  display: block;
+  line-height: initial;
+
+  .file-image-thumbnail {
+    padding: 5px;
+    width: 104px;
+    border: 1px dashed;
+    border-color: #d9d9d9;
+    height: 104px;
+    cursor: pointer;
+    background-color: #fafafa;
+    transition: border .3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  
+    &:hover {
+      border-color: #1890ff;
+  
+      svg {
+        fill: #1890ff;
+      }
+    }
+  
+    .anticon {
+  
+      svg {
+        fill: #999;
+        width: 18px;
+        height: 18px;
+        transition: all .3s ease;
+      }
+    }
+  
+    &:hover svg {
+      fill: #1890ff;
+    }
+  
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+  
+    .icon-image-exists {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #999;
+  
+      svg {
+        width: 18px;
+        height: 18px;
+      }
+    }
+  }
+}
