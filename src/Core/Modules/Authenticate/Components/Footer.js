@@ -12,7 +12,7 @@ const Footer = () => {
 
   return (
     <div className="footer">
-      <div className="copyright">Copyright &copy; 2016 RubikBot Inc.</div>
+      <div className="copyright">Copyright &copy; 2020.</div>
       <AppContext.Consumer>
         {(context) => (
           <div className="mulpti-lang">

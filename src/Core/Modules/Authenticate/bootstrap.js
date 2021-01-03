@@ -15,7 +15,7 @@ export default {
         parent: 0,
         showMenu: false,
       },
-      title: "Đăng nhập | Rubikbot - Solazu"
+      title: "Đăng nhập"
     },
   ],
   lang: { vi: intlMessagesVi, en: intlMessagesEN },

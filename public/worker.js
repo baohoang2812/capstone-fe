@@ -57,7 +57,7 @@ self.addEventListener("fetch", (event) => {
     event.request.destination === "image" &&
     !event.request.url.includes("/temp") && // don't cache temp image when upload
     (location.hostname === "localhost" ||
-      event.request.url.indexOf("rubikbot.com") > -1) // only cache image on mapp domain
+      event.request.url.indexOf("capstone_fe.com") > -1) // only cache image on mapp domain
   ) {
     event.respondWith(
       caches.match(event.request).then((response) => {
