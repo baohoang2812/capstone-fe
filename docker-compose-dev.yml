@@ -1,0 +1,15 @@
+version: "1.0"
+
+services:
+  frontend-core:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: frontend-core
+    image: frontend-core
+    entrypoint: npm run start:testing
+    volumes:
+      - /app/node_modules
+      - .:/app
+    ports:
+      - "3000:3000"

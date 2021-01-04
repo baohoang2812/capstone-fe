@@ -1,0 +1,8 @@
+docker-compose.env
+*.yml
+Dockerfile
+Dockerfile.dev
+**/node_modules
+test
+.vscode
+tslint.json

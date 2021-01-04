@@ -1,0 +1,48 @@
+.layout-header {
+  .layout-header-wrapper
+    .header-left
+    .header-nav-menu
+    .has-submenu
+    .nav-submenu
+    .has-submenu
+    a {
+    .anticon {
+      visibility: visible;
+    }
+    &:hover,
+    &:focus,
+    &:active {
+      .anticon {
+        animation: slide1 1s ease-in-out infinite;
+        visibility: visible;
+        transition: all 0.5s;
+      }
+      &::after {
+        opacity: 1;
+      }
+    }
+  }
+  .layout-header-wrapper
+    .header-left
+    .header-nav-menu
+    .has-submenu
+    .nav-submenu
+    li {
+    &:hover,
+    &:focus {
+      background-color: #275dad;
+      color: rgba(255, 255, 255, 0.8);
+      box-shadow: 0 0 30px -10px #000;
+    }
+  }
+  @keyframes slide1 {
+    0%,
+    100% {
+      transform: translate(0, 0);
+    }
+
+    50% {
+      transform: translate(10px, 0);
+    }
+  }
+}
