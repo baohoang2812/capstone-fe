@@ -9,12 +9,8 @@ export default {
     {
       url: "",
       component: "Page/Signin",
-      menu: {
-        key: "signin",
-        position: 1,
-        parent: 0,
-        showMenu: false,
-      },
+      key: "signin",
+      showMenu: false,
       title: "Đăng nhập"
     },
   ],

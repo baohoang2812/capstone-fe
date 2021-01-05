@@ -1,16 +1,15 @@
 export default {
-  name: "Error",
-  dir: "Error",
-  pathRoot: "500",
+  name: "NotFound",
+  dir: "NotFound",
+  pathRoot: "404",
   accessibleByAnyOne: true,
   routes: [
     {
       url: "",
       component: "Pages/index",
-      menu: {
-        showMenu: false
-      },
-      title: "Error"
+      key: "not found",
+      showMenu: false,
+      title: "Not found"
     }
   ],
   isAuthenticate: true,

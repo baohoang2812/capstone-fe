@@ -1,22 +1,24 @@
 import "~/styles/layout/index.less";
 
-import React, { useEffect, Suspense } from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Layout } from "antd";
-import { useHistory, useLocation, Switch, Redirect, Route } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 /* Components */
 import HeaderMaster from "~/Core/Components/HeaderMaster";
-import LoadableLoading from "~/Core/Components/LoadableLoading";
-import NotFound from "~/Core/Modules/NotFound/Pages";
+import SideBar from "~/Core/Components/SideBar";
+import RouterMaster from "~/Core/Components/RouterMaster";
+
 
 const { Content } = Layout;
 
 const RoutesMaster = ({
   listRoutes,
-  listUrl
+  listUrl,
+  listArrayRoutes
 }) => {
-
+  console.log(listArrayRoutes);
   /* Selector */
   const userImpersonation = useSelector(state => state.userImpersonation);
 
@@ -26,7 +28,6 @@ const RoutesMaster = ({
   const isAuthenticated = token !== null && token !== undefined;
 
   useEffect(() => {
-
     if (isAuthenticated) {
       if (location.pathname === "/") {
         history.push("/user")
@@ -39,26 +40,10 @@ const RoutesMaster = ({
       <div className="main-page">
         <Layout className="main-wrapper">
           <Layout className="content full-height">
+                {isAuthenticated ? <SideBar url={listArrayRoutes} /> : null}
             <Content className={`main-content ${userImpersonation?.isImpersonation && "is-impersonation"}`}>
               {isAuthenticated ? <HeaderMaster url={listUrl} /> : null}
-              <Suspense fallback={<LoadableLoading />}>
-                <Switch>
-                  {listRoutes}
-                  {
-                    isAuthenticated ? (
-                      <Route
-                        path="*"
-                        component={NotFound}
-                      />
-                    ) : (
-                      <Route
-                        path="*"
-                        render={() => <Redirect to="/" />}
-                      />
-                    )
-                  }
-                </Switch>
-              </Suspense>
+                <RouterMaster listRoutes={listRoutes} isAuthenticated={isAuthenticated}/>
             </Content>
           </Layout>
         </Layout>
@@ -69,7 +54,8 @@ const RoutesMaster = ({
 
 RoutesMaster.defaultProps = {
   listRoutes: [],
-  listUrl: []
+  listUrl: [],
+  listArrayRoutes: []
 }
 
 export default RoutesMaster;
