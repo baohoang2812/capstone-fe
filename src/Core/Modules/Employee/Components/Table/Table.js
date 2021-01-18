@@ -43,6 +43,9 @@ const UserTable = () => {
       fieldType: "text",
       sorter: true,
       width: 220,
+      render: (text, record) => (
+        <Link to={`/employee/${record.id}`}>{`${record.code}`}</Link>
+      ),
     },
     {
       title: t("CORE.EMPLOYEE.FULLNAME"),
@@ -53,7 +56,7 @@ const UserTable = () => {
       width: 220,
       sorter: true,
       render: (text, record) => (
-        <Link to={`/user/${record.id}/edit`}>{`${record.first_name} ${record.last_name}`}</Link>
+        <span>{`${record.first_name} ${record.last_name}`}</span>
       ),
     },
     {
@@ -142,7 +145,7 @@ const UserTable = () => {
     },
    
     {
-      title: t("CORE.USER.CHARGE.ACTION"),
+      title: t("CORE.EMPLOYEE.JOB.TYPE"),
       dataIndex: "none",
       className: "header-filter header-center",
       key: "action",
@@ -164,7 +167,7 @@ const UserTable = () => {
   const defaultSorter = useMemo(() => ({ }), []);
   
   const scroll = useMemo(() => ({
-    x: 3050 ,
+    x: 2550 ,
     y: `calc(100vh - (178px))`
   }), []);
 

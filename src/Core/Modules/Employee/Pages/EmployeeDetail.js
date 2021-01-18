@@ -61,8 +61,8 @@ const EmployeeDetail = ({ match: { params } }) => {
             {
               title:
                 params.id === "create"
-                  ? t("CORE.USER.CREATE.ACCOUNT")
-                  : t("CORE.USER.UPDATE.ACCOUNT"),
+                  ? t("CORE.EMPLOYEE.CREATE.ACCOUNT")
+                  : t("CORE.EMPLOYEE.UPDATE.ACCOUNT"),
             },
           ]}
           action={action}
@@ -73,7 +73,7 @@ const EmployeeDetail = ({ match: { params } }) => {
           <Alert type="error" message={t("CORE.task_failure")} />
         ) : (
           <Spin spinning={loading}>
-            <EmployeeDetailForm/>
+            <EmployeeDetailForm action={action} data={data} is_create={params.id === "create"} />
           </Spin>
         )}
       </div>

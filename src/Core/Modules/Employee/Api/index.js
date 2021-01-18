@@ -6,16 +6,17 @@ class ProfileApi extends BaseApi {
   };
 
   update = (body) => {
-    return this.initApi.post(`${this.baseUrl}/update`, body);
+    return this.initApi.put(`${this.baseUrl}/update`, body);
   };
 
-  createUser = (body) => {
+  create = (body) => {
     return this.initApi.post(`${this.baseUrl}/create`, body);
   };
 
   getOne = (id) => {
     return this.initApi.get(`${this.baseUrl}/${id}`);
   };
+  
 }
 
 export default new ProfileApi().requestUrl("/api/employee");

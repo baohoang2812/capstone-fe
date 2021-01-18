@@ -5,10 +5,12 @@
     "CORE.EMPLOYEE.SETTING.FIRST.NAME": "First Name",
     "CORE.EMPLOYEE.SETTING.PHONE": "Phone number",
     "CORE.EMPLOYEE.USERNAME": "User Name",
+    "CORE.EMPLOYEE.PASSWORD": "Password",
     "CORE.EMPLOYEE.FULLNAME": "Full Name",
     "CORE.EMPLOYEE.GENDER": "Gender",
     "CORE.EMPLOYEE.GENDER.MALE": "Male",
     "CORE.EMPLOYEE.GENDER.FEMALE": "Female",
+    "CORE.EMPLOYEE.GENDER.OTHER": "Other",
     "CORE.EMPLOYEE.DATE.OF.BIRTH": "Date of birth",
     "CORE.EMPLOYEE.PHONE.NUMBER": "Phone Number",
     "CORE.EMPLOYEE.CHARGE.CREATE": "Created at",
@@ -21,6 +23,12 @@
     "CORE.EMPLOYEE.POSITION.NAME":"Position name",
     "CORE.EMPLOYEE.IMAGE.PATH":"Image",
     "CORE.EMPLOYEE.MANAGEMENT.TITLE":"Employee manager",
-    "CORE.EMPLOYEE.CREATE.ACCOUNT":"Create employee"
+    "CORE.EMPLOYEE.CREATE.ACCOUNT":"Create employee",
+    "CORE.EMPLOYEE.JOB.TYPE":"Job type",
+    "CORE.EMPLOYEE.POSITION":"Position",
+    "CORE.EMPLOYEE.ROLE":"Role",
+    "CORE.EMPLOYEE.CREATE.SUCCESS":"Created employee success!",
+    "CORE.EMPLOYEE.UPDATE.ACCOUNT":"Update employee",
+    "CORE.EMPLOYEE.UPDATE.SUCCESS":"Updated employee success!"
     
 }
