@@ -166,10 +166,14 @@ export const HeaderMaster = ({ url }) => {
         <div className="header-right">
           <Dropdown overlay={renderMenuProfile(account_info, t)}>
             <span className="dropdown-user">
+              <span>
+                { account_info.full_name }
+              </span>
               <Avatar
+                style={{ backgroundColor: "white" }}
                 size="middle"
                 className="avatar"
-                src="/assets/images/org-avatar.png"
+                src={account_info.image_path}
                 alt="avatar"
               />
             </span>

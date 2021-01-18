@@ -1,4 +1,6 @@
 import "./bootstrap.less";
+import React, { useState } from "react";
+import { Icon } from "antd";
 
 import redux from "./Store/initRedux";
 import sagas from "./Store/initSagas";
@@ -9,7 +11,12 @@ export default {
   name: "User",
   dir: "User",
   pathRoot: "user",
-  title: "User",
+  title: ( 
+    <span>
+      <Icon type="user" />
+      <span>User</span>
+    </span>
+  ),
   showMenu: true,
   routes: [
     {
