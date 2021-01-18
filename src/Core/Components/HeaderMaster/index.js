@@ -166,7 +166,12 @@ export const HeaderMaster = ({ url }) => {
         <div className="header-right">
           <Dropdown overlay={renderMenuProfile(account_info, t)}>
             <span className="dropdown-user">
-              <span>
+              <span style={{
+                padding: "5px 15px",
+                borderLeft: "1px solid",
+                fontSize: "1rem",
+                fontWeight: 600
+              }}>
                 { account_info.full_name }
               </span>
               <Avatar

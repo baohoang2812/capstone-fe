@@ -18,7 +18,6 @@ const RoutesMaster = ({
   listUrl,
   listArrayRoutes
 }) => {
-  console.log(listArrayRoutes);
   /* Selector */
   const userImpersonation = useSelector(state => state.userImpersonation);
 
@@ -30,7 +29,7 @@ const RoutesMaster = ({
   useEffect(() => {
     if (isAuthenticated) {
       if (location.pathname === "/") {
-        history.push("/user")
+        history.push("/employee")
       }
     }
   }, [])

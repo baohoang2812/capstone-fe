@@ -27,6 +27,7 @@ const UserTable = () => {
       className: "header-filter header-image",
       key: "image_path",
       fieldType: "none",
+      fixed: "left",
       sorter: true,
       width: 200,
       render: (_, record) => {
@@ -41,6 +42,7 @@ const UserTable = () => {
       className: "header-filter",
       key: "code",
       fieldType: "text",
+      fixed: "left",
       sorter: true,
       width: 220,
       render: (text, record) => (
@@ -134,7 +136,7 @@ const UserTable = () => {
       render: (text) => moment(text).format("DD/MM/YYYY"),
     },
     {
-      title: t("CORE.USER.CHARGE.UPDATE"),
+      title: t("CORE.EMPLOYEE.CHARGE.UPDATE"),
       dataIndex: "updated_at",
       className: "header-filter",
       key: "contacts.updated_at",
@@ -143,13 +145,14 @@ const UserTable = () => {
       width: 150,
       render: (text) => moment(text).format("DD/MM/YYYY"),
     },
-   
     {
       title: t("CORE.EMPLOYEE.JOB.TYPE"),
       dataIndex: "none",
       className: "header-filter header-center",
       key: "action",
       fieldType: "none",
+      fixed: "right",
+      width: 150,
       render: (_, record) => {
         if (record.is_active) {
           return (
@@ -157,7 +160,7 @@ const UserTable = () => {
           )
         } else {
           return (
-            <Tag color="red">{t("CORE.EMPLOYEE.PART.TIME")}</Tag>
+            <Tag color="blue">{t("CORE.EMPLOYEE.PART.TIME")}</Tag>
           )
         }
       },
@@ -167,7 +170,7 @@ const UserTable = () => {
   const defaultSorter = useMemo(() => ({ }), []);
   
   const scroll = useMemo(() => ({
-    x: 2550 ,
+    x: 2500 ,
     y: `calc(100vh - (178px))`
   }), []);
 
