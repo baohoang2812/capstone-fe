@@ -60,5 +60,6 @@
     "babel-plugin-dynamic-import-node": "^2.2.0",
     "babel-plugin-root-import": "^6.2.0",
     "redux-devtools-extension": "^2.13.8"
-  }
+  },
+  "homepage": "https://capstone-fe.azurewebsites.net"
 }
