@@ -1,21 +1,15 @@
 import "~/styles/components/header.less";
 import "./style.less";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import {
-  Layout,
-  Icon,
-  Dropdown,
-  Avatar,
-  Menu
-} from "antd";
+import { Layout, Icon, Dropdown, Avatar, Menu } from "antd";
 
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 
 /* Components */
-// import ItemsModules from "./Components/ItemsModules";
+import MenuLanguage from "./MenuLanguage";
 
 /* Helpers */
 import { logout } from "~/Core/utils/helper/authenticate";
@@ -25,7 +19,6 @@ import { logout } from "~/Core/utils/helper/authenticate";
 const { Header } = Layout;
 // const { SubMenu } = Menu;
 
-
 export const HeaderMaster = ({ url }) => {
   const t = useTranslate();
 
@@ -34,16 +27,16 @@ export const HeaderMaster = ({ url }) => {
 
   /* State */
   // const [oldActiveElement, setOldActiveElement] = useState(null);
-  const [isHover, setHover] = useState(false);
+  // const [isHover, setHover] = useState(false);
 
   const handleClick = (e) => {
     if (ref?.current && !ref?.current?.contains(e.target)) {
-      setHover(false);
+      // setHover(false);
     }
   };
 
   const clickMenuHover = () => {
-    setHover(true);
+    // setHover(true);
   };
 
   useEffect(() => {
@@ -121,6 +114,12 @@ export const HeaderMaster = ({ url }) => {
       mode="vertical"
     >
       <Menu.Item key="terms">
+        <Link to="/employee/profile">
+          <Icon type="profile" />
+          {t("CORE.EMPLOYEE.PROFILE.TITLE")}
+        </Link>
+      </Menu.Item>
+      <Menu.Item key="terms">
         <Link to="/terms">
           <Icon type="setting" />
           {t("CORE.MENU.terms")}
@@ -164,15 +163,18 @@ export const HeaderMaster = ({ url }) => {
           </div>
         </div>
         <div className="header-right">
+          <MenuLanguage />
           <Dropdown overlay={renderMenuProfile(account_info, t)}>
             <span className="dropdown-user">
-              <span style={{
-                padding: "5px 15px",
-                borderLeft: "1px solid",
-                fontSize: "1rem",
-                fontWeight: 600
-              }}>
-                { account_info.full_name }
+              <span
+                style={{
+                  padding: "5px 15px",
+                  borderLeft: "1px solid",
+                  fontSize: "1rem",
+                  fontWeight: 600,
+                }}
+              >
+                {account_info.full_name}
               </span>
               <Avatar
                 style={{ backgroundColor: "white" }}

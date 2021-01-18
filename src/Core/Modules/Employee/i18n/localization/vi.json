@@ -1,4 +1,6 @@
 {
+    "CORE.EMPLOYEE.TITLE": "Nhân viên",
+    "CORE.EMPLOYEE.PROFILE.TITLE": "Thông tin cá nhân",
     "CORE.EMPLOYEE.EMAIL": "Email",
     "CORE.EMPLOYEE.ADDRESS": "Địa chỉ",
     "CORE.EMPLOYEE.SETTING.LAST.NAME": "Họ",

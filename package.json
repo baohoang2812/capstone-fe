@@ -9,6 +9,7 @@
     "babel-plugin-import": "^1.11.0",
     "customize-cra": "^0.2.12",
     "env-cmd": "^10.1.0",
+    "jwt-decode": "^3.1.2",
     "less": "^3.9.0",
     "less-loader": "^5.0.0",
     "lodash": "^4.17.19",

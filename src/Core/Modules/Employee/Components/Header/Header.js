@@ -1,5 +1,6 @@
 import React from "react";
 import { Icon, Button } from "antd";
+import jwt_decode from "jwt-decode";
 
 /* Components */
 import NavBreadcrumbContentHeader from "~/Core/Components/common/NavBreadcrumbContentHeader";
@@ -9,6 +10,11 @@ const Header = ({ breadcrumb, action, icon = "plus", text, className }) => {
     action();
   };
 
+  const token = localStorage.getItem("token" || "");
+  const {
+    payload: { role },
+  } = jwt_decode(token);
+  
   return (
     <div className="content-header-page">
       <div className="content-header-add">
@@ -22,9 +28,9 @@ const Header = ({ breadcrumb, action, icon = "plus", text, className }) => {
                 <NavBreadcrumbContentHeader data={breadcrumb} />
               </div>
               <div className="nav-right btn-group">
-                <Button onClick={handleClick} className={className}>
+                {role === "Admin" ? (<Button onClick={handleClick} className={className}>
                   <span>{text}</span>
-                </Button>
+                </Button>) : null}
               </div>
             </div>
           </div>

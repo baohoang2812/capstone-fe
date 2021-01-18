@@ -1,5 +1,8 @@
 import "./bootstrap.less";
 
+import React from "react";
+import { Icon } from "antd";
+
 import redux from "./Store/initRedux";
 import sagas from "./Store/initSagas";
 import intlMessagesEN from "./i18n/localization/en.json";
@@ -9,24 +12,33 @@ export default {
   name: "Employee",
   dir: "Employee",
   pathRoot: "employee",
+  title: (
+    <span>
+      <Icon type="user" />
+      <span>Employee</span>
+    </span>
+  ),
+  showMenu: true,
   routes: [
+    {
+      url: "profile",
+      component: "Pages/Profile",
+      key: "profile-edit",
+      showMenu: false,
+      title: "Profile",
+    },
     {
       url: ":id",
       component: "Pages/EmployeeDetail",
-      menu: {
-        key: "user-create-edit",
-        showMenu: false,
-      },
-      title: "Update contact",
+      key: "employee-create-edit",
+      showMenu: false,
+      title: "Employee detail",
     },
     {
       url: "",
       component: "Pages",
-      menu: {
-        key: "user-list",
-        showMenu: false,
-      },
-      title: "Contact Management | Forex - Solazu",
+      showMenu: true,
+      title: "Employee Management",
     },
   ],
   redux: redux,

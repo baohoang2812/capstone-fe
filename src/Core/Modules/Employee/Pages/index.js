@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
 
-import { Icon } from "antd";
 /* Components */
 import Header from "~/Core/Modules/Employee/Components/Header/Header";
 import Table from "~/Core/Modules/Employee/Components/Table/Table";
@@ -9,7 +8,6 @@ import Table from "~/Core/Modules/Employee/Components/Table/Table";
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 
 const UserManagement = () => {
-  const [visible, setVisible] = useState(false);
   const history = useHistory();
 
   const t = useTranslate();

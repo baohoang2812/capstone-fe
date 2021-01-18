@@ -45,7 +45,7 @@ const getBase64 = (file) => {
     reader.onerror = (error) => reject(error);
   });
 };
-const EmployeeDetailForm = ({ form, action, data, is_create }) => {
+const ProfileForm = ({ form, data }) => {
   const t = useTranslate();
   const { getFieldDecorator, validateFields, setFieldsValue } = form;
 
@@ -61,7 +61,6 @@ const EmployeeDetailForm = ({ form, action, data, is_create }) => {
   const [fileList, setFileList] = useState([]);
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
-
 
   const token = localStorage.getItem("token" || "");
   const {
@@ -122,68 +121,34 @@ const EmployeeDetailForm = ({ form, action, data, is_create }) => {
           birth_date: values["birth_date"].format("YYYY-MM-DD"),
           image_path: values?.["image_path"]?.file?.response?.url,
         };
-        console.log(newValues);
+
         newValues.branch_manager_id = 1;
         newValues.status = "test";
-        const { username, hash_password, ...employee } = newValues;
+        const { username, ...employee } = newValues;
         setLoading(false);
         const objReq = {
           employee,
           account: {
-            username,
-            hash_password,
+            username
           },
         };
-        console.log(objReq);
-        if (is_create) {
-          employeeApi
-            .create(objReq)
-            .then((res) => {
-              setLoading(false);
 
-              if (res.status !== 200) {
-                message.error(t("CORE.task_failure"));
-                return;
-              }
+        objReq.employee.id = data.employee.id;
+        employeeApi.update(objReq).then((res) => {
+          setLoading(false);
 
-              dispatch(
-                update_identity_table_data_success(identity, res.data.employee)
-              );
-              message.success(t("CORE.EMPLOYEE.CREATE.SUCCESS"));
-              action();
-            })
-            .catch(() => {
-              message.error(t("CORE.error.system"));
-            });
-        } else {
-          objReq.employee.id = data.employee.id;
-          employeeApi.update(objReq).then((res) => {
-            setLoading(false);
+          if (res.status !== 200) {
+            message.error(t("CORE.task_failure"));
+            return;
+          }
 
-            if (res.status !== 200) {
-              message.error(t("CORE.task_failure"));
-              return;
-            }
+          dispatch(
+            update_identity_table_data_success(identity, res.data.employee)
+          );
+          message.success(t("CORE.EMPLOYEE.UPDATE.SUCCESS"));
+        });
 
-            dispatch(
-              update_identity_table_data_success(identity, res.data.employee)
-            );
-            message.success(t("CORE.EMPLOYEE.UPDATE.SUCCESS"));
-            action();
-          });
-        }
       }
-    });
-  };
-
-  const randomCode = () => {
-    const code = randomstring.generate({
-      length: 8,
-      charset: "alphanumeric",
-    });
-    console.log(code);
-    setFieldsValue({
-      code: code,
     });
   };
 
@@ -212,7 +177,10 @@ const EmployeeDetailForm = ({ form, action, data, is_create }) => {
                     className="upload-image"
                     label={t("CORE.EMPLOYEE.IMAGE.PATH")}
                   >
-                    {getFieldDecorator("image_path", {})(
+                    {getFieldDecorator(
+                      "image_path",
+                      {}
+                    )(
                       <Upload
                         action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                         listType="picture-card"
@@ -233,23 +201,13 @@ const EmployeeDetailForm = ({ form, action, data, is_create }) => {
                 <Col span={7}>
                   <Form.Item
                     className="customs-label"
-                    label={
-                      <>
-                        <label
-                          for="Form_Employee_Detail_code"
-                          title={t("CORE.EMPLOYEE.CODE")}
-                        >
-                          {t("CORE.EMPLOYEE.CODE")}
-                        </label>
-                        <Button onClick={randomCode}>Generate</Button>
-                      </>
-                    }
+                    label={t("CORE.EMPLOYEE.CODE")}
                   >
                     {getFieldDecorator("code", {
                       rules: [
                         { required: true, message: "Please input code!" },
                       ],
-                    })(<Input />)}
+                    })(<Input disabled/>)}
                   </Form.Item>
                 </Col>
                 <Col span={13}>
@@ -341,22 +299,28 @@ const EmployeeDetailForm = ({ form, action, data, is_create }) => {
                           whitespace: false,
                         },
                       ],
-                    })(<Input />)}
+                    })(<Input disabled />)}
                   </Form.Item>
                 </Col>
-                <Col span={7}>
-                  <Form.Item label={t("CORE.EMPLOYEE.PASSWORD")} hasFeedback>
-                    {getFieldDecorator("hash_password", {
+                <Col span={5}>
+                  <Form.Item label={t("CORE.EMPLOYEE.JOB.TYPE")}>
+                    {getFieldDecorator("is_part_time", {
                       rules: [
                         {
                           required: true,
-                          message: "Please input your password!",
+                          message: "Please select job type!",
                         },
                       ],
-                    })(<Input.Password />)}
+                      initialValue: true,
+                    })(
+                      <Select disabled>
+                        <Option value={true}>Part time</Option>
+                        <Option value={false}>Full time</Option>
+                      </Select>
+                    )}
                   </Form.Item>
                 </Col>
-                <Col span={4}>
+                <Col span={5}>
                   <Form.Item label={t("CORE.EMPLOYEE.ROLE")}>
                     {getFieldDecorator("role_id", {
                       rules: [
@@ -367,7 +331,7 @@ const EmployeeDetailForm = ({ form, action, data, is_create }) => {
                       ],
                       initialValue: listRole?.[0]?.id,
                     })(
-                      <Select>
+                      <Select disabled>
                         {listRole.map((item) => (
                           <Option key={item.id} value={item.id}>
                             {item.role}
@@ -377,7 +341,7 @@ const EmployeeDetailForm = ({ form, action, data, is_create }) => {
                     )}
                   </Form.Item>
                 </Col>
-                <Col span={4}>
+                <Col span={5}>
                   <Form.Item label={t("CORE.EMPLOYEE.POSITION")}>
                     {getFieldDecorator("position_id", {
                       rules: [
@@ -388,7 +352,7 @@ const EmployeeDetailForm = ({ form, action, data, is_create }) => {
                       ],
                       initialValue: listPosition?.[0]?.id,
                     })(
-                      <Select>
+                      <Select disabled>
                         {listPosition.map((item) => (
                           <Option key={item.id} value={item.id}>
                             {item.name}
@@ -413,7 +377,7 @@ const EmployeeDetailForm = ({ form, action, data, is_create }) => {
                     })(<DatePicker />)}
                   </Form.Item>
                 </Col>
-                <Col span={4}>
+                <Col span={5}>
                   <Form.Item label={t("CORE.EMPLOYEE.GENDER")}>
                     {getFieldDecorator("gender", {
                       rules: [
@@ -438,25 +402,7 @@ const EmployeeDetailForm = ({ form, action, data, is_create }) => {
                     )}
                   </Form.Item>
                 </Col>
-                <Col span={4}>
-                  <Form.Item label={t("CORE.EMPLOYEE.JOB.TYPE")}>
-                    {getFieldDecorator("is_part_time", {
-                      rules: [
-                        {
-                          required: true,
-                          message: "Please select job type!",
-                        },
-                      ],
-                      initialValue: true,
-                    })(
-                      <Select>
-                        <Option value={true}>Part time</Option>
-                        <Option value={false}>Full time</Option>
-                      </Select>
-                    )}
-                  </Form.Item>
-                </Col>
-                <Col span={9}>
+                <Col span={13}>
                   <Form.Item label={t("CORE.EMPLOYEE.BRANCH.NAME")}>
                     {getFieldDecorator("branch_id", {
                       rules: [
@@ -513,6 +459,4 @@ const EmployeeDetailForm = ({ form, action, data, is_create }) => {
   );
 };
 
-export default Form.create({ name: "Form_Employee_Detail" })(
-  EmployeeDetailForm
-);
+export default Form.create({ name: "Form_Employee_Detail" })(ProfileForm);

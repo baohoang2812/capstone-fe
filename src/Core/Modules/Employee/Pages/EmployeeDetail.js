@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { Spin, Alert, Icon, message } from "antd";
+import { Spin, Alert, message } from "antd";
 
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
@@ -9,10 +9,8 @@ import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 import Header from "~/Core/Modules/Employee/Components/Header/Header";
 import EmployeeDetailForm from "~/Core/Modules/Employee/Components/Form/EmployeeDetailForm";
 
-
 /* Api */
 import employeeApi from "~/Core/Modules/Employee/Api";
-
 
 const EmployeeDetail = ({ match: { params } }) => {
   const t = useTranslate();
@@ -26,12 +24,12 @@ const EmployeeDetail = ({ match: { params } }) => {
   };
 
   useEffect(() => {
-      console.log(JSON.stringify(params));
+    console.log(JSON.stringify(params));
     if (params.id === "create") {
       setLoading(false);
-    //   setError(true);
+      //   setError(true);
     } else {
-        employeeApi
+      employeeApi
         .getOne(params.id)
         .then((res) => {
           setLoading(false);
@@ -50,13 +48,12 @@ const EmployeeDetail = ({ match: { params } }) => {
 
   return (
     <>
-     
       <div className="user">
         <Header
           breadcrumb={[
             {
-                title: t("CORE.EMPLOYEE.MANAGEMENT.TITLE"),
-                link: "/employee",
+              title: t("CORE.EMPLOYEE.MANAGEMENT.TITLE"),
+              link: "/employee",
             },
             {
               title:
@@ -73,7 +70,11 @@ const EmployeeDetail = ({ match: { params } }) => {
           <Alert type="error" message={t("CORE.task_failure")} />
         ) : (
           <Spin spinning={loading}>
-            <EmployeeDetailForm action={action} data={data} is_create={params.id === "create"} />
+            <EmployeeDetailForm
+              action={action}
+              data={data}
+              is_create={params.id === "create"}
+            />
           </Spin>
         )}
       </div>

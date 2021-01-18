@@ -1,4 +1,6 @@
 {
+    "CORE.EMPLOYEE.TITLE": "Employee",
+    "CORE.EMPLOYEE.PROFILE.TITLE": "Profile",
     "CORE.EMPLOYEE.EMAIL": "Email",
     "CORE.EMPLOYEE.ADDRESS": "Address",
     "CORE.EMPLOYEE.SETTING.LAST.NAME": "Last Name",
