@@ -31,7 +31,8 @@
     "CORE.EMPLOYEE.ROLE":"Vai trò",
     "CORE.EMPLOYEE.CREATE.SUCCESS":"Tạo nhân viên thành công!",
     "CORE.EMPLOYEE.UPDATE.ACCOUNT":"Cập nhật nhân viên",
-    "CORE.EMPLOYEE.UPDATE.SUCCESS":"Cập nhật nhân viên thành công!"
+    "CORE.EMPLOYEE.UPDATE.SUCCESS":"Cập nhật nhân viên thành công!",
+    "CORE.EMPLOYEE.GENERATE.CODE":"Tạo mã"
     
    
 }

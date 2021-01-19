@@ -31,6 +31,8 @@
     "CORE.EMPLOYEE.ROLE":"Role",
     "CORE.EMPLOYEE.CREATE.SUCCESS":"Created employee success!",
     "CORE.EMPLOYEE.UPDATE.ACCOUNT":"Update employee",
-    "CORE.EMPLOYEE.UPDATE.SUCCESS":"Updated employee success!"
+    "CORE.EMPLOYEE.UPDATE.SUCCESS":"Updated employee success!",
+    "CORE.EMPLOYEE.GENERATE.CODE":"Generate",
+
     
 }

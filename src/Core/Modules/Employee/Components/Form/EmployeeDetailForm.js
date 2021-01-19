@@ -241,7 +241,7 @@ const EmployeeDetailForm = ({ form, action, data, is_create }) => {
                         >
                           {t("CORE.EMPLOYEE.CODE")}
                         </label>
-                        <Button onClick={randomCode}>Generate</Button>
+                        <Button onClick={randomCode}>{t("CORE.EMPLOYEE.GENERATE.CODE")}</Button>
                       </>
                     }
                   >
@@ -450,8 +450,8 @@ const EmployeeDetailForm = ({ form, action, data, is_create }) => {
                       initialValue: true,
                     })(
                       <Select>
-                        <Option value={true}>Part time</Option>
-                        <Option value={false}>Full time</Option>
+                        <Option value={true}>{t("CORE.EMPLOYEE.PART.TIME")}</Option>
+                        <Option value={false}>{t("CORE.EMPLOYEE.FULL.TIME")}</Option>
                       </Select>
                     )}
                   </Form.Item>

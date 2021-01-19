@@ -155,7 +155,7 @@ const UserTable = () => {
       fixed: "right",
       width: 150,
       render: (_, record) => {
-        if (record.is_active) {
+        if (!record.is_part_time) {
           return (
             <Tag color="green">{t("CORE.EMPLOYEE.FULL.TIME")}</Tag>
           )
