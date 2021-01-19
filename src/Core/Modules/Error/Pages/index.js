@@ -26,7 +26,7 @@ const Error = ({ reload }) => {
       <div className="sub-title">{t("CORE.MENU.incorrect.sub")}</div>
       <div className="button-group">
         <Button className="btn-outline">
-          <Link to="/user">{t("CORE.MENU.user.page")}</Link>
+          <Link to="/employee">{t("CORE.MENU.user.page")}</Link>
         </Button>
         <Button className="btn-orange" onClick={retry} type="primary">
           {t("CORE.MENU.try")}

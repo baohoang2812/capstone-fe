@@ -13,6 +13,7 @@ const MenuLanguage = () => {
   const onChangeLange = (context, lang) => {
     context.changeLanguage(lang);
     setVisible(false);
+    window.location.reload();
   }
 
   return (
