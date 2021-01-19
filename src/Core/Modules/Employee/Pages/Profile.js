@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { Spin, Alert, message } from "antd";
+import { Alert, message } from "antd";
 import jwt_decode from "jwt-decode";
 
 /* Hooks */
@@ -17,7 +17,7 @@ const Profile = ({ match: { params } }) => {
   const t = useTranslate();
   const history = useHistory();
   const [data, setData] = useState({});
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
   const action = () => {
@@ -33,7 +33,7 @@ const Profile = ({ match: { params } }) => {
     employeeApi
       .getOne(employee_id)
       .then((res) => {
-        setLoading(false);
+        // setLoading(false);
         if (res.status !== 200) {
           message.error("CORE.MENU.message_error");
           setError(true);

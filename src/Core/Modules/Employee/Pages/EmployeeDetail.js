@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { Spin, Alert, message } from "antd";
+import { Alert, message } from "antd";
 
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
@@ -16,7 +16,7 @@ const EmployeeDetail = ({ match: { params } }) => {
   const t = useTranslate();
   const history = useHistory();
   const [data, setData] = useState({});
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
   const action = () => {
@@ -26,13 +26,13 @@ const EmployeeDetail = ({ match: { params } }) => {
   useEffect(() => {
     console.log(JSON.stringify(params));
     if (params.id === "create") {
-      setLoading(false);
+      // setLoading(false);
       //   setError(true);
     } else {
       employeeApi
         .getOne(params.id)
         .then((res) => {
-          setLoading(false);
+          // setLoading(false);
           if (res.status !== 200) {
             message.error("CORE.MENU.message_error");
             setError(true);
