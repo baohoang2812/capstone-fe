@@ -69,13 +69,11 @@ const EmployeeDetail = ({ match: { params } }) => {
         {error ? (
           <Alert type="error" message={t("CORE.task_failure")} />
         ) : (
-          <Spin spinning={loading}>
-            <EmployeeDetailForm
-              action={action}
-              data={data}
-              is_create={params.id === "create"}
-            />
-          </Spin>
+          <EmployeeDetailForm
+            action={action}
+            data={data}
+            is_create={params.id === "create"}
+          />
         )}
       </div>
     </>
