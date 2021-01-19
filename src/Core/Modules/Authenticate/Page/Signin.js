@@ -34,12 +34,12 @@ const SignIn = ({ form }) => {
 
   const onHandleLogin = (e) => {
     e.preventDefault();
-    form.validateFields((err, { email, password }) => {
+    form.validateFields((err, { username, password }) => {
       if (!err) {
         setLoading(true);
 
         const user = {
-          email,
+          username,
           password,
         };
 
@@ -51,9 +51,9 @@ const SignIn = ({ form }) => {
               return;
             }
 
-            const { admin_info } = data;
-            setToken(admin_info.token);
-            setAccountInfo({ ...admin_info });
+            const { token, full_name, image_path } = data;
+            setToken(token);
+            setAccountInfo({ full_name, image_path });
 
             window.location.replace("/");
           })
@@ -95,17 +95,13 @@ const SignIn = ({ form }) => {
                       required={false}
                       colon={false}
                     >
-                      {getFieldDecorator("email", {
+                      {getFieldDecorator("username", {
                         getValueFromEvent: (e) => e.target.value.trim(),
                         rules: [
                           {
                             required: true,
                             message: t("CORE.emailRequired"),
-                          },
-                          {
-                            type: "email",
-                            message: t("CORE.emailInvalid"),
-                          },
+                          }
                         ],
                       })(
                         <Input

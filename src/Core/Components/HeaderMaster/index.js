@@ -1,30 +1,23 @@
 import "~/styles/components/header.less";
 import "./style.less";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import {
-  Layout,
-  Icon,
-  Dropdown,
-  Avatar,
-  Menu
-} from "antd";
+import { Layout, Icon, Dropdown, Avatar, Menu } from "antd";
 
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 
 /* Components */
-import ItemsModules from "./Components/ItemsModules";
+import MenuLanguage from "./MenuLanguage";
 
 /* Helpers */
 import { logout } from "~/Core/utils/helper/authenticate";
 
-import routersModule from "./RoutersModule";
+// import buttonInfo from "./ButtonInfo";
 
 const { Header } = Layout;
-const { SubMenu } = Menu;
-
+// const { SubMenu } = Menu;
 
 export const HeaderMaster = ({ url }) => {
   const t = useTranslate();
@@ -33,17 +26,17 @@ export const HeaderMaster = ({ url }) => {
   const ref = useRef();
 
   /* State */
-  const [oldActiveElement, setOldActiveElement] = useState(null);
-  const [isHover, setHover] = useState(false);
+  // const [oldActiveElement, setOldActiveElement] = useState(null);
+  // const [isHover, setHover] = useState(false);
 
   const handleClick = (e) => {
     if (ref?.current && !ref?.current?.contains(e.target)) {
-      setHover(false);
+      // setHover(false);
     }
   };
 
   const clickMenuHover = () => {
-    setHover(true);
+    // setHover(true);
   };
 
   useEffect(() => {
@@ -54,65 +47,65 @@ export const HeaderMaster = ({ url }) => {
     };
   });
 
-  const setActive = ({ target }) => {
-    let oldElement = oldActiveElement;
-    let activeElement = target;
-    setOldActiveElement(target);
+  // const setActive = ({ target }) => {
+  //   let oldElement = oldActiveElement;
+  //   let activeElement = target;
+  //   setOldActiveElement(target);
 
-    if (oldElement) {
-      oldElement.parentElement.closest("li").classList.remove("active");
-    }
+  //   if (oldElement) {
+  //     oldElement.parentElement.closest("li").classList.remove("active");
+  //   }
 
-    while (oldElement && oldElement.parentElement.closest(".has-submenu")) {
-      oldElement.parentElement
-        .closest(".has-submenu")
-        .classList.remove("active");
-      oldElement = oldElement.parentElement.closest(".has-submenu");
-    }
+  //   while (oldElement && oldElement.parentElement.closest(".has-submenu")) {
+  //     oldElement.parentElement
+  //       .closest(".has-submenu")
+  //       .classList.remove("active");
+  //     oldElement = oldElement.parentElement.closest(".has-submenu");
+  //   }
 
-    activeElement.parentElement.closest("li").classList.add("active");
-    while (activeElement.parentElement.closest(".has-submenu")) {
-      activeElement.parentElement
-        .closest(".has-submenu")
-        .classList.add("active");
-      activeElement = activeElement.parentElement.closest(".has-submenu");
-    }
-  };
+  //   activeElement.parentElement.closest("li").classList.add("active");
+  //   while (activeElement.parentElement.closest(".has-submenu")) {
+  //     activeElement.parentElement
+  //       .closest(".has-submenu")
+  //       .classList.add("active");
+  //     activeElement = activeElement.parentElement.closest(".has-submenu");
+  //   }
+  // };
 
-  const renderModuleMenu = (item, account_info, icon_name) => {
-    if (item.subMenu) {
-      return (
-        <SubMenu
-          popupClassName="has-submenu"
-          title={
-            <>
-              {t(item.id, item.defaultMessage)}
-              {icon_name !== "right" && (
-                <Icon
-                  className="ant-menu-submenu-arrow"
-                  type="down"
-                  style={{ fontSize: 10, marginLeft: 5 }}
-                />
-              )}
-            </>
-          }
-          key={item.id}
-        >
-          <Menu.ItemGroup className="nav-submenu">
-            {item.subMenu.map((subItem) =>
-              renderModuleMenu(subItem, account_info, "right")
-            )}
-          </Menu.ItemGroup>
-        </SubMenu>
-      );
-    } else {
-      return (
-        <Menu.Item key={item.id}>
-          <Link to={item.route}>{t(item.id, item.defaultMessage)}</Link>
-        </Menu.Item>
-      );
-    }
-  };
+  // const renderModuleMenu = (item, account_info, icon_name) => {
+  //   if (item.subMenu) {
+  //     return (
+  //       <SubMenu
+  //         popupClassName="has-submenu"
+  //         title={
+  //           <>
+  //             {t(item.id, item.defaultMessage)}
+  //             {icon_name !== "right" && (
+  //               <Icon
+  //                 className="ant-menu-submenu-arrow"
+  //                 type="down"
+  //                 style={{ fontSize: 10, marginLeft: 5 }}
+  //               />
+  //             )}
+  //           </>
+  //         }
+  //         key={item.id}
+  //       >
+  //         <Menu.ItemGroup className="nav-submenu">
+  //           {item.subMenu.map((subItem) =>
+  //             renderModuleMenu(subItem, account_info, "right")
+  //           )}
+  //         </Menu.ItemGroup>
+  //       </SubMenu>
+  //     );
+  //   } else {
+  //     return (
+  //       <Menu.Item key={item.id}>
+  //         <Link to={item.route}>{t(item.id, item.defaultMessage)}</Link>
+  //       </Menu.Item>
+  //     );
+  //   }
+  // };
 
   const renderMenuProfile = (account_info, t) => (
     <Menu
@@ -120,6 +113,12 @@ export const HeaderMaster = ({ url }) => {
       selectedKeys={[]}
       mode="vertical"
     >
+      <Menu.Item key="terms">
+        <Link to="/employee/profile">
+          <Icon type="profile" />
+          {t("CORE.EMPLOYEE.PROFILE.TITLE")}
+        </Link>
+      </Menu.Item>
       <Menu.Item key="terms">
         <Link to="/terms">
           <Icon type="setting" />
@@ -134,42 +133,54 @@ export const HeaderMaster = ({ url }) => {
   );
 
   const account_info = JSON.parse(localStorage.getItem("account_info" || "{}"));
-  let urlModules = {};
-  urlModules = Object.values(urlModules).sort((a, b) =>
-    a.position > b.position ? 1 : -1
-  );
+  // let urlModules = {};
+  // urlModules = Object.values(urlModules).sort((a, b) =>
+  //   a.position > b.position ? 1 : -1
+  // );
 
   return (
     <Header className="layout-header">
       <div className="layout-header-wrapper">
         <div className="header-left">
           <div className="header-logo">
-            <Link to="/user" className="logo">
+            {/* <Link to="/user" className="logo">
               <img
                 className="logo-image"
                 src="/assets/images/RubikBotVertical.png"
                 alt="logo"
               />
-            </Link>
+            </Link> */}
           </div>
           <div className="header-nav-menu" ref={ref} onClick={clickMenuHover}>
-            <Menu
+            {/* <Menu
               mode="horizontal"
               triggerSubMenuAction={isHover ? "hover" : "click"}
               style={{ backgroundColor: "transparent" }}
             >
-              {routersModule.map((item) => renderModuleMenu(item, account_info))}
+              {buttonInfo.map((item) => renderModuleMenu(item, account_info))}
               <ItemsModules urlModules={urlModules} setActive={setActive} />
-            </Menu>
+            </Menu> */}
           </div>
         </div>
         <div className="header-right">
+          <MenuLanguage />
           <Dropdown overlay={renderMenuProfile(account_info, t)}>
             <span className="dropdown-user">
+              <span
+                style={{
+                  padding: "5px 15px",
+                  borderLeft: "1px solid",
+                  fontSize: "1rem",
+                  fontWeight: 600,
+                }}
+              >
+                {account_info.full_name}
+              </span>
               <Avatar
+                style={{ backgroundColor: "white" }}
                 size="middle"
                 className="avatar"
-                src="/assets/images/org-avatar.png"
+                src={account_info.image_path}
                 alt="avatar"
               />
             </span>

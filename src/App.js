@@ -15,7 +15,7 @@ import { combineReducers } from "redux";
 import { all } from "@redux-saga/core/effects";
 
 /* Core */
-import RoutesMaster from "~/Core/Components/RoutesMaster";
+import Layout from "~/Core/Components/Layout";
 import initRedux from "~/Core/Store/initRedux";
 import initSagas from "~/Core/Store/initSagas";
 import { initApp } from "~/Core/Providers/AppProvider";
@@ -30,6 +30,7 @@ class App extends Component {
     init: false,
     listRoutes: [],
     listUrl: [],
+    listArrayRoutes: [],
     listRedux: initRedux,
     listSagas: initSagas,
     listLangVi: intlMessagesVi,
@@ -52,6 +53,7 @@ class App extends Component {
         init: true,
         listRoutes: Object.values({ ...resModules.listRoutes }),
         listUrl: Object.values({ ...resModules.listUrl }),
+        listArrayRoutes:  [ ...this.state.listArrayRoutes, ...resModules.listArrayRoutes ],
         listRedux: { ...this.state.listRedux, ...resModules.listRedux },
         listSagas: [ ...this.state.listSagas, ...resModules.listSagas ],
         listLangVi: { ...this.state.listLangVi, ...resModules.listLangVi },
@@ -61,7 +63,7 @@ class App extends Component {
   }
 
   render = () => {
-    const { listRedux, listSagas, listRoutes, listUrl, init } = this.state;
+    const { listRedux, listSagas, listRoutes, listUrl, listArrayRoutes, init } = this.state;
     let store = null;
 
     if (init) {
@@ -104,7 +106,7 @@ class App extends Component {
               listLangVi={this.state.listLangVi}
               listLangEn={this.state.listLangEn}
             >
-              <RoutesMaster listRoutes={listRoutes} listUrl={listUrl} />
+              <Layout listRoutes={listRoutes} listUrl={listUrl} listArrayRoutes={listArrayRoutes} />
             </InitProvider>
           </PersistGate>
         </Provider>

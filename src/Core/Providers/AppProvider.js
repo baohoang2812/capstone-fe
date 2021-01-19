@@ -11,6 +11,7 @@ export async function initApp(isAuthenticated, AccountInfo) {
   let resModules = {
     listRoutes: {},
     listUrl: {},
+    listArrayRoutes: [],
     listRedux: {},
     listSagas: [],
     listLangVi: {},
@@ -24,6 +25,7 @@ async function initModules(isAuthenticated) {
   try {
     let listRoutes = {};
     let listUrl = {};
+    let listArrayRoutes = [];
     let listRedux = {};
     let listSagas = [];
     let listLangVi = {};
@@ -34,7 +36,7 @@ async function initModules(isAuthenticated) {
       let res = null;
 
       try {
-        res = require("~/Core/Modules/" + module.key + "/bootstrap");
+        res = require("~/Core/Modules/" + module.key + "/subRouter");
       } catch (error) {
         console.log(`Module ${module.key} does not exist!`);
       }
@@ -54,6 +56,14 @@ async function initModules(isAuthenticated) {
             listSagas = [...listSagas, ...moduleConfig.sagas];
           }
           if (moduleConfig.routes !== undefined) {
+            if ( moduleConfig.showMenu ) {
+              listArrayRoutes.push({
+                title: moduleConfig.title,
+                key: moduleConfig.pathRoot,
+                subMenu: moduleConfig.routes
+              })
+            }  
+
             for (let j = 0; j < moduleConfig.routes.length; j++) {
               const route = moduleConfig.routes[j];
               const { component, path } = createRouterModule(
@@ -83,10 +93,11 @@ async function initModules(isAuthenticated) {
         }
       }
     }
-
+    console.log(listUrl);
     return {
       listRoutes,
       listUrl,
+      listArrayRoutes,
       listRedux,
       listSagas,
       listLangVi,
