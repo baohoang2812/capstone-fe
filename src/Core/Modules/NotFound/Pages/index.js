@@ -14,7 +14,7 @@ const NotFound = () => {
       <div className="title">{t("CORE.MENU.NOT.FOUND")}</div>
       <div className="sub-title">{t("CORE.MENU.NOT.FOUND.sub")}</div>
       <Button className="btn-orange" type="primary">
-        <Link to="/user">{t("CORE.MENU.user.page")}</Link>
+        <Link to="/employee">{t("CORE.MENU.user.page")}</Link>
       </Button>
     </div>
   );
