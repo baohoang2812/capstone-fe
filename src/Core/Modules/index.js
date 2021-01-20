@@ -3,4 +3,5 @@ export default [
   { key: "NotFound" },
   { key: "Error" },
   { key: "Employee" },
+  { key: "Branch"}
 ];
