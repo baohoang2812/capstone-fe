@@ -40,9 +40,9 @@ const RegulationDetailForm = ({ form }) => {
   const [loading, setLoading] = useState(false);
   const [loadingDropdown, setLoadingDropdown] = useState(false);
   const { getFieldDecorator, validateFields, setFieldsValue } = form;
- 
+
   const onConfirm = (e) => {
-   
+
   };
   return (
     <Row type="flex" justify="center">
@@ -53,21 +53,55 @@ const RegulationDetailForm = ({ form }) => {
               <Row type="flex" justify="center" align="bottom">
                 <Col span={15}>
                   <Form.Item label={t("CORE.REGULATION.NAME")}>
-                    {getFieldDecorator("name", {})(<Input />)}
+                    {getFieldDecorator("name", {
+                      rules: [
+                        {
+                          required: true,
+                          message: "Please input regulation name!"
+                        },
+                        {
+                          max: 255,
+                          message: "Max length is 255 character!"
+                        }
+                      ]
+
+                    })(<Input />)}
                   </Form.Item>
                 </Col>
               </Row>
               <Row type="flex" justify="center" align="bottom">
                 <Col span={15}>
                   <Form.Item label={t("CORE.REGULATION.TYPE")}>
-                    {getFieldDecorator("type", {})(<Input />)}
+                    {getFieldDecorator("type", {
+                      rules: [
+                        {
+                          required: true,
+                          message: "Please input regulation type!"
+                        },
+                        {
+                          max: 50,
+                          message: "Max length is 50 characters!"
+                        }
+                      ]
+                    })(<Input />)}
                   </Form.Item>
                 </Col>
               </Row>
               <Row type="flex" justify="center" align="bottom">
                 <Col span={15}>
                   <Form.Item label={t("CORE.REGULATION.DESCRIPTION")}>
-                    {getFieldDecorator("description", {})(<Input />)}
+                    {getFieldDecorator("description", {
+                      rules: [
+                        {
+                          required: true,
+                          message: "Please input description!"
+                        },
+                        {
+                          max: 2000,
+                          message: "Max length is 2000 characters!"
+                        }
+                      ]
+                    })(<Input />)}
                   </Form.Item>
                 </Col>
               </Row>
@@ -80,10 +114,10 @@ const RegulationDetailForm = ({ form }) => {
                           required: true,
                           message: "Please input level!",
                         },
-                        
+
                         {
-                          min: 1,
-                          message: "Min length is 10 characters!",
+                          max: 1,
+                          message: "Max length is 1 characters!",
                         },
                       ],
                     })(<Input />)}
@@ -99,18 +133,18 @@ const RegulationDetailForm = ({ form }) => {
                           required: true,
                           message: "Please input point!",
                         },
-                        
+
                         {
-                          min: 1,
-                          message: "Min length is 10 characters!",
+                          max: 1,
+                          message: "Max length is 1 characters!",
                         },
                       ],
                     })(<Input />)}
                   </Form.Item>
                 </Col>
               </Row>
-             
-              
+
+
               <Row type="flex" justify="center">
                 <div className="btn-group">
                   <Button
