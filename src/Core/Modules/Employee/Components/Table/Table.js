@@ -177,7 +177,7 @@ const UserTable = () => {
 
   const token = localStorage.getItem("token" || "");
   const {
-    payload: { role },
+    roleName: role,
   } = jwt_decode(token);
 
   return (

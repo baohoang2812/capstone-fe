@@ -12,7 +12,7 @@ const Header = ({ breadcrumb, action, icon = "plus", text, className }) => {
 
   const token = localStorage.getItem("token" || "");
   const {
-    roleName: role,
+    payload: { role },
   } = jwt_decode(token);
   
   return (

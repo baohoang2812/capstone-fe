@@ -3,5 +3,6 @@ export default [
   { key: "NotFound" },
   { key: "Error" },
   { key: "Employee" },
-  { key: "Branch"}
+  { key: "Branch"},
+  { key: "Regulation"}
 ];

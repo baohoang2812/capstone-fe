@@ -4,7 +4,7 @@ import { logout } from "~/Core/utils/helper/authenticate";
 
 const generate_options = (opts = {}) => {
   let headers = {
-    token: localStorage.getItem("token")
+    Authorization: `Bearer ${localStorage.getItem("token")}`
   };
 
   if (opts.headers) {
@@ -27,7 +27,7 @@ axios.interceptors.response.use((config) => {
   const { response } = error;
 
   if (response?.status === 401 || response?.statusCode === 401) {
-    logout();
+    // logout();
     return error;
   } else {
     throw error;
