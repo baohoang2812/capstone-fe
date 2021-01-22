@@ -102,14 +102,34 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
               <Row type="flex" justify="center" align="bottom">
                 <Col span={15}>
                   <Form.Item label={t("CORE.BRANCH.NAME")}>
-                    {getFieldDecorator("name", {})(<Input />)}
+                    {getFieldDecorator("name", {
+                      rules:[{
+                        required:true,
+                        message:"Please input branch name!"
+
+                      },
+                    {
+                      max:255,
+                      message:"Max length is 255 characters!"
+                    }]
+                    })(<Input />)}
                   </Form.Item>
                 </Col>
               </Row>
               <Row type="flex" justify="center" align="bottom">
                 <Col span={15}>
                   <Form.Item label={t("CORE.BRANCH.ADDRESS")}>
-                    {getFieldDecorator("address", {})(<Input />)}
+                    {getFieldDecorator("address", {
+                       rules:[{
+                        required:true,
+                        message:"Please input branch address!"
+
+                      },
+                    {
+                      max:255,
+                      message:"Max length is 255 characters!"
+                    }]
+                    })(<Input />)}
                   </Form.Item>
                 </Col>
               </Row>
