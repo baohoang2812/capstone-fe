@@ -14,7 +14,7 @@ class ProfileApi extends BaseApi {
   };
 
   getOne = (id) => {
-    return this.initApi.get(`${this.baseUrl}/${id}`);
+    return this.initApi.get(`${this.baseUrl}?Filter.Ids=${id}`);
   };
   
   deleteByIds = (ids, options = {}, opts) => {

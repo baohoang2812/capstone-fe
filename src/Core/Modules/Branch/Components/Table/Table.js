@@ -115,17 +115,13 @@ const UserTable = () => {
     y: `calc(100vh - (178px))`
   }), []);
 
-  const token = localStorage.getItem("token" || "");
-  const {
-    payload: { role },
-  } = jwt_decode(token);
 
   return (
     <AdminTable
       defs={defs}
       api={contactApi}
       identity={identity}
-      showCheckbox={role === "Admin"}
+      showCheckbox={true}
       scroll={scroll}
       defaultSorter={defaultSorter}
       disableClassKey="is_active"

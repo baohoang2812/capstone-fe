@@ -32,7 +32,7 @@ const UserTable = () => {
       sorter: true,
       width: 220,
       render: (text, record) => (
-        <Link to={`/branch/${record.id}`}>{`${record.name}`}</Link>
+        <Link to={`/regulation/${record.id}`}>{`${record.name}`}</Link>
       ),
     },
     {
@@ -66,9 +66,9 @@ const UserTable = () => {
     },
     {
       title: t("CORE.REGULATION.DESCRIPTION"),
-      dataIndex: "manager_name",
+      dataIndex: "description",
       className: "header-filter",
-      key: "manager_name",
+      key: "description",
       fieldType: "text",
       sorter: true,
       width: 240,
@@ -105,17 +105,12 @@ const UserTable = () => {
     y: `calc(100vh - (178px))`
   }), []);
 
-  const token = localStorage.getItem("token" || "");
-  const {
-    payload: { role },
-  } = jwt_decode(token);
-
   return (
     <AdminTable
       defs={defs}
       api={contactApi}
       identity={identity}
-      showCheckbox={role === "Admin"}
+      showCheckbox={true}
       scroll={scroll}
       defaultSorter={defaultSorter}
       disableClassKey="is_active"

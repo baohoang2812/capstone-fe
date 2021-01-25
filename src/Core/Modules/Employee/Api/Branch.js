@@ -4,4 +4,4 @@ class BranchApi extends BaseApi {
     return this.initApi.get(`${this.baseUrl}`);
   };
 }
-export default new BranchApi().requestUrl("/api/branch");
+export default new BranchApi().requestUrl("/v1/branches");

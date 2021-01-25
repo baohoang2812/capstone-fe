@@ -10,6 +10,7 @@ import {
   Button,
   Spin,
   message,
+  InputNumber,
 } from "antd";
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
@@ -22,17 +23,8 @@ import { regulations as identity } from "~/Core/Modules/Regulation/Configs/const
 
 /* Api */
 import regulationApi from "~/Core/Modules/Regulation/Api/";
-const getBase64 = (file) => {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = (error) => reject(error);
-  });
-};
-const { Option } = Select;
-const token = localStorage.getItem("token" || "");
-const RegulationDetailForm = ({ form }) => {
+
+const RegulationDetailForm = ({ form, is_create, action, data }) => {
   const t = useTranslate();
   /* Redux */
   const dispatch = useDispatch();
@@ -41,9 +33,64 @@ const RegulationDetailForm = ({ form }) => {
   const [loadingDropdown, setLoadingDropdown] = useState(false);
   const { getFieldDecorator, validateFields, setFieldsValue } = form;
 
-  const onConfirm = (e) => {
+  useEffect(() => {
+    setFieldsValue({
+      name: data?.name,
+      type: data?.type,
+      description: data?.description,
+      level: data?.level,
+      minusPoint: data?.minusPoint,
+    });
+  }, [data]);
 
+  const onConfirm = (e) => {
+    e.preventDefault();
+    validateFields((err, values) => {
+      if (!err) {
+        setLoading(true);
+        if (is_create) {
+          regulationApi
+            .create(values)
+            .then((res) => {
+              setLoading(false);
+
+              if (res.code !== 201) {
+                message.error(t("CORE.task_failure"));
+                return;
+              }
+              setLoading(false);
+
+              dispatch(
+                update_identity_table_data_success(identity, res.data)
+              );
+              message.success(t("CORE.EMPLOYEE.CREATE.SUCCESS"));
+              action();
+            })
+            .catch(() => {
+              message.error(t("CORE.error.system"));
+            });
+        } else {
+          // objReq.employee.id = data.employee.id;
+          regulationApi.update(data.id, values).then((res) => {
+            setLoading(false);
+
+            if (res.code !== 200) {
+              message.error(t("CORE.task_failure"));
+              return;
+            }
+            setLoading(false);
+
+            dispatch(
+              update_identity_table_data_success(identity, res.data)
+            );
+            message.success(t("CORE.EMPLOYEE.UPDATE.SUCCESS"));
+            action();
+          });
+        }
+      }
+    });
   };
+
   return (
     <Row type="flex" justify="center">
       <Col span={12}>
@@ -57,14 +104,13 @@ const RegulationDetailForm = ({ form }) => {
                       rules: [
                         {
                           required: true,
-                          message: "Please input regulation name!"
+                          message: "Please input regulation name!",
                         },
                         {
                           max: 255,
-                          message: "Max length is 255 character!"
-                        }
-                      ]
-
+                          message: "Max length is 255 character!",
+                        },
+                      ],
                     })(<Input />)}
                   </Form.Item>
                 </Col>
@@ -76,13 +122,13 @@ const RegulationDetailForm = ({ form }) => {
                       rules: [
                         {
                           required: true,
-                          message: "Please input regulation type!"
+                          message: "Please input regulation type!",
                         },
                         {
                           max: 50,
-                          message: "Max length is 50 characters!"
-                        }
-                      ]
+                          message: "Max length is 50 characters!",
+                        },
+                      ],
                     })(<Input />)}
                   </Form.Item>
                 </Col>
@@ -94,13 +140,13 @@ const RegulationDetailForm = ({ form }) => {
                       rules: [
                         {
                           required: true,
-                          message: "Please input description!"
+                          message: "Please input description!",
                         },
                         {
                           max: 2000,
-                          message: "Max length is 2000 characters!"
-                        }
-                      ]
+                          message: "Max length is 2000 characters!",
+                        },
+                      ],
                     })(<Input />)}
                   </Form.Item>
                 </Col>
@@ -114,13 +160,8 @@ const RegulationDetailForm = ({ form }) => {
                           required: true,
                           message: "Please input level!",
                         },
-
-                        {
-                          max: 1,
-                          message: "Max length is 1 characters!",
-                        },
                       ],
-                    })(<Input />)}
+                    })(<InputNumber min={1} max={9} />)}
                   </Form.Item>
                 </Col>
               </Row>
@@ -133,17 +174,11 @@ const RegulationDetailForm = ({ form }) => {
                           required: true,
                           message: "Please input point!",
                         },
-
-                        {
-                          max: 1,
-                          message: "Max length is 1 characters!",
-                        },
                       ],
-                    })(<Input />)}
+                    })(<InputNumber min={1} max={9} />)}
                   </Form.Item>
                 </Col>
               </Row>
-
 
               <Row type="flex" justify="center">
                 <div className="btn-group">
@@ -153,7 +188,8 @@ const RegulationDetailForm = ({ form }) => {
                     htmlType="submit"
                     className="btn-yellow btn-right"
                     style={{ float: "right" }}
-                    onClick={onConfirm}>
+                    onClick={onConfirm}
+                  >
                     {t("CORE.confirm")}
                   </Button>
                 </div>

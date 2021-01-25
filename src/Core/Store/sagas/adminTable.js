@@ -62,9 +62,9 @@ function* get_indentity_table_data_worker({ payload }) {
   try {
     const { data: res } = yield call(api[method], opts);
     const payload = {
-      list: res.list,
+      list: res.result,
       extendsData: res.extendsData,
-      pagination: { current, pageSize, total: res.totalRows },
+      pagination: { current, pageSize, total: res.total },
       filters,
       sorter,
       treeMode,
@@ -77,7 +77,7 @@ function* get_indentity_table_data_worker({ payload }) {
     // Use data for select
     const exists = yield select(select_option_data_for_select_fields(dataForSelectorKey));
     if (dataForSelectorKey && exists.length === 0) {
-      yield put({ type: GET_DATA_FOR_SELECT_SUCCESS, payload: { key: dataForSelectorKey, list: res.list } });
+      yield put({ type: GET_DATA_FOR_SELECT_SUCCESS, payload: { key: dataForSelectorKey, list: res.result } });
     }
   } catch (error) {
     if (currentEnvName !== "production") {

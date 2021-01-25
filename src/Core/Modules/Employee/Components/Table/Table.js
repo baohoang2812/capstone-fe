@@ -24,16 +24,16 @@ const UserTable = () => {
   const defs = useMemo(() => [
     {
       title: t("CORE.EMPLOYEE.IMAGE.PATH"),
-      dataIndex: "image_path",
+      dataIndex: "imagePath",
       className: "header-filter header-image",
-      key: "image_path",
+      key: "imagePath",
       fieldType: "none",
       fixed: "left",
       sorter: true,
       width: 200,
       render: (_, record) => {
         return (
-          <ImageThumbnail src={record.image_path}/>
+          <ImageThumbnail src={record.imagePath}/>
         )
       }
     },
@@ -59,7 +59,7 @@ const UserTable = () => {
       width: 220,
       sorter: true,
       render: (text, record) => (
-        <span>{`${record.first_name} ${record.last_name}`}</span>
+        <span>{`${record.firstName} ${record.lastName}`}</span>
       ),
     },
     {
@@ -91,18 +91,18 @@ const UserTable = () => {
     },
     {
       title: t("CORE.EMPLOYEE.PHONE.NUMBER"),
-      dataIndex: "phone_number",
+      dataIndex: "phoneNumber",
       className: "header-filter",
-      key: "phone_number",
+      key: "phoneNumber",
       fieldType: "number",
       sorter: true,
       width: 200,
     },
     {
       title: t("CORE.EMPLOYEE.DATE.OF.BIRTH"),
-      dataIndex: "birth_date",
+      dataIndex: "birthDate",
       className: "header-filter",
-      key: "birth_date",
+      key: "birthDate",
       fieldType: "date",
       sorter: true,
       width: 150,
@@ -116,6 +116,7 @@ const UserTable = () => {
       fieldType: "text",
       sorter: true,
       width: 220,
+      render: (_, record) => record?.branch?.name
     },
     {
       title: t("CORE.EMPLOYEE.POSITION.NAME"),
@@ -125,12 +126,13 @@ const UserTable = () => {
       fieldType: "text",
       sorter: true,
       width: 200,
+      render: (_, record) => record?.position?.name
     },
     {
       title: t("CORE.EMPLOYEE.CHARGE.CREATE"),
-      dataIndex: "created_at",
+      dataIndex: "createdAt",
       className: "header-filter",
-      key: "contacts.create_at",
+      key: "contacts.createdAt",
       fieldType: "date",
       sorter: true,
       width: 150,
@@ -155,7 +157,7 @@ const UserTable = () => {
       fixed: "right",
       width: 150,
       render: (_, record) => {
-        if (!record.is_part_time) {
+        if (!record.isPartTime) {
           return (
             <Tag color="green">{t("CORE.EMPLOYEE.FULL.TIME")}</Tag>
           )

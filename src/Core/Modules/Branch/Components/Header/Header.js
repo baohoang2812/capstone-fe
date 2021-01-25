@@ -10,10 +10,6 @@ const Header = ({ breadcrumb, action, icon = "plus", text, className }) => {
     action();
   };
 
-  const token = localStorage.getItem("token" || "");
-  const {
-    payload: { role },
-  } = jwt_decode(token);
   
   return (
     <div className="content-header-page">
@@ -28,9 +24,9 @@ const Header = ({ breadcrumb, action, icon = "plus", text, className }) => {
                 <NavBreadcrumbContentHeader data={breadcrumb} />
               </div>
               <div className="nav-right btn-group">
-                {role === "Admin" ? (<Button onClick={handleClick} className={className}>
+                <Button onClick={handleClick} className={className}>
                   <span>{text}</span>
-                </Button>) : null}
+                </Button>
               </div>
             </div>
           </div>

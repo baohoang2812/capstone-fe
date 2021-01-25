@@ -1,7 +1,7 @@
 import BaseApi from "~/Core/Api/BaseAPI";
 class BranchApi extends BaseApi {
   getList = (filters) => {
-    return this.initApi.post(`${this.baseUrl}`, filters);
+    return this.initApi.get(`${this.baseUrl}`, filters);
   };
 
   getOne = (filters) => {
@@ -14,4 +14,4 @@ class BranchApi extends BaseApi {
     return this.initApi.put(`${this.baseUrl}/update`, body);
   };
 }
-export default new BranchApi().requestUrl("/api/branch");
+export default new BranchApi().requestUrl("/v1/branches");
