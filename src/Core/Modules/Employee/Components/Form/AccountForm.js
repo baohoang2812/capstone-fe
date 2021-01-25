@@ -2,7 +2,7 @@ import "./style.less";
 
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Row, Col, Form, Input, Button, message } from "antd";
+import { Select, Row, Col, Form, Input, Button, message } from "antd";
 
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
@@ -15,8 +15,14 @@ import { employees as identity } from "~/Core/Modules/Employee/Configs/constants
 
 /* Api */
 import employeeApi from "~/Core/Modules/Employee/Api";
+import roleApi from "~/Core/Modules/Employee/Api/Role";
 
-const AccountForm = ({ form, action, data, is_create }) => {
+const { Option } = Select;
+
+const AccountForm = ({ form, employeeId, action, data, is_create }) => {
+  const [loadingDropdown, setLoadingDropdown] = useState(false);
+  const [listRole, setRole] = useState([]);
+
   const t = useTranslate();
   const { getFieldDecorator, validateFields, setFieldsValue } = form;
 
@@ -26,6 +32,18 @@ const AccountForm = ({ form, action, data, is_create }) => {
   /* State */
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    (async () => {
+      setLoadingDropdown(true);
+
+      const resRole = await roleApi.getList();
+      setRole(resRole?.data);
+      
+
+      setLoadingDropdown(false);
+    })();
+  }, []);
+  
   useEffect(() => {
     setFieldsValue({
       username: data?.username,
@@ -125,6 +143,29 @@ const AccountForm = ({ form, action, data, is_create }) => {
               ],
             })(<Input.Password />)}
           </Form.Item>
+        </Col>
+      </Row>
+      <Row type="flex" justify="center">
+        <Col span={12}>
+        <Form.Item label={t("CORE.EMPLOYEE.ROLE")}>
+              {getFieldDecorator("rolId", {
+                rules: [
+                  {
+                    required: true,
+                    message: "Please select role!",
+                  },
+                ],
+                initialValue: listRole?.[0]?.id,
+              })(
+                <Select>
+                  {listRole.map((item) => (
+                    <Option key={item.id} value={item.id}>
+                      {item.name}
+                    </Option>
+                  ))}
+                </Select>
+              )}
+            </Form.Item>
         </Col>
       </Row>
       <Row type="flex" justify="center">

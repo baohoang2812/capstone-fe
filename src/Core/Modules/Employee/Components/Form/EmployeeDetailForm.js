@@ -9,6 +9,7 @@ import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 /* Api */
 import employeeApi from "~/Core/Modules/Employee/Api";
 import accountApi from "~/Core/Modules/Employee/Api/Account";
+import certificationApi from "~/Core/Modules/Employee/Api/Certification";
 
 /* Component */
 import AccountForm from "./AccountForm";
@@ -19,6 +20,8 @@ const { TabPane } = Tabs;
 const EmployeeDetailForm = (props) => {
   const t = useTranslate();
   const [data, setData] = useState({});
+  const [account, setAccount] = useState({});
+  const [certifications, setCertifications] = useState({});
   const [error, setError] = useState(false);
 
   useEffect(() => {
@@ -36,10 +39,28 @@ const EmployeeDetailForm = (props) => {
             return;
           }
           const result = res.data?.result?.[0] || {};
+
           setData(result);
 
-          // const resAccount = await accountApi.getOne(result.id)
+          const resAccount = await accountApi.getOne(result.id)
 
+          if (resAccount.code !== 200) {
+            message.error("CORE.MENU.message_error");
+            setError(true);
+            return;
+          }
+          setAccount(resAccount.data?.result?.[0] || {});
+
+
+          // const resCertifications = await certificationApi.getOne(result.id)
+
+          // if (resCertifications.code !== 200) {
+          //   message.error("CORE.MENU.message_error");
+          //   setError(true);
+          //   return;
+          // }
+
+          // setCertifications(resCertifications.data?.result?.[0] || {});
         } catch (error) {
           setError(true);
         }
@@ -63,7 +84,7 @@ const EmployeeDetailForm = (props) => {
                 <EmployeeForm {...props} data={data} />
               </TabPane>
               <TabPane tab="Account" key="2">
-                <AccountForm {...props} />
+                <AccountForm {...props} data={account} />
               </TabPane>
               <TabPane tab="Certification" key="3">
                 Content of Tab Pane 3
