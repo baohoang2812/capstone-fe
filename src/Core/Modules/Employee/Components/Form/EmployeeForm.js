@@ -93,7 +93,10 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
       setLoadingDropdown(false);
     })();
   }, []);
-
+  function disabledDate(current) {
+    // Can not select days before today and today
+    return current && current > moment().subtract(18, 'years');
+  }
   useEffect(() => {
     setFieldsValue({
       code: data?.code,
@@ -106,7 +109,7 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
 
       roleId: data?.roleId,
       gender: data?.gender,
-      birthDate: new moment(data?.birthDate),
+      birthDate: data?.birthDate ? new moment(data?.birthDate) : null,
       isPartTime: data?.isPartTime,
       branchId: data?.branchId,
       positionId: data?.positionId,
@@ -151,7 +154,7 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
             .then((res) => {
               setLoading(false);
 
-              if (res.status !== 200) {
+              if (res.code !== 200) {
                 message.error(t("CORE.task_failure"));
                 return;
               }
@@ -170,7 +173,7 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
           employeeApi.update(objReq).then((res) => {
             setLoading(false);
 
-            if (res.status !== 200) {
+            if (res.code !== 200) {
               message.error(t("CORE.task_failure"));
               return;
             }
@@ -409,7 +412,7 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
                     message: "Please select time!",
                   },
                 ],
-              })(<DatePicker />)}
+              })(<DatePicker disabledDate={disabledDate} />)}
             </Form.Item>
           </Col>
           <Col span={6}>

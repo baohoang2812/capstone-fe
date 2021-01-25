@@ -48,9 +48,9 @@ const UserTable = () => {
     
     {
       title: t("CORE.BRANCH.PHONE.NUMBER"),
-      dataIndex: "phone_number",
+      dataIndex: "phoneNumber",
       className: "header-filter",
-      key: "phone_number",
+      key: "phoneNumber",
       fieldType: "number",
       sorter: true,
       width: 200,

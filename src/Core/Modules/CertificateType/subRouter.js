@@ -11,7 +11,7 @@ import intlMessagesVi from "./i18n/localization/vi.json";
 export default {
   name: "CertificateType",
   dir: "CertificateType",
-  pathRoot: "certificate_type",
+  pathRoot: "certificateType",
   title: (
     <span>
      <Icon type="safety-certificate" />

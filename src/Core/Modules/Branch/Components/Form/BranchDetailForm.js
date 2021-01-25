@@ -42,10 +42,11 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
   const { getFieldDecorator, validateFields, setFieldsValue } = form;
   useEffect(() => {
     setFieldsValue({
-      name: data?.branch?.name,
-      phone_number: data?.branch?.phone_number,
-      address: data?.branch?.address,
-      is_deleted: data?.branch?.is_deleted,
+      name: data?.name,
+      phoneNumber: data?.phoneNumber,
+      address: data?.address,
+      managerId: data?.managerId
+   
 
     });
 
@@ -61,12 +62,12 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
             .create(values)
             .then((res) => {
               setLoading(false);
-              if (res.status !== 200) {
+              if (res.code !== 201) {
                 message.error(t("CORE.task_failure"));
                 return;
               }
               dispatch(
-                update_identity_table_data_success(identity, res.data.branch)
+                update_identity_table_data_success(identity, res.data)
               );
               message.success(t("CORE.BRANCH.CREATE.SUCCESS"));
               action();
@@ -75,11 +76,11 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
               message.error(t("CORE.error.system"));
             });
         } else {
-          values.branch.id = data.branch.id;
-          branchApi.update(values).then((res) => {
+         
+          branchApi.update(data.id,values).then((res) => {
             setLoading(false);
 
-            if (res.status !== 200) {
+            if (res.code !== 200) {
               message.error(t("CORE.task_failure"));
               return;
             }
@@ -136,7 +137,7 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
               <Row type="flex" justify="center" align="bottom">
                 <Col span={15}>
                   <Form.Item label={t("CORE.BRANCH.PHONE.NUMBER")}>
-                    {getFieldDecorator("phone_number", {
+                    {getFieldDecorator("phoneNumber", {
                       rules: [
                         {
                           required: true,
@@ -165,8 +166,8 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
               <Row type="flex" justify="center" align="bottom">
                 <Col span={15}>
                   <Form.Item label={t("CORE.BRANCH.MANAGER.NAME")}>
-                    {getFieldDecorator("manager_id", {})(<Select>
-                      <Option value={27}>
+                    {getFieldDecorator("managerId", {})(<Select>
+                      <Option value={32}>
                         Manager 1
                         </Option>
                       <Option value={2}>
@@ -176,20 +177,7 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
                   </Form.Item>
                 </Col>
               </Row>
-              <Row type="flex" justify="center" align="bottom">
-                <Col span={15}>
-                  <Form.Item label={t("CORE.BRANCH.STATUS")}>
-                    {getFieldDecorator("is_deleted", {})(<Select>
-                      <Option value={false}>
-                        {t("CORE.BRANCH.ACTIVE")}
-                      </Option>
-                      <Option value={true}>
-                        {t("CORE.BRANCH.INACTIVE")}
-                      </Option>
-                    </Select>)}
-                  </Form.Item>
-                </Col>
-              </Row>
+          
               <Row type="flex" justify="center">
                 <div className="btn-group">
                   <Button

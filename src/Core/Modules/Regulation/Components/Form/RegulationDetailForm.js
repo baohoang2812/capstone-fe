@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import "./style.less";
 import {
-  Select,
   Row,
   Col,
   Form,
@@ -63,7 +62,7 @@ const RegulationDetailForm = ({ form, is_create, action, data }) => {
               dispatch(
                 update_identity_table_data_success(identity, res.data)
               );
-              message.success(t("CORE.EMPLOYEE.CREATE.SUCCESS"));
+              message.success(t("CORE.REGULATION.CREATE.SUCCESS"));
               action();
             })
             .catch(() => {
@@ -83,7 +82,7 @@ const RegulationDetailForm = ({ form, is_create, action, data }) => {
             dispatch(
               update_identity_table_data_success(identity, res.data)
             );
-            message.success(t("CORE.EMPLOYEE.UPDATE.SUCCESS"));
+            message.success(t("CORE.REGULATION.UPDATE.SUCCESS"));
             action();
           });
         }

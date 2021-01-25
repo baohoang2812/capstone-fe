@@ -44,7 +44,10 @@ const UserTable = () => {
       key: "name",
       fieldType: "text",
       width: 220,
-      sorter: true
+      sorter: true,
+      render: (text, record) => (
+        <Link to={`/certificateType/${record.id}`}>{`${record.name}`}</Link>
+      ),
     },
     {
       title: t("CORE.CERTIFICATE.TYPE.DESCRIPTION"),

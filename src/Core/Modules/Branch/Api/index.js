@@ -4,14 +4,15 @@ class BranchApi extends BaseApi {
     return this.initApi.get(`${this.baseUrl}`, filters);
   };
 
-  getOne = (filters) => {
-    return this.initApi.post(`${this.baseUrl}`, filters);
-  }
-  create = (body) => {
-    return this.initApi.post(`${this.baseUrl}/createBranch`, body);
+  getOne = (id) => {
+    return this.initApi.get(`${this.baseUrl}?Filter.Ids=${id}`);
   };
-  update = (body) => {
-    return this.initApi.put(`${this.baseUrl}/update`, body);
+  create = (body) => {
+    return this.initApi.post(`${this.baseUrl}`, body);
+  };
+
+  update = (id, body) => {
+    return this.initApi.put(`${this.baseUrl}/${id}`, body);
   };
 }
 export default new BranchApi().requestUrl("/v1/branches");
