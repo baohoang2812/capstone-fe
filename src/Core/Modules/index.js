@@ -4,5 +4,6 @@ export default [
   { key: "Error" },
   { key: "Employee" },
   { key: "Branch"},
-  { key: "Regulation"}
+  { key: "Regulation"},
+  { key: "CertificateType"}
 ];

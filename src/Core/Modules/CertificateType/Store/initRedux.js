@@ -1,4 +1,4 @@
-import { certificateTypes } from "~/Core/Modules/CertificateType/Configs/constants";
+import { certificateTypes } from "~/Core/Modules/CertificateType/Configs/Constants";
 
 import list_certificateTypes from "./reducers";
 

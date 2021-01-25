@@ -21,7 +21,7 @@ import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 import { update_identity_table_data_success } from "~/Core/Store/actions/adminTable";
 
 /* Constants */
-import { certificateTypes as identity } from "~/Core/Modules/CertificateType/Configs/constants";
+import { certificateTypes as identity } from "~/Core/Modules/CertificateType/Configs/Constants";
 
 /* Api */
 

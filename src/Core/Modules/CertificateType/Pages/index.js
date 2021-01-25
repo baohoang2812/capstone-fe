@@ -18,7 +18,7 @@ const CertificateTypeManagement = () => {
 
 
   return (
-    <div className="page-header employee">
+    <div className="page-header certificateType">
       <Header
         breadcrumb={[{ title: t("CORE.CERTIFICATE.TYPE.MANAGEMENT.TITLE") }]}
         action={() => createCertificateType()}

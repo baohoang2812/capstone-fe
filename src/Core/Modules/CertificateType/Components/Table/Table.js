@@ -12,7 +12,7 @@ import AdminTable from "~/Core/Components/common/AdminTable";
 import ImageThumbnail from "~/Core/Components/common/ImageThumbnail";
 
 /* Constants */
-import { certificateTypes as identity } from "~/Core/Modules/CertificateType/Configs/constants";
+import { certificateTypes as identity } from "~/Core/Modules/CertificateType/Configs/Constants";
 
 /* Api */
 import contactApi from "~/Core/Modules/CertificateType/Api";
