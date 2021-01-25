@@ -14,6 +14,7 @@ import certificationApi from "~/Core/Modules/Employee/Api/Certification";
 /* Component */
 import AccountForm from "./AccountForm";
 import EmployeeForm from "./EmployeeForm";
+import CertificationForm from "./CertificationForm";
 
 const { TabPane } = Tabs;
 
@@ -84,10 +85,10 @@ const EmployeeDetailForm = (props) => {
                 <EmployeeForm {...props} data={data} />
               </TabPane>
               <TabPane tab="Account" key="2">
-                <AccountForm {...props} data={account} />
+                <AccountForm {...props} employeeId={data.id} data={account} />
               </TabPane>
               <TabPane tab="Certification" key="3">
-                Content of Tab Pane 3
+                <CertificationForm />
               </TabPane>
             </Tabs>
           )}

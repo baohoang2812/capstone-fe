@@ -133,8 +133,7 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
           imagePath: values?.["imagePath"]?.file?.response?.url,
         };
         console.log(newValues);
-        newValues.branchManagerId = 1;
-        newValues.status = "test";
+        newValues.imagePath = "string";
         const { username, hash_password, ...employee } = newValues;
         setLoading(false);
         const objReq = {
@@ -147,17 +146,17 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
         console.log(objReq);
         if (is_create) {
           employeeApi
-            .create(objReq)
+            .create(newValues)
             .then((res) => {
               setLoading(false);
 
-              if (res.status !== 200) {
+              if (res.status !== 201) {
                 message.error(t("CORE.task_failure"));
                 return;
               }
 
               dispatch(
-                update_identity_table_data_success(identity, res.data.employee)
+                update_identity_table_data_success(identity, res.data)
               );
               message.success(t("CORE.EMPLOYEE.CREATE.SUCCESS"));
               action();
@@ -337,27 +336,6 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
           </Col>
         </Row>
         <Row type="flex" justify="space-between">
-          <Col span={7}>
-            <Form.Item label={t("CORE.EMPLOYEE.ROLE")}>
-              {getFieldDecorator("rolId", {
-                rules: [
-                  {
-                    required: true,
-                    message: "Please select role!",
-                  },
-                ],
-                initialValue: listRole?.[0]?.id,
-              })(
-                <Select>
-                  {listRole.map((item) => (
-                    <Option key={item.id} value={item.id}>
-                      {item.name}
-                    </Option>
-                  ))}
-                </Select>
-              )}
-            </Form.Item>
-          </Col>
           <Col span={7}>
             <Form.Item label={t("CORE.EMPLOYEE.POSITION")}>
               {getFieldDecorator("positionId", {

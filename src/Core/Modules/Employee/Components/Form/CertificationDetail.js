@@ -19,7 +19,7 @@ import roleApi from "~/Core/Modules/Employee/Api/Role";
 
 const { Option } = Select;
 
-const AccountForm = ({ form, employeeId, action, data, is_create }) => {
+const CertificationDetail = ({ form, employeeId, action, data, is_create }) => {
   const [loadingDropdown, setLoadingDropdown] = useState(false);
   const [listRole, setRole] = useState([]);
 
@@ -104,35 +104,6 @@ const AccountForm = ({ form, employeeId, action, data, is_create }) => {
     <Form onSubmit={onConfirm}>
       <Row type="flex" justify="center">
         <Col span={12}>
-          <Form.Item label={t("CORE.EMPLOYEE.USERNAME")}>
-            {getFieldDecorator("username", {
-              rules: [
-                {
-                  required: true,
-                  message: "Please input username!",
-                  whitespace: false,
-                },
-              ],
-            })(<Input />)}
-          </Form.Item>
-        </Col>
-      </Row>
-      <Row type="flex" justify="center">
-        <Col span={12}>
-          <Form.Item label={t("CORE.EMPLOYEE.PASSWORD")} hasFeedback>
-            {getFieldDecorator("password", {
-              rules: [
-                {
-                  required: true,
-                  message: "Please input your password!",
-                },
-              ],
-            })(<Input.Password />)}
-          </Form.Item>
-        </Col>
-      </Row>
-      <Row type="flex" justify="center">
-        <Col span={12}>
           <Form.Item label={t("CORE.EMPLOYEE.ROLE")}>
             {getFieldDecorator("roleId", {
               rules: [
@@ -174,4 +145,4 @@ const AccountForm = ({ form, employeeId, action, data, is_create }) => {
   );
 };
 
-export default Form.create({ name: "Account_Detail" })(AccountForm);
+export default Form.create({ name: "Certification_Detail" })(CertificationDetail);

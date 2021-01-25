@@ -5,12 +5,12 @@ class ProfileApi extends BaseApi {
     return this.initApi.get(`${this.baseUrl}`, filters);
   };
 
-  update = (body) => {
-    return this.initApi.put(`${this.baseUrl}/update`, body);
+  update = (id, body) => {
+    return this.initApi.put(`${this.baseUrl}/${id}`, body);
   };
 
   create = (body) => {
-    return this.initApi.post(`${this.baseUrl}/create`, body);
+    return this.initApi.post(`${this.baseUrl}`, body);
   };
 
   getOne = (id) => {
