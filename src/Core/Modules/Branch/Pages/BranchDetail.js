@@ -29,31 +29,24 @@ const BranchDetail = ({ match: { params } }) => {
       // setLoading(false);
       //   setError(true);
     } else {
-      const filter = {
-        where: [
-          {
-            "id": {
-              "$eq": params.id
-            }
-          }
-        ]
-      }
-      branchApi
-        .getOne(filter)
+        branchApi
+        .getOne(params.id)
         .then((res) => {
           // setLoading(false);
-          if (res.status !== 200) {
+          if (res.code !== 200) {
             message.error("CORE.MENU.message_error");
             setError(true);
             return;
           }
-          setData(res.data);
+          const data = res?.data?.result?.[0] || {};
+          setData(data);
         })
         .catch(() => {
           setError(true);
         });
     }
   }, []);
+  ;
 
   return (
     <>

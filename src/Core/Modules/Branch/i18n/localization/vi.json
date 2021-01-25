@@ -12,7 +12,8 @@
     "CORE.BRANCH.ACTIVE":"Đang hoạt động",
     "CORE.BRANCH.INACTIVE":"Ngừng hoạt động",
     "CORE.BRANCH.CREATE.SUCCESS":"Tạo chi nhánh thành công",
-    "CORE.BRANCH.UPDATE.SUCCESS":"Cập nhật chi nhánh thành công"
+    "CORE.BRANCH.UPDATE.SUCCESS":"Cập nhật chi nhánh thành công",
+    "CORE.BRANCH":"Chi nhánh"
 
     
 }

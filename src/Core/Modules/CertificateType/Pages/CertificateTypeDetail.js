@@ -33,12 +33,13 @@ const CertificateTypeDetail = ({ match: { params } }) => {
         .getOne(params.id)
         .then((res) => {
           // setLoading(false);
-          if (res.status !== 200) {
+          if (res.code !== 200) {
             message.error("CORE.MENU.message_error");
             setError(true);
             return;
           }
-          setData(res.data);
+          const data = res?.data?.result?.[0] || {};
+          setData(data);
         })
         .catch(() => {
           setError(true);
@@ -53,7 +54,7 @@ const CertificateTypeDetail = ({ match: { params } }) => {
           breadcrumb={[
             {
               title: t("CORE.CERTIFICATE.TYPE.MANAGEMENT.TITLE"),
-              link: "/employee",
+              link: "/certificateType",
             },
             {
               title:

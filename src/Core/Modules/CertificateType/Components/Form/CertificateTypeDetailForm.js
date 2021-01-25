@@ -24,8 +24,8 @@ import { update_identity_table_data_success } from "~/Core/Store/actions/adminTa
 import { certificateTypes as identity } from "~/Core/Modules/CertificateType/Configs/Constants";
 
 /* Api */
-
 import certificateTypeApi from "~/Core/Modules/CertificateType/Api/";
+
 const getBase64 = (file) => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -34,9 +34,7 @@ const getBase64 = (file) => {
     reader.onerror = (error) => reject(error);
   });
 };
-const { Option } = Select;
 
-const token = localStorage.getItem("token" || "");
 const CertificateTypeDetailForm = ({ form, data, action, is_create }) => {
   const t = useTranslate();
   /* Redux */
@@ -49,32 +47,30 @@ const CertificateTypeDetailForm = ({ form, data, action, is_create }) => {
   const [previewImage, setPreviewImage] = useState("");
   const [loadingDropdown, setLoadingDropdown] = useState(false);
   const { getFieldDecorator, validateFields, setFieldsValue } = form;
+
   useEffect(() => {
     (async () => {
       setLoadingDropdown(true);
       const resCertificateType = await certificateTypeApi.getList();
-      setListCertificateType (resCertificateType?.data?.list);
-     
+      setListCertificateType(resCertificateType?.data?.list);
+
       setLoadingDropdown(false);
     })();
   }, []);
   useEffect(() => {
+    console.log(data);
     setFieldsValue({
-      name: data?.certificateType?.name,
-      description: data?.certificateType?.description,
-
-
+      name: data?.name,
+      description: data?.description,
     });
     setFileList([
-        {
-          uid: "-4",
-          name: "image.png",
-          status: "done",
-          url: data?.certificateType?.imagePath,
-        },
-      ]);
-   
-
+      {
+        uid: "-4",
+        name: "image.png",
+        status: "done",
+        url: data?.imagePath,
+      },
+    ]);
   }, [data]);
   const onConfirm = (e) => {
     e.preventDefault();
@@ -84,36 +80,41 @@ const CertificateTypeDetailForm = ({ form, data, action, is_create }) => {
         console.log(values);
         if (is_create) {
           certificateTypeApi
-            .create(values)
+            .create({...values,imagePath: values?.["imagePath"]?.file?.response?.url})
             .then((res) => {
               setLoading(false);
-              if (res.status !== 200) {
+              if (res.code !== 201) {
                 message.error(t("CORE.task_failure"));
                 return;
               }
+              setLoading(false);
               dispatch(
-                update_identity_table_data_success(identity, res.data.cer)
+                update_identity_table_data_success(identity, res.data)
               );
               message.success(t("CORE.CERTIFICATE.TYPE.CREATE.SUCCESS"));
               action();
             })
             .catch(() => {
               message.error(t("CORE.error.system"));
+              setLoading(false);
             });
         } else {
-          values.branch.id = data.branch.id;
-          certificateTypeApi.update(values).then((res) => {
+          
+          certificateTypeApi.update(data.id,{...values, imagePath: values?.["imagePath"]?.file?.response?.url}).then((res) => {
             setLoading(false);
 
-            if (res.status !== 200) {
+            if (res.code !== 200) {
               message.error(t("CORE.task_failure"));
               return;
             }
             dispatch(
-              update_identity_table_data_success(identity, res.data.branch)
+              update_identity_table_data_success(identity, res.data)
             );
             message.success(t("CORE.CERTIFICATE.TYPE.UPDATE.SUCCESS"));
             action();
+          }).catch(e => {
+            message.error(t("CORE.error.system"));
+            setLoading(false);
           });
         }
       }
@@ -136,19 +137,19 @@ const CertificateTypeDetailForm = ({ form, data, action, is_create }) => {
         <div className="div_custom">
           <Spin spinning={loadingDropdown}>
             <Form onSubmit={onConfirm}>
-            <Row type="flex" justify="center" align="bottom">
+              <Row type="flex" justify="center" align="bottom">
                 <Col span={15}>
                   <Form.Item label={t("CORE.CERTIFICATE.TYPE.NAME")}>
                     {getFieldDecorator("name", {
-                      rules:[{
-                        required:true,
-                        message:"Please input certificate type name!"
+                      rules: [{
+                        required: true,
+                        message: "Please input certificate type name!"
 
                       },
-                    {
-                      max:255,
-                      message:"Max length is 255 characters!"
-                    }]
+                      {
+                        max: 255,
+                        message: "Max length is 255 characters!"
+                      }]
                     })(<Input />)}
                   </Form.Item>
                 </Col>
@@ -157,27 +158,27 @@ const CertificateTypeDetailForm = ({ form, data, action, is_create }) => {
                 <Col span={15}>
                   <Form.Item label={t("CORE.CERTIFICATE.TYPE.DESCRIPTION")}>
                     {getFieldDecorator("description", {
-                      rules:[{
-                        required:true,
-                        message:"Please input certificate type description!"
+                      rules: [{
+                        required: true,
+                        message: "Please input certificate type description!"
 
                       },
-                    {
-                      max:255,
-                      message:"Max length is 255 characters!"
-                    }]
+                      {
+                        max: 255,
+                        message: "Max length is 255 characters!"
+                      }]
                     })(<Input />)}
                   </Form.Item>
                 </Col>
               </Row>
-             
-            <Row type="flex" justify="center" align="bottom">
-            <Col span={3}>
+
+              <Row type="flex" justify="center" align="bottom">
+                <Col span={5}>
                   <Form.Item
                     className="upload-image"
                     label={t("CORE.CERTIFICATE.TYPE.IMAGE.PATH")}
                   >
-                    {getFieldDecorator("image_path", {})(
+                    {getFieldDecorator("imagePath", {})(
                       <Upload
                         action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                         listType="picture-card"
@@ -195,13 +196,10 @@ const CertificateTypeDetailForm = ({ form, data, action, is_create }) => {
                     )}
                   </Form.Item>
                 </Col>
-            </Row>
-             
-             
-          
-             
+              </Row>
               <Row type="flex" justify="center">
-              <Modal
+                <Col span={5}>
+                  <Modal
                     visible={previewVisible}
                     footer={null}
                     onCancel={handleCancel}
@@ -212,6 +210,13 @@ const CertificateTypeDetailForm = ({ form, data, action, is_create }) => {
                       src={previewImage}
                     />
                   </Modal>
+                </Col>
+              </Row>
+
+
+
+              <Row type="flex" justify="center">
+
                 <div className="btn-group">
                   <Button
                     loading={loading}
@@ -231,6 +236,6 @@ const CertificateTypeDetailForm = ({ form, data, action, is_create }) => {
     </Row>
   );
 };
-export default Form.create({ name: "Form_Certificate_Type_Detail" })(
+export default Form.create({ name: "Form_CertificateType_Detail" })(
   CertificateTypeDetailForm
 );
