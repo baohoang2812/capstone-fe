@@ -2,7 +2,7 @@ import "./style.less";
 
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Select, Row, Col, Form, Input, Button, message } from "antd";
+import { Select, Row, Col, Form, Card, Button, message, Spin } from "antd";
 
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
@@ -15,13 +15,15 @@ import { employees as identity } from "~/Core/Modules/Employee/Configs/constants
 
 /* Api */
 import accountApi from "~/Core/Modules/Employee/Api/Account";
-import roleApi from "~/Core/Modules/Employee/Api/Role";
+import certificationTypeApi from "~/Core/Modules/Employee/Api/CertificationType";
 
 const { Option } = Select;
+const { Meta } = Card;
 
 const CertificationDetail = ({ form, employeeId, action, data, is_create }) => {
   const [loadingDropdown, setLoadingDropdown] = useState(false);
-  const [listRole, setRole] = useState([]);
+  const [listCertificationType, setCertificationType] = useState([]);
+  const [itemSelect, setItemSelect] = useState({});
 
   const t = useTranslate();
   const { getFieldDecorator, validateFields, setFieldsValue } = form;
@@ -36,8 +38,8 @@ const CertificationDetail = ({ form, employeeId, action, data, is_create }) => {
     (async () => {
       setLoadingDropdown(true);
 
-      const resRole = await roleApi.getList();
-      setRole(resRole?.data);
+      const resRole = await certificationTypeApi.getList();
+      setCertificationType(resRole?.data?.result || []);
 
       setLoadingDropdown(false);
     })();
@@ -100,49 +102,72 @@ const CertificationDetail = ({ form, employeeId, action, data, is_create }) => {
     });
   };
 
+  const handleSelectChange = (value) => {
+    const item = listCertificationType.filter((item) => item.id === value);
+    setItemSelect(item?.[0]);
+  };
   return (
-    <Form onSubmit={onConfirm}>
-      <Row type="flex" justify="center">
-        <Col span={12}>
-          <Form.Item label={t("CORE.EMPLOYEE.ROLE")}>
-            {getFieldDecorator("roleId", {
-              rules: [
-                {
-                  required: true,
-                  message: "Please select role!",
-                },
-              ],
-              initialValue: listRole?.[0]?.id,
-            })(
-              <Select>
-                {listRole.map((item) => (
-                  <Option key={item.id} value={item.id}>
-                    {item.name}
-                  </Option>
-                ))}
-              </Select>
-            )}
-          </Form.Item>
-        </Col>
-      </Row>
-      <Row type="flex" justify="center">
-        <Col>
-          <div className="btn-group">
-            <Button
-              loading={loading}
-              type="primary"
-              htmlType="submit"
-              className="btn-yellow btn-right"
-              style={{ float: "right" }}
-              onClick={onConfirm}
+    <Spin spinning={loadingDropdown}>
+      <Form onSubmit={onConfirm}>
+        <Row type="flex" justify="center">
+          <Col span={16}>
+            <Form.Item label={t("CORE.EMPLOYEE.ROLE")}>
+              {getFieldDecorator("certificateTypeId", {
+                rules: [
+                  {
+                    required: true,
+                    message: "Please select role!",
+                  },
+                ],
+                initialValue: listCertificationType?.[0]?.id,
+              })(
+                <Select onChange={handleSelectChange}>
+                  {listCertificationType.map((item) => (
+                    <Option key={item.id} value={item.id}>
+                      {item.name}
+                    </Option>
+                  ))}
+                </Select>
+              )}
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row type="flex" justify="center">
+          <Col span={12}>
+            <Card
+              hoverable
+              style={{ width: 240 }}
+              cover={<img alt={itemSelect.name} src={itemSelect.imagePath} />}
             >
-              {t("CORE.confirm")}
-            </Button>
-          </div>
-        </Col>
-      </Row>
-    </Form>
+              <Meta
+                title={itemSelect.name}
+                description={itemSelect.description}
+              />
+            </Card>
+            ,
+          </Col>
+        </Row>
+        <Row type="flex" justify="center">
+          <Col>
+            <div className="btn-group">
+              <Button
+                loading={loading}
+                type="primary"
+                htmlType="submit"
+                className="btn-yellow btn-right"
+                style={{ float: "right" }}
+                onClick={onConfirm}
+              >
+                {t("CORE.confirm")}
+              </Button>
+            </div>
+          </Col>
+        </Row>
+      </Form>
+    </Spin>
   );
 };
 
-export default Form.create({ name: "Certification_Detail" })(CertificationDetail);
+export default Form.create({ name: "Certification_Detail" })(
+  CertificationDetail
+);

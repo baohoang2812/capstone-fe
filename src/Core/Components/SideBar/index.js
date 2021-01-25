@@ -42,7 +42,7 @@ export const SideBar = ({ url }) => {
     }
   };
   return (
-    <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
+    <Sider width={250} collapsible collapsed={collapsed} onCollapse={onCollapse}>
       <div className="header-logo" style={{height: 92, backgroundColor: "rgb(1 30 58", color: "#fff", lineHeight: "92px", textAlign: "center", fontSize: 35}}>
             Logo
       </div>

@@ -1,7 +1,5 @@
 import React, { useMemo } from "react";
 import { Link } from "react-router-dom";
-import { Tag } from "antd";
-import moment from "moment";
 import jwt_decode from "jwt-decode";
 
 /* Hooks */
@@ -29,7 +27,7 @@ const UserTable = () => {
       key: "imagePath",
       fieldType: "none",
       sorter: true,
-      width: 200,
+      width: 100,
       render: (_, record) => {
         return (
           <ImageThumbnail src={record?.certificateType?.imagePath}/>
@@ -37,7 +35,7 @@ const UserTable = () => {
       }
     },
     {
-      title: t("CORE.EMPLOYEE.CODE"),
+      title: t("CORE.CERTIFICATION.NAME"),
       dataIndex: "code",
       className: "header-filter",
       key: "code",
@@ -49,12 +47,11 @@ const UserTable = () => {
       ),
     },
     {
-      title: t("CORE.EMPLOYEE.FULLNAME"),
+      title: t("CORE.CERTIFICATION.DESCRIPTION"),
       dataIndex: "first_name",
       className: "header-filter",
       key: "first_name",
       fieldType: "text",
-      width: 220,
       sorter: true,
       render: (text, record) => (
         <span>{record?.certificateType?.description}</span>
@@ -64,10 +61,10 @@ const UserTable = () => {
 
   const defaultSorter = useMemo(() => ({ }), []);
   
-  const scroll = useMemo(() => ({
-    x: 640 ,
-    y: `calc(100vh - (178px))`
-  }), []);
+  // const scroll = useMemo(() => ({
+  //   x: 740 ,
+  //   y: `calc(100vh - (178px))`
+  // }), []);
 
   const token = localStorage.getItem("token" || "");
   const {
@@ -80,7 +77,7 @@ const UserTable = () => {
       api={certificationApi}
       identity={identity}
       showCheckbox={role === "Admin"}
-      scroll={scroll}
+      // scroll={scroll}
       defaultSorter={defaultSorter}
       disableClassKey="is_active"
       disableClassMode="toggle"

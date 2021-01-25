@@ -7,7 +7,6 @@ import {
   Form,
   Input,
   Button,
-  Spin,
   message,
   InputNumber,
 } from "antd";
@@ -29,7 +28,6 @@ const RegulationDetailForm = ({ form, is_create, action, data }) => {
   const dispatch = useDispatch();
   /* State */
   const [loading, setLoading] = useState(false);
-  const [loadingDropdown, setLoadingDropdown] = useState(false);
   const { getFieldDecorator, validateFields, setFieldsValue } = form;
 
   useEffect(() => {
@@ -59,9 +57,7 @@ const RegulationDetailForm = ({ form, is_create, action, data }) => {
               }
               setLoading(false);
 
-              dispatch(
-                update_identity_table_data_success(identity, res.data)
-              );
+              dispatch(update_identity_table_data_success(identity, res.data));
               message.success(t("CORE.REGULATION.CREATE.SUCCESS"));
               action();
             })
@@ -79,9 +75,7 @@ const RegulationDetailForm = ({ form, is_create, action, data }) => {
             }
             setLoading(false);
 
-            dispatch(
-              update_identity_table_data_success(identity, res.data)
-            );
+            dispatch(update_identity_table_data_success(identity, res.data));
             message.success(t("CORE.REGULATION.UPDATE.SUCCESS"));
             action();
           });
@@ -94,107 +88,105 @@ const RegulationDetailForm = ({ form, is_create, action, data }) => {
     <Row type="flex" justify="center">
       <Col span={12}>
         <div className="div_custom">
-          <Spin spinning={loadingDropdown}>
-            <Form onSubmit={onConfirm}>
-              <Row type="flex" justify="center" align="bottom">
-                <Col span={15}>
-                  <Form.Item label={t("CORE.REGULATION.NAME")}>
-                    {getFieldDecorator("name", {
-                      rules: [
-                        {
-                          required: true,
-                          message: "Please input regulation name!",
-                        },
-                        {
-                          max: 255,
-                          message: "Max length is 255 character!",
-                        },
-                      ],
-                    })(<Input />)}
-                  </Form.Item>
-                </Col>
-              </Row>
-              <Row type="flex" justify="center" align="bottom">
-                <Col span={15}>
-                  <Form.Item label={t("CORE.REGULATION.TYPE")}>
-                    {getFieldDecorator("type", {
-                      rules: [
-                        {
-                          required: true,
-                          message: "Please input regulation type!",
-                        },
-                        {
-                          max: 50,
-                          message: "Max length is 50 characters!",
-                        },
-                      ],
-                    })(<Input />)}
-                  </Form.Item>
-                </Col>
-              </Row>
-              <Row type="flex" justify="center" align="bottom">
-                <Col span={15}>
-                  <Form.Item label={t("CORE.REGULATION.DESCRIPTION")}>
-                    {getFieldDecorator("description", {
-                      rules: [
-                        {
-                          required: true,
-                          message: "Please input description!",
-                        },
-                        {
-                          max: 2000,
-                          message: "Max length is 2000 characters!",
-                        },
-                      ],
-                    })(<Input />)}
-                  </Form.Item>
-                </Col>
-              </Row>
-              <Row type="flex" justify="center" align="bottom">
-                <Col span={15}>
-                  <Form.Item label={t("CORE.REGULATION.LEVEL")}>
-                    {getFieldDecorator("level", {
-                      rules: [
-                        {
-                          required: true,
-                          message: "Please input level!",
-                        },
-                      ],
-                    })(<InputNumber min={1} max={9} />)}
-                  </Form.Item>
-                </Col>
-              </Row>
-              <Row type="flex" justify="center" align="bottom">
-                <Col span={15}>
-                  <Form.Item label={t("CORE.REGULATION.POINT")}>
-                    {getFieldDecorator("minusPoint", {
-                      rules: [
-                        {
-                          required: true,
-                          message: "Please input point!",
-                        },
-                      ],
-                    })(<InputNumber min={1} max={9} />)}
-                  </Form.Item>
-                </Col>
-              </Row>
+          <Form onSubmit={onConfirm}>
+            <Row type="flex" justify="center" align="bottom">
+              <Col span={15}>
+                <Form.Item label={t("CORE.REGULATION.NAME")}>
+                  {getFieldDecorator("name", {
+                    rules: [
+                      {
+                        required: true,
+                        message: "Please input regulation name!",
+                      },
+                      {
+                        max: 255,
+                        message: "Max length is 255 character!",
+                      },
+                    ],
+                  })(<Input />)}
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row type="flex" justify="center" align="bottom">
+              <Col span={15}>
+                <Form.Item label={t("CORE.REGULATION.TYPE")}>
+                  {getFieldDecorator("type", {
+                    rules: [
+                      {
+                        required: true,
+                        message: "Please input regulation type!",
+                      },
+                      {
+                        max: 50,
+                        message: "Max length is 50 characters!",
+                      },
+                    ],
+                  })(<Input />)}
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row type="flex" justify="center" align="bottom">
+              <Col span={15}>
+                <Form.Item label={t("CORE.REGULATION.DESCRIPTION")}>
+                  {getFieldDecorator("description", {
+                    rules: [
+                      {
+                        required: true,
+                        message: "Please input description!",
+                      },
+                      {
+                        max: 2000,
+                        message: "Max length is 2000 characters!",
+                      },
+                    ],
+                  })(<Input />)}
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row type="flex" justify="center" align="bottom">
+              <Col span={15}>
+                <Form.Item label={t("CORE.REGULATION.LEVEL")}>
+                  {getFieldDecorator("level", {
+                    rules: [
+                      {
+                        required: true,
+                        message: "Please input level!",
+                      },
+                    ],
+                  })(<InputNumber min={1} max={9} />)}
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row type="flex" justify="center" align="bottom">
+              <Col span={15}>
+                <Form.Item label={t("CORE.REGULATION.POINT")}>
+                  {getFieldDecorator("minusPoint", {
+                    rules: [
+                      {
+                        required: true,
+                        message: "Please input point!",
+                      },
+                    ],
+                  })(<InputNumber min={1} max={9} />)}
+                </Form.Item>
+              </Col>
+            </Row>
 
-              <Row type="flex" justify="center">
-                <div className="btn-group">
-                  <Button
-                    loading={loading}
-                    type="primary"
-                    htmlType="submit"
-                    className="btn-yellow btn-right"
-                    style={{ float: "right" }}
-                    onClick={onConfirm}
-                  >
-                    {t("CORE.confirm")}
-                  </Button>
-                </div>
-              </Row>
-            </Form>
-          </Spin>
+            <Row type="flex" justify="center">
+              <div className="btn-group">
+                <Button
+                  loading={loading}
+                  type="primary"
+                  htmlType="submit"
+                  className="btn-yellow btn-right"
+                  style={{ float: "right" }}
+                  onClick={onConfirm}
+                >
+                  {t("CORE.confirm")}
+                </Button>
+              </div>
+            </Row>
+          </Form>
         </div>
       </Col>
     </Row>

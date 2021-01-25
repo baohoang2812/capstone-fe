@@ -53,15 +53,15 @@ const EmployeeDetailForm = (props) => {
           setAccount(resAccount.data?.result?.[0] || {});
 
 
-          // const resCertifications = await certificationApi.getOne(result.id)
+          const resCertifications = await certificationApi.getOne(result.id)
 
-          // if (resCertifications.code !== 200) {
-          //   message.error("CORE.MENU.message_error");
-          //   setError(true);
-          //   return;
-          // }
+          if (resCertifications.code !== 200) {
+            message.error("CORE.MENU.message_error");
+            setError(true);
+            return;
+          }
 
-          // setCertifications(resCertifications.data?.result?.[0] || {});
+          setCertifications(resCertifications.data?.result?.[0] || {});
         } catch (error) {
           setError(true);
         }
@@ -81,14 +81,14 @@ const EmployeeDetailForm = (props) => {
             <Alert type="error" message={t("CORE.task_failure")} />
           ) : (
             <Tabs onChange={callback} type="card">
-              <TabPane tab="Employee detail" key="1">
+              <TabPane tab={t("CORE.EMPLOYEE.TITLE.DETAIL")} key="1">
                 <EmployeeForm {...props} data={data} />
               </TabPane>
-              <TabPane tab="Account" key="2">
+              <TabPane tab={t("CORE.EMPLOYEE.TITLE.ACCOUNT")} key="2">
                 <AccountForm {...props} employeeId={data.id} data={account} />
               </TabPane>
-              <TabPane tab="Certification" key="3">
-                <CertificationForm />
+              <TabPane tab={t("CORE.CERTIFICATION.MANAGEMENT.TITLE")} key="3">
+                <CertificationForm {...props} employeeId={data.id} data={certifications}/>
               </TabPane>
             </Tabs>
           )}

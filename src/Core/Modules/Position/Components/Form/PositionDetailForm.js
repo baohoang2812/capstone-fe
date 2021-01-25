@@ -1,49 +1,37 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState } from "react";
 import "./style.less";
 import {
-    Select,
     Row,
     Col,
     Form,
     Input,
     Button,
     Spin,
-    message,
 } from "antd";
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 
 /* Actions */
-import { update_identity_table_data_success } from "~/Core/Store/actions/adminTable";
+// import { update_identity_table_data_success } from "~/Core/Store/actions/adminTable";
 
 /* Constants */
-import { positions as identity } from "~/Core/Modules/Position/Configs/constants";
+// import { positions as identity } from "~/Core/Modules/Position/Configs/constants";
 
 /* Api */
-import positionApi from "~/Core/Modules/Position/Api/";
-import { max } from "moment";
-const getBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = (error) => reject(error);
-    });
-};
-const { Option } = Select;
-const token = localStorage.getItem("token" || "");
+// import positionApi from "~/Core/Modules/Position/Api/";
+
 const PositionDetailForm = ({ form }) => {
     const t = useTranslate();
     /* Redux */
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     /* State */
     const [loading, setLoading] = useState(false);
     const [loadingDropdown, setLoadingDropdown] = useState(false);
-    const { getFieldDecorator, validateFields, setFieldsValue } = form;
+    const { getFieldDecorator } = form;
 
     const onConfirm = (e) => {
-
+        setLoadingDropdown(true)
+        setLoading(true)
     };
     return (
         <Row type="flex" justify="center">

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { currentEnv } from "~/Configs";
-import { logout } from "~/Core/utils/helper/authenticate";
+// import { logout } from "~/Core/utils/helper/authenticate";
 
 const generate_options = (opts = {}) => {
   let headers = {

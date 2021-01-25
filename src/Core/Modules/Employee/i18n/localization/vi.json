@@ -1,5 +1,11 @@
 {
+    "CORE.CERTIFICATION.MANAGEMENT.TITLE": "Chứng chỉ",
+    "CORE.CERTIFICATION.NAME": "Tên chứng chỉ",
+    "CORE.CERTIFICATION.DESCRIPTION": "Mô tả",
+    "CORE.CERTIFICATION.MANAGEMENT.CREATE": "Tạo chứng chỉ",
     "CORE.EMPLOYEE.TITLE": "Nhân viên",
+    "CORE.EMPLOYEE.TITLE.DETAIL": "Chi tiết nhân viên",
+    "CORE.EMPLOYEE.TITLE.ACCOUNT": "Tài khoản",
     "CORE.EMPLOYEE.PROFILE.TITLE": "Thông tin cá nhân",
     "CORE.EMPLOYEE.EMAIL": "Email",
     "CORE.EMPLOYEE.ADDRESS": "Địa chỉ",

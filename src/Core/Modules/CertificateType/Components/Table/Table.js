@@ -1,6 +1,5 @@
 import React, { useMemo } from "react";
 import { Link } from "react-router-dom";
-import { Tag } from "antd";
 import moment from "moment";
 import jwt_decode from "jwt-decode";
 
@@ -76,7 +75,6 @@ const UserTable = () => {
       key: "contacts.updatedAt",
       fieldType: "date",
       sorter: true,
-      width: 150,
       render: (text) => moment(text).format("DD/MM/YYYY"),
     },
   ], [])

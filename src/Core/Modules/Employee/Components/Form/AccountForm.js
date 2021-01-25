@@ -2,7 +2,7 @@ import "./style.less";
 
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Select, Row, Col, Form, Input, Button, message } from "antd";
+import { Select, Row, Col, Form, Input, Button, message, Spin } from "antd";
 
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
@@ -56,9 +56,10 @@ const AccountForm = ({ form, employeeId, action, data, is_create }) => {
       if (!err) {
         setLoading(true);
 
-        const { roleId, password } = values;
+        const { username, roleId, password } = values;
 
         const objReq = {
+          username,
           employeeId,
           password,
           roleId,
@@ -70,7 +71,7 @@ const AccountForm = ({ form, employeeId, action, data, is_create }) => {
             .then((res) => {
               setLoading(false);
 
-              if (res.status !== 200) {
+              if (res.code !== 201) {
                 message.error(t("CORE.task_failure"));
                 return;
               }
@@ -86,7 +87,7 @@ const AccountForm = ({ form, employeeId, action, data, is_create }) => {
           accountApi.update(data.id, objReq).then((res) => {
             setLoading(false);
 
-            if (res.status !== 200) {
+            if (res.code !== 200) {
               message.error(t("CORE.task_failure"));
               return;
             }
@@ -101,76 +102,78 @@ const AccountForm = ({ form, employeeId, action, data, is_create }) => {
   };
 
   return (
-    <Form onSubmit={onConfirm}>
-      <Row type="flex" justify="center">
-        <Col span={12}>
-          <Form.Item label={t("CORE.EMPLOYEE.USERNAME")}>
-            {getFieldDecorator("username", {
-              rules: [
-                {
-                  required: true,
-                  message: "Please input username!",
-                  whitespace: false,
-                },
-              ],
-            })(<Input />)}
-          </Form.Item>
-        </Col>
-      </Row>
-      <Row type="flex" justify="center">
-        <Col span={12}>
-          <Form.Item label={t("CORE.EMPLOYEE.PASSWORD")} hasFeedback>
-            {getFieldDecorator("password", {
-              rules: [
-                {
-                  required: true,
-                  message: "Please input your password!",
-                },
-              ],
-            })(<Input.Password />)}
-          </Form.Item>
-        </Col>
-      </Row>
-      <Row type="flex" justify="center">
-        <Col span={12}>
-          <Form.Item label={t("CORE.EMPLOYEE.ROLE")}>
-            {getFieldDecorator("roleId", {
-              rules: [
-                {
-                  required: true,
-                  message: "Please select role!",
-                },
-              ],
-              initialValue: listRole?.[0]?.id,
-            })(
-              <Select>
-                {listRole.map((item) => (
-                  <Option key={item.id} value={item.id}>
-                    {item.name}
-                  </Option>
-                ))}
-              </Select>
-            )}
-          </Form.Item>
-        </Col>
-      </Row>
-      <Row type="flex" justify="center">
-        <Col>
-          <div className="btn-group">
-            <Button
-              loading={loading}
-              type="primary"
-              htmlType="submit"
-              className="btn-yellow btn-right"
-              style={{ float: "right" }}
-              onClick={onConfirm}
-            >
-              {t("CORE.confirm")}
-            </Button>
-          </div>
-        </Col>
-      </Row>
-    </Form>
+    <Spin spinning={loadingDropdown}>
+      <Form onSubmit={onConfirm}>
+        <Row type="flex" justify="center">
+          <Col span={12}>
+            <Form.Item label={t("CORE.EMPLOYEE.USERNAME")}>
+              {getFieldDecorator("username", {
+                rules: [
+                  {
+                    required: true,
+                    message: "Please input username!",
+                    whitespace: false,
+                  },
+                ],
+              })(<Input />)}
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row type="flex" justify="center">
+          <Col span={12}>
+            <Form.Item label={t("CORE.EMPLOYEE.PASSWORD")} hasFeedback>
+              {getFieldDecorator("password", {
+                rules: [
+                  {
+                    required: true,
+                    message: "Please input your password!",
+                  },
+                ],
+              })(<Input.Password />)}
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row type="flex" justify="center">
+          <Col span={12}>
+            <Form.Item label={t("CORE.EMPLOYEE.ROLE")}>
+              {getFieldDecorator("roleId", {
+                rules: [
+                  {
+                    required: true,
+                    message: "Please select role!",
+                  },
+                ],
+                initialValue: listRole?.[0]?.id,
+              })(
+                <Select>
+                  {listRole.map((item) => (
+                    <Option key={item.id} value={item.id}>
+                      {item.name}
+                    </Option>
+                  ))}
+                </Select>
+              )}
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row type="flex" justify="center">
+          <Col>
+            <div className="btn-group">
+              <Button
+                loading={loading}
+                type="primary"
+                htmlType="submit"
+                className="btn-yellow btn-right"
+                style={{ float: "right" }}
+                onClick={onConfirm}
+              >
+                {t("CORE.confirm")}
+              </Button>
+            </div>
+          </Col>
+        </Row>
+      </Form>
+    </Spin>
   );
 };
 
