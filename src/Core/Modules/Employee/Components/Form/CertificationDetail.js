@@ -2,7 +2,7 @@ import "./style.less";
 
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Select, Row, Col, Form, Input, Button, message, Spin } from "antd";
+import { Select, Row, Col, Form, Card, Button, message, Spin } from "antd";
 
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
@@ -15,13 +15,15 @@ import { employees as identity } from "~/Core/Modules/Employee/Configs/constants
 
 /* Api */
 import accountApi from "~/Core/Modules/Employee/Api/Account";
-import roleApi from "~/Core/Modules/Employee/Api/Role";
+import certificationTypeApi from "~/Core/Modules/Employee/Api/CertificationType";
 
 const { Option } = Select;
+const { Meta } = Card;
 
-const AccountForm = ({ form, employeeId, action, data, is_create }) => {
+const CertificationDetail = ({ form, employeeId, action, data, is_create }) => {
   const [loadingDropdown, setLoadingDropdown] = useState(false);
-  const [listRole, setRole] = useState([]);
+  const [listCertificationType, setCertificationType] = useState([]);
+  const [itemSelect, setItemSelect] = useState({});
 
   const t = useTranslate();
   const { getFieldDecorator, validateFields, setFieldsValue } = form;
@@ -36,8 +38,8 @@ const AccountForm = ({ form, employeeId, action, data, is_create }) => {
     (async () => {
       setLoadingDropdown(true);
 
-      const resRole = await roleApi.getList();
-      setRole(resRole?.data);
+      const resRole = await certificationTypeApi.getList();
+      setCertificationType(resRole?.data?.result || []);
 
       setLoadingDropdown(false);
     })();
@@ -56,10 +58,9 @@ const AccountForm = ({ form, employeeId, action, data, is_create }) => {
       if (!err) {
         setLoading(true);
 
-        const { username, roleId, password } = values;
+        const { roleId, password } = values;
 
         const objReq = {
-          username,
           employeeId,
           password,
           roleId,
@@ -71,7 +72,7 @@ const AccountForm = ({ form, employeeId, action, data, is_create }) => {
             .then((res) => {
               setLoading(false);
 
-              if (res.code !== 201) {
+              if (res.status !== 200) {
                 message.error(t("CORE.task_failure"));
                 return;
               }
@@ -87,7 +88,7 @@ const AccountForm = ({ form, employeeId, action, data, is_create }) => {
           accountApi.update(data.id, objReq).then((res) => {
             setLoading(false);
 
-            if (res.code !== 200) {
+            if (res.status !== 200) {
               message.error(t("CORE.task_failure"));
               return;
             }
@@ -101,52 +102,27 @@ const AccountForm = ({ form, employeeId, action, data, is_create }) => {
     });
   };
 
+  const handleSelectChange = (value) => {
+    const item = listCertificationType.filter((item) => item.id === value);
+    setItemSelect(item?.[0]);
+  };
   return (
     <Spin spinning={loadingDropdown}>
       <Form onSubmit={onConfirm}>
         <Row type="flex" justify="center">
-          <Col span={12}>
-            <Form.Item label={t("CORE.EMPLOYEE.USERNAME")}>
-              {getFieldDecorator("username", {
-                rules: [
-                  {
-                    required: true,
-                    message: "Please input username!",
-                    whitespace: false,
-                  },
-                ],
-              })(<Input />)}
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row type="flex" justify="center">
-          <Col span={12}>
-            <Form.Item label={t("CORE.EMPLOYEE.PASSWORD")} hasFeedback>
-              {getFieldDecorator("password", {
-                rules: [
-                  {
-                    required: true,
-                    message: "Please input your password!",
-                  },
-                ],
-              })(<Input.Password />)}
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row type="flex" justify="center">
-          <Col span={12}>
+          <Col span={16}>
             <Form.Item label={t("CORE.EMPLOYEE.ROLE")}>
-              {getFieldDecorator("roleId", {
+              {getFieldDecorator("certificateTypeId", {
                 rules: [
                   {
                     required: true,
                     message: "Please select role!",
                   },
                 ],
-                initialValue: listRole?.[0]?.id,
+                initialValue: listCertificationType?.[0]?.id,
               })(
-                <Select>
-                  {listRole.map((item) => (
+                <Select onChange={handleSelectChange}>
+                  {listCertificationType.map((item) => (
                     <Option key={item.id} value={item.id}>
                       {item.name}
                     </Option>
@@ -154,6 +130,21 @@ const AccountForm = ({ form, employeeId, action, data, is_create }) => {
                 </Select>
               )}
             </Form.Item>
+          </Col>
+        </Row>
+        <Row type="flex" justify="center">
+          <Col span={12}>
+            <Card
+              hoverable
+              style={{ width: 240 }}
+              cover={<img alt={itemSelect.name} src={itemSelect.imagePath} />}
+            >
+              <Meta
+                title={itemSelect.name}
+                description={itemSelect.description}
+              />
+            </Card>
+            ,
           </Col>
         </Row>
         <Row type="flex" justify="center">
@@ -177,4 +168,6 @@ const AccountForm = ({ form, employeeId, action, data, is_create }) => {
   );
 };
 
-export default Form.create({ name: "Account_Detail" })(AccountForm);
+export default Form.create({ name: "Certification_Detail" })(
+  CertificationDetail
+);

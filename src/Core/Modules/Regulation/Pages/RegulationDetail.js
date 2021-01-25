@@ -50,14 +50,14 @@ const RegulationDetail = ({ match: { params } }) => {
         <Header
           breadcrumb={[
             {
-              title: t("CORE.EMPLOYEE.MANAGEMENT.TITLE"),
-              link: "/employee",
+              title: t("CORE.REGULATION.MANAGEMENT.TITLE"),
+              link: "/regulation",
             },
             {
               title:
                 params.id === "create"
-                  ? t("CORE.EMPLOYEE.CREATE.ACCOUNT")
-                  : t("CORE.EMPLOYEE.UPDATE.ACCOUNT"),
+                  ? t("CORE.REGULATION.CREATE.ACCOUNT")
+                  : t("CORE.REGULATION.UPDATE.ACCOUNT"),
             },
           ]}
           action={action}

@@ -1,6 +1,5 @@
 import React, { useMemo } from "react";
 import { Link } from "react-router-dom";
-import { Tag } from "antd";
 import moment from "moment";
 import jwt_decode from "jwt-decode";
 
@@ -44,7 +43,10 @@ const UserTable = () => {
       key: "name",
       fieldType: "text",
       width: 220,
-      sorter: true
+      sorter: true,
+      render: (text, record) => (
+        <Link to={`/certificateType/${record.id}`}>{`${record.name}`}</Link>
+      ),
     },
     {
       title: t("CORE.CERTIFICATE.TYPE.DESCRIPTION"),
@@ -73,7 +75,6 @@ const UserTable = () => {
       key: "contacts.updatedAt",
       fieldType: "date",
       sorter: true,
-      width: 150,
       render: (text) => moment(text).format("DD/MM/YYYY"),
     },
   ], [])

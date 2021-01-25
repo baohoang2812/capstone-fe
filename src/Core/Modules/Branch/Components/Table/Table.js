@@ -2,14 +2,12 @@ import React, { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { Tag } from "antd";
 import moment from "moment";
-import jwt_decode from "jwt-decode";
 
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 
 /* Components */
 import AdminTable from "~/Core/Components/common/AdminTable";
-import ImageThumbnail from "~/Core/Components/common/ImageThumbnail";
 
 /* Constants */
 import { branches as identity } from "~/Core/Modules/Branch/Configs/constants";
@@ -48,9 +46,9 @@ const UserTable = () => {
     
     {
       title: t("CORE.BRANCH.PHONE.NUMBER"),
-      dataIndex: "phone_number",
+      dataIndex: "phoneNumber",
       className: "header-filter",
-      key: "phone_number",
+      key: "phoneNumber",
       fieldType: "number",
       sorter: true,
       width: 200,

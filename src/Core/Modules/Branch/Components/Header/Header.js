@@ -1,6 +1,5 @@
 import React from "react";
 import { Icon, Button } from "antd";
-import jwt_decode from "jwt-decode";
 
 /* Components */
 import NavBreadcrumbContentHeader from "~/Core/Components/common/NavBreadcrumbContentHeader";
