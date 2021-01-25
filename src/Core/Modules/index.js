@@ -3,4 +3,7 @@ export default [
   { key: "NotFound" },
   { key: "Error" },
   { key: "Employee" },
+  { key: "Branch"},
+  { key: "Regulation"},
+  { key: "CertificateType"}
 ];

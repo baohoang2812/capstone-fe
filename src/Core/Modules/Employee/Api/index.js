@@ -2,7 +2,7 @@ import BaseApi from "~/Core/Api/BaseAPI";
 
 class ProfileApi extends BaseApi {
   getList = (filters) => {
-    return this.initApi.post(`${this.baseUrl}`, filters);
+    return this.initApi.get(`${this.baseUrl}`, filters);
   };
 
   update = (body) => {
@@ -14,7 +14,7 @@ class ProfileApi extends BaseApi {
   };
 
   getOne = (id) => {
-    return this.initApi.get(`${this.baseUrl}/${id}`);
+    return this.initApi.get(`${this.baseUrl}?Filter.Ids=${id}`);
   };
   
   deleteByIds = (ids, options = {}, opts) => {
@@ -22,4 +22,4 @@ class ProfileApi extends BaseApi {
   };
 }
 
-export default new ProfileApi().requestUrl("/api/employee");
+export default new ProfileApi().requestUrl("/v1/employees");

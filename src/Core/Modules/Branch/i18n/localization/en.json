@@ -1,0 +1,20 @@
+{
+    "CORE.BRANCH.MANAGEMENT.TITLE":"Branch Manager",
+    "CORE.BRANCH.CREATE.ACCOUNT":"Create Branch",
+    "CORE.BRANCH.UPDATE.ACCOUNT":"Update Branch",
+    "CORE.BRANCH.NAME":"Branch name",
+    "CORE.BRANCH.ADDRESS":"Address",
+    "CORE.BRANCH.PHONE.NUMBER":"Phone number",
+    "CORE.BRANCH.CHARGE.CREATE":"Created at",
+    "CORE.BRANCH.CHARGE.UPDATE":"Updated at",
+    "CORE.BRANCH.MANAGER.NAME":"Manager name",
+    "CORE.BRANCH.STATUS":"Status",
+    "CORE.BRANCH.ACTIVE":"Active",
+    "CORE.BRANCH.INACTIVE":"Inactive",
+    "CORE.BRANCH.CREATE.SUCCESS":"Create branch success!",
+    "CORE.BRANCH.UPDATE.SUCCESS":"Update branch success!"
+
+
+
+    
+}

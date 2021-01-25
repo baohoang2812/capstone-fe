@@ -5,4 +5,4 @@ class RoleApi extends BaseApi {
     return this.initApi.get(`${this.baseUrl}`);
   };
 }
-export default new RoleApi().requestUrl("/api/role");
+export default new RoleApi().requestUrl("/v1/roles");
