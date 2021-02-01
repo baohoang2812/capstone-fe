@@ -1,0 +1,12 @@
+{    "CORE.REPORT.ID":"ID",
+    "CORE.REPORT.NAME":"Tên báo cáo",
+    "CORE.REPORT.DESCRIPTION":"Mô tả",
+    "CORE.REPORT.STATUS":"Trạng thái",
+    "CORE.REPORT.BRANCH.NAME":"Tên chi nhánh",
+    "CORE.REPORT.CREATED.BY":"Người tạo",
+    "CORE.REPORT.CHARGE.CREATE":"Ngày tạo",
+    "CORE.REPORT.CHARGE.UPDATE":"Ngày cập nhật",
+    "CORE.REPORT.MANAGEMENT.TITLE":"Quản lý báo cáo",
+    "CORE.REPORT.CREATE.ACCOUNT":"Xem báo cáo"
+
+}

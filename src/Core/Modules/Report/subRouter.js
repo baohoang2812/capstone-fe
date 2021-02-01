@@ -9,13 +9,13 @@ import intlMessagesEN from "./i18n/localization/en.json";
 import intlMessagesVi from "./i18n/localization/vi.json";
 
 export default {
-  name: "Regulation",
-  dir: "Regulation",
-  pathRoot: "regulation",
+  name: "Report",
+  dir: "Report",
+  pathRoot: "report",
   title: (
     <span>
-      <Icon type="file-text" /> 
-      <span>Regulation</span>
+     <Icon type="read" />
+      <span>Report</span>
     </span>
   ),
   showMenu: true,
@@ -29,16 +29,16 @@ export default {
     },
     {
       url: ":id",
-      component: "Pages/RegulationDetail",
-      key: "regulation-create-edit",
+      component: "Pages/ReportDetail",
+      key: "report-create-edit",
       showMenu: false,
-      title: "Regulation detail",
+      title: "Report detail",
     },
     {
       url: "",
       component: "Pages",
       showMenu: true,
-      title: "Regulation Management",
+      title: "Report Management",
     },
   ],
   redux: redux,

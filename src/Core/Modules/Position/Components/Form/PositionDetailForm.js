@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect,useState } from "react";
 import "./style.less";
+import { useDispatch } from "react-redux";
 import {
     Row,
     Col,
@@ -7,32 +8,79 @@ import {
     Input,
     Button,
     Spin,
+    message
 } from "antd";
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 
 /* Actions */
-// import { update_identity_table_data_success } from "~/Core/Store/actions/adminTable";
+import { update_identity_table_data_success } from "~/Core/Store/actions/adminTable";
 
 /* Constants */
-// import { positions as identity } from "~/Core/Modules/Position/Configs/constants";
+ import { positions as identity } from "~/Core/Modules/Position/Configs/constants";
 
 /* Api */
-// import positionApi from "~/Core/Modules/Position/Api/";
+ import positionApi from "~/Core/Modules/Position/Api/";
 
-const PositionDetailForm = ({ form }) => {
+const PositionDetailForm = ({ form,is_create,action, data }) => {
     const t = useTranslate();
     /* Redux */
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
     /* State */
     const [loading, setLoading] = useState(false);
     const [loadingDropdown, setLoadingDropdown] = useState(false);
-    const { getFieldDecorator } = form;
+    const { getFieldDecorator, validateFields, setFieldsValue } = form;
+    
+  useEffect(() => {
+    setFieldsValue({
+      name: data?.name,
+      description: data?.description,
+      
+    });
+  }, [data]);
+  const onConfirm = (e) => {
+    e.preventDefault();
+    validateFields((err, values) => {
+      if (!err) {
+        setLoading(true);
+        if (is_create) {
+          positionApi
+            .create(values)
+            .then((res) => {
+              setLoading(false);
 
-    const onConfirm = (e) => {
-        setLoadingDropdown(true)
-        setLoading(true)
-    };
+              if (res.code !== 201) {
+                message.error(t("CORE.task_failure"));
+                return;
+              }
+              setLoading(false);
+
+              dispatch(update_identity_table_data_success(identity, res.data));
+              message.success(t("CORE.POSITION.CREATE.SUCCESS"));
+              action();
+            })
+            .catch(() => {
+              message.error(t("CORE.error.system"));
+            });
+        } else {
+          // objReq.employee.id = data.employee.id;
+          positionApi.update(data.id, values).then((res) => {
+            setLoading(false);
+
+            if (res.code !== 200) {
+              message.error(t("CORE.task_failure"));
+              return;
+            }
+            setLoading(false);
+
+            dispatch(update_identity_table_data_success(identity, res.data));
+            message.success(t("CORE.POSITION.UPDATE.SUCCESS"));
+            action();
+          });
+        }
+      }
+    });
+  };
     return (
         <Row type="flex" justify="center">
             <Col span={12}>

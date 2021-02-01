@@ -16,4 +16,4 @@ class BranchApi extends BaseApi {
     return this.initApi.put(`${this.baseUrl}/${id}`, body);
   };
 }
-export default new BranchApi().requestUrl("/v1/positions");
+export default new BranchApi().requestUrl("/v1/shifts");

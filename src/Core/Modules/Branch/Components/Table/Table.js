@@ -55,9 +55,9 @@ const UserTable = () => {
     },
     {
       title: t("CORE.BRANCH.MANAGER.NAME"),
-      dataIndex: "manager_name",
+      dataIndex: "managerId",
       className: "header-filter",
-      key: "manager_name",
+      key: "managerName",
       fieldType: "text",
       sorter: true,
       width: 220,

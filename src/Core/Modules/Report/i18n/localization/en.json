@@ -1,0 +1,13 @@
+{
+    "CORE.REPORT.ID":"ID",
+    "CORE.REPORT.NAME":"Report Name",
+    "CORE.REPORT.DESCRIPTION":"Description",
+    "CORE.REPORT.STATUS":"Status",
+    "CORE.REPORT.BRANCH.NAME":"Branch Name",
+    "CORE.REPORT.CREATED.BY":"Created by",
+    "CORE.REPORT.CHARGE.CREATE":"Created at",
+    "CORE.REPORT.CHARGE.UPDATE":"Updated at",
+    "CORE.REPORT.MANAGEMENT.TITLE":"Report Management",
+    "CORE.REPORT.CREATE.ACCOUNT":"Create Report"
+
+}

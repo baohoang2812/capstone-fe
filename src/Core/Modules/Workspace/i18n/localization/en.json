@@ -1,0 +1,9 @@
+{
+    "CORE.WORKSPACE.NAME":"Workspace name",
+    "CORE.WORKSPACE.DESCRIPTION":"Description",
+    "CORE.WORKSPACE.PARENT":"Workspace parent",
+    "CORE.WORKSPACE.CHARGE.CREATE":"Created at",
+    "CORE.WORKSPACE.CHARGE.UPDATE":"Updated at",
+    "CORE.WORKSPACE.MANAGEMENT.TITLE":"Workspace Management",
+    "CORE.WORKSPACE.CREATE.ACCOUNT":"Create workspace"
+}

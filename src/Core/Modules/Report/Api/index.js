@@ -1,5 +1,5 @@
 import BaseApi from "~/Core/Api/BaseAPI";
-class BranchApi extends BaseApi {
+class ReportApi extends BaseApi {
   getList = (filters) => {
     return this.initApi.get(`${this.baseUrl}`, filters);
   };
@@ -16,4 +16,4 @@ class BranchApi extends BaseApi {
     return this.initApi.put(`${this.baseUrl}/${id}`, body);
   };
 }
-export default new BranchApi().requestUrl("/v1/positions");
+export default new ReportApi().requestUrl("/v1/reports");

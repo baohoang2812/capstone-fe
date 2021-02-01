@@ -9,13 +9,13 @@ import intlMessagesEN from "./i18n/localization/en.json";
 import intlMessagesVi from "./i18n/localization/vi.json";
 
 export default {
-  name: "Regulation",
-  dir: "Regulation",
-  pathRoot: "regulation",
+  name: "Workspace",
+  dir: "Workspace",
+  pathRoot: "workspace",
   title: (
     <span>
-      <Icon type="file-text" /> 
-      <span>Regulation</span>
+     <Icon type="table" />
+      <span>Workspace</span>
     </span>
   ),
   showMenu: true,
@@ -29,16 +29,16 @@ export default {
     },
     {
       url: ":id",
-      component: "Pages/RegulationDetail",
-      key: "regulation-create-edit",
+      component: "Pages/WorkspaceDetail",
+      key: "workspace-create-edit",
       showMenu: false,
-      title: "Regulation detail",
+      title: "Workspace detail",
     },
     {
       url: "",
       component: "Pages",
       showMenu: true,
-      title: "Regulation Management",
+      title: "Workspace Management",
     },
   ],
   redux: redux,

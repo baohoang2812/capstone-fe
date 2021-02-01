@@ -9,13 +9,13 @@ import intlMessagesEN from "./i18n/localization/en.json";
 import intlMessagesVi from "./i18n/localization/vi.json";
 
 export default {
-  name: "Regulation",
-  dir: "Regulation",
-  pathRoot: "regulation",
+  name: "Shift",
+  dir: "Shift",
+  pathRoot: "shift",
   title: (
     <span>
-      <Icon type="file-text" /> 
-      <span>Regulation</span>
+    <Icon type="calendar" />
+      <span>Shift</span>
     </span>
   ),
   showMenu: true,
@@ -29,16 +29,16 @@ export default {
     },
     {
       url: ":id",
-      component: "Pages/RegulationDetail",
-      key: "regulation-create-edit",
+      component: "Pages/ShiftDetail",
+      key: "shift-create-edit",
       showMenu: false,
-      title: "Regulation detail",
+      title: "Shift detail",
     },
     {
       url: "",
       component: "Pages",
       showMenu: true,
-      title: "Regulation Management",
+      title: "Shift Management",
     },
   ],
   redux: redux,
