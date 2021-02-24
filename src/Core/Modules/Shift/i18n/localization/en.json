@@ -1,0 +1,16 @@
+{   "CORE.SHIFT.TYPE":"Type",
+    "CORE.SHIFT.NAME":"Shift Name",
+    "CORE.SHIFT.START.TIME":"Start time",
+    "CORE.SHIFT.END.TIME":"End time",
+    "CORE.SHIFT.CHARGE.CREATE":"Created at",
+    "CORE.SHIFT.CHARGE.UPDATE":"Updated at",
+    "CORE.SHIFT.MANAGEMENT.TITLE":"Shift management",
+    "CORE.SHIFT.CREATE.ACCOUNT":"Create shift",
+    "CORE.SHIFT.FULL.SHIFT":"Full shift",
+    "CORE.SHIFT.BREAK.SHIFT":"Break shift",
+    "CORE.SHIFT.UPDATE.ACCOUNT":"Update shift",
+    "CORE.SHIFT.CREATE.SUCCESS":"Create shift success!",
+    "CORE.SHIFT.UPDATE.SUCCESS":"Update shift success!"
+
+
+}

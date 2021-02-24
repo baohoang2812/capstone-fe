@@ -14,7 +14,7 @@ export default {
   pathRoot: "regulation",
   title: (
     <span>
-      <Icon type="schedule"/> 
+      <Icon type="file-text" /> 
       <span>Regulation</span>
     </span>
   ),
