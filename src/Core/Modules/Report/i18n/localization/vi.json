@@ -31,7 +31,8 @@
     "CORE.VIOLATION.OPEN":"Đang chờ",
     "CORE.VIOLATION.DECLINED":"Từ chối",
     "CORE.VIOLATION.STATUS.EXCUSE":"Biện minh",
-    "CORE.VIOLATION.CONFIRM.SUCCESS":"Cập nhật thành công"
+    "CORE.VIOLATION.CONFIRM.SUCCESS":"Cập nhật thành công",
+    "CORE.VIOLATION.SELECT.VIOLATOR":"Chọn người vi phạm"
 
 
 

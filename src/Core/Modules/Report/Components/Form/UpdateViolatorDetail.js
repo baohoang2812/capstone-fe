@@ -9,7 +9,8 @@ import {
     Button,
     Spin,
     Divider,
-    message
+    message,
+    Select
 } from "antd";
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
@@ -23,7 +24,7 @@ import { violations as identity } from "~/Core/Modules/Report/Configs/Constants"
 /* Api */
 import violationApi from "~/Core/Modules/Report/Api/Violation";
 
-const ExcuseDetail = ({ form, isShow = true, action, data }) => {
+const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
     const t = useTranslate();
     const { TextArea } = Input;
     /* Redux */
@@ -36,7 +37,7 @@ const ExcuseDetail = ({ form, isShow = true, action, data }) => {
     useEffect(() => {
         console.log(data);
     }, [data]);
-
+    const { Option } = Select;
     const onConfirm = (e) => {
         e.preventDefault();
         validateFields((err, values) => {
@@ -60,7 +61,7 @@ const ExcuseDetail = ({ form, isShow = true, action, data }) => {
                             return;
                         }
                         dispatch(update_identity_table_data_success(identity, { id: res.data.id, column: "status", data: res.data.status }));
-                        message.success(t("CORE.VIOLATION.CONFIRM.SUCCESS"));
+                        message.success(t("CORE.POSITION.CREATE.SUCCESS"));
                         action();
                     })
                     .catch(() => {
@@ -113,18 +114,35 @@ const ExcuseDetail = ({ form, isShow = true, action, data }) => {
                             </Col>
                         </Row>
                         <Row type="flex" justify="center" align="bottom">
-                            {
-                                data?.status === "Excuse" || data?.status === "Declined" ? (<Col span={20}>
-                                    <Form.Item label={t("CORE.VIOLATION.EXCUSE")}>
-                                        {getFieldDecorator("excuse", {
-
-                                        })(<span>{data.excuse}</span>)}
-                                    </Form.Item>
-                                </Col>) : null
-                            }
+                            <Col span={20}>
+                            <Form.Item label={t("CORE.VIOLATION.SELECT.VIOLATOR")}>
+          {getFieldDecorator('select-multiple', {
+            rules: [
+              { required: true, message: 'Please select violator!', type: 'array' },
+            ],
+          })(
+            <Select mode="multiple" placeholder="Please select violator">
+              <Option  value="red">Branch Manager</Option>
+              <Option value="green">Employee 1</Option>
+              <Option value="blue">Employee 2</Option>
+            </Select>,
+          )}
+        </Form.Item>
+                            </Col>
                         </Row>
                         <Row type="flex" justify="center">
                             { isShow ? (<div className="btn-group">
+                                
+                                <Button
+                                    loading={loading}
+                                    type="danger"
+                                    className="btn-yellow btn-left"
+                                    style={{ float: "right" }}
+                                    onClick={action}>
+                                    {t("CORE.cancel")}
+                                </Button>
+                                <Divider type="vertical" />
+
                                 <Button
                                     loading={loading}
                                     type="primary"
@@ -132,16 +150,7 @@ const ExcuseDetail = ({ form, isShow = true, action, data }) => {
                                     className="btn-yellow btn-right"
                                     style={{ float: "right" }}
                                     onClick={onConfirm}>
-                                    {t("CORE.reject")}
-                                </Button>
-                                <Divider type="vertical" />
-                                <Button
-                                    loading={loading}
-                                    type="danger"
-                                    className="btn-yellow btn-right"
-                                    style={{ float: "right" }}
-                                    onClick={action}>
-                                    {t("CORE.cancel")}
+                                    {t("CORE.VIOLATION.CONFIRM.ACCEPT")}
                                 </Button>
                             </div>) : null}
                         </Row>
@@ -151,6 +160,6 @@ const ExcuseDetail = ({ form, isShow = true, action, data }) => {
         </Row>
     );
 };
-export default Form.create({ name: "Excuse_Detail" })(
-    ExcuseDetail
+export default Form.create({ name: "UpdatePerson_Detail" })(
+    UpdateViolatorDetail
 );
