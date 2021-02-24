@@ -18,18 +18,18 @@ const UserTable = () => {
   const t = useTranslate();
   const defs = useMemo(() => [
     {
-        title: t("CORE.REPORT.ID"),
-        dataIndex: "id",
-        className: "header-filter",
-        key: "id",
-        fieldType: "number",
-        fixed: "left",
-        sorter: true,
-        width: 220,
-        render: (text, record) => (
-          <Link to={`/report/${record.id}`}>{`${record.id}`}</Link>
-        ),
-      },
+      title: t("CORE.REPORT.ID"),
+      dataIndex: "id",
+      className: "header-filter",
+      key: "id",
+      fieldType: "number",
+      fixed: "left",
+      sorter: true,
+      width: 220,
+      render: (text, record) => (
+        <Link to={`/report/${record.id}`}>{`${record.id}`}</Link>
+      ),
+    },
     {
       title: t("CORE.REPORT.NAME"),
       dataIndex: "name",
@@ -38,7 +38,7 @@ const UserTable = () => {
       fieldType: "text",
       sorter: true,
       width: 220,
-      
+
     },
     {
       title: t("CORE.REPORT.DESCRIPTION"),
@@ -50,36 +50,37 @@ const UserTable = () => {
       width: 220,
     },
     {
-        title: t("CORE.REPORT.STATUS"),
-        dataIndex: "status",
-        className: "header-filter",
-        key: "status",
-        fieldType: "text",
-        sorter: true,
-        width: 220,
-      },
-      {
-        title: t("CORE.REPORT.BRANCH.NAME"),
-        dataIndex: "branchId",
-        className: "header-filter",
-        key: "branchId",
-        fieldType: "text",
-        fixed: "left",
-        sorter: true,
-        width: 220,
-        
-      },
-      {
-        title: t("CORE.REPORT.CREATED.BY"),
-        dataIndex: "createdBy",
-        className: "header-filter",
-        key: "type",
-        fieldType: "text",
-        sorter: true,
-        width: 220,
-      },
+      title: t("CORE.REPORT.STATUS"),
+      dataIndex: "status",
+      className: "header-filter",
+      key: "status",
+      fieldType: "text",
+      sorter: true,
+      width: 220,
+    },
+    {
+      title: t("CORE.REPORT.BRANCH.NAME"),
+      dataIndex: "branch.name",
+      className: "header-filter",
+      key: "branchId",
+      fieldType: "text",
+      sorter: true,
+      width: 220,
 
-    
+    },
+    {
+      title: t("CORE.REPORT.CREATED.BY"),
+      dataIndex: "createdByNavigation.firstName",
+      className: "header-filter",
+      key: "type",
+      fieldType: "text",
+      sorter: true,
+      width: 220,
+      render: (text, record) => (
+        <span>{`${record.createdByNavigation.firstName} ${record.createdByNavigation.lastName}`}</span>)
+    },
+
+
     {
       title: t("CORE.REPORT.CHARGE.CREATE"),
       dataIndex: "createdAt",
@@ -100,15 +101,15 @@ const UserTable = () => {
       width: 150,
       render: (text) => moment(text).format("DD/MM/YYYY"),
     },
-    
-    
-   
+
+
+
   ], [])
 
-  const defaultSorter = useMemo(() => ({ }), []);
-  
+  const defaultSorter = useMemo(() => ({}), []);
+
   const scroll = useMemo(() => ({
-    x: 1620 ,
+    x: 1620,
     y: `calc(100vh - (178px))`
   }), []);
 

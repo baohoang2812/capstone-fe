@@ -3,7 +3,7 @@ import "./style.less";
 
 import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { Layout, Icon, Dropdown, Avatar, Menu } from "antd";
+import { Layout, Icon, Dropdown, Avatar, Menu, Badge } from "antd";
 
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
@@ -163,6 +163,26 @@ export const HeaderMaster = ({ url }) => {
           </div>
         </div>
         <div className="header-right">
+          <div style={{ width: 40, height: 30 }}>
+            <Badge count={<span style={{
+              fontSize:'11px',
+              padding: '0 6px',
+              minWidth: '18px',
+              height: '18px',
+              color: '#fff',
+              fontWeight: '400',
+              lineHeight: '20px',
+              whiteSpace: 'nowrap',
+              textAlign: 'center',
+              background: '#f5222d',
+              borderRadius: '10px',
+              boxShadow: '0 0 0 1px #fff'
+              }}>69</span>}>
+              <div>
+                <Icon style={{ fontSize: '22px'}} type="notification" />
+              </div>
+            </Badge>
+          </div>
           <MenuLanguage />
           <Dropdown overlay={renderMenuProfile(account_info, t)}>
             <span className="dropdown-user">

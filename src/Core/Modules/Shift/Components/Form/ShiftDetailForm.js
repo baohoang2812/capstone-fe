@@ -9,7 +9,7 @@ import {
   Button,
   message,
   Select,
-  DatePicker
+  TimePicker
 } from "antd";
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
@@ -30,38 +30,65 @@ const ShiftDetailForm = ({ form, is_create, action, data }) => {
   /* State */
   const [loading, setLoading] = useState(false);
   const { getFieldDecorator, validateFields, setFieldsValue } = form;
-
+  const format = 'HH:mm';
   useEffect(() => {
     setFieldsValue({
       name: data?.name,
       startTime: data?.startTime,
       endTime: data?.endTime,
       isBreakShift: data?.isBreakShift
-      
+
     });
   }, [data]);
-  function disabledDate(current) {
-    // Can not select days before today and today
-    return current && current > moment;
-  }
 
   const onConfirm = (e) => {
     e.preventDefault();
     validateFields((err, values) => {
       if (!err) {
         setLoading(true);
+        "".split(":")
+        const startTime = values["startTime"].format("HH:mm").split(":")
+        const endTime = values["endTime"].format("HH:mm").split(":")
+        const newValues = {
+          ...values,
+          startTime: {
+            "ticks": 0,
+            "days": 0,
+            "hours": parseInt(startTime?.[0]),
+            "milliseconds": 0,
+            "minutes": parseInt(startTime?.[1]),
+            "seconds": 0,
+            "totalDays": 0,
+            "totalHours": parseInt(startTime?.[0]),
+            "totalMilliseconds": parseInt(startTime?.[1]),
+            "totalMinutes": 0,
+            "totalSeconds": 0
+          },
+          endTime: {
+            "ticks": 0,
+            "days": 0,
+            "hours": parseInt(endTime?.[0]),
+            "milliseconds": 0,
+            "minutes": parseInt(endTime?.[1]),
+            "seconds": 0,
+            "totalDays": 0,
+            "totalHours": parseInt(endTime?.[0]),
+            "totalMilliseconds": parseInt(endTime?.[1]),
+            "totalMinutes": 0,
+            "totalSeconds": 0
+          }
+        }
+
         if (is_create) {
           shiftApi
-            .create(values)
+            .create(newValues)
             .then((res) => {
               setLoading(false);
-
               if (res.code !== 201) {
                 message.error(t("CORE.task_failure"));
                 return;
               }
               setLoading(false);
-
               dispatch(update_identity_table_data_success(identity, res.data));
               message.success(t("CORE.SHIFT.CREATE.SUCCESS"));
               action();
@@ -72,7 +99,7 @@ const ShiftDetailForm = ({ form, is_create, action, data }) => {
             });
         } else {
           // objReq.employee.id = data.employee.id;
-          shiftApi.update(data.id, values).then((res) => {
+          shiftApi.update(data.id, newValues).then((res) => {
             setLoading(false);
 
             if (res.code !== 200) {
@@ -80,7 +107,6 @@ const ShiftDetailForm = ({ form, is_create, action, data }) => {
               return;
             }
             setLoading(false);
-
             dispatch(update_identity_table_data_success(identity, res.data));
             message.success(t("CORE.SHIFT.UPDATE.SUCCESS"));
             action();
@@ -117,47 +143,49 @@ const ShiftDetailForm = ({ form, is_create, action, data }) => {
               </Col>
             </Row>
             <Row type="flex" justify="center" align="bottom">
-          <Col span={15}>
-            <Form.Item label={t("CORE.SHIFT.START.TIME")}>
-              {getFieldDecorator("startTime", {
-                rules: [
-                  {
-                    type: "object",
-                    required: true,
-                    message: "Please select time!",
-                  },
-                ],
-              })(<DatePicker disabledDate={disabledDate} />)}
-            </Form.Item>
-          </Col>
-           </Row>
-           <Row type="flex" justify="center" align="bottom">
-          <Col span={15}>
-            <Form.Item label={t("CORE.SHIFT.END.TIME")}>
-              {getFieldDecorator("endTime", {
-                rules: [
-                  {
-                    type: "object",
-                    required: true,
-                    message: "Please select time!",
-                  },
-                ],
-              })(<DatePicker disabledDate={disabledDate} />)}
-            </Form.Item>
-          </Col>
-           </Row>
+              <Col span={15}>
+                <Form.Item label={t("CORE.SHIFT.START.TIME")}>
+                  {getFieldDecorator("startTime", {
+                    rules: [
+                      {
+                        type: "object",
+                        required: true,
+                        message: "Please select time!",
+                      },
+                    ],
+                  })(<TimePicker defaultValue={moment('00:00', format)} format={format} />)}
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row type="flex" justify="center" align="bottom">
+              <Col span={15}>
+                <Form.Item label={t("CORE.SHIFT.END.TIME")}>
+                  {getFieldDecorator("endTime", {
+                    rules: [
+                      {
+                        type: "object",
+                        required: true,
+                        message: "Please select time!",
+                      },
+                    ],
+                  })(<TimePicker defaultValue={moment('00:00', format)} format={format} />)}
+                </Form.Item>
+              </Col>
+            </Row>
             <Row type="flex" justify="center" align="bottom">
               <Col span={15}>
                 <Form.Item label={t("CORE.SHIFT.TYPE")}>
                   {getFieldDecorator(
                     "isBreakShift",
-                    { rules: [
-                      {
-                        
-                        required: true,
-                        message: "Please select type!",
-                      },
-                    ],}
+                    {
+                      rules: [
+                        {
+
+                          required: true,
+                          message: "Please select type!",
+                        },
+                      ],
+                    }
                   )(
                     <Select>
                       <Option value={true}>Break Shift</Option>
@@ -167,7 +195,7 @@ const ShiftDetailForm = ({ form, is_create, action, data }) => {
                 </Form.Item>
               </Col>
             </Row>
-           
+
 
             <Row type="flex" justify="center">
               <div className="btn-group">

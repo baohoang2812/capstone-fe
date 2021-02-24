@@ -1,6 +1,9 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import { useDispatch } from "react-redux";
+import { Button, Divider, Modal, message, Tag } from 'antd';
+import jwt_decode from "jwt-decode";
 
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
@@ -10,35 +13,91 @@ import AdminTable from "~/Core/Components/common/AdminTable";
 import ImageThumbnail from "~/Core/Components/common/ImageThumbnail";
 /* Constants */
 import { violations as identity } from "~/Core/Modules/Report/Configs/Constants";
-
+import ViolationDetail from "~/Core/Modules/Report/Components/Form/ViolationDetail";
+import ExcuseDetail from "~/Core/Modules/Report/Components/Form/ExcuseDetail";
+import { update_identity_table_data_success } from "~/Core/Store/actions/adminTable";
 /* Api */
-import contactApi from "~/Core/Modules/Report/Api";
+import contactApi from "~/Core/Modules/Report/Api/Violation";
+const { confirm } = Modal;
 
 const UserTable = () => {
   const t = useTranslate();
+  const [visible, setVisible] = useState(false);
+  const [visibleExcuse, setVisibleExcuse] = useState(false);
+  const [data, setData] = useState({});
+  const [isShow, setIsShow] = useState(true);
+  const dispatch = useDispatch();
 
+  const showConfirm = (record) => {
+
+    confirm({
+      title: t("CORE.VIOLATION.CONFIRM"),
+      content: t("CORE.VIOLATION.CONFIRM.CONTENT"),
+      onOk() {
+        contactApi.update(
+          record.id,
+          {
+            excuse: "string",
+            name: "string",
+            description: "string",
+            imagePath: "string",
+            reportId: 0,
+            regulationId: 0,
+            status: "Confirmed",
+            branchId: 0
+
+          }
+        )
+          .then((res) => {
+
+
+            if (res.code !== 200) {
+              message.error(t("CORE.task_failure"));
+              return;
+            }
+
+
+            dispatch(update_identity_table_data_success(identity, { id: res.data.id, column: "status", data: res.data.status }));
+            message.success(t("CORE.POSITION.CREATE.SUCCESS"));
+
+          })
+          .catch(() => {
+            message.error(t("CORE.error.system"));
+          });
+      },
+      onCancel() {
+        console.log(t("CORE.VIOLATION.CONFIRM.CANCEL"));
+      },
+      okText: t("CORE.VIOLATION.CONFIRM.ACCEPT"),
+      cancelText: t("CORE.VIOLATION.CONFIRM.CANCEL")
+    });
+  }
+  const openModel = (record) => {
+
+    setVisible(true);
+    setData(record);
+  };
+
+  const openModelExcuse = (record, isShow = true) => {
+    setVisibleExcuse(true);
+    setData(record);
+    setIsShow(isShow);
+  };
+
+  const handleCloseModal = () => {
+    setVisible(false);
+    setVisibleExcuse(false);
+  };
 
   const defs = useMemo(() => [
-    {
-      title: t("CORE.VIOLATION.ID"),
-      dataIndex: "id",
-      className: "header-filter",
-      key: "id",
-      fieldType: "number",
-      fixed: "left",
-      sorter: true,
-      width: 220,
-      render: (text, record) => (
-        <Link to={`/regulation/${record.id}`}>{`${record.id}`}</Link>
-      ),
-    },
+
     {
       title: t("CORE.VIOLATION.IMAGE.PATH"),
       dataIndex: "imagePath",
       className: "header-filter header-image",
       key: "imagePath",
       fieldType: "none",
-      fixed: "left",
+
       sorter: true,
       width: 200,
       render: (_, record) => {
@@ -54,18 +113,50 @@ const UserTable = () => {
       className: "header-filter",
       key: "name",
       fieldType: "text",
-      fixed: "left",
       sorter: true,
-      width: 220,
+      width: 240,
+      render: (_, record) => {
+        return (
+          <Link onClick={() => { openModelExcuse(record, false) }} >{`${record.name}`}</Link>
+        )
+      }
 
     },
     {
-      title: t("CORE.REGULATION.NAME"),
-      dataIndex: "name",
+      title: t("CORE.VIOLATION.STATUS"),
+      dataIndex: "status",
       className: "header-filter",
-      key: "name",
+      key: "status",
       fieldType: "text",
-      fixed: "left",
+      sorter: true,
+      width: 230,
+      render: (_, record) => {
+        if (record.status.toLocaleLowerCase() === 'confirmed') {
+          return (
+            <Tag color="green">{t("CORE.VIOLATION.CONFIRMED")}</Tag>
+          )
+        } else if (record.status.toLocaleLowerCase() === 'open') {
+          return (
+            <Tag color="orange">{t("CORE.VIOLATION.OPEN")}</Tag>
+          )
+        } else if (record.status.toLocaleLowerCase() === 'declined') {
+          return (
+            <Tag color="red">{t("CORE.VIOLATION.DECLINED")}</Tag>
+          )
+        }
+        else {
+          return (
+            <Tag color="blue">{t("CORE.VIOLATION.STATUS.EXCUSE")}</Tag>
+          )
+        }
+      },
+    },
+    {
+      title: t("CORE.REGULATION.NAME"),
+      dataIndex: "regulation.name",
+      className: "header-filter",
+      key: "name_regulation",
+      fieldType: "text",
       sorter: true,
       width: 220,
 
@@ -80,14 +171,15 @@ const UserTable = () => {
       width: 220,
     },
     {
-      title: t("CORE.VIOLATION.STATUS"),
-      dataIndex: "status",
+      title: t("CORE.VIOLATION.EXCUSE"),
+      dataIndex: "excuse",
       className: "header-filter",
-      key: "status",
+      key: "excuse",
       fieldType: "text",
       sorter: true,
       width: 220,
     },
+
 
     {
       title: t("CORE.VIOLATION.CHARGE.CREATE"),
@@ -109,15 +201,61 @@ const UserTable = () => {
       width: 150,
       render: (text) => moment(text).format("DD/MM/YYYY"),
     },
+    {
+      title: t("CORE.VIOLATION.ACTION"),
+      dataIndex: "none",
+      className: "header-filter",
+      key: "violation.action",
+      fieldType: "none",
+      fixed: "right",
+      sorter: true,
+      width: 220,
+      render: (_, record) => renderAction(record),
+    },
 
 
 
   ], [])
 
+  const renderAction = (record) => {
+    const token = localStorage.getItem("token" || "");
+    const {
+      roleName: role,
+    } = jwt_decode(token);
+    console.log(role);
+    if (role === "Admin") {
+      const isDisable = record?.status?.toLocaleLowerCase() === 'open' || record?.status?.toLocaleLowerCase() === 'excuse'
+      return (
+          <>
+            <Button disabled={!isDisable} onClick={() => { openModelExcuse(record) }} type="danger">
+              {t("CORE.VIOLATION.ACTION.REJECT")}
+            </Button>
+            <Divider type="vertical" />
+            <Button disabled={!isDisable} onClick={() => { showConfirm(record) }} type="primary">
+              {t("CORE.VIOLATION.ACTION.ACCEPT")}
+            </Button>
+          </>
+        )
+    } else {
+      const isDisable = record?.status?.toLocaleLowerCase() === 'open';
+      return (
+          <>
+            <Button disabled={!isDisable} onClick={() => { openModel(record) }} type="danger">
+              {t("CORE.VIOLATION.ACTION.REJECT")}
+            </Button>
+            <Divider type="vertical" />
+            <Button disabled={!isDisable} onClick={() => { showConfirm(record) }} type="primary">
+              {t("CORE.VIOLATION.ACTION.ACCEPT")}
+            </Button>
+          </>
+        )
+    }
+  }
+
   const defaultSorter = useMemo(() => ({}), []);
 
   const scroll = useMemo(() => ({
-    x: 1620,
+    x: 1700,
     y: `calc(100vh - (178px))`
   }), []);
 
@@ -127,12 +265,28 @@ const UserTable = () => {
         defs={defs}
         api={contactApi}
         identity={identity}
-        showCheckbox={true}
+        showCheckbox={false}
         scroll={scroll}
         defaultSorter={defaultSorter}
         disableClassKey="is_active"
         disableClassMode="toggle"
       />
+      <Modal
+        title={t("CORE.VIOLATION.MANAGEMENT.TITLE")}
+        visible={visible}
+        onCancel={handleCloseModal}
+        footer={null}
+      >
+        <ViolationDetail data={data} action={handleCloseModal} />
+      </Modal>
+      <Modal
+        title={t("CORE.VIOLATION.MANAGEMENT.TITLE")}
+        visible={visibleExcuse}
+        onCancel={handleCloseModal}
+        footer={null}
+      >
+        <ExcuseDetail data={data} isShow={isShow} action={handleCloseModal} />
+      </Modal>
     </>
   );
 };

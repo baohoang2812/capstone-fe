@@ -55,12 +55,13 @@ const UserTable = () => {
     },
     {
       title: t("CORE.BRANCH.MANAGER.NAME"),
-      dataIndex: "managerId",
+      dataIndex: "manager",
       className: "header-filter",
       key: "managerName",
       fieldType: "text",
       sorter: true,
       width: 220,
+      render: (text, record) => <span>{`${record?.manager?.firstName} ${record?.manager?.lastName}`}</span>
     },
     
    

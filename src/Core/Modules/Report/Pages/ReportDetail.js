@@ -57,7 +57,7 @@ const ReportDetail = ({ match: { params } }) => {
               title:
                 params.id === "create"
                   ? t("CORE.REPORT.CREATE.ACCOUNT")
-                  : t("CORE.REPORT.UPDATE.ACCOUNT"),
+                  : t("CORE.REPORT.DETAIL"),
             },
           ]}
           action={action}

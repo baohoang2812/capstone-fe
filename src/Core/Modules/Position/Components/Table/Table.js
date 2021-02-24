@@ -25,9 +25,8 @@ const UserTable = () => {
       className: "header-filter",
       key: "name",
       fieldType: "text",
-      fixed: "left",
       sorter: true,
-      width: 220,
+      width: 180,
       render: (text, record) => (
         <Link to={`/position/${record.id}`}>{`${record.name}`}</Link>
       ),
@@ -40,7 +39,7 @@ const UserTable = () => {
       key: "description",
       fieldType: "text",
       sorter: true,
-      width: 240,
+      width: 280,
     },
     
     

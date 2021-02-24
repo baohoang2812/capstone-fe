@@ -7,6 +7,33 @@
     "CORE.REPORT.CHARGE.CREATE":"Ngày tạo",
     "CORE.REPORT.CHARGE.UPDATE":"Ngày cập nhật",
     "CORE.REPORT.MANAGEMENT.TITLE":"Quản lý báo cáo",
-    "CORE.REPORT.CREATE.ACCOUNT":"Xem báo cáo"
+    "CORE.REPORT.CREATE.ACCOUNT":"Xem báo cáo",
+    "CORE.VIOLATION.MANAGEMENT.TITLE":"Chi tiết vi phạm",
+    "CORE.VIOLATION.ID":"ID",
+    "CORE.VIOLATION.IMAGE.PATH":"Hình ảnh",
+    "CORE.VIOLATION.NAME":"Tên vi phạm",
+    "CORE.REGULATION.NAME":"Loại quy tắc",
+    "CORE.VIOLATION.DESCRIPTION":"Mô tả",
+    "CORE.VIOLATION.STATUS":"Trạng thái",
+    "CORE.VIOLATION.CHARGE.CREATE":"Ngày tạo",
+    "CORE.VIOLATION.CHARGE.UPDATE":"Ngày cập nhật",
+    "CORE.REPORT.DETAIL":"Chi tiết báo cáo",
+    "CORE.LIST.VIOLATION":"Danh sách lỗi vi phạm :",
+    "CORE.VIOLATION.ACTION.ACCEPT":"Chấp nhận",
+    "CORE.VIOLATION.ACTION.REJECT":"Từ chối",
+    "CORE.VIOLATION.ACTION":"Hành động",
+    "CORE.VIOLATION.EXCUSE":"Lý do từ chối",
+    "CORE.VIOLATION.CONFIRM":"Đồng ý chấp nhận ?",
+    "CORE.VIOLATION.CONFIRM.CONTENT":"Chấp nhận lỗi vi phạm.",
+    "CORE.VIOLATION.CONFIRM.ACCEPT":"Đồng ý",
+    "CORE.VIOLATION.CONFIRM.CANCEL":"Hủy",
+    "CORE.VIOLATION.CONFIRMED":"Đã xác nhận",
+    "CORE.VIOLATION.OPEN":"Đang chờ",
+    "CORE.VIOLATION.DECLINED":"Từ chối",
+    "CORE.VIOLATION.STATUS.EXCUSE":"Biện minh",
+    "CORE.VIOLATION.CONFIRM.SUCCESS":"Cập nhật thành công"
+
+
+
 
 }

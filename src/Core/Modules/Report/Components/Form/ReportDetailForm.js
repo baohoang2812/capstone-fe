@@ -6,7 +6,7 @@ import {
   Col,
   Form,
   Input,
-  Button,
+  Modal,
   message,
   Select,
 } from "antd";
@@ -20,7 +20,7 @@ import { update_identity_table_data_success } from "~/Core/Store/actions/adminTa
 import { reports as identity } from "~/Core/Modules/Report/Configs/Constants";
 
 /* Api */
-import reportApi from "~/Core/Modules/Report/Api/";
+import reportApi from "~/Core/Modules/Report/Api";
 
 import Table from "~/Core/Modules/Report/Components/Table/TableViolation";
 
@@ -34,102 +34,50 @@ const ReportDetailForm = ({ form, is_create, action, data }) => {
   const { getFieldDecorator, validateFields, setFieldsValue } = form;
 
   useEffect(() => {
+    console.log(data);
     setFieldsValue({
       name: data?.name,
       description: data?.description,
-      parent: data?.parent?.name
-      
+      createdAt: data?.createdAt
     });
   }, [data]);
 
-  const onConfirm = (e) => {
-    e.preventDefault();
-    validateFields((err, values) => {
-      if (!err) {
-        setLoading(true);
-        if (is_create) {
-          reportApi
-            .create(values)
-            .then((res) => {
-              setLoading(false);
 
-              if (res.code !== 201) {
-                message.error(t("CORE.task_failure"));
-                return;
-              }
-              setLoading(false);
-
-              dispatch(update_identity_table_data_success(identity, res.data));
-              message.success(t("CORE.REPORT.CREATE.SUCCESS"));
-              action();
-            })
-            .catch(() => {
-              setLoading(false);
-              message.error(t("CORE.error.system"));
-            });
-        } else {
-          // objReq.employee.id = data.employee.id;
-          reportApi.update(data.id, values).then((res) => {
-            setLoading(false);
-
-            if (res.code !== 200) {
-              message.error(t("CORE.task_failure"));
-              return;
-            }
-            setLoading(false);
-
-            dispatch(update_identity_table_data_success(identity, res.data));
-            message.success(t("CORE.REPORT.UPDATE.SUCCESS"));
-            action();
-          }).catch(() => {
-            setLoading(false);
-            message.error(t("CORE.error.system"));
-          });
-        }
-      }
-    });
-  };
 
   return (
     <Row type="flex" justify="center">
-      <Col span={12}>
+      <Col span={24}>
         <div className="div_custom">
-          <Form onSubmit={onConfirm}>
+          <Form>
             <Row type="flex" justify="center" align="bottom">
-              <Col span={15}>
+              <Col span={10}>
                 <Form.Item label={t("CORE.REPORT.NAME")}>
-                  {getFieldDecorator("name", {})(<Input  disabled={true}/>)}
+                  {getFieldDecorator("name", {})(<Input disabled={true} />)}
                 </Form.Item>
               </Col>
             </Row>
-           
+
             <Row type="flex" justify="center" align="bottom">
-              <Col span={15}>
+              <Col span={10}>
                 <Form.Item label={t("CORE.REPORT.DESCRIPTION")}>
                   {getFieldDecorator("description", {})(<Input disabled={true} />)}
                 </Form.Item>
               </Col>
             </Row>
-           <Row>
-             <Col>
-             <Table t={t} />
-             </Col>
-           </Row>
-           
+            <Row type="flex" justify="center" align="bottom">
+              <Col span={10}>
+                <Form.Item label={t("CORE.REPORT.CHARGE.CREATE")}>
+                  {getFieldDecorator("createdAt", {})(<Input disabled={true} />)}
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row>
+              <Col span={24}>
 
-            <Row type="flex" justify="center">
-              <div className="btn-group">
-                <Button
-                  loading={loading}
-                  type="primary"
-                  htmlType="submit"
-                  className="btn-yellow btn-right"
-                  style={{ float: "right" }}
-                  onClick={onConfirm}
-                >
-                  {t("CORE.confirm")}
-                </Button>
-              </div>
+                <Table t={t} />
+
+              
+              </Col>
             </Row>
           </Form>
         </div>

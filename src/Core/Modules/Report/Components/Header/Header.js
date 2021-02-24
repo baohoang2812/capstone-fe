@@ -22,9 +22,7 @@ const Header = ({ breadcrumb, action, icon = "plus", text, className }) => {
                 <NavBreadcrumbContentHeader data={breadcrumb} />
               </div>
               <div className="nav-right btn-group">
-                <Button onClick={handleClick} className={className}>
-                  <span>{text}</span>
-                </Button>
+                
               </div>
             </div>
           </div>
