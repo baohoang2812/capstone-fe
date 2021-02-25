@@ -11,7 +11,7 @@ import 'bryntum-react-shared/resources/shared.scss';
 import Main from './containers/Main';
 import Popup from './components/Popup';
 
-function App() {
+const Schedule = () => {
 
     const [popupShown, showPopup] = useState(false),
           [eventRecord, setEventRecord] = useState(null),
@@ -21,7 +21,8 @@ function App() {
     ;
 
     const showEditor = (eventRecord) => {
-        const { eventStore, resourceStore } = main.current.refs.scheduler.schedulerInstance;
+        const { eventStore, resourceStore } = main.current.schedulerInstance;
+
         setEventStore(eventStore);
         setResourceStore(resourceStore);
         setEventRecord(eventRecord);
@@ -51,6 +52,6 @@ function App() {
     );
 }
 
-export default App;
+export default Schedule;
 
 // eof

@@ -2,245 +2,159 @@
  *- Implements the top level Main container
  */
 // libraries
-import React, { Component } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { BryntumScheduler } from "bryntum-react-shared";
 
 // our stuff
 import Header from "../components/Header.js";
 
-class Main extends Component {
-  /**
-   * render method
-   */
-  render = () => {
-    return (
-      <>
-        <Header titleHref="../../../../../examples/#example-examples-scheduler-react-javascript-custom-event-editor" />
-        <BryntumScheduler
-          ref={"scheduler"}
-          barMargin={5}
-          startDate={new Date(2017, 1, 7, 8)}
-          endDate={new Date(2017, 1, 7, 18)}
-          events={[
-              {
-                resourceId: "r3",
-                name: "Meeting #1",
-                startDate: "2017-02-07 11:00",
-                endDate: "2017-02-07 14:00",
-                location: "Some office",
-                eventType: "Meeting",
-                iconCls: "b-fa b-fa-calendar",
-              },
-              {
-                resourceId: "r4",
-                name: "Meeting #2",
-                startDate: "2017-02-07 12:00",
-                endDate: "2017-02-07 15:00",
-                location: "Home office",
-                eventType: "Meeting",
-                iconCls: "b-fa b-fa-calendar",
-              },
-              {
-                resourceId: "r10",
-                name: "Meeting #3",
-                startDate: "2017-02-07 13:00",
-                endDate: "2017-02-07 16:00",
-                location: "Customer office",
-                eventType: "Meeting",
-                iconCls: "b-fa b-fa-calendar",
-              },
-              {
-                resourceId: "r11",
-                name: "Important meeting",
-                startDate: "2017-02-07 09:00",
-                endDate: "2017-02-07 11:00",
-                location: "Some office",
-                eventType: "Meeting",
-                eventColor: "red",
-                iconCls: "b-fa b-fa-exclamation-triangle",
-              },
-              {
-                resourceId: "r14",
-                name: "Appointment #1",
-                startDate: "2017-02-07 10:00",
-                endDate: "2017-02-07 12:00",
-                location: "Home office",
-                type: "Dental",
-                eventType: "Appointment",
-                iconCls: "b-fa b-fa-calendar-alt",
-              },
-              {
-                resourceId: "r15",
-                name: "Appointment #2",
-                startDate: "2017-02-07 11:00",
-                endDate: "2017-02-07 13:00",
-                location: "Customer office",
-                type: "Medical",
-                eventType: "Appointment",
-                iconCls: "b-fa b-fa-calendar-alt",
-              },
-              {
-                resourceId: "r15",
-                name: "Appointment #3",
-                startDate: "2017-02-07 10:00",
-                endDate: "2017-02-07 12:00",
-                location: "Home office",
-                type: "Medical",
-                eventType: "Appointment",
-                iconCls: "b-fa b-fa-calendar-alt",
-              },
-              {
-                resourceId: "r18",
-                name: "Important appointment",
-                startDate: "2017-02-07 15:00",
-                endDate: "2017-02-07 18:00",
-                location: "Customer office",
-                type: "Dental",
-                eventType: "Appointment",
-                eventColor: "red",
-                iconCls: "b-fa b-fa-exclamation-triangle",
-              },
-            ]}
-          resources={[
-              {
-                id: "r1",
-                name: "Mike Anderson",
-                category: "Consultants",
-                type: "Full time",
-                image: "mike",
-              },
-              {
-                id: "r2",
-                name: "Kevin Larson",
-                category: "Consultants",
-                type: "Full time",
-                image: "amit",
-              },
-              {
-                id: "r3",
-                name: "Brett Hornbach",
-                category: "Consultants",
-                type: "Full time",
-                image: "angelo",
-              },
-              {
-                id: "r4",
-                name: "Lars Holt",
-                category: "Consultants",
-                type: "Full time",
-                image: "arcady",
-              },
-              {
-                id: "r5",
-                name: "Fred Arnold",
-                category: "Consultants",
-                type: "Part time",
-                image: "arnold",
-              },
-              {
-                id: "r10",
-                name: "Matt Demon",
-                category: "Sales",
-                type: "Full time",
-                image: "dan",
-              },
-              {
-                id: "r11",
-                name: "Karl Lager",
-                category: "Testers",
-                type: "Part time",
-                image: "henrik",
-              },
-              {
-                id: "r12",
-                name: "Pete Wilson",
-                category: "Testers",
-                type: "Full time",
-                image: "malik",
-              },
-              {
-                id: "r13",
-                name: "Derek Ronburg",
-                category: "Testers",
-                type: "Full time",
-                image: "jong",
-              },
-              {
-                id: "r14",
-                name: "Alyssa Patterson",
-                category: "Testers",
-                type: "Full time",
-                image: "lola",
-              },
-              {
-                id: "r15",
-                name: "Will Pherrel",
-                category: "Testers",
-                type: "Part time",
-                image: "lee",
-              },
-              {
-                id: "r16",
-                name: "Ofelia Larson",
-                category: "Research",
-                type: "Full time",
-                image: "emilia",
-              },
-              {
-                id: "r17",
-                name: "David Mantorp",
-                category: "Research",
-                type: "Part time",
-                image: "mark",
-              },
-              {
-                id: "r18",
-                name: "Ann Withersby",
-                category: "Research",
-                type: "Full time",
-                image: "gloria",
-              },
-              {
-                id: "r20",
-                name: "John Dough",
-                category: "Research",
-                type: "Full time",
-                image: "rob",
-              },
-            ]}
-          timeRanges={[
-              {
-                startDate: "2017-02-07 11:00",
-                endDate: "2017-02-07 12:00",
-              },
-            ]}
-          listeners={{
-            beforeEventEdit: (source) => {
-              source.eventRecord.resourceId = source.resourceRecord.id;
-              this.props.showEditor(source.eventRecord);
-              return false;
-            },
-          }}
-          resourceImagePath="users/"
-          // Columns in scheduler
-          columns={[
-            {
-              type: "resourceInfo",
-              text: "Staff",
-              width: 180,
-            },
-            {
-              text: "Type",
-              field: "category",
-              width: 100,
-            },
-          ]}
-        />{" "}
-        {/* eo BryntumScheduler */}
-      </>
-    );
-  }; // eo function render
-} // eo class Main
+// API
+import employeeApi from "~/Core/Modules/WorkSchedule/Api/EmployeeApi";
+
+
+const Main = React.forwardRef((props, ref) => {
+  const [employees, setEmployees] = useState([])
+  const scheduler = useRef();
+
+  useEffect(() => {
+    employeeApi.getList()
+    .then( res => {
+      console.log(res.data);
+      const listEmployee = res?.data?.result?.map( item => {
+        return {
+          id: item.id,
+          name: `${item.lastName} ${item.firstName}`,
+          category: item?.position?.name,
+          type: item.isPartTime ? "Full time" : "Part time",
+          image: item.imagePath,
+        }
+      })
+
+      setEmployees(listEmployee);
+    })
+  }, [])
+
+  return (
+    <>
+      <Header titleHref="../../../../../examples/#example-examples-scheduler-react-javascript-custom-event-editor" />
+      <BryntumScheduler
+        ref={ref}
+        barMargin={5}
+        startDate={new Date(2017, 1, 7, 8)}
+        endDate={new Date(2017, 1, 7, 18)}
+        events={[
+          {
+            resourceId: "6",
+            name: "Meeting #1",
+            startDate: "2017-02-07 11:00",
+            endDate: "2017-02-07 14:00",
+            location: "Some office",
+            eventType: "Meeting",
+            iconCls: "b-fa b-fa-calendar",
+          },
+          {
+            resourceId: "7",
+            name: "Meeting #2",
+            startDate: "2017-02-07 12:00",
+            endDate: "2017-02-07 15:00",
+            location: "Home office",
+            eventType: "Meeting",
+            iconCls: "b-fa b-fa-calendar",
+          },
+          {
+            resourceId: "8",
+            name: "Meeting #3",
+            startDate: "2017-02-07 13:00",
+            endDate: "2017-02-07 16:00",
+            location: "Customer office",
+            eventType: "Meeting",
+            iconCls: "b-fa b-fa-calendar",
+          },
+          {
+            resourceId: "9",
+            name: "Important meeting",
+            startDate: "2017-02-07 09:00",
+            endDate: "2017-02-07 11:00",
+            location: "Some office",
+            eventType: "Meeting",
+            eventColor: "red",
+            iconCls: "b-fa b-fa-exclamation-triangle",
+          },
+          {
+            resourceId: "10",
+            name: "Appointment #1",
+            startDate: "2017-02-07 10:00",
+            endDate: "2017-02-07 12:00",
+            location: "Home office",
+            type: "Dental",
+            eventType: "Appointment",
+            iconCls: "b-fa b-fa-calendar-alt",
+          },
+          {
+            resourceId: "11",
+            name: "Appointment #2",
+            startDate: "2017-02-07 11:00",
+            endDate: "2017-02-07 13:00",
+            location: "Customer office",
+            type: "Medical",
+            eventType: "Appointment",
+            iconCls: "b-fa b-fa-calendar-alt",
+          },
+          {
+            resourceId: "13",
+            name: "Appointment #3",
+            startDate: "2017-02-07 10:00",
+            endDate: "2017-02-07 12:00",
+            location: "Home office",
+            type: "Medical",
+            eventType: "Appointment",
+            iconCls: "b-fa b-fa-calendar-alt",
+          },
+          {
+            resourceId: "12",
+            name: "Important appointment",
+            startDate: "2017-02-07 15:00",
+            endDate: "2017-02-07 18:00",
+            location: "Customer office",
+            type: "Dental",
+            eventType: "Appointment",
+            eventColor: "red",
+            iconCls: "b-fa b-fa-exclamation-triangle",
+          },
+        ]}
+        resources={employees}
+        timeRanges={[
+          {
+            startDate: "2017-02-07 11:00",
+            endDate: "2017-02-07 12:00",
+          },
+        ]}
+        listeners={{
+          beforeEventEdit: (source) => {
+            source.eventRecord.resourceId = source.resourceRecord.id;
+            props.showEditor(source.eventRecord);
+            return false;
+          },
+        }}
+        resourceImagePath="users/"
+        // Columns in scheduler
+        columns={[
+          {
+            type: "resourceInfo",
+            text: "Staff",
+            width: 180,
+          },
+          {
+            text: "Type",
+            field: "category",
+            width: 100,
+          },
+        ]}
+      />{" "}
+      {/* eo BryntumScheduler */}
+    </>
+  );
+}) // eo class Main
 
 export default Main;
 

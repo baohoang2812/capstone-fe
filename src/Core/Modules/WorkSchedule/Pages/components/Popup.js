@@ -10,10 +10,14 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import DateFnsUtils from '@date-io/date-fns';
+import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
+
+
 import {
     MuiPickersUtilsProvider,
     KeyboardDateTimePicker
 } from '@material-ui/pickers';
+import contactApi from "~/Core/Modules/WorkSchedule/Api/EmployeeApi";
 
 class Popup extends React.Component {
 
@@ -145,7 +149,7 @@ class Popup extends React.Component {
                                 <MenuItem value="Appointment">Appointment</MenuItem>
                             </Select>
                         </FormControl>
-                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
                             <KeyboardDateTimePicker
                                 name="startDate"
                                 label="Start"
@@ -164,7 +168,7 @@ class Popup extends React.Component {
                                 value={this.state.endDate}
                                 onChange={this.endDateChangeHandler}
                             ></KeyboardDateTimePicker>
-                        </MuiPickersUtilsProvider>
+                        </MuiPickersUtilsProvider> */}
                     </article>
                     <footer>
                         <Button variant="contained" color="secondary" onClick={this.props.closePopup}>Cancel</Button>
