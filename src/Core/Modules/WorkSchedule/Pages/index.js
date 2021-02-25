@@ -1,33 +1,56 @@
-import React from "react";
-import { useHistory } from "react-router-dom";
+/**
+ *- Application file
+ */
+// libraries
+import React, { useState, useRef } from 'react';
 
-/* Components */
-import Header from "~/Core/Modules/WorkSchedule/Components/Header/Header";
-import Table from "~/Core/Modules/WorkSchedule/Components/Table/Table";
-/* Hooks */
-import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
+// our stuff
+import './App.scss';
+import 'bryntum-schedulerpro/schedulerpro.stockholm.css';
+import 'bryntum-react-shared/resources/shared.scss';
+import Main from './containers/Main';
+import Popup from './components/Popup';
 
-const UserManagement = () => {
-  const history = useHistory();
+function App() {
 
-  const t = useTranslate();
+    const [popupShown, showPopup] = useState(false),
+          [eventRecord, setEventRecord] = useState(null),
+          [eventStore, setEventStore] = useState(null),
+          [resourceStore, setResourceStore] = useState(null),
+          main = useRef()
+    ;
 
-  const createWorkSchedule = () => {
-    history.push("/workSchedule/create")
-  }
+    const showEditor = (eventRecord) => {
+        const { eventStore, resourceStore } = main.current.refs.scheduler.schedulerInstance;
+        setEventStore(eventStore);
+        setResourceStore(resourceStore);
+        setEventRecord(eventRecord);
+        showPopup(true);
+    }
 
+    const hideEditor = () => {
+        setEventRecord(null);
+        showPopup(false)
+    }
 
-  return (
-    <div className="page-header workSchedule">
-      <Header
-        breadcrumb={[{ title: t("CORE.WORKSCHEDULE.MANAGEMENT.TITLE") }]}
-        action={() => createWorkSchedule()}
-        text={t("CORE.WORKSCHEDULE.CREATE.ACCOUNT")}
-        className="btn-yellow"
-      />
-      <Table t={t} />
-    </div>
-  );
-};
+    return (
+        <>
+            <Main showEditor={showEditor} ref={main} />
+            <div>
+                { popupShown ?
+                    <Popup
+                        text="Popup text"
+                        closePopup={hideEditor}
+                        eventRecord={eventRecord}
+                        eventStore={eventStore}
+                        resourceStore={resourceStore}
+                    ></Popup> :
+                null}
+            </div>
+        </>
+    );
+}
 
-export default UserManagement;
+export default App;
+
+// eof

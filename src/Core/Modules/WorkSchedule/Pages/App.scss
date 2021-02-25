@@ -1,0 +1,12 @@
+/**
+ *- Main application sass file that contains all the application styling
+ */
+.b-sch-event:not(.b-sch-event-milestone) {
+  border-radius : 2px;
+}
+
+.b-sch-event.b-sch-event-milestone label {
+  margin-left: 2.2em;
+}
+
+// eof
