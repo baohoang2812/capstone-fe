@@ -1,0 +1,2 @@
+ yarn --network-timeout 100000
+ clone https://github.com/nguyenquangkhai2210/schedule.git
