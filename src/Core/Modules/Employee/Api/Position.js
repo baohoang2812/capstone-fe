@@ -5,4 +5,4 @@ class PositionApi extends BaseApi {
     return this.initApi.get(`${this.baseUrl}`);
   };
 }
-export default new PositionApi().requestUrl("/api/position");
+export default new PositionApi().requestUrl("/v1/positions");

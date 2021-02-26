@@ -12,6 +12,7 @@ import {
     message,
     Select
 } from "antd";
+import moment from "moment";
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 
@@ -22,7 +23,8 @@ import { update_identity_table_data_success } from "~/Core/Store/actions/adminTa
 import { violations as identity } from "~/Core/Modules/Report/Configs/Constants";
 
 /* Api */
-import violationApi from "~/Core/Modules/Report/Api/Violation";
+import updateViolatorApi from "~/Core/Modules/Report/Api/Violation";
+import employeeApi from "~/Core/Modules/Employee/Api";
 
 const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
     const t = useTranslate();
@@ -33,16 +35,24 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
     const [loading, setLoading] = useState(false);
     const [loadingDropdown, setLoadingDropdown] = useState(false);
     const { getFieldDecorator, validateFields, setFieldsValue } = form;
+    const [ dataEmployee, setDataEmployee ] = useState([]);
 
     useEffect(() => {
         console.log(data);
+        employeeApi.getList()
+            .then(res => {
+                const result = res.data.result;
+                setDataEmployee(result);
+            }
+            )
+
     }, [data]);
     const { Option } = Select;
     const onConfirm = (e) => {
         e.preventDefault();
         validateFields((err, values) => {
             if (!err) {
-                violationApi.update(
+                updateViolatorApi.update(
                     data.id,
                     {
                         excuse: "string",
@@ -61,7 +71,7 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
                             return;
                         }
                         dispatch(update_identity_table_data_success(identity, { id: res.data.id, column: "status", data: res.data.status }));
-                        message.success(t("CORE.POSITION.CREATE.SUCCESS"));
+                        message.success(t("CORE.VIOLATION.CREATE.SUCCESS"));
                         action();
                     })
                     .catch(() => {
@@ -71,6 +81,7 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
             }
         });
     };
+    console.log(dataEmployee);
     return (
         <Row type="flex" justify="center">
             <Col span={24}>
@@ -109,30 +120,33 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
                                 <Form.Item label={t("CORE.VIOLATION.CHARGE.CREATE")}>
                                     {getFieldDecorator("createdAt", {
 
-                                    })(<span>{data.createdAt}</span>)}
+                                    })(<span>{moment(data.createdAt).format("DD-MM-YYYY")}</span>)}
                                 </Form.Item>
                             </Col>
                         </Row>
                         <Row type="flex" justify="center" align="bottom">
                             <Col span={20}>
-                            <Form.Item label={t("CORE.VIOLATION.SELECT.VIOLATOR")}>
-          {getFieldDecorator('select-multiple', {
-            rules: [
-              { required: true, message: 'Please select violator!', type: 'array' },
-            ],
-          })(
-            <Select mode="multiple" placeholder="Please select violator">
-              <Option  value="red">Branch Manager</Option>
-              <Option value="green">Employee 1</Option>
-              <Option value="blue">Employee 2</Option>
-            </Select>,
-          )}
-        </Form.Item>
+                                <Form.Item label={t("CORE.VIOLATION.SELECT.VIOLATOR")}>
+                                    {getFieldDecorator("violator", {
+                                        rules: [
+                                            { required: true, message: 'Please select violator!', type: 'array' },
+                                        ],
+                                        initialValue: dataEmployee?.[0]?.id,
+                                    })(
+                                        <Select mode="multiple" placeholder="Please select violator">
+                                            {dataEmployee.map((item) => (
+                                                <Option key={item.id} value={item.id}>
+                                                    {`${item.lastName} ${item.firstName}`}
+                                                </Option>
+                                            ))}
+                                        </Select>,
+                                    )}
+                                </Form.Item>
                             </Col>
                         </Row>
                         <Row type="flex" justify="center">
-                            { isShow ? (<div className="btn-group">
-                                
+                            {isShow ? (<div className="btn-group">
+
                                 <Button
                                     loading={loading}
                                     type="danger"

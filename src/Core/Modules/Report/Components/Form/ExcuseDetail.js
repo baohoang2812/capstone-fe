@@ -11,6 +11,7 @@ import {
     Divider,
     message
 } from "antd";
+import moment from "moment";
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 
@@ -22,7 +23,7 @@ import { violations as identity } from "~/Core/Modules/Report/Configs/Constants"
 
 /* Api */
 import violationApi from "~/Core/Modules/Report/Api/Violation";
-
+import employeeApi from "~/Core/Modules/Employee/Api";
 const ExcuseDetail = ({ form, isShow = true, action, data }) => {
     const t = useTranslate();
     const { TextArea } = Input;
@@ -32,9 +33,20 @@ const ExcuseDetail = ({ form, isShow = true, action, data }) => {
     const [loading, setLoading] = useState(false);
     const [loadingDropdown, setLoadingDropdown] = useState(false);
     const { getFieldDecorator, validateFields, setFieldsValue } = form;
-
+    const [dataEmployee, setDataEmployee] = useState([]);
     useEffect(() => {
         console.log(data);
+
+        if (data?.employeeIds?.length > 0) {
+            employeeApi.getListFilter(data.employeeIds)
+                .then(res => {
+                    const result = res.data.result;
+                    setDataEmployee(result);
+                })
+        } else {
+            setDataEmployee([])
+        }
+
     }, [data]);
 
     const onConfirm = (e) => {
@@ -108,10 +120,32 @@ const ExcuseDetail = ({ form, isShow = true, action, data }) => {
                                 <Form.Item label={t("CORE.VIOLATION.CHARGE.CREATE")}>
                                     {getFieldDecorator("createdAt", {
 
-                                    })(<span>{data.createdAt}</span>)}
+                                    })(<span>{moment(data.createdAt).format("DD-MM-YYYY")}</span>)}
                                 </Form.Item>
                             </Col>
                         </Row>
+                        <Row type="flex" justify="center" align="bottom">
+                            <Col span={20}>
+                                <Form.Item label={t("CORE.VIOLATION.VIOLATOR")}>
+                                    {getFieldDecorator('select-multiple', {
+
+                                    })(
+                                        <>
+                                            {
+                                                dataEmployee.map(item => {
+                                                    return (
+                                                        <div>
+                                                            {`${item.lastName} ${item.firstName}`}
+                                                        </div>
+                                                    )
+                                                })
+                                            }
+                                        </>
+                                    )}
+                                </Form.Item>
+                            </Col>
+                        </Row>
+
                         <Row type="flex" justify="center" align="bottom">
                             {
                                 data?.status === "Excuse" || data?.status === "Declined" ? (<Col span={20}>
@@ -124,7 +158,7 @@ const ExcuseDetail = ({ form, isShow = true, action, data }) => {
                             }
                         </Row>
                         <Row type="flex" justify="center">
-                            { isShow ? (<div className="btn-group">
+                            {isShow ? (<div className="btn-group">
                                 <Button
                                     loading={loading}
                                     type="primary"

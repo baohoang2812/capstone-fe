@@ -233,7 +233,7 @@ const UserTable = () => {
     } = jwt_decode(token);
     console.log(role);
     if (role === "Admin") {
-      const isDisable = record?.status?.toLocaleLowerCase() === 'open' || record?.status?.toLocaleLowerCase() === 'excuse'
+      const isDisable = record?.status?.toLocaleLowerCase() === 'excuse'
       return (
           <>
             <Button disabled={!isDisable} onClick={() => { openModelExcuse(record) }} type="danger">

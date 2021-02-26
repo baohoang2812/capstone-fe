@@ -23,6 +23,7 @@ import { reports as identity } from "~/Core/Modules/Report/Configs/Constants";
 import reportApi from "~/Core/Modules/Report/Api";
 
 import Table from "~/Core/Modules/Report/Components/Table/TableViolation";
+import moment from "moment";
 
 const { Option } = Select;
 const ReportDetailForm = ({ form, is_create, action, data }) => {
@@ -38,7 +39,7 @@ const ReportDetailForm = ({ form, is_create, action, data }) => {
     setFieldsValue({
       name: data?.name,
       description: data?.description,
-      createdAt: data?.createdAt
+      createdAt: moment(data?.createdAt).format("DD-MM-YYYY")
     });
   }, [data]);
 
