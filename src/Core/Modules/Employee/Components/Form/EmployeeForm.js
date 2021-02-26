@@ -32,7 +32,7 @@ import { employees as identity } from "~/Core/Modules/Employee/Configs/constants
 /* Api */
 import employeeApi from "~/Core/Modules/Employee/Api";
 import branchApi from "~/Core/Modules/Employee/Api/Branch";
-// import positionApi from "~/Core/Modules/Employee/Api/Position";
+import positionApi from "~/Core/Modules/Employee/Api/Position";
 
 const { Option } = Select;
 
@@ -68,24 +68,9 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
       setLoadingDropdown(true);
 
       const resBranch = await branchApi.getList();
-      // const resPosition = await positionApi.getList();
+      const resPosition = await positionApi.getList();
       setListBranch(resBranch?.data?.result);
-      // setPosition(resPosition?.data?.list);
-      setPosition([
-        {
-          id: 1,
-          name: "IT",
-        },
-        {
-          id: 2,
-          name: "Manager",
-        },
-        {
-          id: 3,
-          name: "Staff",
-        },
-      ]);
-
+      setPosition(resPosition?.data?.result);
       setLoadingDropdown(false);
     })();
   }, []);

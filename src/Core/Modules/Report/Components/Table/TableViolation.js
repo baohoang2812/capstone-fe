@@ -15,6 +15,7 @@ import ImageThumbnail from "~/Core/Components/common/ImageThumbnail";
 import { violations as identity } from "~/Core/Modules/Report/Configs/Constants";
 import ViolationDetail from "~/Core/Modules/Report/Components/Form/ViolationDetail";
 import ExcuseDetail from "~/Core/Modules/Report/Components/Form/ExcuseDetail";
+import UpdateViolatorDetail from "~/Core/Modules/Report/Components/Form/UpdateViolatorDetail";
 import { update_identity_table_data_success } from "~/Core/Store/actions/adminTable";
 /* Api */
 import contactApi from "~/Core/Modules/Report/Api/Violation";
@@ -24,6 +25,7 @@ const UserTable = () => {
   const t = useTranslate();
   const [visible, setVisible] = useState(false);
   const [visibleExcuse, setVisibleExcuse] = useState(false);
+  const [visibleViolator, setVisibleViolator] = useState(false);
   const [data, setData] = useState({});
   const [isShow, setIsShow] = useState(true);
   const dispatch = useDispatch();
@@ -43,7 +45,7 @@ const UserTable = () => {
             imagePath: "string",
             reportId: 0,
             regulationId: 0,
-            status: "Confirmed",
+            status: "Declined",
             branchId: 0
 
           }
@@ -78,6 +80,12 @@ const UserTable = () => {
     setData(record);
   };
 
+  const openModelViolator = (record) => {
+
+    setVisibleViolator(true);
+    setData(record);
+  };
+
   const openModelExcuse = (record, isShow = true) => {
     setVisibleExcuse(true);
     setData(record);
@@ -87,6 +95,7 @@ const UserTable = () => {
   const handleCloseModal = () => {
     setVisible(false);
     setVisibleExcuse(false);
+    setVisibleViolator(false);
   };
 
   const defs = useMemo(() => [
@@ -224,7 +233,7 @@ const UserTable = () => {
     } = jwt_decode(token);
     console.log(role);
     if (role === "Admin") {
-      const isDisable = record?.status?.toLocaleLowerCase() === 'open' || record?.status?.toLocaleLowerCase() === 'excuse'
+      const isDisable = record?.status?.toLocaleLowerCase() === 'excuse'
       return (
           <>
             <Button disabled={!isDisable} onClick={() => { openModelExcuse(record) }} type="danger">
@@ -244,7 +253,7 @@ const UserTable = () => {
               {t("CORE.VIOLATION.ACTION.REJECT")}
             </Button>
             <Divider type="vertical" />
-            <Button disabled={!isDisable} onClick={() => { showConfirm(record) }} type="primary">
+            <Button disabled={!isDisable} onClick={() => { openModelViolator(record) }} type="primary">
               {t("CORE.VIOLATION.ACTION.ACCEPT")}
             </Button>
           </>
@@ -286,6 +295,15 @@ const UserTable = () => {
         footer={null}
       >
         <ExcuseDetail data={data} isShow={isShow} action={handleCloseModal} />
+      </Modal>
+
+      <Modal
+        title={t("CORE.VIOLATION.MANAGEMENT.TITLE")}
+        visible={visibleViolator}
+        onCancel={handleCloseModal}
+        footer={null}
+      >
+        <UpdateViolatorDetail data={data} action={handleCloseModal} />
       </Modal>
     </>
   );

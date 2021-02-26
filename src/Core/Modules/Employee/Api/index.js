@@ -5,6 +5,14 @@ class ProfileApi extends BaseApi {
     return this.initApi.get(`${this.baseUrl}`, filters);
   };
 
+  getListFilter = (filters) => {
+    let stringFilter = filters.reduce( (result, item) => {
+      return `${result}Filter.Ids=${item}&`;
+    }, "")
+    stringFilter = stringFilter.slice(0, -1);
+    return this.initApi.get(`${this.baseUrl}?${stringFilter}`, filters);
+  };
+
   update = (id, body) => {
     return this.initApi.put(`${this.baseUrl}/${id}`, body);
   };

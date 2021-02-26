@@ -32,6 +32,8 @@
     "CORE.VIOLATION.OPEN":"Open",
     "CORE.VIOLATION.DECLINED":"Declined",
     "CORE.VIOLATION.STATUS.EXCUSE":"Excuse",
-    "CORE.VIOLATION.CONFIRM.SUCCESS":"Updated success"
+    "CORE.VIOLATION.CONFIRM.SUCCESS":"Updated success",
+    "CORE.VIOLATION.SELECT.VIOLATOR":"Select violator",
+    "CORE.VIOLATION.VIOLATOR":"Violator"
 
 }

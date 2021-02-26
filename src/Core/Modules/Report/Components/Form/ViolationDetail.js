@@ -10,6 +10,7 @@ import {
     Spin,
     message
 } from "antd";
+import moment from "moment";
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 
@@ -21,6 +22,7 @@ import { violations as identity } from "~/Core/Modules/Report/Configs/Constants"
 
 /* Api */
 import violationApi from "~/Core/Modules/Report/Api/Violation";
+import employeeApi from "~/Core/Modules/Employee/Api";
 
 const ViolationDetail = ({ form, is_create, action, data }) => {
     const t = useTranslate();
@@ -31,13 +33,18 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
     const [loading, setLoading] = useState(false);
     const [loadingDropdown, setLoadingDropdown] = useState(false);
     const { getFieldDecorator, validateFields, setFieldsValue } = form;
-
+    const [dataEmployee, setDataEmployee] = useState([]);
     useEffect(() => {
-        console.log(data);
-        setFieldsValue({
+        if (data?.employeeIds?.length > 0) {
+            employeeApi.getListFilter(data.employeeIds)
+                .then(res => {
+                    const result = res.data.result;
+                    setDataEmployee(result);
+                })
+        } else {
+            setDataEmployee([])
+        }
 
-
-        });
     }, [data]);
 
     const onConfirm = (e) => {
@@ -48,28 +55,28 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
                     data.id,
                     {
                         excuse: values.excuse,
-                    name: "string",
-                    description: "string",
-                    imagePath: "string",
-                    reportId: 0,
-                    regulationId: 0,
-                    status: "Excuse",
-                    branchId: 0
+                        name: "string",
+                        description: "string",
+                        imagePath: "string",
+                        reportId: 0,
+                        regulationId: 0,
+                        status: "Excuse",
+                        branchId: 0
                     }
-                  )
+                )
                     .then((res) => {
-                      if (res.code !== 200) {
-                        message.error(t("CORE.task_failure"));
-                        return;
-                      }
-                      dispatch(update_identity_table_data_success(identity, { id: res.data.id, column: "status", data: res.data.status }));
-                      message.success(t("CORE.VIOLATION.CONFIRM.SUCCESS"));
-                      action();
+                        if (res.code !== 200) {
+                            message.error(t("CORE.task_failure"));
+                            return;
+                        }
+                        dispatch(update_identity_table_data_success(identity, { id: res.data.id, column: "status", data: res.data.status }));
+                        message.success(t("CORE.VIOLATION.CONFIRM.SUCCESS"));
+                        action();
                     })
                     .catch(() => {
-                      message.error(t("CORE.error.system"));
+                        message.error(t("CORE.error.system"));
                     });
-                
+
             }
         });
     };
@@ -111,19 +118,42 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
                                 <Form.Item label={t("CORE.VIOLATION.CHARGE.CREATE")}>
                                     {getFieldDecorator("createdAt", {
 
-                                    })(<span>{data.createdAt}</span>)}
+                                    })(<span>{moment(data.createdAt).format("DD-MM-YYYY")}</span>)}
                                 </Form.Item>
                             </Col>
                         </Row>
+                        <Row type="flex" justify="center" align="bottom">
+                            <Col span={20}>
+                                <Form.Item label={t("CORE.VIOLATION.VIOLATOR")}>
+                                    {getFieldDecorator('select-multiple', {
+
+                                    })(
+                                        <>
+                                            {
+                                                dataEmployee.map(item => {
+                                                    return (
+                                                        <div>
+                                                            {`${item.lastName} ${item.firstName}`}
+                                                        </div>
+                                                    )
+                                                })
+                                            }
+                                        </>
+                                    )}
+                                </Form.Item>
+                            </Col>
+                        </Row>
+
+
                         <Row type="flex" justify="center" align="bottom">
                             <Col span={20}>
                                 <Form.Item label={t("CORE.VIOLATION.EXCUSE")}>
                                     {getFieldDecorator("excuse", {
 
                                     })
-                                    ( 
-                                    <TextArea rows={4} />
-                                    )}
+                                        (
+                                            <TextArea rows={4} />
+                                        )}
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -143,7 +173,7 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
                     </Form>
                 </Spin>
             </Col>
-        </Row>
+        </Row >
     );
 };
 export default Form.create({ name: "Violation_Detail" })(

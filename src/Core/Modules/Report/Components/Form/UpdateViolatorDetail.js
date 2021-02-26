@@ -9,7 +9,8 @@ import {
     Button,
     Spin,
     Divider,
-    message
+    message,
+    Select
 } from "antd";
 import moment from "moment";
 /* Hooks */
@@ -22,9 +23,10 @@ import { update_identity_table_data_success } from "~/Core/Store/actions/adminTa
 import { violations as identity } from "~/Core/Modules/Report/Configs/Constants";
 
 /* Api */
-import violationApi from "~/Core/Modules/Report/Api/Violation";
+import updateViolatorApi from "~/Core/Modules/Report/Api/Violation";
 import employeeApi from "~/Core/Modules/Employee/Api";
-const ExcuseDetail = ({ form, isShow = true, action, data }) => {
+
+const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
     const t = useTranslate();
     const { TextArea } = Input;
     /* Redux */
@@ -33,27 +35,24 @@ const ExcuseDetail = ({ form, isShow = true, action, data }) => {
     const [loading, setLoading] = useState(false);
     const [loadingDropdown, setLoadingDropdown] = useState(false);
     const { getFieldDecorator, validateFields, setFieldsValue } = form;
-    const [dataEmployee, setDataEmployee] = useState([]);
+    const [ dataEmployee, setDataEmployee ] = useState([]);
+
     useEffect(() => {
         console.log(data);
-
-        if (data?.employeeIds?.length > 0) {
-            employeeApi.getListFilter(data.employeeIds)
-                .then(res => {
-                    const result = res.data.result;
-                    setDataEmployee(result);
-                })
-        } else {
-            setDataEmployee([])
-        }
+        employeeApi.getList()
+            .then(res => {
+                const result = res.data.result;
+                setDataEmployee(result);
+            }
+            )
 
     }, [data]);
-
+    const { Option } = Select;
     const onConfirm = (e) => {
         e.preventDefault();
         validateFields((err, values) => {
             if (!err) {
-                violationApi.update(
+                updateViolatorApi.update(
                     data.id,
                     {
                         excuse: "string",
@@ -72,7 +71,7 @@ const ExcuseDetail = ({ form, isShow = true, action, data }) => {
                             return;
                         }
                         dispatch(update_identity_table_data_success(identity, { id: res.data.id, column: "status", data: res.data.status }));
-                        message.success(t("CORE.VIOLATION.CONFIRM.SUCCESS"));
+                        message.success(t("CORE.VIOLATION.CREATE.SUCCESS"));
                         action();
                     })
                     .catch(() => {
@@ -82,6 +81,7 @@ const ExcuseDetail = ({ form, isShow = true, action, data }) => {
             }
         });
     };
+    console.log(dataEmployee);
     return (
         <Row type="flex" justify="center">
             <Col span={24}>
@@ -126,39 +126,37 @@ const ExcuseDetail = ({ form, isShow = true, action, data }) => {
                         </Row>
                         <Row type="flex" justify="center" align="bottom">
                             <Col span={20}>
-                                <Form.Item label={t("CORE.VIOLATION.VIOLATOR")}>
-                                    {getFieldDecorator('select-multiple', {
-
+                                <Form.Item label={t("CORE.VIOLATION.SELECT.VIOLATOR")}>
+                                    {getFieldDecorator("violator", {
+                                        rules: [
+                                            { required: true, message: 'Please select violator!', type: 'array' },
+                                        ],
+                                        initialValue: dataEmployee?.[0]?.id,
                                     })(
-                                        <>
-                                            {
-                                                dataEmployee.map(item => {
-                                                    return (
-                                                        <div>
-                                                            {`${item.lastName} ${item.firstName}`}
-                                                        </div>
-                                                    )
-                                                })
-                                            }
-                                        </>
+                                        <Select mode="multiple" placeholder="Please select violator">
+                                            {dataEmployee.map((item) => (
+                                                <Option key={item.id} value={item.id}>
+                                                    {`${item.lastName} ${item.firstName}`}
+                                                </Option>
+                                            ))}
+                                        </Select>,
                                     )}
                                 </Form.Item>
                             </Col>
                         </Row>
-
-                        <Row type="flex" justify="center" align="bottom">
-                            {
-                                data?.status === "Excuse" || data?.status === "Declined" ? (<Col span={20}>
-                                    <Form.Item label={t("CORE.VIOLATION.EXCUSE")}>
-                                        {getFieldDecorator("excuse", {
-
-                                        })(<span>{data.excuse}</span>)}
-                                    </Form.Item>
-                                </Col>) : null
-                            }
-                        </Row>
                         <Row type="flex" justify="center">
                             {isShow ? (<div className="btn-group">
+
+                                <Button
+                                    loading={loading}
+                                    type="danger"
+                                    className="btn-yellow btn-left"
+                                    style={{ float: "right" }}
+                                    onClick={action}>
+                                    {t("CORE.cancel")}
+                                </Button>
+                                <Divider type="vertical" />
+
                                 <Button
                                     loading={loading}
                                     type="primary"
@@ -166,16 +164,7 @@ const ExcuseDetail = ({ form, isShow = true, action, data }) => {
                                     className="btn-yellow btn-right"
                                     style={{ float: "right" }}
                                     onClick={onConfirm}>
-                                    {t("CORE.reject")}
-                                </Button>
-                                <Divider type="vertical" />
-                                <Button
-                                    loading={loading}
-                                    type="danger"
-                                    className="btn-yellow btn-right"
-                                    style={{ float: "right" }}
-                                    onClick={action}>
-                                    {t("CORE.cancel")}
+                                    {t("CORE.VIOLATION.CONFIRM.ACCEPT")}
                                 </Button>
                             </div>) : null}
                         </Row>
@@ -185,6 +174,6 @@ const ExcuseDetail = ({ form, isShow = true, action, data }) => {
         </Row>
     );
 };
-export default Form.create({ name: "Excuse_Detail" })(
-    ExcuseDetail
+export default Form.create({ name: "UpdatePerson_Detail" })(
+    UpdateViolatorDetail
 );
