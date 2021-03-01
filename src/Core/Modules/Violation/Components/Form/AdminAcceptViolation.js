@@ -8,7 +8,9 @@ import {
     Input,
     Button,
     Spin,
-    message
+    Divider,
+    message,
+    Select
 } from "antd";
 import moment from "moment";
 /* Hooks */
@@ -21,10 +23,11 @@ import { update_identity_table_data_success } from "~/Core/Store/actions/adminTa
 import { violations as identity } from "~/Core/Modules/Violation/Configs/Constants";
 
 /* Api */
-import violationApi from "~/Core/Modules/Report/Api/Violation";
+import ViolationEmployeeApi from "~/Core/Modules/Violation/Api/ViolationEmployee";
 import employeeApi from "~/Core/Modules/Employee/Api";
+import violationApi from "~/Core/Modules/Violation/Api/Violation";
 
-const ViolationDetail = ({ form, is_create, action, data }) => {
+const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
     const t = useTranslate();
     const { TextArea } = Input;
     /* Redux */
@@ -34,7 +37,9 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
     const [loadingDropdown, setLoadingDropdown] = useState(false);
     const { getFieldDecorator, validateFields, setFieldsValue } = form;
     const [dataEmployee, setDataEmployee] = useState([]);
+
     useEffect(() => {
+        console.log(data);
         if (data?.employeeIds?.length > 0) {
             employeeApi.getListFilter(data.employeeIds)
                 .then(res => {
@@ -46,42 +51,43 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
         }
 
     }, [data]);
-
+    const { Option } = Select;
     const onConfirm = (e) => {
         e.preventDefault();
         validateFields((err, values) => {
+
             if (!err) {
-                console.log(values);
                 violationApi.update(
                     data.id,
                     {
-                        excuse: values.excuse,
+                        excuse: "string",
                         name: "string",
                         description: "string",
                         imagePath: "string",
                         reportId: 0,
                         regulationId: 0,
-                        status: "Excuse",
+                        status: "Accepted Excuse",
                         branchId: 0
                     }
-                )
-                    .then((res) => {
-                        if (res.code !== 200) {
-                            message.error(t("CORE.task_failure"));
-                            return;
-                        }
-                        dispatch(update_identity_table_data_success(identity, { id: res.data.id, column: "status", data: res.data.status }));
-                        dispatch(update_identity_table_data_success(identity, { id: res.data.id, column: "excuse", data: values.excuse }));
-                        message.success(t("CORE.VIOLATION.CONFIRM.SUCCESS"));
-                        action();
-                    })
+                ).then((res) => {
+                    if (res.code !== 200) {
+                        message.error(t("CORE.task_failure"));
+                        return;
+                    }
+                    dispatch(update_identity_table_data_success(identity, { id: res.data.id, column: "status", data: res.data.status }));
+                    message.success(t("CORE.VIOLATION.CREATE.SUCCESS"));
+                    action();
+                })
                     .catch(() => {
                         message.error(t("CORE.error.system"));
                     });
 
+
+
             }
         });
     };
+    console.log(dataEmployee);
     return (
         <Row type="flex" justify="center">
             <Col span={24}>
@@ -146,20 +152,31 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
                             </Col>
                         </Row>
 
-
                         <Row type="flex" justify="center" align="bottom">
-                            <Col span={20}>
-                                <Form.Item label={t("CORE.VIOLATION.EXCUSE")}>
-                                    {getFieldDecorator("excuse", {
+                            {
+                                data?.status === "Excuse" || data?.status === "Declined" ? (<Col span={20}>
+                                    <Form.Item label={t("CORE.VIOLATION.EXCUSE")}>
+                                        {getFieldDecorator("excuse", {
 
-                                    })(
-                                            <TextArea rows={4} />
-                                        )}
-                                </Form.Item>
-                            </Col>
+                                        })(<span>{data.excuse}</span>)}
+                                    </Form.Item>
+                                </Col>) : null
+                            }
                         </Row>
+
                         <Row type="flex" justify="center">
-                            <div className="btn-group">
+                            {isShow ? (<div className="btn-group">
+
+                                <Button
+                                    loading={loading}
+                                    type="danger"
+                                    className="btn-yellow btn-left"
+                                    style={{ float: "right" }}
+                                    onClick={action}>
+                                    {t("CORE.cancel")}
+                                </Button>
+                                <Divider type="vertical" />
+
                                 <Button
                                     loading={loading}
                                     type="primary"
@@ -167,16 +184,16 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
                                     className="btn-yellow btn-right"
                                     style={{ float: "right" }}
                                     onClick={onConfirm}>
-                                    {t("CORE.confirm")}
+                                    {t("CORE.VIOLATION.CONFIRM.ACCEPT")}
                                 </Button>
-                            </div>
+                            </div>) : null}
                         </Row>
                     </Form>
                 </Spin>
             </Col>
-        </Row >
+        </Row>
     );
 };
-export default Form.create({ name: "Violation_Detail" })(
-    ViolationDetail
+export default Form.create({ name: "UpdatePerson_Detail" })(
+    UpdateViolatorDetail
 );

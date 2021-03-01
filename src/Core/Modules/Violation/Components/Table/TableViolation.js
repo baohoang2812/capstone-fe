@@ -16,6 +16,7 @@ import { violations as identity } from "~/Core/Modules/Violation/Configs/Constan
 import ViolationDetail from "~/Core/Modules/Violation/Components/Form/ViolationDetail";
 import ExcuseDetail from "~/Core/Modules/Violation/Components/Form/ExcuseDetail";
 import UpdateViolatorDetail from "~/Core/Modules/Violation/Components/Form/UpdateViolatorDetail";
+import AdminAcceptViolation from "~/Core/Modules/Violation/Components/Form/AdminAcceptViolation";
 import { update_identity_table_data_success } from "~/Core/Store/actions/adminTable";
 /* Api */
 import contactApi from "~/Core/Modules/Violation/Api/Violation";
@@ -26,6 +27,7 @@ const UserTable = () => {
   const [visible, setVisible] = useState(false);
   const [visibleExcuse, setVisibleExcuse] = useState(false);
   const [visibleViolator, setVisibleViolator] = useState(false);
+  const [visibleAdminAccept, setVisibleAdminAccept] = useState(false);
   const [data, setData] = useState({});
   const [isShow, setIsShow] = useState(true);
   const dispatch = useDispatch();
@@ -45,7 +47,7 @@ const UserTable = () => {
             imagePath: "string",
             reportId: 0,
             regulationId: 0,
-            status: "Declined",
+            status: "Accepted Excuse",
             branchId: 0
 
           }
@@ -79,6 +81,10 @@ const UserTable = () => {
     setVisible(true);
     setData(record);
   };
+  const openModelAdminAccept = (record) => {
+    setVisibleAdminAccept(true);
+    setData(record);
+  };
 
   const openModelViolator = (record) => {
 
@@ -96,6 +102,7 @@ const UserTable = () => {
     setVisible(false);
     setVisibleExcuse(false);
     setVisibleViolator(false);
+    setVisibleAdminAccept(false);
   };
 
   const defs = useMemo(() => [
@@ -148,7 +155,7 @@ const UserTable = () => {
           return (
             <Tag color="orange">{t("CORE.VIOLATION.OPEN")}</Tag>
           )
-        } else if (record.status.toLocaleLowerCase() === 'declined') {
+        } else if (record.status.toLocaleLowerCase() === 'accepted excuse') {
           return (
             <Tag color="red">{t("CORE.VIOLATION.DECLINED")}</Tag>
           )
@@ -240,7 +247,7 @@ const UserTable = () => {
               {t("CORE.VIOLATION.ACTION.REJECT")}
             </Button>
             <Divider type="vertical" />
-            <Button disabled={!isDisable} onClick={() => { showConfirm(record) }} type="primary">
+            <Button disabled={!isDisable} onClick={() => { openModelAdminAccept(record) }} type="primary">
               {t("CORE.VIOLATION.ACTION.ACCEPT")}
             </Button>
           </>
@@ -304,6 +311,15 @@ const UserTable = () => {
         footer={null}
       >
         <UpdateViolatorDetail data={data} action={handleCloseModal} />
+      </Modal>
+
+      <Modal
+        title={t("CORE.VIOLATION.MANAGEMENT.TITLE")}
+        visible={visibleAdminAccept}
+        onCancel={handleCloseModal}
+        footer={null}
+      >
+        <AdminAcceptViolation data={data} action={handleCloseModal} />
       </Modal>
     </>
   );

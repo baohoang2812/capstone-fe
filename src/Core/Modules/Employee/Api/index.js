@@ -10,7 +10,7 @@ class ProfileApi extends BaseApi {
       return `${result}Filter.Ids=${item}&`;
     }, "")
     stringFilter = stringFilter.slice(0, -1);
-    return this.initApi.get(`${this.baseUrl}?${stringFilter}`, filters);
+    return this.initApi.get(`${this.baseUrl}?${stringFilter}`);
   };
 
   update = (id, body) => {

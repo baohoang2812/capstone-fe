@@ -25,6 +25,7 @@ import { violations as identity } from "~/Core/Modules/Violation/Configs/Constan
 /* Api */
 import ViolationEmployeeApi from "~/Core/Modules/Violation/Api/ViolationEmployee";
 import employeeApi from "~/Core/Modules/Employee/Api";
+import  violationApi from "~/Core/Modules/Violation/Api/Violation";
 
 const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
     const t = useTranslate();
@@ -67,8 +68,31 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
                             return;
                         }
                         dispatch(update_identity_table_data_success(identity, { id: res.data.id, column: "status", data: res.data.status }));
-                        message.success(t("CORE.VIOLATION.CREATE.SUCCESS"));
-                        action();
+                        violationApi.update(
+                            data.id,
+                            {
+                                excuse: "string",
+                                name: "string",
+                                description: "string",
+                                imagePath: "string",
+                                reportId: 0,
+                                regulationId: 0,
+                                status: "Confirmed",
+                                branchId: 0
+                            }
+                        ).then((res) => {
+                            if (res.code !== 200) {
+                                message.error(t("CORE.task_failure"));
+                                return;
+                            }
+                            dispatch(update_identity_table_data_success(identity, { id: res.data.id, column: "status", data: res.data.status }));
+                            message.success(t("CORE.VIOLATION.CREATE.SUCCESS"));
+                            action();
+                        })
+                        .catch(() => {
+                            message.error(t("CORE.error.system"));
+                        });
+                       
                     })
                     .catch(() => {
                         message.error(t("CORE.error.system"));

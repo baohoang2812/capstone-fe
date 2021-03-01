@@ -33,7 +33,8 @@
     "CORE.VIOLATION.STATUS.EXCUSE":"Biện minh",
     "CORE.VIOLATION.CONFIRM.SUCCESS":"Cập nhật thành công",
     "CORE.VIOLATION.SELECT.VIOLATOR":"Chọn người vi phạm",
-    "CORE.VIOLATION.VIOLATOR":"Người vi phạm"
+    "CORE.VIOLATION.VIOLATOR":"Người vi phạm",
+    "CORE.VIOLATION.CREATE.SUCCESS":"Cập nhật thành công"
 
 
 

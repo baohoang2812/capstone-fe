@@ -10,38 +10,53 @@ import Header from "../components/Header.js";
 
 // API
 import employeeApi from "~/Core/Modules/WorkSchedule/Api/EmployeeApi";
+import workScheduleApi from "~/Core/Modules/WorkSchedule/Api/WorkScheduleApi";
 import moment from "moment";
 
 const Main = React.forwardRef((props, ref) => {
-  const [employees, setEmployees] = useState([])
+  const [employees, setEmployees] = useState([]);
+  const [workSchedules, setWorkSchedules] = useState([])
   const scheduler = useRef();
   const t = useTranslate();
   useEffect(() => {
     employeeApi.getList()
-    .then( res => {
-      console.log(res.data);
-      const listEmployee = res?.data?.result?.map( item => {
-        return {
-          id: item.id,
-          name: `${item.lastName} ${item.firstName}`,
-          category: item?.position?.name,
-          type: item.isPartTime ? "Full time" : "Part time",
-          image: item.imagePath,
-        }
-      })
+      .then(res => {
+        console.log(res.data);
+        const listEmployee = res?.data?.result?.map(item => {
+          return {
+            id: item.id,
+            name: `${item.lastName} ${item.firstName}`,
+            category: item?.position?.name,
+            type: item.isPartTime ? "Full time" : "Part time",
+            image: item.imagePath,
+          }
+        })
 
-      setEmployees(listEmployee);
-    });
+        setEmployees(listEmployee);
+      });
+
+    workScheduleApi.getList()
+      .then(res => {
+        const listWorkSchedule = res?.data?.result?.map(item => {
+          return {
+            id: item.id,
+            workDate: item.workDate,
+            shift: item.shift.name,
+
+          }
+        })
+        setWorkSchedules(listWorkSchedule);
+      })
 
   }, [])
   const startDate = () => {
     const start = new Date();
-    start.setHours(8,0,0,0);
+    start.setHours(8, 0, 0, 0);
     return start
   }
   const endDate = () => {
     const end = new Date();
-    end.setHours(23,59,59,999);
+    end.setHours(23, 59, 59, 999);
     return end
   }
   return (
@@ -52,88 +67,91 @@ const Main = React.forwardRef((props, ref) => {
         barMargin={7}
         startDate={startDate()}
         endDate={endDate()}
-        events={[
-          {
-            resourceId: "6",
-            name: "Ca 1",
-            startDate: "2017-02-07 11:00",
-            endDate: "2017-02-07 14:00",
-            location: "Some office",
-            eventType: "Meeting",
-            iconCls: "b-fa b-fa-calendar",
-          },
-          {
-            resourceId: "7",
-            name: "Ca 2",
-            startDate: "2017-02-07 12:00",
-            endDate: "2017-02-07 15:00",
-            location: "Home office",
-            eventType: "Meeting",
-            iconCls: "b-fa b-fa-calendar",
-          },
-          {
-            resourceId: "8",
-            name: "Ca #3",
-            startDate: "2017-02-07 13:00",
-            endDate: "2017-02-07 16:00",
-            location: "Customer office",
-            eventType: "Meeting",
-            iconCls: "b-fa b-fa-calendar",
-          },
-          {
-            resourceId: "9",
-            name: "Important meeting",
-            startDate: "2017-02-07 09:00",
-            endDate: "2017-02-07 11:00",
-            location: "Some office",
-            eventType: "Meeting",
-            eventColor: "red",
-            iconCls: "b-fa b-fa-exclamation-triangle",
-          },
-          {
-            resourceId: "10",
-            name: "Ca #1",
-            startDate: "2017-02-07 10:00",
-            endDate: "2017-02-07 12:00",
-            location: "Home office",
-            type: "Dental",
-            eventType: "Appointment",
-            iconCls: "b-fa b-fa-calendar-alt",
-          },
-          {
-            resourceId: "11",
-            name: "Appointment #2",
-            startDate: "2017-02-07 11:00",
-            endDate: "2017-02-07 13:00",
-            location: "Customer office",
-            type: "Medical",
-            eventType: "Appointment",
-            iconCls: "b-fa b-fa-calendar-alt",
-          },
-          {
-            resourceId: "13",
-            name: "Appointment #3",
-            startDate: "2020-02-07 10:00",
-            endDate: "2017-02-07 12:00",
-            location: "Home office",
-            type: "Medical",
-            eventType: "Appointment",
-            iconCls: "b-fa b-fa-calendar-alt",
-          },
-          {
-            resourceId: "12",
-            name: "Important appointment",
-            startDate: "2020-02-07 15:00",
-            endDate: "2017-02-07 18:00",
-            location: "Customer office",
-            type: "Dental",
-            eventType: "Appointment",
-            eventColor: "red",
-            iconCls: "b-fa b-fa-exclamation-triangle",
-          },
-        ]}
+        events={workSchedules}
+        // events={[
+          
+          
+        //   {
+        //     resourceId: "6",
+        //     name: "Ca 1",
+        //     startDate: "2017-02-07 11:00",
+        //     endDate: "2017-02-07 14:00",
+        //     location: "Some office",
+        //     eventType: "Meeting",
+        //     iconCls: "b-fa b-fa-calendar",
+        //   },
+        //   {
+        //     resourceId: "7",
+        //     name: "Ca 2",
+        //     startDate: "2017-02-07 12:00",
+        //     endDate: "2017-02-07 15:00",
+        //     location: "Home office",
+        //     eventType: "Meeting",
+        //     iconCls: "b-fa b-fa-calendar",
+        //   },
+        //   {
+        //     resourceId: "8",
+        //     name: "Ca #3",
+        //     startDate: "2017-02-07 13:00",
+        //     endDate: "2017-02-07 16:00",
+        //     location: "Customer office",
+        //     eventType: "Meeting",
+        //     iconCls: "b-fa b-fa-calendar",
+        //   },
+        //   {
+        //     resourceId: "9",
+        //     name: "Important meeting",
+        //     startDate: "2017-02-07 09:00",
+        //     endDate: "2017-02-07 11:00",
+        //     location: "Some office",
+        //     eventType: "Meeting",
+        //     eventColor: "red",
+        //     iconCls: "b-fa b-fa-exclamation-triangle",
+        //   },
+        //   {
+        //     resourceId: "10",
+        //     name: "Ca #1",
+        //     startDate: "2017-02-07 10:00",
+        //     endDate: "2017-02-07 12:00",
+        //     location: "Home office",
+        //     type: "Dental",
+        //     eventType: "Appointment",
+        //     iconCls: "b-fa b-fa-calendar-alt",
+        //   },
+        //   {
+        //     resourceId: "11",
+        //     name: "Appointment #2",
+        //     startDate: "2017-02-07 11:00",
+        //     endDate: "2017-02-07 13:00",
+        //     location: "Customer office",
+        //     type: "Medical",
+        //     eventType: "Appointment",
+        //     iconCls: "b-fa b-fa-calendar-alt",
+        //   },
+        //   {
+        //     resourceId: "13",
+        //     name: "Appointment #3",
+        //     startDate: "2020-02-07 10:00",
+        //     endDate: "2017-02-07 12:00",
+        //     location: "Home office",
+        //     type: "Medical",
+        //     eventType: "Appointment",
+        //     iconCls: "b-fa b-fa-calendar-alt",
+        //   },
+        //   {
+        //     resourceId: "12",
+        //     name: "Important appointment",
+        //     startDate: "2020-02-07 15:00",
+        //     endDate: "2017-02-07 18:00",
+        //     location: "Customer office",
+        //     type: "Dental",
+        //     eventType: "Appointment",
+        //     eventColor: "red",
+        //     iconCls: "b-fa b-fa-exclamation-triangle",
+        //   },
+        // ]}
         resources={employees}
-      
+
         listeners={{
           beforeEventEdit: (source) => {
             source.eventRecord.resourceId = source.resourceRecord.id;
