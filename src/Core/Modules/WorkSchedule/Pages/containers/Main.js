@@ -4,18 +4,18 @@
 // libraries
 import React, { useRef, useState, useEffect } from "react";
 import { BryntumScheduler } from "bryntum-react-shared";
-
+import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 // our stuff
 import Header from "../components/Header.js";
 
 // API
 import employeeApi from "~/Core/Modules/WorkSchedule/Api/EmployeeApi";
-
+import moment from "moment";
 
 const Main = React.forwardRef((props, ref) => {
   const [employees, setEmployees] = useState([])
   const scheduler = useRef();
-
+  const t = useTranslate();
   useEffect(() => {
     employeeApi.getList()
     .then( res => {
@@ -31,7 +31,8 @@ const Main = React.forwardRef((props, ref) => {
       })
 
       setEmployees(listEmployee);
-    })
+    });
+
   }, [])
 
   return (
@@ -39,13 +40,13 @@ const Main = React.forwardRef((props, ref) => {
       <Header titleHref="../../../../../examples/#example-examples-scheduler-react-javascript-custom-event-editor" />
       <BryntumScheduler
         ref={ref}
-        barMargin={5}
-        startDate={new Date(2017, 1, 7, 8)}
-        endDate={new Date(2017, 1, 7, 18)}
+        barMargin={7}
+        startDate={new Date(2020, 12, 7, 8)}
+        endDate={new Date(2020, 12, 7, 18)}
         events={[
           {
             resourceId: "6",
-            name: "Meeting #1",
+            name: "Ca 1",
             startDate: "2017-02-07 11:00",
             endDate: "2017-02-07 14:00",
             location: "Some office",
@@ -54,7 +55,7 @@ const Main = React.forwardRef((props, ref) => {
           },
           {
             resourceId: "7",
-            name: "Meeting #2",
+            name: "Ca 2",
             startDate: "2017-02-07 12:00",
             endDate: "2017-02-07 15:00",
             location: "Home office",
@@ -63,7 +64,7 @@ const Main = React.forwardRef((props, ref) => {
           },
           {
             resourceId: "8",
-            name: "Meeting #3",
+            name: "Ca #3",
             startDate: "2017-02-07 13:00",
             endDate: "2017-02-07 16:00",
             location: "Customer office",
@@ -82,7 +83,7 @@ const Main = React.forwardRef((props, ref) => {
           },
           {
             resourceId: "10",
-            name: "Appointment #1",
+            name: "Ca #1",
             startDate: "2017-02-07 10:00",
             endDate: "2017-02-07 12:00",
             location: "Home office",
@@ -103,7 +104,7 @@ const Main = React.forwardRef((props, ref) => {
           {
             resourceId: "13",
             name: "Appointment #3",
-            startDate: "2017-02-07 10:00",
+            startDate: "2020-02-07 10:00",
             endDate: "2017-02-07 12:00",
             location: "Home office",
             type: "Medical",
@@ -113,7 +114,7 @@ const Main = React.forwardRef((props, ref) => {
           {
             resourceId: "12",
             name: "Important appointment",
-            startDate: "2017-02-07 15:00",
+            startDate: "2020-02-07 15:00",
             endDate: "2017-02-07 18:00",
             location: "Customer office",
             type: "Dental",
@@ -125,8 +126,8 @@ const Main = React.forwardRef((props, ref) => {
         resources={employees}
         timeRanges={[
           {
-            startDate: "2017-02-07 11:00",
-            endDate: "2017-02-07 12:00",
+            startDate: moment().format("YYYY-MM-DD")+" 00:00",
+            endDate: moment().format("YYYY-MM-DD")+" 24:00",
           },
         ]}
         listeners={{

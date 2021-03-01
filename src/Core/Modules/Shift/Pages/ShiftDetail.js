@@ -41,6 +41,8 @@ const ShiftDetail = ({ match: { params } }) => {
           setError(true);
         }
       })();
+    } else {
+      setData({});
     }
   }, []);
 

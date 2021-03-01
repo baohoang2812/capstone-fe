@@ -32,12 +32,11 @@ const ShiftDetailForm = ({ form, is_create, action, data }) => {
   const { getFieldDecorator, validateFields, setFieldsValue } = form;
   const format = 'HH:mm';
   useEffect(() => {
+    console.log("this");
     setFieldsValue({
       name: data?.name,
-      startTime: data?.startTime,
-      endTime: data?.endTime,
-      isBreakShift: data?.isBreakShift
-
+      startTime: moment(data?.startTime || "00:00", "HH:mm:ss"),
+      endTime: moment(data?.endTime || "00:00", "HH:mm:ss"),
     });
   }, [data]);
 
@@ -47,36 +46,14 @@ const ShiftDetailForm = ({ form, is_create, action, data }) => {
       if (!err) {
         setLoading(true);
         "".split(":")
-        const startTime = values["startTime"].format("HH:mm").split(":")
-        const endTime = values["endTime"].format("HH:mm").split(":")
+        const startTime = values["startTime"].format("HH:mm")
+        const endTime = values["endTime"].format("HH:mm")
         const newValues = {
           ...values,
-          startTime: {
-            "ticks": 0,
-            "days": 0,
-            "hours": parseInt(startTime?.[0]),
-            "milliseconds": 0,
-            "minutes": parseInt(startTime?.[1]),
-            "seconds": 0,
-            "totalDays": 0,
-            "totalHours": parseInt(startTime?.[0]),
-            "totalMilliseconds": parseInt(startTime?.[1]),
-            "totalMinutes": 0,
-            "totalSeconds": 0
-          },
-          endTime: {
-            "ticks": 0,
-            "days": 0,
-            "hours": parseInt(endTime?.[0]),
-            "milliseconds": 0,
-            "minutes": parseInt(endTime?.[1]),
-            "seconds": 0,
-            "totalDays": 0,
-            "totalHours": parseInt(endTime?.[0]),
-            "totalMilliseconds": parseInt(endTime?.[1]),
-            "totalMinutes": 0,
-            "totalSeconds": 0
-          }
+          startTime: startTime,
+          endTime: endTime
+            
+          
         }
 
         if (is_create) {
@@ -121,7 +98,7 @@ const ShiftDetailForm = ({ form, is_create, action, data }) => {
 
   return (
     <Row type="flex" justify="center">
-      <Col span={12}>
+      <Col span={15}>
         <div className="div_custom">
           <Form onSubmit={onConfirm}>
             <Row type="flex" justify="center" align="bottom">
@@ -172,29 +149,7 @@ const ShiftDetailForm = ({ form, is_create, action, data }) => {
                 </Form.Item>
               </Col>
             </Row>
-            <Row type="flex" justify="center" align="bottom">
-              <Col span={15}>
-                <Form.Item label={t("CORE.SHIFT.TYPE")}>
-                  {getFieldDecorator(
-                    "isBreakShift",
-                    {
-                      rules: [
-                        {
-
-                          required: true,
-                          message: "Please select type!",
-                        },
-                      ],
-                    }
-                  )(
-                    <Select>
-                      <Option value={true}>Break Shift</Option>
-                      <Option value={false}>Full Shift</Option>
-                    </Select>
-                  )}
-                </Form.Item>
-              </Col>
-            </Row>
+            
 
 
             <Row type="flex" justify="center">

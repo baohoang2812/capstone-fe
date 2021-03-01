@@ -63,8 +63,8 @@ const UserTable = () => {
         sorter: true,
         width: 150,
         render: (startTime) => {
-          // return moment(text).format("HH:mm")
-          return `${startTime.hours < 10 ? '0' + startTime.hours : startTime.hours}:${startTime.minutes < 10 ? '0' + startTime.minutes : startTime.minutes}`
+          return moment(startTime, "HH:mm:ss").format("HH:mm")
+          // return `${startTime.hours < 10 ? '0' + startTime.hours : startTime.hours}:${startTime.minutes < 10 ? '0' + startTime.minutes : startTime.minutes}`
         },
       },
       {
@@ -76,8 +76,8 @@ const UserTable = () => {
         sorter: true,
         width: 150,
         render: (endTime) => {
-          // return moment(text).format("HH:mm")
-          return `${endTime.hours < 10 ? '0' + endTime.hours : endTime.hours}:${endTime.minutes < 10 ? '0' + endTime.minutes : endTime.minutes}` 
+           return moment(endTime, "HH:mm:ss").format("HH:mm")
+          // return `${endTime.hours < 10 ? '0' + endTime.hours : endTime.hours}:${endTime.minutes < 10 ? '0' + endTime.minutes : endTime.minutes}` 
         },
       },
       

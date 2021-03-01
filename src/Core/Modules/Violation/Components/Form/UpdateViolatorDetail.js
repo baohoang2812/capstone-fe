@@ -51,19 +51,18 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
     const onConfirm = (e) => {
         e.preventDefault();
         validateFields((err, values) => {
+            
             if (!err) {
                 ViolationEmployeeApi.create(
                     data.id,
                     
                         {
-                            "employeeIds": values.violator [
-                              0
-                            ]
+                            "employeeIds": values.violator
                           }
                     
                 )
                     .then((res) => {
-                        if (res.code !== 200) {
+                        if (res.code !== 201) {
                             message.error(t("CORE.task_failure"));
                             return;
                         }

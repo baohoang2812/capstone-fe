@@ -1,7 +1,6 @@
 import BaseApi from "~/Core/Api/BaseAPI";
-class ViolationApi extends BaseApi {
+class ShiftApi extends BaseApi {
   getList = (filters) => {
-    console.log(filters);
     return this.initApi.get(`${this.baseUrl}`, filters);
   };
 
@@ -17,4 +16,4 @@ class ViolationApi extends BaseApi {
     return this.initApi.put(`${this.baseUrl}/${id}`, body);
   };
 }
-export default new ViolationApi().requestUrl("/v1/violations");
+export default new ShiftApi().requestUrl("/v1/shifts");
