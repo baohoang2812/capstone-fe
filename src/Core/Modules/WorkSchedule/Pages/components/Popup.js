@@ -183,7 +183,7 @@ const Popup = (props) => {
                     <FormControl style={{ marginBottom: 10, width: '100%' }}>
                         <InputLabel>{t("CORE.SHIFT.NAME")}</InputLabel>
                         <Select
-                            name="ShiftName"
+                            name="shiftName"
                             onChange={dataChangedHandler}
                             value={state.shiftName}
                         >

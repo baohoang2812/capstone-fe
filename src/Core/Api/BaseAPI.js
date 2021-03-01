@@ -11,6 +11,7 @@ const serialize = (obj) => {
       }
     return `?${str.join("&")}`;
   }
+  return "";
 }
 const generate_options = (opts = {}) => {
   let headers = {

@@ -34,15 +34,24 @@ const Main = React.forwardRef((props, ref) => {
     });
 
   }, [])
-
+  const startDate = () => {
+    const start = new Date();
+    start.setHours(8,0,0,0);
+    return start
+  }
+  const endDate = () => {
+    const end = new Date();
+    end.setHours(23,59,59,999);
+    return end
+  }
   return (
     <>
       <Header titleHref="../../../../../examples/#example-examples-scheduler-react-javascript-custom-event-editor" />
       <BryntumScheduler
         ref={ref}
         barMargin={7}
-        startDate={new Date(2020, 12, 7, 8)}
-        endDate={new Date(2020, 12, 7, 18)}
+        startDate={startDate()}
+        endDate={endDate()}
         events={[
           {
             resourceId: "6",
@@ -124,12 +133,7 @@ const Main = React.forwardRef((props, ref) => {
           },
         ]}
         resources={employees}
-        timeRanges={[
-          {
-            startDate: moment().format("YYYY-MM-DD")+" 00:00",
-            endDate: moment().format("YYYY-MM-DD")+" 24:00",
-          },
-        ]}
+      
         listeners={{
           beforeEventEdit: (source) => {
             source.eventRecord.resourceId = source.resourceRecord.id;
