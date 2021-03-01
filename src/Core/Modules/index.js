@@ -10,5 +10,6 @@ export default [
   { key: "Position"},
   { key: "Workspace"},
   { key: "WorkSchedule"},
-  { key: "Shift"}
+  { key: "Shift"},
+  { key: "Violation"}
 ];
