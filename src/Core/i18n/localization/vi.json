@@ -343,5 +343,6 @@
     "AUTHENTICATE.passwordOld": "Mật khẩu cũ",
     "AUTHENTICATE.passwordNew": "Mật khẩu mới",
     "AUTHENTICATE.rePassword": "Nhập lại mật khẩu mới",
-    "AUTHENTICATE.LOGIN.HAVE_NOT_ACCOUNT": "Chưa có tài khoản?"
+    "AUTHENTICATE.LOGIN.HAVE_NOT_ACCOUNT": "Chưa có tài khoản?",
+    "CORE.VIEW.ALL":"Xem tất cả"
 }

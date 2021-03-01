@@ -3,7 +3,7 @@ import "./style.less";
 
 import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { Layout, Icon, Dropdown, Avatar, Menu, Badge } from "antd";
+import { Layout, Icon, Dropdown, Avatar, Menu, Badge, List, Card } from "antd";
 
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
@@ -11,6 +11,8 @@ import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 /* Components */
 import MenuLanguage from "./MenuLanguage";
 
+/* Components */
+import MenuNotify from "./MenuNotify";
 /* Helpers */
 import { logout } from "~/Core/utils/helper/authenticate";
 
@@ -34,6 +36,15 @@ export const HeaderMaster = ({ url }) => {
       // setHover(false);
     }
   };
+
+  const data = [
+    'Racing car sprays burning fuel into crowd.',
+    'Japanese princess to wed commoner.',
+    'Australian walks 100km after outback crash.',
+    'Man charged over missing wedding girl.',
+    'Los Angeles battles huge wildfires.',
+  ];
+  const { Meta } = Card;
 
   const clickMenuHover = () => {
     // setHover(true);
@@ -163,26 +174,16 @@ export const HeaderMaster = ({ url }) => {
           </div>
         </div>
         <div className="header-right">
-          <div style={{ width: 40, height: 30 }}>
-            <Badge count={<span style={{
-              fontSize:'11px',
-              padding: '0 6px',
-              minWidth: '18px',
-              height: '18px',
-              color: '#fff',
-              fontWeight: '400',
-              lineHeight: '20px',
-              whiteSpace: 'nowrap',
-              textAlign: 'center',
-              background: '#f5222d',
-              borderRadius: '10px',
-              boxShadow: '0 0 0 1px #fff'
-              }}>69</span>}>
-              <div>
-                <Icon style={{ fontSize: '22px'}} type="notification" />
-              </div>
-            </Badge>
-          </div>
+          <Dropdown
+            overlay={<MenuNotify />}
+            trigger={["click"]}
+          >
+            <div className="action-icon dropdown-notification">
+              <Badge count={22}>
+                <Icon type="notification" />
+              </Badge>
+            </div>
+          </Dropdown>
           <MenuLanguage />
           <Dropdown overlay={renderMenuProfile(account_info, t)}>
             <span className="dropdown-user">

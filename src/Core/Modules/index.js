@@ -11,5 +11,6 @@ export default [
   { key: "Workspace"},
   { key: "WorkSchedule"},
   { key: "Shift"},
-  { key: "Violation"}
+  { key: "Violation"},
+  { key: "Notification"}
 ];
