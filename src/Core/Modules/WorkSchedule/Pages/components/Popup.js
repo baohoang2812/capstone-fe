@@ -14,32 +14,33 @@ import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 import DateFnsUtils from '@date-io/date-fns';
 import workspaceApi from "~/Core/Modules/WorkSchedule/Api/WorkspaceApi";
 import shiftApi from "~/Core/Modules/WorkSchedule/Api/ShiftApi";
-
+import workScheduleApi from "~/Core/Modules/WorkSchedule/Api/WorkScheduleApi";
+import { update_identity_table_data_success } from "~/Core/Store/actions/adminTable";
+import { useDispatch } from "react-redux";
 
 
 import {
     MuiPickersUtilsProvider,
     KeyboardDateTimePicker
 } from '@material-ui/pickers';
-import contactApi from "~/Core/Modules/WorkSchedule/Api/EmployeeApi";
-
+import contactApi from "~/Core/Modules/WorkSchedule/Api";
+import moment from "moment";
 const Popup = (props) => {
     const [workspaces, setWorkspaces] = useState([]);
     const [shifts, setShifts] = useState([]);
+    const dispatch = useDispatch();
     const [state, setState] = useState({
         name: '',
         eventType: 'Meeting',
         location: '',
-        ...props.eventRecord.data
+        ...props?.eventRecord?.data
     });
-    console.log(state);
 
     const t = useTranslate();
 
     useEffect(() => {
         workspaceApi.getList()
             .then(res => {
-                console.log(res.data);
                 const listWorkspace = res?.data?.result?.map(item => {
                     return {
                         id: item.id,
@@ -56,7 +57,9 @@ const Popup = (props) => {
                 const listShift = res?.data?.result?.map(item => {
                     return {
                         id: item.id,
-                        name: item.name
+                        name: item.name,
+                        startTime: item.startTime,
+                        endTime: item.endTime
                     }
                 })
                 setShifts(listShift);
@@ -77,35 +80,32 @@ const Popup = (props) => {
         });
     } // eo function dataChangedHandler
 
-    /**
-     * Updates state with startDate
-     * @param {Date} startDate
-     */
-    const startDateChangeHandler = (startDate) => {
+    const dataChangedLocationHandler = ({ target }) => {
+        const nameWorkspace = workspaces.filter(item => item.id === target.value);
         setState({
             ...state,
-            startDate: startDate
+            name: nameWorkspace?.[0]?.name,
+            [target.name]: target.value
         })
-    } // eo startDateChangeHandler
+    }
 
-    /**
-     * Updates state with endDate
-     * @param {Date} endDate
-     */
-    const endDateChangeHandler = (endDate) => {
+    const dataChangedShiftHandler = ({ target }) => {
+        const newShift = shifts.filter(item => item.id === target.value)
+        const duration = moment.duration(moment(newShift?.[0].endTime, "HH:mm:ss").diff(moment(newShift?.[0].startTime, "HH:mm:ss")));
+        const hours = duration.asHours();
         setState({
             ...state,
-            endDate: endDate
-        });
-    } // eo function endDateChangeHandler
-
+            duration: hours/24,
+            startDate: moment(state.startDate).format("YYYY-MM-DD") + " " + moment(newShift?.[0].startTime, "HH:mm:ss").format("HH:mm"),
+            endDate: moment(state.startDate).format("YYYY-MM-DD") + " " + moment(newShift?.[0].endTime, "HH:mm:ss").format("HH:mm"),
+            [target.name]: target.value
+        })
+    }
+    
     /**
      * Saves the modified form data to the record being edited
      */
     const saveClickHandler = () => {
-
-
-        console.log(state.workspaceName)
         if (state.workspaceName === null || state.workspaceName === undefined) {
             message.error('Please select workspace!');
         } else if (state.resourceId === null || state.resourceId === undefined) {
@@ -114,19 +114,43 @@ const Popup = (props) => {
         else if (state.shiftName === null) {
             message.error('Please select shift!');
         } else {
-            const eventRecord = props.eventRecord;
-            message.success('Created success!');
-            eventRecord.set({ ...state });
+            props.setEventRecordHandler(state);
+            
+            const result = [{
+                isDeleted: false,
+                createdBy: 0,
+                shiftId: state.shiftName,
+                workDate: moment(new Date(state.startDate)).format("YYYY-MM-DDThh:mm:ss"),
 
-            if (!eventRecord.eventStore) {
-                props.eventStore.add(eventRecord);
-            }
-
-            props.closePopup();
+            }]
+            contactApi.create(state.shiftName, result)
+                .then((res) => {
+                    if (res.code !== 201) {
+                        message.error(t("CORE.task_failure"));
+                        return;
+                    }
+                    const values = {
+                        workScheduleId: res?.data?.[0]?.id,
+                        workspaceId: state.workspaceName,
+                        employeeId: state.resourceId
+                    };
+                    workScheduleApi.create(values).then((res) => {
+                        if (res.code !== 201) {
+                            message.error(t("CORE.task_failure"));
+                            return;
+                        }
+                        // dispatch(update_identity_table_data_success(identity, res.data));
+                        message.success(t("CORE.SHIFT.CREATE.SUCCESS"));
+                        props.closePopup();
+                    })
+                        .catch(() => {
+                            message.error(t("CORE.error.system"));
+                        });
+                })
+                .catch(() => {
+                    message.error(t("CORE.error.system"));
+                });
         }
-
-
-
     } // saveClickHandler
 
 
@@ -164,14 +188,14 @@ const Popup = (props) => {
                         <InputLabel>{t("CORE.WORKSPACE.NAME")}</InputLabel>
                         <Select
                             name="workspaceName"
-                            onChange={dataChangedHandler}
+                            onChange={dataChangedLocationHandler}
                             value={state.workspaceName}
                         >
                             {workspaceItems}
                         </Select>
                     </FormControl>
                     <FormControl style={{ marginBottom: 10, width: '100%' }}>
-                        <InputLabel>Staff</InputLabel>
+                        <InputLabel>{t("CORE.EMPLOYEE.NAME")}</InputLabel>
                         <Select
                             name="resourceId"
                             onChange={dataChangedHandler}
@@ -184,7 +208,7 @@ const Popup = (props) => {
                         <InputLabel>{t("CORE.SHIFT.NAME")}</InputLabel>
                         <Select
                             name="shiftName"
-                            onChange={dataChangedHandler}
+                            onChange={dataChangedShiftHandler}
                             value={state.shiftName}
                         >
                             {shiftItems}

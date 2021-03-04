@@ -16,4 +16,4 @@ class WorkScheduleApi extends BaseApi {
     return this.initApi.put(`${this.baseUrl}/${id}`, body);
   };
 }
-export default new WorkScheduleApi().requestUrl("/v1/workschedules");
+export default new WorkScheduleApi().requestUrl("/v1/scheduleSpacesEmployees");

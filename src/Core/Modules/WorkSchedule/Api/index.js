@@ -8,8 +8,8 @@ class WorkScheduleApi extends BaseApi {
     return this.initApi.get(`${this.baseUrl}?Filter.Ids=${id}`);
   };
 
-  create = (body) => {
-    return this.initApi.post(`${this.baseUrl}`, body);
+  create = (id,body) => {
+    return this.initApi.post(`${this.baseUrl}/${id}`, body);
   };
 
   update = (id, body) => {

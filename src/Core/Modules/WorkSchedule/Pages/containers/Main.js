@@ -21,7 +21,6 @@ const Main = React.forwardRef((props, ref) => {
   useEffect(() => {
     employeeApi.getList()
       .then(res => {
-        console.log(res.data);
         const listEmployee = res?.data?.result?.map(item => {
           return {
             id: item.id,
@@ -39,10 +38,15 @@ const Main = React.forwardRef((props, ref) => {
       .then(res => {
         const listWorkSchedule = res?.data?.result?.map(item => {
           return {
-            id: item.id,
-            workDate: item.workDate,
-            shift: item.shift.name,
-
+            resourceId: item?.employee?.id,
+            name: item?.workspace?.name,
+            workspaceName: item?.workspace?.id,
+            startDate: moment(item?.workSchedule?.workDate).format("YYYY-MM-DD")+" "+ moment(item?.workSchedule?.shift?.startTime, "HH:mm:ss").format("HH:mm"),
+            endDate: moment(item?.workSchedule?.workDate).format("YYYY-MM-DD")+" "+ moment(item?.workSchedule?.shift?.endTime, "HH:mm:ss").format("HH:mm"),
+            location: "Some office",
+            eventType: "Meeting",
+            iconCls: "b-fa b-fa-calendar",
+            shiftName: item?.workSchedule?.shift?.id
           }
         })
         setWorkSchedules(listWorkSchedule);
@@ -69,8 +73,8 @@ const Main = React.forwardRef((props, ref) => {
         endDate={endDate()}
         events={workSchedules}
         // events={[
-          
-          
+
+
         //   {
         //     resourceId: "6",
         //     name: "Ca 1",
