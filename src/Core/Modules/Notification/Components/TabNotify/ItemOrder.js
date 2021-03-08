@@ -7,11 +7,11 @@ export const ItemOrder = ({ detail }) => {
 
   const dummiesItem = {
     id: detail.id,
-    title: detail.title,
-    content: detail.content.split("#DP"),
-    datetime: moment(detail.updated_at).format('DD-MM-YYYY HH:mm:ss'),
+    name: detail.name,
+    description: detail.description,
+    // datetime: moment(detail.updated_at).format('DD-MM-YYYY HH:mm:ss'),
     payloadID: "_.get(payload.id, detail)",
-    is_check: detail.is_check
+    // is_check: detail.is_check
   }
 
   return (
@@ -21,12 +21,13 @@ export const ItemOrder = ({ detail }) => {
           <img src="https://cf.shopee.vn/file/db260e324552139ba91c1cb6a04696ce_tn" alt="" />
         </div>
         <div className="item-content">
-          <h4>{dummiesItem.title}</h4>
-          <div className="item-summary">"dummiesItem.content" <Link to="#">"dummiesItem.content"</Link></div>
-          <span className="item-datetime">{dummiesItem.datetime}</span>
+          <h4>{dummiesItem.name}</h4>
+          <div className="item-summary">"dummiesItem.description" <Link to="#">"dummiesItem.description"</Link></div>
+          <span className="item-datetime">{}</span>
           <Link className="link-detail" to={`/deal/${dummiesItem.id}`}>Xem chi tiết</Link>
         </div>
       </div>
+      
     </Col>
   )
 }
