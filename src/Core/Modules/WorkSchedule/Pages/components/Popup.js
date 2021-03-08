@@ -1,163 +1,240 @@
 /**
  * Popup Component
  */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Popup.scss';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import { message } from 'antd';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
-import DateFnsUtils from '@date-io/date-fns';
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
+import DateFnsUtils from '@date-io/date-fns';
+import workspaceApi from "~/Core/Modules/WorkSchedule/Api/WorkspaceApi";
+import shiftApi from "~/Core/Modules/WorkSchedule/Api/ShiftApi";
+import workScheduleApi from "~/Core/Modules/WorkSchedule/Api/WorkScheduleApi";
+import { update_identity_table_data_success } from "~/Core/Store/actions/adminTable";
+import { useDispatch } from "react-redux";
 
 
 import {
     MuiPickersUtilsProvider,
     KeyboardDateTimePicker
 } from '@material-ui/pickers';
-import contactApi from "~/Core/Modules/WorkSchedule/Api/EmployeeApi";
+import contactApi from "~/Core/Modules/WorkSchedule/Api";
+import moment from "moment";
+const Popup = (props) => {
+    const [workspaces, setWorkspaces] = useState([]);
+    const [shifts, setShifts] = useState([]);
+    const dispatch = useDispatch();
+    const [state, setState] = useState({
+        name: '',
+        eventType: 'Meeting',
+        location: '',
+        ...props?.eventRecord?.data
+    });
 
-class Popup extends React.Component {
+    const t = useTranslate();
 
-    /**
-     * Constructor (initializes state and binds handlers)
-     * @param {Object} props
-     */
-    constructor(props) {
-        super();
+    useEffect(() => {
+        workspaceApi.getList()
+            .then(res => {
+                const listWorkspace = res?.data?.result?.map(item => {
+                    return {
+                        id: item.id,
+                        name: item.name
 
-        // create state with defaults overridden by eventRecord data
-        this.state = {
-            name      : '',
-            eventType : 'Meeting',
-            location  : '',
-            ...props.eventRecord.data
-        };
+                    }
+                })
 
-        // shortcuts to handlers
-        this.dataChangedHandler = this.dataChangedHandler.bind(this);
-        this.saveClickHandler = this.saveClickHandler.bind(this);
-        this.startDateChangeHandler = this.startDateChangeHandler.bind(this);
-        this.endDateChangeHandler = this.endDateChangeHandler.bind(this);
+                setWorkspaces(listWorkspace);
+            });
 
-    } // eo function constructor
+        shiftApi.getList()
+            .then(res => {
+                const listShift = res?.data?.result?.map(item => {
+                    return {
+                        id: item.id,
+                        name: item.name,
+                        startTime: item.startTime,
+                        endTime: item.endTime
+                    }
+                })
+                setShifts(listShift);
+
+            })
+
+
+    }, [])
 
     /**
      * Sets the changed value to state
      * @param {HTMLElement} target The input that changed
      */
-    dataChangedHandler({ target }) {
-        this.setState(prevState => {
-            return {
-                ...prevState,
-                [target.name] : target.value
-            };
+    const dataChangedHandler = ({ target }) => {
+        setState({
+            ...state,
+            [target.name]: target.value
         });
     } // eo function dataChangedHandler
 
-    /**
-     * Updates state with startDate
-     * @param {Date} startDate
-     */
-    startDateChangeHandler(startDate) {
-        this.setState(prevState => {
-            return {
-                ...prevState,
-                startDate : startDate
-            };
-        });
-    } // eo startDateChangeHandler
+    const dataChangedLocationHandler = ({ target }) => {
+        const nameWorkspace = workspaces.filter(item => item.id === target.value);
+        setState({
+            ...state,
+            name: nameWorkspace?.[0]?.name,
+            [target.name]: target.value
+        })
+    }
 
-    /**
-     * Updates state with endDate
-     * @param {Date} endDate
-     */
-    endDateChangeHandler(endDate) {
-        this.setState(prevState => {
-            return {
-                ...prevState,
-                endDate : endDate
-            };
-        });
-    } // eo function endDateChangeHandler
-
+    const dataChangedShiftHandler = ({ target }) => {
+        const newShift = shifts.filter(item => item.id === target.value)
+        const duration = moment.duration(moment(newShift?.[0].endTime, "HH:mm:ss").diff(moment(newShift?.[0].startTime, "HH:mm:ss")));
+        const hours = duration.asHours();
+        setState({
+            ...state,
+            duration: hours/24,
+            startDate: moment(state.startDate).format("YYYY-MM-DD") + " " + moment(newShift?.[0].startTime, "HH:mm:ss").format("HH:mm"),
+            endDate: moment(state.startDate).format("YYYY-MM-DD") + " " + moment(newShift?.[0].endTime, "HH:mm:ss").format("HH:mm"),
+            [target.name]: target.value
+        })
+    }
+    
     /**
      * Saves the modified form data to the record being edited
      */
-    saveClickHandler() {
-        const eventRecord = this.props.eventRecord;
-
-        eventRecord.set({ ...this.state });
-
-        if (!eventRecord.eventStore) {
-            this.props.eventStore.add(eventRecord);
+    const saveClickHandler = () => {
+        if (state.workspaceName === null || state.workspaceName === undefined) {
+            message.error('Please select workspace!');
+        } else if (state.resourceId === null || state.resourceId === undefined) {
+            message.error('Please select employee!');
         }
+        else if (state.shiftName === null) {
+            message.error('Please select shift!');
+        } else {
+            props.setEventRecordHandler(state);
+            
+            const result = [{
+                isDeleted: false,
+                createdBy: 0,
+                shiftId: state.shiftName,
+                workDate: moment(new Date(state.startDate)).format("YYYY-MM-DDThh:mm:ss"),
 
-        this.props.closePopup();
+            }]
+            contactApi.create(state.shiftName, result)
+                .then((res) => {
+                    if (res.code !== 201) {
+                        message.error(t("CORE.task_failure"));
+                        return;
+                    }
+                    const values = {
+                        workScheduleId: res?.data?.[0]?.id,
+                        workspaceId: state.workspaceName,
+                        employeeId: state.resourceId
+                    };
+                    workScheduleApi.create(values).then((res) => {
+                        if (res.code !== 201) {
+                            message.error(t("CORE.task_failure"));
+                            return;
+                        }
+                        // dispatch(update_identity_table_data_success(identity, res.data));
+                        message.success(t("CORE.SHIFT.CREATE.SUCCESS"));
+                        props.closePopup();
+                    })
+                        .catch(() => {
+                            message.error(t("CORE.error.system"));
+                        });
+                })
+                .catch(() => {
+                    message.error(t("CORE.error.system"));
+                });
+        }
     } // saveClickHandler
 
-    /**
-     * @return The markup to render
-     */
-    render() {
 
-        const resourceItems = this.props.resourceStore.map(resource => (
-            <MenuItem key={resource.id} value={resource.id}>{resource.name}</MenuItem>
-        ));
 
-        return (
-            <div className='popup-mask'>
-                <div className='popup'>
-                    <header>{this.state.name}&nbsp;</header>
-                    <article>
-                        <TextField
-                            name="name"
-                            label="Event name"
-                            onChange={this.dataChangedHandler}
-                            value={this.state.name}
-                            fullWidth
-                            style={{ marginBottom : 10 }}
-                        />
-                        <FormControl style={{ marginBottom : 10, width : '100%' }}>
-                            <InputLabel>Staff</InputLabel>
-                            <Select
-                                name="resourceId"
-                                onChange={this.dataChangedHandler}
-                                value={this.state.resourceId}
-                            >
-                                {resourceItems}
-                            </Select>
-                        </FormControl>
-                        <TextField
-                            name="location"
-                            label="Event location"
-                            onChange={this.dataChangedHandler}
-                            value={this.state.location}
-                            // fullWidth
-                            style={{ marginBottom : 10, width : '49%', marginRight : 5 }}
-                        />
-                        <FormControl style={{ marginBottom : 10, width : '49%', marginLeft : 5 }}>
-                            <InputLabel>Event type</InputLabel>
-                            <Select
-                                name="eventType"
-                                onChange={this.dataChangedHandler}
-                                value={this.state.eventType}
-                            >
-                                <MenuItem value="Meeting">Meeting</MenuItem>
-                                <MenuItem value="Appointment">Appointment</MenuItem>
-                            </Select>
-                        </FormControl>
-                        {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
+    const resourceItems = props.resourceStore.map(resource => (
+        <MenuItem key={resource.id} value={resource.id}>{resource.name}</MenuItem>
+    ));
+
+
+    const workspaceItems = workspaces.map(resource => (
+        <MenuItem key={resource.id} value={resource.id}>{resource.name}</MenuItem>
+    ));
+
+    const shiftItems = shifts.map(resource => (
+        <MenuItem key={resource.id} value={resource.id}>{resource.name}</MenuItem>
+    ));
+
+
+    return (
+        <div className='popup-mask'>
+            <div className='popup'>
+                <header style={{
+                    fontSize: "1em",
+                    textTransform: "uppercase",
+                    fontWeight: 700,
+                    background: "#fff5e6",
+                    padding: "0.5em",
+                    borderBottom: "solid 1px #feac31"
+                }}>
+                    {t("CORE.WORKSCHEDULE.CREATE")}
+                    &nbsp;</header>
+                <article>
+
+                    <FormControl style={{ marginBottom: 10, width: '100%' }}>
+                        <InputLabel>{t("CORE.WORKSPACE.NAME")}</InputLabel>
+                        <Select
+                            name="workspaceName"
+                            onChange={dataChangedLocationHandler}
+                            value={state.workspaceName}
+                        >
+                            {workspaceItems}
+                        </Select>
+                    </FormControl>
+                    <FormControl style={{ marginBottom: 10, width: '100%' }}>
+                        <InputLabel>{t("CORE.EMPLOYEE.NAME")}</InputLabel>
+                        <Select
+                            name="resourceId"
+                            onChange={dataChangedHandler}
+                            value={state.resourceId}
+                        >
+                            {resourceItems}
+                        </Select>
+                    </FormControl>
+                    <FormControl style={{ marginBottom: 10, width: '100%' }}>
+                        <InputLabel>{t("CORE.SHIFT.NAME")}</InputLabel>
+                        <Select
+                            name="shiftName"
+                            onChange={dataChangedShiftHandler}
+                            value={state.shiftName}
+                        >
+                            {shiftItems}
+                        </Select>
+                    </FormControl>
+
+                    <FormControl style={{ marginBottom: 10, width: '49%', marginLeft: 5 }}>
+                        <InputLabel>Event type</InputLabel>
+                        <Select
+                            name="eventType"
+                            onChange={dataChangedHandler}
+                            value={state.eventType}
+                        >
+                            <MenuItem value="Meeting">Meeting</MenuItem>
+                            <MenuItem value="Appointment">Appointment</MenuItem>
+                        </Select>
+                    </FormControl>
+                    {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
                             <KeyboardDateTimePicker
                                 name="startDate"
                                 label="Start"
                                 ampm={false}
                                 format="yyyy-MM-dd HH:mm"
                                 style={{ width : '49%', marginRight : 5 }}
-                                value={this.state.startDate}
-                                onChange={this.startDateChangeHandler}
+                                value={state.startDate}
+                                onChange={startDateChangeHandler}
                             ></KeyboardDateTimePicker>
                             <KeyboardDateTimePicker
                                 name="endDate"
@@ -165,20 +242,19 @@ class Popup extends React.Component {
                                 ampm={false}
                                 format="yyyy-MM-dd HH:mm"
                                 style={{ width : '49%', marginLeft : 5 }}
-                                value={this.state.endDate}
-                                onChange={this.endDateChangeHandler}
+                                value={state.endDate}
+                                onChange={endDateChangeHandler}
                             ></KeyboardDateTimePicker>
                         </MuiPickersUtilsProvider> */}
-                    </article>
-                    <footer>
-                        <Button variant="contained" color="secondary" onClick={this.props.closePopup}>Cancel</Button>
-                        <Button variant="contained" color="primary" onClick={this.saveClickHandler}>Save</Button>
-                    </footer>
-                </div>
+                </article>
+                <footer>
+                    <Button variant="contained" color="secondary" onClick={props.closePopup}>Cancel</Button>
+                    <Button variant="contained" color="primary" onClick={saveClickHandler}>Save</Button>
+                </footer>
             </div>
-        );
-    }
-} // eo function render
+        </div >
+    );
+}
 
 export default Popup;
 

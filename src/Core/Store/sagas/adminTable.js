@@ -55,10 +55,11 @@ function* get_indentity_table_data_worker({ payload }) {
     where.push(defaultFilter.whereAnd);
   }
 
-  const opts = { pageIndex: current, pageSize, where, order: sorter };
+  // const opts = { PageIndex: current, Limit: pageSize, where, order: sorter };
+  const opts = { PageIndex: current-1, Limit: pageSize };
 
   yield put({ type: get_action_table(identity, actions.GET_IDENTITY_TABLE_DATA_REQUEST) }); // Trigger loading
-
+  console.log(opts);
   try {
     const { data: res } = yield call(api[method], opts);
     const payload = {

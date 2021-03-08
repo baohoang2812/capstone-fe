@@ -10,7 +10,7 @@ class ProfileApi extends BaseApi {
       return `${result}Filter.Ids=${item}&`;
     }, "")
     stringFilter = stringFilter.slice(0, -1);
-    return this.initApi.get(`${this.baseUrl}?${stringFilter}`, filters);
+    return this.initApi.get(`${this.baseUrl}?${stringFilter}`);
   };
 
   update = (id, body) => {
@@ -24,7 +24,9 @@ class ProfileApi extends BaseApi {
   getOne = (id) => {
     return this.initApi.get(`${this.baseUrl}?Filter.Ids=${id}`);
   };
-  
+  getProfile = (body) => {
+    return this.initApi.get(`${this.baseUrl}/profile`);
+  };
   deleteByIds = (ids, options = {}, opts) => {
     return this.initApi.del(`${this.baseUrl}/deleteByIds`, { ids }, opts);
   };

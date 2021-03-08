@@ -25,25 +25,9 @@ const Profile = ({ match: { params } }) => {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("token" || "");
-    const {
-      payload: { employee_id },
-    } = jwt_decode(token);
+   
 
-    employeeApi
-      .getOne(employee_id)
-      .then((res) => {
-        // setLoading(false);
-        if (res.status !== 200) {
-          message.error("CORE.MENU.message_error");
-          setError(true);
-          return;
-        }
-        setData(res.data);
-      })
-      .catch(() => {
-        setError(true);
-      });
+    
   }, []);
 
   return (

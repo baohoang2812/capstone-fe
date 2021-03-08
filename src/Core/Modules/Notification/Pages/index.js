@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 import Header from "~/Core/Components/common/Header/NoBtn";
 import withTabNotify from "~/Core/Modules/Notification/Components/TabNotify";
-
+import notiApi from "~/Core/Modules/Notification/Api";
 import ItemOrder from "~/Core/Modules/Notification/Components/TabNotify/ItemOrder";
 // import * as action from "~/Core/Store/actions/notification";
 // import { updateListNotification, clearCountNotification } from "~/Core/Store/actions/notification";
@@ -16,52 +16,83 @@ const ComponentSystem = (withTabNotify(ItemOrder))
 
 export const Notify = () => {
   const [key, setKey] = useState('tab1')
-
+  const [error, setError] = useState(false);
   const dispatch = useDispatch();
-  const listNotification = useSelector(state => state?.NotificationCore?.listNotification || [])
-  const pageIndex = useSelector(state => state?.NotificationCore?.pageIndex || 1)
-  const pageSize = useSelector(state => state?.NotificationCore?.pageSize || 20)
-  const totalRows = useSelector(state => state?.NotificationCore?.totalRows || 100)
-  const loading = useSelector(state => state?.NotificationCore?.loading || false)
-  const error = useSelector(state => state?.NotificationCore?.error || false)
+  // const listNotification = useSelector(state => state?.NotificationCore?.listNotification || [])
+  // const pageIndex = useSelector(state => state?.NotificationCore?.pageIndex || 1)
+  // const pageSize = useSelector(state => state?.NotificationCore?.pageSize || 20)
+  // const totalRows = useSelector(state => state?.NotificationCore?.totalRows || 100)
+  // const loading = useSelector(state => state?.NotificationCore?.loading || false)
+  // const error = useSelector(state => state?.NotificationCore?.error || false)
   const message = useSelector(state => state?.NotificationCore?.message || "")
+  const [listNoti, setListNoti] = useState([]);
+  const [pageIndex, setPageIndex] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [totalRows, setTotalRows] = useState(50);
+  const [loading, setLoading] = useState(false);
+  // const callAPI = (pageSize, pageIndex, key) => {
+  //   let filter = {
+  //     pageSize: pageSize,
+  //     pageIndex: pageIndex,
+  //     where: [],
+  //     order: {
+  //       created_at: "desc"
+  //     }
+  //   }
+  //   switch (key) {
+  //     case 'tab2':
+  //       filter.where = [
+  //         {
+  //           "type": {
+  //             "$eq": 'order'
+  //           }
+  //         }
+  //       ]
+  //       break;
+  //     case 'tab3':
+  //       filter.where = [
+  //         {
+  //           "type": {
+  //             "$eq": 'system'
+  //           }
+  //         }
+  //       ]
+  //       break;
+  //     default:
+  //   }
 
-  const callAPI = (pageSize, pageIndex, key) => {
-    let filter = {
-      pageSize: pageSize,
-      pageIndex: pageIndex,
-      where: [],
-      order: {
-        created_at: "desc"
+  //   // dispatch(action.getListNotification(filter))
+  // }
+  useEffect(() => {
+    setLoading(true);
+
+    (async () => {
+      try {
+        const res = await notiApi.getList(0, 10);
+        if (res.code !== 200) {
+          message.error("CORE.MENU.message_error");
+          setError(true);
+          return;
+        }
+        const listNotification = res?.data?.result || {};
+        setListNoti(listNotification);
+        console.log(listNotification);
+        const totalRows = res?.data?.total
+        setTotalRows(30);
+        setLoading(false);
+
+      } catch (error) {
+        setError(true);
+        setLoading(false);
+
       }
-    }
-    switch (key) {
-      case 'tab2':
-        filter.where = [
-          {
-            "type": {
-              "$eq": 'order'
-            }
-          }
-        ]
-        break;
-      case 'tab3':
-        filter.where = [
-          {
-            "type": {
-              "$eq": 'system'
-            }
-          }
-        ]
-        break;
-      default:
-    }
-    
-    // dispatch(action.getListNotification(filter))
-  }
+    })();
+  }, []);
 
   useEffect(() => {
-    callAPI(50, 1, key)
+
+    // call api
+    // callAPI(50, 1, key)
     // dispatch(clearCountNotification())
   }, [])
 
@@ -74,16 +105,67 @@ export const Notify = () => {
   }, [loading])
 
   const onChangePageIndex = (pagination) => {
-    callAPI(pagination.pageSize, pagination.pageIndex, key)
+    // update pageIndex pageSize
+    // call api with pageIndex - 1
+    setLoading(true);
+
+    setPageIndex(pagination.pageIndex);
+    setPageSize(pagination.pageSize);
+    (async () => {
+      try {
+        const res = await notiApi.getList(pagination.pageIndex - 1, pagination.pageSize)
+        if (res.code !== 200) {
+          message.error("CORE.MENU.message_error");
+          setError(true);
+          return;
+        }
+        const listNotification = res?.data?.result || {};
+        setListNoti(listNotification);
+        console.log(listNotification);
+        const totalRows = res?.data?.total
+        setTotalRows(35);
+        setLoading(false);
+
+      } catch (error) {
+        setError(true);
+        setLoading(false);
+
+      }
+    })();
+
   }
 
   const onShowSizeChange = (pagination) => {
-    callAPI(pagination.pageSize, pagination.pageIndex, key)
+    // update pageIndex pageSize
+    // call api with pageIndex - 1
+    setPageIndex(pagination.pageIndex);
+    setPageSize(pagination.pageSize);
+    setLoading(true);
+    (async () => {
+      try {
+        const res = await notiApi.getList(pagination.pageIndex - 1, pagination.pageSize)
+        if (res.code !== 200) {
+          message.error("CORE.MENU.message_error");
+          setError(true);
+          return;
+        }
+        const listNotification = res?.data?.result || {};
+        setListNoti(listNotification);
+        console.log(listNotification);
+        const totalRows = res?.data?.total
+        setTotalRows(35);
+        setLoading(false);
+
+      } catch (error) {
+        setError(true);
+        setLoading(false);
+      }
+    })();
   }
 
   const onChangeTab = (key) => {
     setKey(key)
-    callAPI(50, 1, key)
+    notiApi.getList(1, 10);
 
   }
 
@@ -123,7 +205,7 @@ export const Notify = () => {
               >
                 <Spin spinning={loading}>
                   <ComponentSystem
-                    listNoti={listNotification}
+                    listNoti={listNoti}
                     pagination={pagination}
                     onChangePageIndex={onChangePageIndex}
                     onShowSizeChange={onShowSizeChange}

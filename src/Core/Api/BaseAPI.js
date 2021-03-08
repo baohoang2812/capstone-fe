@@ -2,6 +2,17 @@ import axios from "axios";
 import { currentEnv } from "~/Configs";
 // import { logout } from "~/Core/utils/helper/authenticate";
 
+const serialize = (obj) => {
+  if (obj && obj !== {}) {
+    var str = [];
+    for (var p in obj)
+      if (obj.hasOwnProperty(p)) {
+        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+      }
+    return `?${str.join("&")}`;
+  }
+  return "";
+}
 const generate_options = (opts = {}) => {
   let headers = {
     Authorization: `Bearer ${localStorage.getItem("token")}`
@@ -15,6 +26,7 @@ const generate_options = (opts = {}) => {
   }
   
   delete opts.headers;
+  console.log();
   return {
     headers,
     ...opts
@@ -40,10 +52,10 @@ const get_prefix = (apiVersion, customPrefix, path) => {
   return `${prefix}${path}`;
 }
 
-const get = (apiVersion, customPrefix) => async (path, opts) => {
+const get = (apiVersion, customPrefix) => async (path, params, opts) => {
   try {
     const response = await axios.get(
-      get_prefix(apiVersion, customPrefix, path),
+      get_prefix(apiVersion, customPrefix, path) + serialize(params),
       generate_options(opts)
     );
 

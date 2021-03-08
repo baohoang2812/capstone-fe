@@ -14,19 +14,29 @@ import Popup from './components/Popup';
 const Schedule = () => {
 
     const [popupShown, showPopup] = useState(false),
-          [eventRecord, setEventRecord] = useState(null),
-          [eventStore, setEventStore] = useState(null),
-          [resourceStore, setResourceStore] = useState(null),
-          main = useRef()
-    ;
+        [eventRecord, setEventRecord] = useState(null),
+        [eventStore, setEventStore] = useState(null),
+        [resourceStore, setResourceStore] = useState(null),
+        main = useRef()
+        ;
 
     const showEditor = (eventRecord) => {
         const { eventStore, resourceStore } = main.current.schedulerInstance;
-
+      
         setEventStore(eventStore);
         setResourceStore(resourceStore);
         setEventRecord(eventRecord);
         showPopup(true);
+    }
+
+    const setEventRecordHandler = (state) => {
+        eventRecord.set({ ...state });
+        if (!eventRecord.eventStore) {
+            eventStore.add(eventRecord);
+            setEventRecord(eventRecord);
+            setEventStore(eventStore);
+        }
+
     }
 
     const hideEditor = () => {
@@ -38,15 +48,16 @@ const Schedule = () => {
         <>
             <Main showEditor={showEditor} ref={main} />
             <div>
-                { popupShown ?
+                {popupShown ?
                     <Popup
                         text="Popup text"
                         closePopup={hideEditor}
                         eventRecord={eventRecord}
                         eventStore={eventStore}
                         resourceStore={resourceStore}
+                        setEventRecordHandler={setEventRecordHandler}
                     ></Popup> :
-                null}
+                    null}
             </div>
         </>
     );
