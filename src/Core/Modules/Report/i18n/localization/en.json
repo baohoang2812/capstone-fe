@@ -34,6 +34,10 @@
     "CORE.VIOLATION.STATUS.EXCUSE":"Excuse",
     "CORE.VIOLATION.CONFIRM.SUCCESS":"Updated success",
     "CORE.VIOLATION.SELECT.VIOLATOR":"Select violator",
-    "CORE.VIOLATION.VIOLATOR":"Violator"
+    "CORE.VIOLATION.VIOLATOR":"Violator",
+    "CORE.VIOLATION.SUBMITTED":"Submitted",
+    "CORE.REPORT.ADMIN.NOTE":"Admin note",
+    "CORE.REPORT.QC.NOTE": "QC note",
+    "CORE.REPORT.ASSIGNEE":"Assignee"
 
 }

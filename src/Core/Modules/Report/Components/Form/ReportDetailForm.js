@@ -39,7 +39,12 @@ const ReportDetailForm = ({ form, is_create, action, data }) => {
     setFieldsValue({
       name: data?.name,
       description: data?.description,
-      createdAt: moment(data?.createdAt).format("DD-MM-YYYY")
+      createdAt: moment(data?.createdAt).format("DD-MM-YYYY"),
+      status: data?.status,
+      adminNote: data?.adminNote,
+      qcNote: data?.qcNote,
+      branchName: data?.branch?.name,
+      assignee: data?.assigneeNavigation?.id
     });
   }, [data]);
 
@@ -51,35 +56,78 @@ const ReportDetailForm = ({ form, is_create, action, data }) => {
         <div className="div_custom">
           <Form>
             <Row type="flex" justify="center" align="bottom">
-              <Col span={10}>
+              <Col span={20}>
                 <Form.Item label={t("CORE.REPORT.NAME")}>
-                  {getFieldDecorator("name", {})(<Input disabled={true} />)}
+                  {getFieldDecorator("name", {})(<span>{data.name}</span>)}
                 </Form.Item>
               </Col>
             </Row>
 
             <Row type="flex" justify="center" align="bottom">
-              <Col span={10}>
+              <Col span={20}>
                 <Form.Item label={t("CORE.REPORT.DESCRIPTION")}>
-                  {getFieldDecorator("description", {})(<Input disabled={true} />)}
+                  {getFieldDecorator("description", {})(<span>{data.description}</span>)}
                 </Form.Item>
               </Col>
             </Row>
             <Row type="flex" justify="center" align="bottom">
-              <Col span={10}>
+              <Col span={20}>
                 <Form.Item label={t("CORE.REPORT.CHARGE.CREATE")}>
-                  {getFieldDecorator("createdAt", {})(<Input disabled={true} />)}
+                  {getFieldDecorator("createdAt", {})(<span>{data.createdAt}</span>)}
                 </Form.Item>
               </Col>
             </Row>
-            <Row>
-              <Col span={24}>
-
-                <Table t={t} />
-
-              
+            
+            <Row type="flex" justify="center" align="bottom">
+              <Col span={20}>
+                <Form.Item label={t("CORE.REPORT.STATUS")}>
+                  {getFieldDecorator("status", {})(<span>{data.status}</span>)}
+                </Form.Item>
               </Col>
             </Row>
+            <Row type="flex" justify="center" align="bottom">
+              <Col span={20}>
+                <Form.Item label={t("CORE.REPORT.BRANCH.NAME")}>
+                  {getFieldDecorator("branchName", {})(<span>{data?.branch?.name}</span>)}
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row type="flex" justify="center" align="bottom">
+              <Col span={20}>
+                <Form.Item label={t("CORE.REPORT.ADMIN.NOTE")}>
+                  {getFieldDecorator("adminNote", {})(<Input/>)}
+                </Form.Item>
+              </Col>
+            </Row>
+
+            <Row type="flex" justify="center" align="bottom">
+              <Col span={20}>
+                <Form.Item label={t("CORE.REPORT.QC.NOTE")}>
+                  {getFieldDecorator("qcNote", {})(<span>{data.qcNote}</span>)}
+                </Form.Item>
+              </Col>
+            </Row>
+            
+            <Row type="flex" justify="center" align="bottom">
+              <Col span={20}>
+                <Form.Item label={t("CORE.REPORT.ASSIGNEE")}>
+                  {getFieldDecorator("assignee", {
+                    initialValue: 12
+                  })(
+                    <Select>
+                  <Option value={11}>Tran Duc Hiep</Option>
+                  <Option value={12}>
+                    Nguyen Quang Vi
+                  </Option>
+                  <Option value={13}>
+                   Nguyen Quang Khai
+                  </Option>
+                </Select>
+                  )}
+                </Form.Item>
+              </Col>
+            </Row>
+            
           </Form>
         </div>
       </Col>

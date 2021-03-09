@@ -216,14 +216,14 @@ const Popup = (props) => {
                     </FormControl>
 
                     <FormControl style={{ marginBottom: 10, width: '49%', marginLeft: 5 }}>
-                        <InputLabel>Event type</InputLabel>
+                        <InputLabel>Công việc</InputLabel>
                         <Select
                             name="eventType"
                             onChange={dataChangedHandler}
                             value={state.eventType}
                         >
-                            <MenuItem value="Meeting">Meeting</MenuItem>
-                            <MenuItem value="Appointment">Appointment</MenuItem>
+                            <MenuItem value="Meeting">Phụ bếp</MenuItem>
+                            <MenuItem value="Appointment">Phục vụ</MenuItem>
                         </Select>
                     </FormControl>
                     {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
