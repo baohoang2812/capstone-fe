@@ -27,7 +27,6 @@ const UserTable = () => {
   };
   const handleCloseModal = () => {
     setVisible(false);
-
   };
   const defs = useMemo(() => [
     {
@@ -81,7 +80,7 @@ const UserTable = () => {
       render: (_, record) => {
         if (record.status.toLocaleLowerCase() === 'opening') {
           return (
-            <Tag color="orange">{t("CORE.VIOLATION.OPEN")}</Tag>
+            <Tag color="orange">{t("CORE.VIOLATION.OPENING")}</Tag>
           )
         }
         else {

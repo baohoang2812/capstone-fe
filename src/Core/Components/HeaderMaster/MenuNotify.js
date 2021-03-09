@@ -24,6 +24,7 @@ export default ({
 
   const rederDataNotification = useCallback(
     () => {
+      
       let data = [{
         is_check: true,
         title: "Hệ thống Mavca",

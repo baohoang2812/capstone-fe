@@ -6,6 +6,7 @@ import {
   Col,
   Form,
   Input,
+  Button,
   Modal,
   message,
   Select,
@@ -20,10 +21,10 @@ import { update_identity_table_data_success } from "~/Core/Store/actions/adminTa
 import { reports as identity } from "~/Core/Modules/Report/Configs/Constants";
 
 /* Api */
+import QCApi from "~/Core/Modules/Report/Api/GetQC";
 import reportApi from "~/Core/Modules/Report/Api";
-
-import Table from "~/Core/Modules/Report/Components/Table/TableViolation";
 import moment from "moment";
+import TextArea from "antd/lib/input/TextArea";
 
 const { Option } = Select;
 const ReportDetailForm = ({ form, is_create, action, data }) => {
@@ -32,8 +33,49 @@ const ReportDetailForm = ({ form, is_create, action, data }) => {
   const dispatch = useDispatch();
   /* State */
   const [loading, setLoading] = useState(false);
+  const [listQC, setListQC] = useState([]);
   const { getFieldDecorator, validateFields, setFieldsValue } = form;
-
+  const onConfirm = (e) => {
+    e.preventDefault();
+    validateFields((err, values) => {
+      if (!err) {
+        setLoading(true)
+        reportApi.update(
+          data.id,
+          {
+            adminNote: "string",
+            qcNote: "string",
+            assignee: values.assignee,
+            updatedAt: "2021-03-09T08:12:08.538Z",
+            description: values.description,
+            status: "string",
+            submittedBySystem: true
+          }
+        )
+          .then((res) => {
+            if (res.code !== 200) {
+              message.error(t("CORE.task_failure"));
+              return;
+            }
+            dispatch(update_identity_table_data_success(identity, { id: res.data.id, column: "assigneeNavigation", data: { id: values.assignee } }));
+            dispatch(update_identity_table_data_success(identity, { id: res.data.id, column: "description", data: values.description }));
+            message.success(t("CORE.VIOLATION.CONFIRM.SUCCESS"));
+            setLoading(false);
+            action();
+          })
+          .catch(() => {
+            message.error(t("CORE.error.system"));
+            setLoading(false);
+          });
+      }
+    });
+  };
+  useEffect(() => {
+    (async () => {
+      const resListQC = await QCApi.getList();
+      setListQC(resListQC?.data?.result);
+    })();
+  }, []);
   useEffect(() => {
     console.log(data);
     setFieldsValue({
@@ -62,11 +104,10 @@ const ReportDetailForm = ({ form, is_create, action, data }) => {
                 </Form.Item>
               </Col>
             </Row>
-
             <Row type="flex" justify="center" align="bottom">
               <Col span={20}>
-                <Form.Item label={t("CORE.REPORT.DESCRIPTION")}>
-                  {getFieldDecorator("description", {})(<span>{data.description}</span>)}
+                <Form.Item label={t("CORE.REPORT.BRANCH.NAME")}>
+                  {getFieldDecorator("branchName", {})(<span>{data.branch.name}</span>)}
                 </Form.Item>
               </Col>
             </Row>
@@ -77,7 +118,6 @@ const ReportDetailForm = ({ form, is_create, action, data }) => {
                 </Form.Item>
               </Col>
             </Row>
-            
             <Row type="flex" justify="center" align="bottom">
               <Col span={20}>
                 <Form.Item label={t("CORE.REPORT.STATUS")}>
@@ -87,47 +127,43 @@ const ReportDetailForm = ({ form, is_create, action, data }) => {
             </Row>
             <Row type="flex" justify="center" align="bottom">
               <Col span={20}>
-                <Form.Item label={t("CORE.REPORT.BRANCH.NAME")}>
-                  {getFieldDecorator("branchName", {})(<span>{data?.branch?.name}</span>)}
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row type="flex" justify="center" align="bottom">
-              <Col span={20}>
-                <Form.Item label={t("CORE.REPORT.ADMIN.NOTE")}>
-                  {getFieldDecorator("adminNote", {})(<Input/>)}
-                </Form.Item>
-              </Col>
-            </Row>
+                <Form.Item label={t("CORE.REPORT.DESCRIPTION")}>
+                  {getFieldDecorator("description", {
 
-            <Row type="flex" justify="center" align="bottom">
-              <Col span={20}>
-                <Form.Item label={t("CORE.REPORT.QC.NOTE")}>
-                  {getFieldDecorator("qcNote", {})(<span>{data.qcNote}</span>)}
+                  })(<TextArea/>)}
                 </Form.Item>
               </Col>
             </Row>
-            
             <Row type="flex" justify="center" align="bottom">
               <Col span={20}>
                 <Form.Item label={t("CORE.REPORT.ASSIGNEE")}>
                   {getFieldDecorator("assignee", {
-                    initialValue: 12
+                    initialValue: listQC?.[0]?.id,
                   })(
                     <Select>
-                  <Option value={11}>Tran Duc Hiep</Option>
-                  <Option value={12}>
-                    Nguyen Quang Vi
-                  </Option>
-                  <Option value={13}>
-                   Nguyen Quang Khai
-                  </Option>
-                </Select>
+                      {listQC.map((item) => (
+                        <Option key={item.id} value={item.id}>
+                          {item.firstName} {item.lastName}
+                        </Option>
+                      ))}
+                    </Select>
                   )}
                 </Form.Item>
               </Col>
             </Row>
-            
+            <Row type="flex" justify="center">
+              <div className="btn-group">
+                <Button
+                  loading={loading}
+                  type="primary"
+                  htmlType="submit"
+                  className="btn-yellow btn-right"
+                  style={{ float: "right" }}
+                  onClick={onConfirm}>
+                  {t("CORE.confirm")}
+                </Button>
+              </div>
+            </Row>
           </Form>
         </div>
       </Col>

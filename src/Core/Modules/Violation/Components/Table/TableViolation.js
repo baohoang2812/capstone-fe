@@ -151,16 +151,16 @@ const UserTable = () => {
           return (
             <Tag color="green">{t("CORE.VIOLATION.CONFIRMED")}</Tag>
           )
-        } else if (record.status.toLocaleLowerCase() === 'open') {
+        } else if (record.status.toLocaleLowerCase() === 'opening') {
           return (
-            <Tag color="orange">{t("CORE.VIOLATION.OPEN")}</Tag>
+            <Tag color="orange">{t("CORE.VIOLATION.OPENING")}</Tag>
           )
-        } else if (record.status.toLocaleLowerCase() === 'accepted excuse') {
+        } else if (record.status.toLocaleLowerCase() === 'rejected') {
           return (
-            <Tag color="red">{t("CORE.VIOLATION.DECLINED")}</Tag>
+            <Tag color="red">{t("CORE.VIOLATION.REJECTED")}</Tag>
           )
         }
-        else {
+        else if(record.status.toLocaleLowerCase() === 'excuse') {
           return (
             <Tag color="blue">{t("CORE.VIOLATION.STATUS.EXCUSE")}</Tag>
           )
@@ -253,7 +253,7 @@ const UserTable = () => {
           </>
         )
     } else {
-      const isDisable = record?.status?.toLocaleLowerCase() === 'open';
+      const isDisable = record?.status?.toLocaleLowerCase() === 'opening';
       return (
           <>
             <Button disabled={!isDisable} onClick={() => { openModel(record) }} type="danger">
