@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { Alert, message } from "antd";
-import jwt_decode from "jwt-decode";
+// import { Alert} from "antd";
 
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
@@ -11,14 +10,12 @@ import Header from "~/Core/Modules/Employee/Components/Header/Header";
 import ProfileForm from "~/Core/Modules/Employee/Components/Form/ProfileForm";
 
 /* Api */
-import employeeApi from "~/Core/Modules/Employee/Api";
 
 const Profile = ({ match: { params } }) => {
   const t = useTranslate();
   const history = useHistory();
-  const [data, setData] = useState({});
   // const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+  // const [error, setError] = useState(false);
 
   const action = () => {
     history.push("/employee");
@@ -43,11 +40,11 @@ const Profile = ({ match: { params } }) => {
           text={t("CORE.back")}
           className="btn-yellow"
         />
-        {error ? (
+        {/* {error ? (
           <Alert type="error" message={t("CORE.task_failure")} />
-        ) : (
-          <ProfileForm data={data} />
-        )}
+        ) : ( */}
+          <ProfileForm />
+        {/* )} */}
       </div>
     </>
   );

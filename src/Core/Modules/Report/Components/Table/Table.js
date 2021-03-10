@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
-import { Button, Divider, Modal, message, Tag } from 'antd';
+import { Button,Modal,Tag } from 'antd';
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 

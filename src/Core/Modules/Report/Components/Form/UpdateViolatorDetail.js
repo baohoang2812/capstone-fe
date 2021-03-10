@@ -5,7 +5,6 @@ import {
     Row,
     Col,
     Form,
-    Input,
     Button,
     Spin,
     Divider,
@@ -28,13 +27,12 @@ import employeeApi from "~/Core/Modules/Employee/Api";
 
 const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
     const t = useTranslate();
-    const { TextArea } = Input;
     /* Redux */
     const dispatch = useDispatch();
     /* State */
     const [loading, setLoading] = useState(false);
-    const [loadingDropdown, setLoadingDropdown] = useState(false);
-    const { getFieldDecorator, validateFields, setFieldsValue } = form;
+    // const [loadingDropdown, setLoadingDropdown] = useState(false);
+    const { getFieldDecorator, validateFields} = form;
     const [ dataEmployee, setDataEmployee ] = useState([]);
 
     useEffect(() => {
@@ -52,6 +50,7 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
         e.preventDefault();
         validateFields((err, values) => {
             if (!err) {
+                setLoading(true);
                 updateViolatorApi.update(
                     data.id,
                     {
@@ -72,10 +71,12 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
                         }
                         dispatch(update_identity_table_data_success(identity, { id: res.data.id, column: "status", data: res.data.status }));
                         message.success(t("CORE.VIOLATION.CREATE.SUCCESS"));
+                        setLoading(false);
                         action();
                     })
                     .catch(() => {
                         message.error(t("CORE.error.system"));
+                        setLoading(false);
                     });
 
             }
@@ -85,7 +86,7 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
     return (
         <Row type="flex" justify="center">
             <Col span={24}>
-                <Spin spinning={loadingDropdown}>
+                <Spin>
                     <Form onSubmit={onConfirm}>
                         <Row type="flex" justify="center" align="bottom">
                             <Col span={20}>

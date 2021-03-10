@@ -4,31 +4,23 @@
 import React, { useState, useEffect } from 'react';
 import './Popup.scss';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import { message } from 'antd';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
-import DateFnsUtils from '@date-io/date-fns';
 import workspaceApi from "~/Core/Modules/WorkSchedule/Api/WorkspaceApi";
 import shiftApi from "~/Core/Modules/WorkSchedule/Api/ShiftApi";
 import workScheduleApi from "~/Core/Modules/WorkSchedule/Api/WorkScheduleApi";
-import { update_identity_table_data_success } from "~/Core/Store/actions/adminTable";
-import { useDispatch } from "react-redux";
 
 
-import {
-    MuiPickersUtilsProvider,
-    KeyboardDateTimePicker
-} from '@material-ui/pickers';
+
 import contactApi from "~/Core/Modules/WorkSchedule/Api";
 import moment from "moment";
 const Popup = (props) => {
     const [workspaces, setWorkspaces] = useState([]);
     const [shifts, setShifts] = useState([]);
-    const dispatch = useDispatch();
     const [state, setState] = useState({
         name: '',
         eventType: 'Meeting',

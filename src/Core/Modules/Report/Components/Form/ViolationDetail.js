@@ -31,8 +31,8 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
     const dispatch = useDispatch();
     /* State */
     const [loading, setLoading] = useState(false);
-    const [loadingDropdown, setLoadingDropdown] = useState(false);
-    const { getFieldDecorator, validateFields, setFieldsValue } = form;
+    // const [loadingDropdown, setLoadingDropdown] = useState(false);
+    const { getFieldDecorator, validateFields} = form;
     const [dataEmployee, setDataEmployee] = useState([]);
     useEffect(() => {
         if (data?.employeeIds?.length > 0) {
@@ -51,6 +51,7 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
         e.preventDefault();
         validateFields((err, values) => {
             if (!err) {
+                setLoading(true);
                 violationApi.update(
                     data.id,
                     {
@@ -71,10 +72,12 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
                         }
                         dispatch(update_identity_table_data_success(identity, { id: res.data.id, column: "status", data: res.data.status }));
                         message.success(t("CORE.VIOLATION.CONFIRM.SUCCESS"));
+                        setLoading(false);
                         action();
                     })
                     .catch(() => {
                         message.error(t("CORE.error.system"));
+                        setLoading(false);
                     });
 
             }
@@ -83,7 +86,7 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
     return (
         <Row type="flex" justify="center">
             <Col span={24}>
-                <Spin spinning={loadingDropdown}>
+                <Spin>
                     <Form onSubmit={onConfirm}>
                         <Row type="flex" justify="center" align="bottom">
                             <Col span={20}>
@@ -150,10 +153,7 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
                                 <Form.Item label={t("CORE.VIOLATION.EXCUSE")}>
                                     {getFieldDecorator("excuse", {
 
-                                    })
-                                        (
-                                            <TextArea rows={4} />
-                                        )}
+                                    })(<TextArea rows={4} />)}
                                 </Form.Item>
                             </Col>
                         </Row>

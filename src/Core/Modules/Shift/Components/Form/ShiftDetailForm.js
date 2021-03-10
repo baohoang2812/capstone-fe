@@ -8,7 +8,6 @@ import {
   Input,
   Button,
   message,
-  Select,
   TimePicker
 } from "antd";
 /* Hooks */
@@ -22,7 +21,6 @@ import { shifts as identity } from "~/Core/Modules/Shift/Configs/Constants";
 
 /* Api */
 import shiftApi from "~/Core/Modules/Shift/Api/";
-const { Option } = Select;
 const ShiftDetailForm = ({ form, is_create, action, data }) => {
   const t = useTranslate();
   /* Redux */

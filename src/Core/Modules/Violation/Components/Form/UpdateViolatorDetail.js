@@ -5,7 +5,6 @@ import {
     Row,
     Col,
     Form,
-    Input,
     Button,
     Spin,
     Divider,
@@ -25,18 +24,17 @@ import { violations as identity } from "~/Core/Modules/Violation/Configs/Constan
 /* Api */
 import ViolationEmployeeApi from "~/Core/Modules/Violation/Api/ViolationEmployee";
 import employeeApi from "~/Core/Modules/Employee/Api";
-import  violationApi from "~/Core/Modules/Violation/Api/Violation";
+import violationApi from "~/Core/Modules/Violation/Api/Violation";
 
 const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
     const t = useTranslate();
-    const { TextArea } = Input;
     /* Redux */
     const dispatch = useDispatch();
     /* State */
     const [loading, setLoading] = useState(false);
-    const [loadingDropdown, setLoadingDropdown] = useState(false);
-    const { getFieldDecorator, validateFields, setFieldsValue } = form;
-    const [ dataEmployee, setDataEmployee ] = useState([]);
+    // const [loadingDropdown, setLoadingDropdown] = useState(false);
+    const { getFieldDecorator, validateFields} = form;
+    const [dataEmployee, setDataEmployee] = useState([]);
 
     useEffect(() => {
         console.log(data);
@@ -52,22 +50,22 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
     const onConfirm = (e) => {
         e.preventDefault();
         validateFields((err, values) => {
-            
+
             if (!err) {
+                setLoading(true);
                 ViolationEmployeeApi.create(
                     data.id,
-                    
-                        {
-                            "employeeIds": values.violator
-                          }
-                    
+
+                    {
+                        "employeeIds": values.violator
+                    }
+
                 )
                     .then((res) => {
                         if (res.code !== 201) {
                             message.error(t("CORE.task_failure"));
                             return;
                         }
-                        dispatch(update_identity_table_data_success(identity, { id: res.data.id, column: "status", data: res.data.status }));
                         violationApi.update(
                             data.id,
                             {
@@ -86,16 +84,20 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
                                 return;
                             }
                             dispatch(update_identity_table_data_success(identity, { id: res.data.id, column: "status", data: res.data.status }));
+                            dispatch(update_identity_table_data_success(identity, { id: res.data.id, column: "employeeIds", data: values.violator }));
                             message.success(t("CORE.VIOLATION.CREATE.SUCCESS"));
+                            setLoading(false);
                             action();
                         })
-                        .catch(() => {
-                            message.error(t("CORE.error.system"));
-                        });
-                       
+                            .catch(() => {
+                                message.error(t("CORE.error.system"));
+                                setLoading(false);
+                            });
+
                     })
                     .catch(() => {
                         message.error(t("CORE.error.system"));
+                        setLoading(false);
                     });
 
             }
@@ -105,7 +107,7 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
     return (
         <Row type="flex" justify="center">
             <Col span={24}>
-                <Spin spinning={loadingDropdown}>
+                <Spin>
                     <Form onSubmit={onConfirm}>
                         <Row type="flex" justify="center" align="bottom">
                             <Col span={20}>

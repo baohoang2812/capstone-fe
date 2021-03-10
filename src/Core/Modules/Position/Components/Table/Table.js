@@ -1,6 +1,5 @@
 import React, { useMemo } from "react";
 import { Link } from "react-router-dom";
-import moment from "moment";
 
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";

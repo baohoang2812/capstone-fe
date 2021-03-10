@@ -5,11 +5,8 @@ import {
   Row,
   Col,
   Form,
-  Input,
   Button,
-  Modal,
   message,
-  Select,
 } from "antd";
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
@@ -27,7 +24,6 @@ import Table from "~/Core/Modules/Report/Components/Table/TableViolation";
 import moment from "moment";
 import TextArea from "antd/lib/input/TextArea";
 
-const { Option } = Select;
 const ReportViolation = ({ form, is_create, action, data }) => {
   const t = useTranslate();
   /* Redux */

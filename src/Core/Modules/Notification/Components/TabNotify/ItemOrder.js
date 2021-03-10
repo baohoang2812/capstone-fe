@@ -1,9 +1,8 @@
 import React, {useState} from 'react';
-import { Col,Modal,Icon,Card,Avatar } from 'antd';
+import { Col,Modal,Card,Avatar } from 'antd';
 import { Link } from "react-router-dom";
 import moment from 'moment';
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
-import { OpenInBrowser } from '@material-ui/icons';
 export const ItemOrder = ({ detail }) => {
   const [visible, setVisible] = useState(false);
   const dummiesItem = {

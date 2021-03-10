@@ -1,8 +1,6 @@
 import React, { useCallback } from "react";
 import { Avatar, List } from "antd";
-import { Link, useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import moment from "moment";
+import { Link} from "react-router-dom";
 
 /* Actions */
 // import { updateListNotification } from "~/Core/Store/actions/notification";
@@ -15,8 +13,6 @@ export default ({
   handleOpenModal
 }) => {
   // const listNotification = useSelector(state => state.NotificationCore.listNotificationHeader)
-  const dispatch = useDispatch();
-  const history = useHistory();
 
   const onMarkAllAsRead = () => {
     // dispatch(updateListNotification("all"));
