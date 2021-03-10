@@ -12,5 +12,6 @@ export default [
   { key: "WorkSchedule"},
   { key: "Shift"},
   { key: "Violation"},
-  { key: "Notification"}
+  { key: "Notification"},
+  { key: "Cameras"}
 ];
