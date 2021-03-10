@@ -45,7 +45,7 @@
     "build:testing": "env-cmd -e testing react-app-rewired build",
     "start:production": "env-cmd -e production react-app-rewired start",
     "build:production": "env-cmd -e production react-app-rewired build",
-    "postinstall": "cp -r ./schedule/bryntum-react-shared node_modules/bryntum-react-shared* && cp -r ./schedule/bryntum-schedulerpro node_modules/bryntum-schedulerpro* && cp -r ./schedule/bryntum-resources node_modules/bryntum-resources*"
+    "postinstall": "ls cp -r ./schedule/bryntum-react-shared node_modules/bryntum-react-shared* && cp -r ./schedule/bryntum-schedulerpro node_modules/bryntum-schedulerpro* && cp -r ./schedule/bryntum-resources node_modules/bryntum-resources*"
   },
   "eslintConfig": {
     "extends": "react-app"
