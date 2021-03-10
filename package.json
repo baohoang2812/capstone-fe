@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "schedule": "git://github.com/nguyenquangkhai2210/schedule.git",
+    "schedule": "git+http://github.com/nguyenquangkhai2210/schedule.git",
     "@material-ui/core": "~4.4.0",
     "@material-ui/icons": "~4.2.1",
     "@material-ui/pickers": "~3.2.4",
