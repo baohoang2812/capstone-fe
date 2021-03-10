@@ -46,14 +46,15 @@ const SignIn = ({ form }) => {
         login(user)
           .then(({ data }) => {
             setLoading(false);
-            if (data.status !== 200) {
+            console.log(data);
+            if (data.code  !== 200) {
               setError(true);
               return;
             }
 
-            const { token, full_name, image_path } = data;
-            setToken(token);
-            setAccountInfo({ full_name, image_path });
+            const { accessToken, username, email } = data.data;
+            setToken(accessToken);
+            setAccountInfo({ username,email });
 
             window.location.replace("/");
           })
@@ -129,7 +130,7 @@ const SignIn = ({ form }) => {
                             message: t("CORE.passwordRequired"),
                           },
                           {
-                            min: 6,
+                            min: 2,
                             message: t("CORE.passIsLessThan6Char"),
                           },
                         ],

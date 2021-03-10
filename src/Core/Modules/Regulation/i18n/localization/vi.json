@@ -1,0 +1,15 @@
+{
+    "CORE.REGULATION.MANAGEMENT.TITLE":"Quản lý quy tắc",
+    "CORE.REGULATION.CREATE.ACCOUNT":"Tạo quy tắc",
+    "CORE.REGULATION.UPDATE.ACCOUNT":"Cập nhật quy tắc",
+    "CORE.REGULATION.NAME":"Tên quy tắc",
+    "CORE.REGULATION.DESCRIPTION":"Mô tả",
+    "CORE.REGULATION.LEVEL":"Cấp độ",
+    "CORE.REGULATION.MINUS.POINT":"Điểm trừ",
+    "CORE.REGULATION.TYPE":"Loại quy tắc",
+    "CORE.REGULATION.CREATE.SUCCESS":"Tạo quy tắc thành công!",
+    "CORE.REGULATION.UPDATE.SUCCESS":"Cập nhật quy tắc thành công!",
+    "CORE.REGULATION.CHARGE.CREATE":"Ngày tạo",
+    "CORE.REGULATION.CHARGE.UPDATE":"Ngày cập nhật",
+    "CORE.REGULATION.POINT": "Điểm trừ"
+}

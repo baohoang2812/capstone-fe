@@ -1,0 +1,15 @@
+{
+    "CORE.SHIFT.TYPE":"Loại ca",
+    "CORE.SHIFT.NAME":"Tên ca",
+    "CORE.SHIFT.START.TIME":"Thời gian bắt đầu",
+    "CORE.SHIFT.END.TIME":"Thời gian kết thúc",
+    "CORE.SHIFT.CHARGE.CREATE":"Ngày tạo",
+    "CORE.SHIFT.CHARGE.UPDATE":"Ngày cập nhật",
+    "CORE.SHIFT.MANAGEMENT.TITLE":"Quản lý ca",
+    "CORE.SHIFT.CREATE.ACCOUNT":"Tạo mới",
+    "CORE.SHIFT.FULL.SHIFT":"Ca đủ",
+    "CORE.SHIFT.BREAK.SHIFT":"Ca gãy",
+    "CORE.SHIFT.UPDATE.ACCOUNT":"Cập nhật ca",
+    "CORE.SHIFT.CREATE.SUCCESS":"Tạo mới ca thành công!",
+    "CORE.SHIFT.UPDATE.SUCCESS":"Cập nhật ca thành công!"
+}

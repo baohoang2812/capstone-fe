@@ -3,7 +3,7 @@ import "./style.less";
 
 import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { Layout, Icon, Dropdown, Avatar, Menu } from "antd";
+import { Layout, Icon, Dropdown, Avatar, Menu, Badge} from "antd";
 
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
@@ -11,6 +11,8 @@ import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 /* Components */
 import MenuLanguage from "./MenuLanguage";
 
+/* Components */
+import MenuNotify from "./MenuNotify";
 /* Helpers */
 import { logout } from "~/Core/utils/helper/authenticate";
 
@@ -163,6 +165,16 @@ export const HeaderMaster = ({ url }) => {
           </div>
         </div>
         <div className="header-right">
+          <Dropdown
+            overlay={<MenuNotify />}
+            trigger={["click"]}
+          >
+            <div className="action-icon dropdown-notification">
+              <Badge count={22}>
+                <Icon type="notification" />
+              </Badge>
+            </div>
+          </Dropdown>
           <MenuLanguage />
           <Dropdown overlay={renderMenuProfile(account_info, t)}>
             <span className="dropdown-user">

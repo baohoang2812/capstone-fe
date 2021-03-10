@@ -1,0 +1,7 @@
+{
+    "CORE.WORKSPACE.NAME":"Workspace name",
+    "CORE.WORKSCHEDULE.CREATE":"Create WorkSchedule",
+    "CORE.SHIFT.NAME":"Shift Name",
+    "CORE.EMPLOYEE.NAME":"Name",
+    "CORE.VIOLATION.CREATE.SUCCESS":"Updated success"
+}

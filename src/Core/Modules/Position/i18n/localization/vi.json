@@ -1,0 +1,8 @@
+{
+    
+    "CORE.POSITION.NAME":"Tên chức vụ",
+    "CORE.POSITION.DESCRIPTION":"Mô tả",
+    "CORE.POSITION.MANAGEMENT.TITLE":"Quản lý chức vụ",
+    "CORE.POSITION.CREATE.ACCOUNT":"Tạo chức vụ",
+    "CORE.POSITION.UPDATE.ACCOUNT":"Cập nhật chức vụ"
+}

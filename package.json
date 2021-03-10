@@ -3,11 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "~4.4.0",
+    "@material-ui/icons": "~4.2.1",
+    "@material-ui/pickers": "~3.2.4",
+    "@date-io/date-fns": "^2.10.8",
     "@formatjs/intl-pluralrules": "^3.5.1",
     "antd": "^3.20.0",
     "axios": "^0.18.0",
     "babel-plugin-import": "^1.11.0",
     "customize-cra": "^0.2.12",
+    "date-fns": "^2.17.0",
     "env-cmd": "^10.1.0",
     "jwt-decode": "^3.1.2",
     "less": "^3.9.0",
@@ -39,7 +44,8 @@
     "start:testing": "env-cmd -e testing react-app-rewired start",
     "build:testing": "env-cmd -e testing react-app-rewired build",
     "start:production": "env-cmd -e production react-app-rewired start",
-    "build:production": "env-cmd -e production react-app-rewired build"
+    "build:production": "env-cmd -e production react-app-rewired build",
+    "copy": "cp -r ../schedule/bryntum-react-shared node_modules/bryntum-react-shared && cp -r ../schedule/bryntum-schedulerpro node_modules/bryntum-schedulerpro && cp -r ../schedule/bryntum-resources node_modules/bryntum-resources"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -61,5 +67,6 @@
     "babel-plugin-dynamic-import-node": "^2.2.0",
     "babel-plugin-root-import": "^6.2.0",
     "redux-devtools-extension": "^2.13.8"
-  }
+  },
+  "homepage": "https://capstone-fe.azurewebsites.net"
 }

@@ -1,7 +1,6 @@
 import "./style.less";
 
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import {
   Select,
   DatePicker,
@@ -11,31 +10,16 @@ import {
   Col,
   Form,
   Input,
-  Button,
   Modal,
   Spin,
   message,
 } from "antd";
 import moment from "moment";
-import jwt_decode from "jwt-decode";
-
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
-
-/* Actions */
-import { update_identity_table_data_success } from "~/Core/Store/actions/adminTable";
-
-/* Constants */
-import { employees as identity } from "~/Core/Modules/Employee/Configs/constants";
-
 /* Api */
 import employeeApi from "~/Core/Modules/Employee/Api";
-import branchApi from "~/Core/Modules/Employee/Api/Branch";
-import roleApi from "~/Core/Modules/Employee/Api/Role";
-import positionApi from "~/Core/Modules/Employee/Api/Position";
-
 const { Option } = Select;
-
 const getBase64 = (file) => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -44,60 +28,55 @@ const getBase64 = (file) => {
     reader.onerror = (error) => reject(error);
   });
 };
-const ProfileForm = ({ form, data }) => {
+const ProfileForm = ({form}) => {
   const t = useTranslate();
-  const { getFieldDecorator, validateFields, setFieldsValue } = form;
-
+  const { getFieldDecorator,setFieldsValue } = form;
+  // const [error, setError] = useState(false);
   /* Redux */
-  const dispatch = useDispatch();
-
   /* State */
-  const [listBranch, setListBranch] = useState([]);
-  const [listRole, setRole] = useState([]);
-  const [listPosition, setPosition] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [loadingDropdown, setLoadingDropdown] = useState(false);
+  // const [loading, setLoading] = useState(false);
+  // const [loadingDropdown, setLoadingDropdown] = useState(false);
   const [fileList, setFileList] = useState([]);
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
+  // const {
+  //   roleName: role
+  // } = jwt_decode(token);
 
-  const token = localStorage.getItem("token" || "");
-  const {
-    payload: { role },
-  } = jwt_decode(token);
+  // useEffect(() => {
+  //   (async () => {
+  //     setLoadingDropdown(true);
+
+  //     const resBranch = await branchApi.getList();
+  //     const resRole = await roleApi.getList();
+  //     const resPosition = await positionApi.getList();
+
+  //     setListBranch(resBranch?.data?.list);
+  //     setRole(resRole?.data?.list);
+  //     setPosition(resPosition?.data?.list);
+
+  //     setLoadingDropdown(false);
+  //   })();
+  // }, []);
+  const [data, setData] = useState({});
 
   useEffect(() => {
-    (async () => {
-      setLoadingDropdown(true);
-
-      const resBranch = await branchApi.getList();
-      const resRole = await roleApi.getList();
-      const resPosition = await positionApi.getList();
-
-      setListBranch(resBranch?.data?.list);
-      setRole(resRole?.data?.list);
-      setPosition(resPosition?.data?.list);
-
-      setLoadingDropdown(false);
-    })();
-  }, []);
-
-  useEffect(() => {
+  
     setFieldsValue({
-      code: data?.employee?.code,
-      first_name: data?.employee?.first_name,
-      last_name: data?.employee?.last_name,
-      email: data?.employee?.email,
-      phone_number: data?.employee?.phone_number,
-      address: data?.employee?.address,
-      username: data?.employee?.username,
+      code: data?.code,
+      first_name: data?.firstName,
+      last_name: data?.lastName,
+      email: data?.email,
+      phone_number: data?.phoneNumber,
+      address: data?.address,
+      username: data?.account?.username,
+      gender: data?.gender,
 
-      role_id: data?.employee?.role_id,
-      gender: data?.employee?.gender,
-      birth_date: new moment(data?.employee?.birth_date),
-      is_part_time: data?.employee?.is_part_time,
-      branch_id: data?.employee?.branch_id,
-      position_id: data?.employee?.position_id,
+      role_id: data?.account?.role?.name,
+      birth_date: new moment(data?.birthDate),
+      is_part_time: data?.isPartTime,
+      branch_id: data?.branch?.name,
+      position_id: data?.position?.name,
     });
 
     setFileList([
@@ -110,46 +89,67 @@ const ProfileForm = ({ form, data }) => {
     ]);
   }, [data]);
 
-  const onConfirm = (e) => {
-    e.preventDefault();
-    validateFields((err, values) => {
-      if (!err) {
-        setLoading(true);
-        const newValues = {
-          ...values,
-          birth_date: values["birth_date"].format("YYYY-MM-DD"),
-          image_path: values?.["image_path"]?.file?.response?.url,
-        };
-
-        newValues.branch_manager_id = 1;
-        newValues.status = "test";
-        const { username, ...employee } = newValues;
-        setLoading(false);
-        const objReq = {
-          employee,
-          account: {
-            username
-          },
-        };
-
-        objReq.employee.id = data.employee.id;
-        employeeApi.update(objReq).then((res) => {
-          setLoading(false);
-
-          if (res.status !== 200) {
-            message.error(t("CORE.task_failure"));
+  useEffect(() => {
+    
+      (async () => {
+        try {
+          // setLoading(true);
+          const res = await employeeApi.getProfile();
+          if (res.code !== 200) {
+            message.error("CORE.MENU.message_error");
+            // setLoading(false);
+            // setError(true);
             return;
           }
+          const data = res?.data|| {};
+          setData(data);
+          console.log(data);
+        } catch (error) {
+          // setError(true);
+          // setLoading(false);
+        }
+      })();
+  }, []);
+  // const onConfirm = (e) => {
+  //   e.preventDefault();
+  //   validateFields((err, values) => {
+  //     if (!err) {
+  //       setLoading(true);
+  //       const newValues = {
+  //         ...values,
+  //         birth_date: values["birth_date"].format("YYYY-MM-DD"),
+  //         image_path: values?.["image_path"]?.file?.response?.url,
+  //       };
 
-          dispatch(
-            update_identity_table_data_success(identity, res.data.employee)
-          );
-          message.success(t("CORE.EMPLOYEE.UPDATE.SUCCESS"));
-        });
+  //       newValues.branch_manager_id = 1;
+  //       newValues.status = "test";
+  //       const { username, ...employee } = newValues;
+  //       setLoading(false);
+  //       const objReq = {
+  //         employee,
+  //         account: {
+  //           username
+  //         },
+  //       };
 
-      }
-    });
-  };
+  //       objReq.employee.id = data.employee.id;
+  //       employeeApi.update(objReq).then((res) => {
+  //         setLoading(false);
+
+  //         if (res.status !== 200) {
+  //           message.error(t("CORE.task_failure"));
+  //           return;
+  //         }
+
+  //         dispatch(
+  //           update_identity_table_data_success(identity, res.data.employee)
+  //         );
+  //         message.success(t("CORE.EMPLOYEE.UPDATE.SUCCESS"));
+  //       });
+
+  //     }
+  //   });
+  // };
 
   const handleCancel = () => setPreviewVisible(false);
 
@@ -168,8 +168,8 @@ const ProfileForm = ({ form, data }) => {
     <Row type="flex" justify="center">
       <Col span={20}>
         <div className="div_custom">
-          <Spin spinning={loadingDropdown}>
-            <Form onSubmit={onConfirm}>
+          <Spin>
+            <Form>
               <Row type="flex" justify="space-between" align="bottom">
                 <Col span={3}>
                   <Form.Item
@@ -222,7 +222,7 @@ const ProfileForm = ({ form, data }) => {
                           message: "Please input your E-mail!",
                         },
                       ],
-                    })(<Input />)}
+                    })(<Input disabled/>)}
                   </Form.Item>
                 </Col>
               </Row>
@@ -237,7 +237,7 @@ const ProfileForm = ({ form, data }) => {
                           whitespace: true,
                         },
                       ],
-                    })(<Input />)}
+                    })(<Input disabled />)}
                   </Form.Item>
                 </Col>
                 <Col span={10}>
@@ -250,7 +250,7 @@ const ProfileForm = ({ form, data }) => {
                           whitespace: true,
                         },
                       ],
-                    })(<Input />)}
+                    })(<Input disabled/>)}
                   </Form.Item>
                 </Col>
               </Row>
@@ -278,12 +278,12 @@ const ProfileForm = ({ form, data }) => {
                           message: "Min length is 10 characters!",
                         },
                       ],
-                    })(<Input />)}
+                    })(<Input disabled/>)}
                   </Form.Item>
                 </Col>
                 <Col span={15}>
                   <Form.Item label={t("CORE.EMPLOYEE.ADDRESS")}>
-                    {getFieldDecorator("address", {})(<Input />)}
+                    {getFieldDecorator("address", {})(<Input disabled />)}
                   </Form.Item>
                 </Col>
               </Row>
@@ -291,26 +291,14 @@ const ProfileForm = ({ form, data }) => {
                 <Col span={7}>
                   <Form.Item label={t("CORE.EMPLOYEE.USERNAME")}>
                     {getFieldDecorator("username", {
-                      rules: [
-                        {
-                          required: true,
-                          message: "Please input username!",
-                          whitespace: false,
-                        },
-                      ],
+                      
                     })(<Input disabled />)}
                   </Form.Item>
                 </Col>
                 <Col span={5}>
                   <Form.Item label={t("CORE.EMPLOYEE.JOB.TYPE")}>
                     {getFieldDecorator("is_part_time", {
-                      rules: [
-                        {
-                          required: true,
-                          message: "Please select job type!",
-                        },
-                      ],
-                      initialValue: true,
+                     
                     })(
                       <Select disabled>
                         <Option value={true}>Part time</Option>
@@ -322,42 +310,18 @@ const ProfileForm = ({ form, data }) => {
                 <Col span={5}>
                   <Form.Item label={t("CORE.EMPLOYEE.ROLE")}>
                     {getFieldDecorator("role_id", {
-                      rules: [
-                        {
-                          required: true,
-                          message: "Please select role!",
-                        },
-                      ],
-                      initialValue: listRole?.[0]?.id,
+                      
                     })(
-                      <Select disabled>
-                        {listRole.map((item) => (
-                          <Option key={item.id} value={item.id}>
-                            {item.role}
-                          </Option>
-                        ))}
-                      </Select>
+                      <Input disabled/>
                     )}
                   </Form.Item>
                 </Col>
                 <Col span={5}>
                   <Form.Item label={t("CORE.EMPLOYEE.POSITION")}>
                     {getFieldDecorator("position_id", {
-                      rules: [
-                        {
-                          required: true,
-                          message: "Please select position!",
-                        },
-                      ],
-                      initialValue: listPosition?.[0]?.id,
+                     
                     })(
-                      <Select disabled>
-                        {listPosition.map((item) => (
-                          <Option key={item.id} value={item.id}>
-                            {item.name}
-                          </Option>
-                        ))}
-                      </Select>
+                      <Input disabled/>
                     )}
                   </Form.Item>
                 </Col>
@@ -366,32 +330,20 @@ const ProfileForm = ({ form, data }) => {
                 <Col span={5}>
                   <Form.Item label={t("CORE.EMPLOYEE.DATE.OF.BIRTH")}>
                     {getFieldDecorator("birth_date", {
-                      rules: [
-                        {
-                          type: "object",
-                          required: true,
-                          message: "Please select time!",
-                        },
-                      ],
-                    })(<DatePicker />)}
+                     
+                    })(<DatePicker disabled />)}
                   </Form.Item>
                 </Col>
                 <Col span={5}>
                   <Form.Item label={t("CORE.EMPLOYEE.GENDER")}>
                     {getFieldDecorator("gender", {
-                      rules: [
-                        {
-                          required: true,
-                          message: "Please select your gender!",
-                        },
-                      ],
-                      initialValue: "male",
+                      
                     })(
-                      <Select>
-                        <Option value="male">
+                      <Select disabled>
+                        <Option value="T">
                           {t("CORE.EMPLOYEE.GENDER.MALE")}
                         </Option>
-                        <Option value="female">
+                        <Option value="F">
                           {t("CORE.EMPLOYEE.GENDER.FEMALE")}
                         </Option>
                         <Option value="other">
@@ -404,20 +356,10 @@ const ProfileForm = ({ form, data }) => {
                 <Col span={13}>
                   <Form.Item label={t("CORE.EMPLOYEE.BRANCH.NAME")}>
                     {getFieldDecorator("branch_id", {
-                      rules: [
-                        {
-                          required: true,
-                          message: "Please select branch name!",
-                        },
-                      ],
-                      initialValue: listBranch?.[0]?.id,
+                     
                     })(
-                      <Select disabled={role !== "Admin"}>
-                        {listBranch.map((item) => (
-                          <Option key={item.id} value={item.id}>
-                            {item.name}
-                          </Option>
-                        ))}
+                      <Select disabled>
+                        
                       </Select>
                     )}
                   </Form.Item>
@@ -437,16 +379,7 @@ const ProfileForm = ({ form, data }) => {
                     />
                   </Modal>
                   <div className="btn-group">
-                    <Button
-                      loading={loading}
-                      type="primary"
-                      htmlType="submit"
-                      className="btn-yellow btn-right"
-                      style={{ float: "right" }}
-                      onClick={onConfirm}
-                    >
-                      {t("CORE.confirm")}
-                    </Button>
+                    
                   </div>
                 </Col>
               </Row>

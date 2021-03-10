@@ -1,0 +1,19 @@
+{
+    "CORE.BRANCH.MANAGEMENT.TITLE":"Quản lý chi nhánh",
+    "CORE.BRANCH.CREATE.ACCOUNT":"Tạo chi nhánh",
+    "CORE.BRANCH.UPDATE.ACCOUNT":"Cập nhật chi nhánh",
+    "CORE.BRANCH.NAME":"Tên chi nhánh",
+    "CORE.BRANCH.ADDRESS":"Địa chỉ",
+    "CORE.BRANCH.PHONE.NUMBER":"Số điện thoại",
+    "CORE.BRANCH.CHARGE.CREATE":"Ngày tạo",
+    "CORE.BRANCH.CHARGE.UPDATE":"Ngày cập nhật",
+    "CORE.BRANCH.MANAGER.NAME":"Tên quản lý",
+    "CORE.BRANCH.STATUS":"Trạng thái",
+    "CORE.BRANCH.ACTIVE":"Đang hoạt động",
+    "CORE.BRANCH.INACTIVE":"Ngừng hoạt động",
+    "CORE.BRANCH.CREATE.SUCCESS":"Tạo chi nhánh thành công",
+    "CORE.BRANCH.UPDATE.SUCCESS":"Cập nhật chi nhánh thành công",
+    "CORE.BRANCH":"Chi nhánh"
+
+    
+}
