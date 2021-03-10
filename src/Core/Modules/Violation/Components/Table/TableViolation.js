@@ -1,8 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
-import { useDispatch } from "react-redux";
-import { Button, Divider, Modal, message, Tag } from 'antd';
+import { Button, Divider, Modal, Tag } from 'antd';
 import jwt_decode from "jwt-decode";
 
 /* Hooks */
@@ -17,10 +16,9 @@ import ViolationDetail from "~/Core/Modules/Violation/Components/Form/ViolationD
 import ExcuseDetail from "~/Core/Modules/Violation/Components/Form/ExcuseDetail";
 import UpdateViolatorDetail from "~/Core/Modules/Violation/Components/Form/UpdateViolatorDetail";
 import AdminAcceptViolation from "~/Core/Modules/Violation/Components/Form/AdminAcceptViolation";
-import { update_identity_table_data_success } from "~/Core/Store/actions/adminTable";
+
 /* Api */
 import contactApi from "~/Core/Modules/Violation/Api/Violation";
-const { confirm } = Modal;
 
 const UserTable = () => {
   const t = useTranslate();
@@ -30,52 +28,50 @@ const UserTable = () => {
   const [visibleAdminAccept, setVisibleAdminAccept] = useState(false);
   const [data, setData] = useState({});
   const [isShow, setIsShow] = useState(true);
-  const dispatch = useDispatch();
 
-  const showConfirm = (record) => {
+  // const showConfirm = (record) => {
+  //   confirm({
+  //     title: t("CORE.VIOLATION.CONFIRM"),
+  //     content: t("CORE.VIOLATION.CONFIRM.CONTENT"),
+  //     onOk() {
+  //       contactApi.update(
+  //         record.id,
+  //         {
+  //           excuse: "string",
+  //           name: "string",
+  //           description: "string",
+  //           imagePath: "string",
+  //           reportId: 0,
+  //           regulationId: 0,
+  //           status: "Accepted Excuse",
+  //           branchId: 0
 
-    confirm({
-      title: t("CORE.VIOLATION.CONFIRM"),
-      content: t("CORE.VIOLATION.CONFIRM.CONTENT"),
-      onOk() {
-        contactApi.update(
-          record.id,
-          {
-            excuse: "string",
-            name: "string",
-            description: "string",
-            imagePath: "string",
-            reportId: 0,
-            regulationId: 0,
-            status: "Accepted Excuse",
-            branchId: 0
-
-          }
-        )
-          .then((res) => {
+  //         }
+  //       )
+  //         .then((res) => {
 
 
-            if (res.code !== 200) {
-              message.error(t("CORE.task_failure"));
-              return;
-            }
+  //           if (res.code !== 200) {
+  //             message.error(t("CORE.task_failure"));
+  //             return;
+  //           }
 
 
-            dispatch(update_identity_table_data_success(identity, { id: res.data.id, column: "status", data: res.data.status }));
-            message.success(t("CORE.POSITION.CREATE.SUCCESS"));
+  //           dispatch(update_identity_table_data_success(identity, { id: res.data.id, column: "status", data: res.data.status }));
+  //           message.success(t("CORE.POSITION.CREATE.SUCCESS"));
 
-          })
-          .catch(() => {
-            message.error(t("CORE.error.system"));
-          });
-      },
-      onCancel() {
-        console.log(t("CORE.VIOLATION.CONFIRM.CANCEL"));
-      },
-      okText: t("CORE.VIOLATION.CONFIRM.ACCEPT"),
-      cancelText: t("CORE.VIOLATION.CONFIRM.CANCEL")
-    });
-  }
+  //         })
+  //         .catch(() => {
+  //           message.error(t("CORE.error.system"));
+  //         });
+  //     },
+  //     onCancel() {
+  //       console.log(t("CORE.VIOLATION.CONFIRM.CANCEL"));
+  //     },
+  //     okText: t("CORE.VIOLATION.CONFIRM.ACCEPT"),
+  //     cancelText: t("CORE.VIOLATION.CONFIRM.CANCEL")
+  //   });
+  // }
   const openModel = (record) => {
 
     setVisible(true);
@@ -151,16 +147,16 @@ const UserTable = () => {
           return (
             <Tag color="green">{t("CORE.VIOLATION.CONFIRMED")}</Tag>
           )
-        } else if (record.status.toLocaleLowerCase() === 'open') {
+        } else if (record.status.toLocaleLowerCase() === 'opening') {
           return (
-            <Tag color="orange">{t("CORE.VIOLATION.OPEN")}</Tag>
+            <Tag color="orange">{t("CORE.VIOLATION.OPENING")}</Tag>
           )
-        } else if (record.status.toLocaleLowerCase() === 'accepted excuse') {
+        } else if (record.status.toLocaleLowerCase() === 'rejected') {
           return (
-            <Tag color="red">{t("CORE.VIOLATION.DECLINED")}</Tag>
+            <Tag color="red">{t("CORE.VIOLATION.REJECTED")}</Tag>
           )
         }
-        else {
+        else if(record.status.toLocaleLowerCase() === 'excused') {
           return (
             <Tag color="blue">{t("CORE.VIOLATION.STATUS.EXCUSE")}</Tag>
           )
@@ -240,7 +236,7 @@ const UserTable = () => {
     } = jwt_decode(token);
     console.log(role);
     if (role === "Admin") {
-      const isDisable = record?.status?.toLocaleLowerCase() === 'excuse'
+      const isDisable = record?.status?.toLocaleLowerCase() === 'excused'
       return (
           <>
             <Button disabled={!isDisable} onClick={() => { openModelExcuse(record) }} type="danger">
@@ -253,7 +249,7 @@ const UserTable = () => {
           </>
         )
     } else {
-      const isDisable = record?.status?.toLocaleLowerCase() === 'open';
+      const isDisable = record?.status?.toLocaleLowerCase() === 'opening';
       return (
           <>
             <Button disabled={!isDisable} onClick={() => { openModel(record) }} type="danger">

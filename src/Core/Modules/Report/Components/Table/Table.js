@@ -1,7 +1,7 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
-
+import { Button,Modal,Tag } from 'antd';
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 
@@ -13,9 +13,21 @@ import { reports as identity } from "~/Core/Modules/Report/Configs/Constants";
 
 /* Api */
 import contactApi from "~/Core/Modules/Report/Api";
+import ReportDetailForm from "../Form/ReportDetailForm";
 
 const UserTable = () => {
   const t = useTranslate();
+  const [visible, setVisible] = useState(false);
+  const [data, setData] = useState({});
+  const openModel = (record) => {
+
+    setVisible(true);
+    setData(record);
+    console.log(data);
+  };
+  const handleCloseModal = () => {
+    setVisible(false);
+  };
   const defs = useMemo(() => [
     {
       title: t("CORE.REPORT.ID"),
@@ -26,9 +38,17 @@ const UserTable = () => {
       fixed: "left",
       sorter: true,
       width: 220,
-      render: (text, record) => (
-        <Link to={`/report/${record.id}`}>{`${record.id}`}</Link>
-      ),
+      render: (text, record) => {
+       
+        if (record.status.toLowerCase() === "opening") {
+          return (<Button type="link" style={{paddingLeft:"0"}} onClick={() => openModel(record)}>{`${record.id}`}</Button>)
+        }
+        else {
+          return (
+            <Link to={`/report/${record.id}`}>{`${record.id}`}</Link>
+          )
+        }
+      },
     },
     {
       title: t("CORE.REPORT.NAME"),
@@ -57,6 +77,18 @@ const UserTable = () => {
       fieldType: "text",
       sorter: true,
       width: 220,
+      render: (_, record) => {
+        if (record.status.toLocaleLowerCase() === 'opening') {
+          return (
+            <Tag color="orange">{t("CORE.VIOLATION.OPENING")}</Tag>
+          )
+        }
+        else {
+          return (
+            <Tag color="green">{t("CORE.VIOLATION.SUBMITTED")}</Tag>
+          )
+        }
+      }
     },
     {
       title: t("CORE.REPORT.BRANCH.NAME"),
@@ -76,8 +108,8 @@ const UserTable = () => {
       fieldType: "text",
       sorter: true,
       width: 220,
-      render: (text, record) => (
-        <span>{`${record.createdByNavigation.firstName} ${record.createdByNavigation.lastName}`}</span>)
+      // render: (text, record) => (
+      //   <span>{`${record.createdByNavigation.firstName} ${record.createdByNavigation.lastName}`}</span>)
     },
 
 
@@ -114,16 +146,27 @@ const UserTable = () => {
   }), []);
 
   return (
-    <AdminTable
-      defs={defs}
-      api={contactApi}
-      identity={identity}
-      showCheckbox={true}
-      scroll={scroll}
-      defaultSorter={defaultSorter}
-      disableClassKey="is_active"
-      disableClassMode="toggle"
-    />
+    <>
+      <AdminTable
+        defs={defs}
+        api={contactApi}
+        identity={identity}
+        showCheckbox={true}
+        scroll={scroll}
+        defaultSorter={defaultSorter}
+        disableClassKey="is_active"
+        disableClassMode="toggle"
+      />
+      <Modal
+        title={t("CORE.REPORT.DETAIL")}
+        visible={visible}
+        onCancel={handleCloseModal}
+        footer={null}
+      >
+        <ReportDetailForm data={data} action={handleCloseModal} />
+
+      </Modal>
+    </>
   );
 };
 

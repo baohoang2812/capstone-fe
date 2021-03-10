@@ -3,7 +3,7 @@ import "./style.less";
 
 import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { Layout, Icon, Dropdown, Avatar, Menu, Badge, List, Card } from "antd";
+import { Layout, Icon, Dropdown, Avatar, Menu, Badge} from "antd";
 
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
@@ -36,15 +36,6 @@ export const HeaderMaster = ({ url }) => {
       // setHover(false);
     }
   };
-
-  const data = [
-    'Racing car sprays burning fuel into crowd.',
-    'Japanese princess to wed commoner.',
-    'Australian walks 100km after outback crash.',
-    'Man charged over missing wedding girl.',
-    'Los Angeles battles huge wildfires.',
-  ];
-  const { Meta } = Card;
 
   const clickMenuHover = () => {
     // setHover(true);

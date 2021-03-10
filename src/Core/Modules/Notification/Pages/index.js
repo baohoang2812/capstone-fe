@@ -2,7 +2,7 @@ import "./style.less";
 
 import React, { useEffect, useState } from "react";
 import { Card, Spin, message as popupMessage } from "antd";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import Header from "~/Core/Components/common/Header/NoBtn";
@@ -17,7 +17,7 @@ const ComponentSystem = (withTabNotify(ItemOrder))
 export const Notify = () => {
   const [key, setKey] = useState('tab1')
   const [error, setError] = useState(false);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   // const listNotification = useSelector(state => state?.NotificationCore?.listNotification || [])
   // const pageIndex = useSelector(state => state?.NotificationCore?.pageIndex || 1)
   // const pageSize = useSelector(state => state?.NotificationCore?.pageSize || 20)
@@ -77,7 +77,7 @@ export const Notify = () => {
         const listNotification = res?.data?.result || {};
         setListNoti(listNotification);
         console.log(listNotification);
-        const totalRows = res?.data?.total
+        // const totalRows = res?.data?.total
         setTotalRows(30);
         setLoading(false);
 
@@ -122,7 +122,7 @@ export const Notify = () => {
         const listNotification = res?.data?.result || {};
         setListNoti(listNotification);
         console.log(listNotification);
-        const totalRows = res?.data?.total
+        // const totalRows = res?.data?.total
         setTotalRows(35);
         setLoading(false);
 
@@ -152,7 +152,7 @@ export const Notify = () => {
         const listNotification = res?.data?.result || {};
         setListNoti(listNotification);
         console.log(listNotification);
-        const totalRows = res?.data?.total
+        // const totalRows = res?.data?.total
         setTotalRows(35);
         setLoading(false);
 
@@ -175,7 +175,7 @@ export const Notify = () => {
   }
 
   const pagination = { totalRows, pageIndex, pageSize };
-  const user_info = JSON.parse(localStorage.getItem("user_info"));
+  // const user_info = JSON.parse(localStorage.getItem("user_info"));
 
   const tabList = [
     {

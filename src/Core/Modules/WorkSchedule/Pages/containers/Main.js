@@ -2,9 +2,8 @@
  *- Implements the top level Main container
  */
 // libraries
-import React, { useRef, useState, useEffect } from "react";
+import React, {useState, useEffect } from "react";
 import { BryntumScheduler } from "bryntum-react-shared";
-import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 // our stuff
 import Header from "../components/Header.js";
 
@@ -16,8 +15,6 @@ import moment from "moment";
 const Main = React.forwardRef((props, ref) => {
   const [employees, setEmployees] = useState([]);
   const [workSchedules, setWorkSchedules] = useState([])
-  const scheduler = useRef();
-  const t = useTranslate();
   useEffect(() => {
     employeeApi.getList()
       .then(res => {

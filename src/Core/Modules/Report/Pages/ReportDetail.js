@@ -9,7 +9,7 @@ import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 
 /* Components */
 import Header from "~/Core/Modules/Report/Components/Header/Header";
-import ReportDetailForm from "~/Core/Modules/Report/Components/Form/ReportDetailForm";
+import ReportViolation from "~/Core/Modules/Report/Components/Form/ReportViolation";
 
 /* Api */
 import reportApi from "~/Core/Modules/Report/Api";
@@ -67,7 +67,7 @@ const ReportDetail = ({ match: { params } }) => {
         {error ? (
           <Alert type="error" message={t("CORE.task_failure")} />
         ) : (
-          <ReportDetailForm
+          <ReportViolation
             action={action}
             is_create={params.id === "create"}
             data={data}

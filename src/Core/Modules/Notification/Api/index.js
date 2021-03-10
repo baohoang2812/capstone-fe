@@ -6,4 +6,4 @@ class NotificationApi extends BaseApi {
 
  
 }
-export default new NotificationApi().requestUrl("/v1/notifications");
+export default new NotificationApi().requestUrl("/v1/employee-notifications");

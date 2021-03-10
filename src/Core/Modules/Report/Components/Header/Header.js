@@ -1,13 +1,11 @@
 import React from "react";
-import { Icon, Button } from "antd";
+import { Icon} from "antd";
 
 /* Components */
 import NavBreadcrumbContentHeader from "~/Core/Components/common/NavBreadcrumbContentHeader";
 
 const Header = ({ breadcrumb, action, icon = "plus", text, className }) => {
-  const handleClick = () => {
-    action();
-  };
+ 
 
   return (
     <div className="content-header-page">

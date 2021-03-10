@@ -1,8 +1,7 @@
 import "./style.less";
 
-import React, { useState } from "react";
+import React from "react";
 import { Row, Empty, Pagination } from "antd";
-import { useDispatch } from "react-redux";
 // import { updateListNotification } from "~/Core/Store/actions/notification";
 // import PopUpNotifyPage from "~/Core/Modules/Notification/Component/PopUpNotiDetail/withPopUpNotiDetail";
 
@@ -12,9 +11,8 @@ const TabNotify = (Component) => ({
   onChangePageIndex,
   onShowSizeChange,
 }) => {
-  const [visibleChangePopUp, setVisibleChangePopUp] = useState(false);
-  const [dataDetail, setDataDetail] = useState();
-  const dispatch = useDispatch();
+  // const [visibleChangePopUp, setVisibleChangePopUp] = useState(false);
+  // const [dataDetail, setDataDetail] = useState();
 
   const { totalRows = 0, pageIndex = 1, pageSize = 1 } = pagination;
 
@@ -27,8 +25,8 @@ const TabNotify = (Component) => ({
   };
 
   const handleOpenModal = (item) => {
-    setDataDetail(item);
-    setVisibleChangePopUp(true);
+    // setDataDetail(item);
+    // setVisibleChangePopUp(true);
     // dispatch(updateListNotification([item.id]));
   };
 

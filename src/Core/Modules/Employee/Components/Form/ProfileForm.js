@@ -1,7 +1,6 @@
 import "./style.less";
 
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import {
   Select,
   DatePicker,
@@ -11,29 +10,16 @@ import {
   Col,
   Form,
   Input,
-  Button,
   Modal,
   Spin,
   message,
 } from "antd";
 import moment from "moment";
-import jwt_decode from "jwt-decode";
-
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
-
-/* Actions */
-import { update_identity_table_data_success } from "~/Core/Store/actions/adminTable";
-
-/* Constants */
-import { employees as identity } from "~/Core/Modules/Employee/Configs/constants";
-
 /* Api */
 import employeeApi from "~/Core/Modules/Employee/Api";
-
-
 const { Option } = Select;
-
 const getBase64 = (file) => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -42,24 +28,17 @@ const getBase64 = (file) => {
     reader.onerror = (error) => reject(error);
   });
 };
-const ProfileForm = ({ form}) => {
+const ProfileForm = ({form}) => {
   const t = useTranslate();
-  const { getFieldDecorator, validateFields, setFieldsValue } = form;
-  const [error, setError] = useState(false);
+  const { getFieldDecorator,setFieldsValue } = form;
+  // const [error, setError] = useState(false);
   /* Redux */
-  const dispatch = useDispatch();
-
   /* State */
-  const [listBranch, setListBranch] = useState([]);
-  const [listRole, setRole] = useState([]);
-  const [listPosition, setPosition] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [loadingDropdown, setLoadingDropdown] = useState(false);
+  // const [loading, setLoading] = useState(false);
+  // const [loadingDropdown, setLoadingDropdown] = useState(false);
   const [fileList, setFileList] = useState([]);
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
-
-  const token = localStorage.getItem("token" || "");
   // const {
   //   roleName: role
   // } = jwt_decode(token);
@@ -114,17 +93,20 @@ const ProfileForm = ({ form}) => {
     
       (async () => {
         try {
+          // setLoading(true);
           const res = await employeeApi.getProfile();
           if (res.code !== 200) {
             message.error("CORE.MENU.message_error");
-            setError(true);
+            // setLoading(false);
+            // setError(true);
             return;
           }
           const data = res?.data|| {};
           setData(data);
           console.log(data);
         } catch (error) {
-          setError(true);
+          // setError(true);
+          // setLoading(false);
         }
       })();
   }, []);
@@ -186,7 +168,7 @@ const ProfileForm = ({ form}) => {
     <Row type="flex" justify="center">
       <Col span={20}>
         <div className="div_custom">
-          <Spin spinning={loadingDropdown}>
+          <Spin>
             <Form>
               <Row type="flex" justify="space-between" align="bottom">
                 <Col span={3}>

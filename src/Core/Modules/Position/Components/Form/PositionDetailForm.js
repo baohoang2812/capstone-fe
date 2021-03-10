@@ -28,7 +28,7 @@ const PositionDetailForm = ({ form,is_create,action, data }) => {
     const dispatch = useDispatch();
     /* State */
     const [loading, setLoading] = useState(false);
-    const [loadingDropdown, setLoadingDropdown] = useState(false);
+    // const [loadingDropdown, setLoadingDropdown] = useState(false);
     const { getFieldDecorator, validateFields, setFieldsValue } = form;
     
   useEffect(() => {
@@ -85,7 +85,7 @@ const PositionDetailForm = ({ form,is_create,action, data }) => {
         <Row type="flex" justify="center">
             <Col span={12}>
                 <div className="div_custom">
-                    <Spin spinning={loadingDropdown}>
+                    <Spin>
                         <Form onSubmit={onConfirm}>
                             <Row type="flex" justify="center" align="bottom">
                                 <Col span={15}>
