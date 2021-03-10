@@ -1,0 +1,21 @@
+{
+    "CORE.CAMERA.MANAGEMENT.TITLE":"Quản lý máy quay",
+    "CORE.CAMERA.CREATE":"Tạo chi máy quay",
+    "CORE.CAMERA.UPDATE":"Cập nhật máy quay",
+    "CORE.CAMERA.NAME":"Tên chi máy quay",
+    "CORE.CAMERA.BRANCH.URL": "Địa chỉ máy chủ",
+    "CORE.CAMERA.IP":"IP Camera",
+    "CORE.CAMERA.ADDRESS":"Địa chỉ",
+    "CORE.CAMERA.PHONE.NUMBER":"Số điện thoại",
+    "CORE.CAMERA.CHARGE.CREATE":"Ngày tạo",
+    "CORE.CAMERA.CHARGE.UPDATE":"Ngày cập nhật",
+    "CORE.CAMERA.WORKSPACE.NAME":"Tên khu vực",
+    "CORE.CAMERA.STATUS":"Trạng thái",
+    "CORE.CAMERA.ACTIVE":"Đang hoạt động",
+    "CORE.CAMERA.INACTIVE":"Ngừng hoạt động",
+    "CORE.CAMERA.CREATE.SUCCESS":"Tạo chi nhánh thành công",
+    "CORE.CAMERA.UPDATE.SUCCESS":"Cập nhật chi nhánh thành công",
+    "CORE.CAMERA":"Chi nhánh"
+
+    
+}
