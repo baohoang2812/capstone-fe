@@ -21,7 +21,7 @@ const UserTable = () => {
    
     {
       title: t("CORE.SHIFT.NAME"),
-      dataIndex: "name",
+      dataIndex: "Filter.Name",
       className: "header-filter",
       key: "name",
       fieldType: "text",
@@ -109,7 +109,7 @@ const UserTable = () => {
    
   ], [])
 
-  const defaultSorter = useMemo(() => ({ }), []);
+  const defaultSorter = useMemo(() => ({ "Sort.Orders": "desc createdAt" }), []);
   
   const scroll = useMemo(() => ({
     x: 1040 ,

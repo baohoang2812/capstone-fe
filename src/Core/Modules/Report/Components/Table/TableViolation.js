@@ -153,7 +153,7 @@ const UserTable = () => {
             <Tag color="red">{t("CORE.VIOLATION.REJECTED")}</Tag>
           )
         }
-        else if (record.status.toLocaleLowerCase() === 'excuse') {
+        else if (record.status.toLocaleLowerCase() === 'excused') {
           return (
             <Tag color="blue">{t("CORE.VIOLATION.STATUS.EXCUSE")}</Tag>
           )
@@ -233,7 +233,7 @@ const UserTable = () => {
     } = jwt_decode(token);
     console.log(role);
     if (role === "Admin") {
-      const isDisable = record?.status?.toLocaleLowerCase() === 'excuse'
+      const isDisable = record?.status?.toLocaleLowerCase() === 'excused'
       return (
           <>
             <Button disabled={!isDisable} onClick={() => { openModelExcuse(record) }} type="danger">
@@ -246,7 +246,7 @@ const UserTable = () => {
           </>
         )
     } else {
-      const isDisable = record?.status?.toLocaleLowerCase() === 'open';
+      const isDisable = record?.status?.toLocaleLowerCase() === 'opening';
       return (
           <>
             <Button disabled={!isDisable} onClick={() => { openModel(record) }} type="danger">
@@ -261,7 +261,7 @@ const UserTable = () => {
     }
   }
 
-  const defaultSorter = useMemo(() => ({}), []);
+  const defaultSorter = useMemo(() => ({ "Sort.Orders": "desc createdAt"}), []);
 
   const scroll = useMemo(() => ({
     x: 1700,

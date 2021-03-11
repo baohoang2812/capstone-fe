@@ -92,8 +92,8 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
       gender: data?.gender,
       birthDate: data?.birthDate ? new moment(data?.birthDate) : null,
       isPartTime: data?.isPartTime,
-      branchId: data?.branchId,
-      positionId: data?.positionId,
+      branchId: data?.branch?.name,
+      positionId: data?.position?.name,
     });
 
     setFileList([

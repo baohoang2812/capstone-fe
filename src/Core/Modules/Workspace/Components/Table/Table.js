@@ -22,7 +22,7 @@ const UserTable = () => {
       title: t("CORE.WORKSPACE.NAME"),
       dataIndex: "name",
       className: "header-filter",
-      key: "name",
+      key: "Filter.Name",
       fieldType: "text",
       sorter: true,
       width: 220,
@@ -80,7 +80,7 @@ const UserTable = () => {
    
   ], [])
 
-  const defaultSorter = useMemo(() => ({ }), []);
+  const defaultSorter = useMemo(() => ({ "Sort.Orders": "desc createdAt" }), []);
   
   const scroll = useMemo(() => ({
     x: 960 ,

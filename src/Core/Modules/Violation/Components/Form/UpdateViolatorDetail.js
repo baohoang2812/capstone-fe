@@ -6,7 +6,6 @@ import {
     Col,
     Form,
     Button,
-    Spin,
     Divider,
     message,
     Select
@@ -107,7 +106,7 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
     return (
         <Row type="flex" justify="center">
             <Col span={24}>
-                <Spin>
+                
                     <Form onSubmit={onConfirm}>
                         <Row type="flex" justify="center" align="bottom">
                             <Col span={20}>
@@ -191,7 +190,7 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
                             </div>) : null}
                         </Row>
                     </Form>
-                </Spin>
+                
             </Col>
         </Row>
     );

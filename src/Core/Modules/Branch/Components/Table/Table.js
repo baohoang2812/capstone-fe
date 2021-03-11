@@ -24,7 +24,7 @@ const UserTable = () => {
       title: t("CORE.BRANCH.NAME"),
       dataIndex: "name",
       className: "header-filter",
-      key: "name",
+      key: "Filter.Name",
       fieldType: "text",
       fixed: "left",
       sorter: true,
@@ -107,8 +107,10 @@ const UserTable = () => {
    
   ], [])
 
-  const defaultSorter = useMemo(() => ({ }), []);
-  
+ 
+  const defaultSorter = useMemo(() => ({
+    "Sort.Orders": "desc createdAt"
+   }), []);
   const scroll = useMemo(() => ({
     x: 1310 ,
     y: `calc(100vh - (178px))`
