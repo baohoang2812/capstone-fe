@@ -38,9 +38,14 @@ export const checkLoggedIn = () => {
 
 export const checkRole = (roleName) => {
   const token = localStorage.getItem("token" || "");
-  const { roleName: role } = jwt_decode(token);
+  let role = {};
+  try {
+    role = jwt_decode(token)
+  } catch (error) {
+    role = {}
+  }
   
-  return roleName?.find(item => item.toLowerCase() === role.toLowerCase()) !== undefined;
+  return roleName?.find(item => item.toLowerCase() === role.roleName.toLowerCase()) !== undefined;
 };
 
 export const logout = () => {

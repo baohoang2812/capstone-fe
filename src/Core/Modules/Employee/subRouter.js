@@ -13,12 +13,13 @@ export default {
   name: "Employee",
   dir: "Employee",
   pathRoot: "employee",
-  title: (
+  title: (t) => {
+    return (
     <span>
       <Icon type="user" />
-      <span>Employee</span>
+      <span>{t("CORE.delete")}</span>
     </span>
-  ),
+  )},
   showMenu: true,
   routes: [
     {
