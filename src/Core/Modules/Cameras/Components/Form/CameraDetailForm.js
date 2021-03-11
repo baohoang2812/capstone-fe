@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import "./style.less";
-import { Select, Row, Col, Form, Input, Button, message } from "antd";
+import { Row, Col, Form, Input, Button, message } from "antd";
 import axios from "axios";
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";

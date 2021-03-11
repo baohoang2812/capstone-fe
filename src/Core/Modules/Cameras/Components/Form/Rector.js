@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 class Rector extends React.Component {
   static defaultProps = {
@@ -17,10 +17,6 @@ class Rector extends React.Component {
   startY = -1;
   curX = -1;
   curY = -1;
-
-  constructor(props) {
-    super(props);
-  }
 
   componentDidMount(props) {
     this.ctx = this.canvas.getContext("2d");
