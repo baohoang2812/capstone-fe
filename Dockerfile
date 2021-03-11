@@ -2,6 +2,7 @@ FROM node:12.18-alpine as build-app
 # ARG BUILD_ENV
 WORKDIR /app
 COPY package.json yarn.lock ./
+RUN apk add git
 RUN yarn install
 
 ENV PATH="./node_modules/.bin:$PATH"
