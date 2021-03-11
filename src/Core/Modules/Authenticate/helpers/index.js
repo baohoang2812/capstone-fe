@@ -35,10 +35,12 @@ export const checkLoggedIn = () => {
   }
   return false;
 };
-export const getRole = () => {
+
+export const checkRole = (roleName) => {
   const token = localStorage.getItem("token" || "");
   const { roleName: role } = jwt_decode(token);
-  return role;
+  
+  return roleName?.find(item => item.toLowerCase() === role.toLowerCase()) !== undefined;
 };
 
 export const logout = () => {

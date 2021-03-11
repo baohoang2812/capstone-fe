@@ -47,5 +47,5 @@ export default {
     vi: intlMessagesVi,
     en: intlMessagesEN,
   },
-  isAuthenticate: true,
+  isAuthenticate: true
 };

@@ -3,6 +3,7 @@ import { Route } from "react-router-dom";
 import Helmet from "react-helmet";
 
 import Modules from "~/Core/Modules";
+import { checkRole } from "~/Core/Modules/Authenticate/helpers";
 
 /* Components */
 import ErrorBoundary from "~/Core/Components/common/ErrorBoundary";
@@ -49,13 +50,14 @@ async function initModules(isAuthenticated) {
             ? moduleConfig.isAuthenticate
             : true;
         if (
-          isAuthenticated === moduleAuthenticated ||
+          (isAuthenticated === moduleAuthenticated) ||
           moduleAuthenticated === "Any"
         ) {
-          if (moduleConfig.sagas !== undefined) {
+          const roleName = moduleConfig.roleName;
+          if (moduleConfig.sagas !== undefined && checkRole(roleName)) {
             listSagas = [...listSagas, ...moduleConfig.sagas];
           }
-          if (moduleConfig.routes !== undefined) {
+          if (moduleConfig.routes !== undefined && checkRole(roleName)) {
             if ( moduleConfig.showMenu ) {
               listArrayRoutes.push({
                 title: moduleConfig.title,
