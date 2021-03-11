@@ -21,9 +21,10 @@ export const SideBar = ({ url }) => {
 
   const renderModuleMenu = (item) => {
     if (item.subMenu) {
+      const title = typeof(item.title) === "string" ? item.title : item.title(t)
       return (
         <SubMenu   
-          title={item.title}
+          title={title}
           key={item.key}
         >
           {item.subMenu.map((subItem) =>
