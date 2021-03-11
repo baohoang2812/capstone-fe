@@ -9,13 +9,14 @@ import intlMessagesEN from "./i18n/localization/en.json";
 import intlMessagesVi from "./i18n/localization/vi.json";
 
 export default {
+  roleName: ["admin"],
   name: "CertificateType",
   dir: "CertificateType",
   pathRoot: "certificateType",
   title: (
     <span>
      <Icon type="safety-certificate" />
-      <span>Certificate Type</span>
+      <span>Certificate</span>
     </span>
   ),
   showMenu: true,

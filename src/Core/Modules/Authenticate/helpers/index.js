@@ -36,11 +36,21 @@ export const checkLoggedIn = () => {
   return false;
 };
 
-export const checkRole = (roleName) => {
+export const checkRole = (roleName, isAuthenticate) => {
   const token = localStorage.getItem("token" || "");
-  const { roleName: role } = jwt_decode(token);
-  
-  return roleName?.find(item => item.toLowerCase() === role.toLowerCase()) !== undefined;
+  let role = {};
+
+  try {
+    role = jwt_decode(token);
+  } catch (e) {
+    role = {}
+  }
+
+  if (!isAuthenticate){
+    return true
+  }
+
+  return roleName?.find(item => item.toLowerCase() === role.roleName.toLowerCase()) !== undefined;
 };
 
 export const logout = () => {

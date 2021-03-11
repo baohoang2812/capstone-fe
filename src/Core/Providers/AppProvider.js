@@ -49,15 +49,17 @@ async function initModules(isAuthenticated) {
           moduleConfig.isAuthenticate !== undefined
             ? moduleConfig.isAuthenticate
             : true;
+            
         if (
           (isAuthenticated === moduleAuthenticated) ||
           moduleAuthenticated === "Any"
         ) {
           const roleName = moduleConfig.roleName;
-          if (moduleConfig.sagas !== undefined && checkRole(roleName)) {
+
+          if (moduleConfig.sagas !== undefined && checkRole(roleName, isAuthenticated)) {
             listSagas = [...listSagas, ...moduleConfig.sagas];
           }
-          if (moduleConfig.routes !== undefined && checkRole(roleName)) {
+          if (moduleConfig.routes !== undefined && checkRole(roleName, isAuthenticated)) {
             if ( moduleConfig.showMenu ) {
               listArrayRoutes.push({
                 title: moduleConfig.title,

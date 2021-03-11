@@ -9,13 +9,13 @@ import intlMessagesEN from "./i18n/localization/en.json";
 import intlMessagesVi from "./i18n/localization/vi.json";
 
 export default {
-  
+  roleName: ["admin","Branch Manager"],
   name: "Cameras",
   dir: "Cameras",
   pathRoot: "cameras",
   title: (
     <span>
-      <Icon type="branches" />
+      <Icon type="video-camera" />
       <span>Cameras</span>
     </span>
   ),
