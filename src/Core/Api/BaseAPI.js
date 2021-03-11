@@ -26,7 +26,7 @@ const generate_options = (opts = {}) => {
   }
   
   delete opts.headers;
-  console.log();
+
   return {
     headers,
     ...opts
@@ -53,6 +53,7 @@ const get_prefix = (apiVersion, customPrefix, path) => {
 }
 
 const get = (apiVersion, customPrefix) => async (path, params, opts) => {
+  console.log(opts)
   try {
     const response = await axios.get(
       get_prefix(apiVersion, customPrefix, path) + serialize(params),

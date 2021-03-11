@@ -7,7 +7,6 @@ import {
     Form,
     Input,
     Button,
-    Spin,
     message
 } from "antd";
 import moment from "moment";
@@ -86,7 +85,7 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
     return (
         <Row type="flex" justify="center">
             <Col span={24}>
-                <Spin>
+        
                     <Form onSubmit={onConfirm}>
                         <Row type="flex" justify="center" align="bottom">
                             <Col span={20}>
@@ -171,7 +170,7 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
                             </div>
                         </Row>
                     </Form>
-                </Spin>
+            
             </Col>
         </Row >
     );
