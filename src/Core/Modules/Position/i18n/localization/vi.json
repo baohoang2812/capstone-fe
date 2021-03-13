@@ -4,5 +4,7 @@
     "CORE.POSITION.DESCRIPTION":"Mô tả",
     "CORE.POSITION.MANAGEMENT.TITLE":"Quản lý chức vụ",
     "CORE.POSITION.CREATE.ACCOUNT":"Tạo chức vụ",
-    "CORE.POSITION.UPDATE.ACCOUNT":"Cập nhật chức vụ"
+    "CORE.POSITION.UPDATE.ACCOUNT":"Cập nhật chức vụ",
+    "CORE.POSITION":"Chức vụ",
+    "CORE.POSITION.DETAIL":"Chi tiết chức vụ"
 }

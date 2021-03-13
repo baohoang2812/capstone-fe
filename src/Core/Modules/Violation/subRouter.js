@@ -13,12 +13,13 @@ export default {
   name: "Violation",
   dir: "Violation",
   pathRoot: "violation",
-  title: (
+  title: (t) => {
+    return (
     <span>
-     <Icon type="read" />
-      <span>Violation</span>
+    <Icon type="read" />
+      <span>{t("CORE.VIOLATION")}</span>
     </span>
-  ),
+  )},
   showMenu: true,
   routes: [
     {
@@ -39,7 +40,7 @@ export default {
       url: "",
       component: "Pages",
       showMenu: true,
-      title: "Violation Management",
+      title: "CORE.VIOLATION.MANAGEMENT.TITLE",
     },
   ],
   redux: redux,

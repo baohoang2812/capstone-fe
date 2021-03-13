@@ -9,7 +9,7 @@
     "CORE.REPORT.CHARGE.UPDATE":"Updated at",
     "CORE.REPORT.MANAGEMENT.TITLE":"Report Management",
     "CORE.REPORT.CREATE.ACCOUNT":"Create Report",
-    "CORE.VIOLATION.MANAGEMENT.TITLE":"Violation Detail",
+    "CORE.VIOLATION.MANAGEMENT.TITLE":"Violation management",
     "CORE.VIOLATION.ID":"ID",
     "CORE.VIOLATION.IMAGE.PATH":"Image",
     "CORE.VIOLATION.NAME":"Name",
@@ -35,6 +35,7 @@
     "CORE.VIOLATION.CONFIRM.SUCCESS":"Updated success",
     "CORE.VIOLATION.SELECT.VIOLATOR":"Select violator",
     "CORE.VIOLATION.VIOLATOR":"Violator",
-    "CORE.VIOLATION.REJECTED":"Rejected"
+    "CORE.VIOLATION.REJECTED":"Rejected",
+    "CORE.VIOLATION":"Violation"
 
 }

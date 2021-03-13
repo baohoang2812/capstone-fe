@@ -13,12 +13,13 @@ export default {
   name: "WorkSchedule",
   dir: "WorkSchedule",
   pathRoot: "workSchedule",
-  title: (
+  title: (t) => {
+    return (
     <span>
-     <Icon type="schedule" />
-      <span>Work Schedule</span>
+       <Icon type="schedule" />
+      <span>{t("CORE.WORKSCHEDULE")}</span>
     </span>
-  ),
+  )},
   showMenu: true,
   routes: [
     {
@@ -39,7 +40,7 @@ export default {
       url: "",
       component: "Pages",
       showMenu: true,
-      title: "Work Schedule Management",
+      title: "CORE.WORKSCHEDULE.MANAGEMENT",
     },
   ],
   redux: redux,

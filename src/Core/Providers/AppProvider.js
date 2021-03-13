@@ -4,6 +4,7 @@ import Helmet from "react-helmet";
 
 import Modules from "~/Core/Modules";
 import { checkRole } from "~/Core/Modules/Authenticate/helpers";
+import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 
 /* Components */
 import ErrorBoundary from "~/Core/Components/common/ErrorBoundary";
@@ -113,10 +114,12 @@ async function initModules(isAuthenticated) {
 }
 
 function RouteWithTitle({ title, ...props }) {
+  const t = useTranslate();
+
   return (
     <ErrorBoundary>
       <Helmet>
-        <title>{title}</title>
+        <title>{t(title)}</title>
       </Helmet>
       <Route {...props} />
     </ErrorBoundary>

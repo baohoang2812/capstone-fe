@@ -17,7 +17,7 @@ export default {
     return (
     <span>
       <Icon type="user" />
-      <span>{t("CORE.delete")}</span>
+      <span>{t("CORE.EMPLOYEE.TITLE")}</span>
     </span>
   )},
   showMenu: true,
@@ -34,13 +34,13 @@ export default {
       component: "Pages/EmployeeDetail",
       key: "employee-create-edit",
       showMenu: false,
-      title: "Employee detail",
+      title: "CORE.EMPLOYEE.UPDATE.ACCOUNT"
     },
     {
       url: "",
       component: "Pages",
       showMenu: true,
-      title: "Employee Management",
+      title: "CORE.EMPLOYEE.MANAGEMENT.TITLE",
     },
   ],
   redux: redux,

@@ -84,10 +84,10 @@ const EmployeeDetailForm = (props) => {
               <TabPane tab={t("CORE.EMPLOYEE.TITLE.DETAIL")} key="1">
                 <EmployeeForm {...props} data={data} />
               </TabPane>
-              <TabPane tab={t("CORE.EMPLOYEE.TITLE.ACCOUNT")} key="2">
+              <TabPane disabled={props.is_create} tab={t("CORE.EMPLOYEE.TITLE.ACCOUNT")} key="2">
                 <AccountForm {...props} employeeId={data.id} data={account} />
               </TabPane>
-              <TabPane tab={t("CORE.CERTIFICATION.MANAGEMENT.TITLE")} key="3">
+              <TabPane disabled={props.is_create} tab={t("CORE.CERTIFICATION.MANAGEMENT.TITLE")} key="3">
                 <CertificationForm {...props} employeeId={data.id} data={certifications}/>
               </TabPane>
             </Tabs>

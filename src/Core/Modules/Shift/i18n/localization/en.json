@@ -10,7 +10,9 @@
     "CORE.SHIFT.BREAK.SHIFT":"Break shift",
     "CORE.SHIFT.UPDATE.ACCOUNT":"Update shift",
     "CORE.SHIFT.CREATE.SUCCESS":"Create shift success!",
-    "CORE.SHIFT.UPDATE.SUCCESS":"Update shift success!"
+    "CORE.SHIFT.UPDATE.SUCCESS":"Update shift success!",
+    "CORE.SHIFT":"Shift",
+    "CORE.SHIFT.DETAIL":"Shift detail"
 
 
 }

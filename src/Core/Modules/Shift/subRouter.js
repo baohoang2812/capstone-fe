@@ -13,12 +13,13 @@ export default {
   name: "Shift",
   dir: "Shift",
   pathRoot: "shift",
-  title: (
+  title: (t) => {
+    return (
     <span>
     <Icon type="calendar" />
-      <span>Shift</span>
+      <span>{t("CORE.SHIFT")}</span>
     </span>
-  ),
+  )},
   showMenu: true,
   routes: [
     {
@@ -33,13 +34,13 @@ export default {
       component: "Pages/ShiftDetail",
       key: "shift-create-edit",
       showMenu: false,
-      title: "Shift detail",
+      title: "CORE.SHIFT.DETAIL",
     },
     {
       url: "",
       component: "Pages",
       showMenu: true,
-      title: "Shift Management",
+      title: "CORE.SHIFT.MANAGEMENT.TITLE",
     },
   ],
   redux: redux,

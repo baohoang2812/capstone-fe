@@ -13,12 +13,13 @@ export default {
   name: "Workspace",
   dir: "Workspace",
   pathRoot: "workspace",
-  title: (
+  title: (t) => {
+    return (
     <span>
      <Icon type="table" />
-      <span>Workspace</span>
+      <span>{t("CORE.WORKSPACE")}</span>
     </span>
-  ),
+  )},
   showMenu: true,
   routes: [
     {
@@ -33,13 +34,13 @@ export default {
       component: "Pages/WorkspaceDetail",
       key: "workspace-create-edit",
       showMenu: false,
-      title: "Workspace detail",
+      title: "CORE.WORKSPACE.DETAIL",
     },
     {
       url: "",
       component: "Pages",
       showMenu: true,
-      title: "Workspace Management",
+      title: "CORE.WORKSPACE.MANAGEMENT.TITLE",
     },
   ],
   redux: redux,

@@ -21,7 +21,7 @@ export const SideBar = ({ url }) => {
 
   const renderModuleMenu = (item) => {
     if (item.subMenu) {
-      const title = typeof(item.title) === "string" ? item.title : item.title(t)
+      const title = typeof(item.title) === "object" ? item.title : item.title(t)
       return (
         <SubMenu   
           title={title}

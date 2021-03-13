@@ -13,12 +13,13 @@ export default {
   name: "Branch",
   dir: "Branch",
   pathRoot: "branch",
-  title: (
+  title: (t) => {
+    return (
     <span>
       <Icon type="branches" />
-      <span>Branches</span>
+      <span>{t("CORE.BRANCH")}</span>
     </span>
-  ),
+  )},
   showMenu: true,
   routes: [
     {
@@ -33,13 +34,13 @@ export default {
       component: "Pages/BranchDetail",
       key: "branch-create-edit",
       showMenu: false,
-      title: "Branch detail",
+      title: "CORE.BRANCH.UPDATE.ACCOUNT",
     },
     {
       url: "",
       component: "Pages",
       showMenu: true,
-      title: "Branch Management",
+      title: "CORE.BRANCH.MANAGEMENT",
     },
   ],
   redux: redux,

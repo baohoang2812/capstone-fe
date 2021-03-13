@@ -7,7 +7,6 @@ import {
     Form,
     Input,
     Button,
-    Spin,
     message
 } from "antd";
 /* Hooks */
@@ -85,7 +84,7 @@ const PositionDetailForm = ({ form,is_create,action, data }) => {
         <Row type="flex" justify="center">
             <Col span={12}>
                 <div className="div_custom">
-                    <Spin>
+                   
                         <Form onSubmit={onConfirm}>
                             <Row type="flex" justify="center" align="bottom">
                                 <Col span={15}>
@@ -139,7 +138,7 @@ const PositionDetailForm = ({ form,is_create,action, data }) => {
                                 </div>
                             </Row>
                         </Form>
-                    </Spin>
+                   
                 </div>
             </Col>
         </Row>

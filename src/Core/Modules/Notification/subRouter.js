@@ -13,12 +13,13 @@ export default {
   name: "Notification",
   dir: "Notification",
   pathRoot: "notification",
-  title: (
+  title: (t) => {
+    return (
     <span>
-     <Icon type="team" />
-      <span>Notification</span>
+     <Icon type="notification" />
+      <span>{t("CORE.NOTIFICATION")}</span>
     </span>
-  ),
+  )},
   showMenu: true,
   routes: [
     {
@@ -33,13 +34,13 @@ export default {
       component: "Pages/NotificationDetail",
       key: "Notification-create-edit",
       showMenu: false,
-      title: "Notification detail",
+      title: "CORE.NOTIFICATION.DETAIL",
     },
     {
       url: "",
       component: "Pages",
       showMenu: true,
-      title: "Notification Management",
+      title: "CORE.NOTIFICATION.MANAGEMENT",
     },
   ],
   redux: redux,

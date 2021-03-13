@@ -8,7 +8,7 @@
     "CORE.REPORT.CHARGE.UPDATE":"Ngày cập nhật",
     "CORE.REPORT.MANAGEMENT.TITLE":"Quản lý báo cáo",
     "CORE.REPORT.CREATE.ACCOUNT":"Xem báo cáo",
-    "CORE.VIOLATION.MANAGEMENT.TITLE":"Chi tiết vi phạm",
+    "CORE.VIOLATION.MANAGEMENT.TITLE":"Quản lý vi phạm",
     "CORE.VIOLATION.ID":"ID",
     "CORE.VIOLATION.IMAGE.PATH":"Hình ảnh",
     "CORE.VIOLATION.NAME":"Tên vi phạm",
@@ -35,7 +35,8 @@
     "CORE.VIOLATION.SELECT.VIOLATOR":"Chọn người vi phạm",
     "CORE.VIOLATION.VIOLATOR":"Người vi phạm",
     "CORE.VIOLATION.CREATE.SUCCESS":"Cập nhật thành công",
-    "CORE.VIOLATION.REJECTED":"Đã từ chối"
+    "CORE.VIOLATION.REJECTED":"Đã từ chối",
+    "CORE.VIOLATION":"Vi phạm"
 
 
 

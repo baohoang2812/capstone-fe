@@ -46,7 +46,7 @@ const AccountForm = ({ form, employeeId, action, data, is_create }) => {
   useEffect(() => {
     setFieldsValue({
       username: data?.username,
-      roleId: data?.roleId,
+      roleId: data?.role?.id,
     });
   }, [data]);
 
@@ -78,10 +78,12 @@ const AccountForm = ({ form, employeeId, action, data, is_create }) => {
 
               dispatch(update_identity_table_data_success(identity, res.data));
               message.success(t("CORE.EMPLOYEE.CREATE.SUCCESS"));
+              setLoading(false);
               action();
             })
             .catch(() => {
               message.error(t("CORE.error.system"));
+              setLoading(false);
             });
         } else {
           accountApi.update(data.id, objReq).then((res) => {
@@ -111,9 +113,13 @@ const AccountForm = ({ form, employeeId, action, data, is_create }) => {
                 rules: [
                   {
                     required: true,
-                    message: "Please input username!",
+                    message: (<>{t("CORE.ACCOUNT.ALERT.USERNAME")}</>),
                     whitespace: false,
                   },
+                  {
+                    max:255,
+                    message: (<>{t("CORE.EMPLOYEE.ALERT.MAX.LENGTH")}</>),
+                  }
                 ],
               })(<Input />)}
             </Form.Item>
@@ -126,8 +132,16 @@ const AccountForm = ({ form, employeeId, action, data, is_create }) => {
                 rules: [
                   {
                     required: true,
-                    message: "Please input your password!",
+                    message: (<>{t("CORE.ACCOUNT.ALERT.PASSWORD")}</>),
                   },
+                  {
+                    min:8,
+                    message:(<>{t("CORE.ACCOUNT.PASSWORD.MIN.LENGTH")}</>),
+                  },
+                  {
+                    max:255,
+                    message:(<>{t("CORE.EMPLOYEE.ALERT.MAX.LENGTH")}</>),
+                  }
                 ],
               })(<Input.Password />)}
             </Form.Item>
@@ -140,7 +154,7 @@ const AccountForm = ({ form, employeeId, action, data, is_create }) => {
                 rules: [
                   {
                     required: true,
-                    message: "Please select role!",
+                    message: (<>{t("CORE.ACCOUNT.ALERT.ROLE")}</>),
                   },
                 ],
                 initialValue: listRole?.[0]?.id,

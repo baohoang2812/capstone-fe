@@ -13,12 +13,13 @@ export default {
   name: "Position",
   dir: "Position",
   pathRoot: "position",
-  title: (
+  title: (t) => {
+    return (
     <span>
-     <Icon type="team" />
-      <span>Position</span>
+      <Icon type="team" />
+      <span>{t("CORE.POSITION")}</span>
     </span>
-  ),
+  )},
   showMenu: true,
   routes: [
     {
@@ -33,13 +34,13 @@ export default {
       component: "Pages/PositionDetail",
       key: "position-create-edit",
       showMenu: false,
-      title: "Position detail",
+      title: "CORE.POSITION.DETAIL",
     },
     {
       url: "",
       component: "Pages",
       showMenu: true,
-      title: "Position Management",
+      title: "CORE.POSITION.MANAGEMENT.TITLE",
     },
   ],
   redux: redux,

@@ -13,12 +13,13 @@ export default {
   name: "CertificateType",
   dir: "CertificateType",
   pathRoot: "certificateType",
-  title: (
+  title: (t) => {
+    return (
     <span>
-     <Icon type="safety-certificate" />
-      <span>Certificate</span>
+      <Icon type="safety-certificate" />
+      <span>{t("CORE.CERTIFICATE")}</span>
     </span>
-  ),
+  )},
   showMenu: true,
   routes: [
     {
@@ -33,13 +34,13 @@ export default {
       component: "Pages/CertificateTypeDetail",
       key: "certificateType-create-edit",
       showMenu: false,
-      title: "Certificate Type detail",
+      title: "CORE.CERTIFICATE.DETAIL",
     },
     {
       url: "",
       component: "Pages",
       showMenu: true,
-      title: "Certificate Type Management",
+      title: "CORE.CERTIFICATE.TYPE.MANAGEMENT.TITLE",
     },
   ],
   redux: redux,
