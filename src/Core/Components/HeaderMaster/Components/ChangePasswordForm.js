@@ -1,106 +1,65 @@
 import "./style.less";
 
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { Select, Row, Col, Form, Input, Button, message, Spin } from "antd";
+// import { useDispatch } from "react-redux";
+import {  Row, Col, Form, Input, Button, message, Spin } from "antd";
 
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 
 /* Actions */
-import { update_identity_table_data_success } from "~/Core/Store/actions/adminTable";
+// import { update_identity_table_data_success } from "~/Core/Store/actions/adminTable";
 
-/* Constants */
-import { employees as identity } from "~/Core/Modules/Employee/Configs/constants";
+// /* Constants */
+// import { employees as identity } from "~/Core/Modules/Employee/Configs/constants";
 
 /* Api */
-import accountApi from "~/Core/Modules/Employee/Api/Account";
-import roleApi from "~/Core/Modules/Employee/Api/Role";
+import accountApi from "~/Core/Api/ChangePassword";
 
-const { Option } = Select;
-
-const AccountForm = ({ form, employeeId, action, data, is_create }) => {
+const AccountForm = ({ form, action, data, is_create }) => {
   const [loadingDropdown, setLoadingDropdown] = useState(false);
-  const [listRole, setRole] = useState([]);
-
   const t = useTranslate();
   const { getFieldDecorator, validateFields, setFieldsValue } = form;
 
   /* Redux */
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   /* State */
   const [loading, setLoading] = useState(false);
 
+
   useEffect(() => {
-    (async () => {
-      setLoadingDropdown(true);
-
-      const resRole = await roleApi.getList();
-      setRole(resRole?.data);
-
-      setLoadingDropdown(false);
-    })();
+    const account_info = JSON.parse(localStorage.getItem("account_info"));
+    setFieldsValue({
+      username: account_info.username,
+    });
   }, []);
 
-  useEffect(() => {
-    setFieldsValue({
-      username: data?.username,
-      roleId: data?.role?.id,
-    });
-  }, [data]);
 
   const onConfirm = (e) => {
     e.preventDefault();
     validateFields((err, values) => {
       if (!err) {
         setLoading(true);
-
-        const { username, roleId, password } = values;
-
+        const { username,password,newPassword } = values;
         const objReq = {
           username,
-          employeeId,
           password,
-          roleId,
+          newPassword
         };
-
-        if (!data?.username) {
-          accountApi
-            .create(objReq)
-            .then((res) => {
-              setLoading(false);
-
-              if (res.code !== 201) {
-                message.error(t("CORE.task_failure"));
-                return;
-              }
-
-              dispatch(update_identity_table_data_success(identity, res.data));
-              message.success(t("CORE.ACCOUNT.CREATE.SUCCESS"));
-              setLoading(false);
-              action();
-            })
-            .catch(() => {
-              message.error(t("CORE.error.system"));
-              setLoading(false);
-            });
-        } else {
-          accountApi.update(data.id, objReq).then((res) => {
+          accountApi.update(objReq).then((res) => {
             setLoading(false);
-
             if (res.code !== 200) {
               message.error(t("CORE.task_failure"));
               return;
             }
-
-            dispatch(update_identity_table_data_success(identity, res.data));
+            // dispatch(update_identity_table_data_success(identity, res.data));
             message.success(t("CORE.ACCOUNT.UPDATE.SUCCESS"));
             action();
           });
         }
       }
-    });
+    );
   };
 
   return (
@@ -149,24 +108,23 @@ const AccountForm = ({ form, employeeId, action, data, is_create }) => {
         </Row>
         <Row type="flex" justify="center">
           <Col span={12}>
-            <Form.Item label={t("CORE.EMPLOYEE.ROLE")}>
-              {getFieldDecorator("roleId", {
+            <Form.Item label={t("CORE.EMPLOYEE.NEW.PASSWORD")} hasFeedback>
+              {getFieldDecorator("newPassword", {
                 rules: [
                   {
                     required: true,
-                    message: (<>{t("CORE.ACCOUNT.ALERT.ROLE")}</>),
+                    message: (<>{t("CORE.ACCOUNT.ALERT.PASSWORD")}</>),
                   },
+                  {
+                    min:8,
+                    message:(<>{t("CORE.ACCOUNT.PASSWORD.MIN.LENGTH")}</>),
+                  },
+                  {
+                    max:255,
+                    message:(<>{t("CORE.EMPLOYEE.ALERT.MAX.LENGTH")}</>),
+                  }
                 ],
-                initialValue: listRole?.[0]?.id,
-              })(
-                <Select>
-                  {listRole.map((item) => (
-                    <Option key={item.id} value={item.id}>
-                      {item.name}
-                    </Option>
-                  ))}
-                </Select>
-              )}
+              })(<Input.Password />)}
             </Form.Item>
           </Col>
         </Row>
@@ -190,5 +148,4 @@ const AccountForm = ({ form, employeeId, action, data, is_create }) => {
     </Spin>
   );
 };
-
 export default Form.create({ name: "Account_Detail" })(AccountForm);

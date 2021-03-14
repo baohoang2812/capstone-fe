@@ -11,14 +11,13 @@ import {
   Form,
   Input,
   Modal,
-  Spin,
   message,
 } from "antd";
 import moment from "moment";
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 /* Api */
-import employeeApi from "~/Core/Modules/Employee/Api";
+import employeeApi from "~/Core/Modules/Profile/Api";
 const { Option } = Select;
 const getBase64 = (file) => {
   return new Promise((resolve, reject) => {
@@ -168,7 +167,7 @@ const ProfileForm = ({form}) => {
     <Row type="flex" justify="center">
       <Col span={20}>
         <div className="div_custom">
-          <Spin>
+          
             <Form>
               <Row type="flex" justify="space-between" align="bottom">
                 <Col span={3}>
@@ -384,7 +383,7 @@ const ProfileForm = ({form}) => {
                 </Col>
               </Row>
             </Form>
-          </Spin>
+         
         </div>
       </Col>
     </Row>

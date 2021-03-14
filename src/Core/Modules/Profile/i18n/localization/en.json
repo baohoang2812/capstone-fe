@@ -59,9 +59,6 @@
     "CORE.ACCOUNT.ALERT.USERNAME":"Please input username",
     "CORE.ACCOUNT.ALERT.PASSWORD":"Please input password",
     "CORE.ACCOUNT.PASSWORD.MIN.LENGTH":"Min length is 8 characters",
-    "CORE.ACCOUNT.ALERT.ROLE":"Please select role",
-    "CORE.ACCOUNT.CREATE.SUCCESS":"Updated account success",
-    "CORE.ACCOUNT.UPDATE.SUCCESS":"Created account success",
-    "CORE.EMPLOYEE.NEW.PASSWORD":"New password"
+    "CORE.ACCOUNT.ALERT.ROLE":"Please select role"
     
 }

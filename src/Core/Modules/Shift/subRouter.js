@@ -23,13 +23,6 @@ export default {
   showMenu: true,
   routes: [
     {
-      url: "profile",
-      component: "Pages/Profile",
-      key: "profile-edit",
-      showMenu: false,
-      title: "Profile",
-    },
-    {
       url: ":id",
       component: "Pages/ShiftDetail",
       key: "shift-create-edit",

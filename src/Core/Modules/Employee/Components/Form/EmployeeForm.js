@@ -34,6 +34,7 @@ import employeeApi from "~/Core/Modules/Employee/Api";
 import branchApi from "~/Core/Modules/Employee/Api/Branch";
 import positionApi from "~/Core/Modules/Employee/Api/Position";
 import uploadApi from "~/Core/Modules/Employee/Api/Upload";
+import { set } from "lodash";
 
 const { Option } = Select;
 
@@ -54,6 +55,7 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
 
   /* State */
   const [listBranch, setListBranch] = useState([]);
+  const [listBranchUnManaged, setListBranchUnManaged] = useState([]);
   const [listPosition, setPosition] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingDropdown, setLoadingDropdown] = useState(false);
@@ -63,15 +65,24 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
   const token = localStorage.getItem("token" || "");
   const { roleName: role } = jwt_decode(token);
   const [isDisable, setIsDisable] = useState(false);
+  const [tmpListBranch, setTmpListBranch] = useState([]);
 
   useEffect(() => {
     (async () => {
       setLoadingDropdown(true);
-
-      const resBranch = await branchApi.getList();
-      const resPosition = await positionApi.getList();
-      setListBranch(resBranch?.data?.result);
-      setPosition(resPosition?.data?.result);
+      try {
+        const resBranch = await branchApi.getList();
+        setListBranch(resBranch?.data?.result);
+        setTmpListBranch(resBranch?.data?.result);
+      } catch { };
+      try {
+        const resPosition = await positionApi.getList();
+        setPosition(resPosition?.data?.result);
+      } catch { };
+      try {
+        const resBranchUnManaged = await branchApi.getListBranchUnManaged();
+        setListBranchUnManaged(resBranchUnManaged?.data?.result)
+      } catch { };
       setLoadingDropdown(false);
     })();
   }, []);
@@ -80,10 +91,17 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
     return current && current > moment().subtract(18, "years");
   }
   function handleChangePosition(value) {
-    if (value === 1 || value === 3 || value === 2) {
+
+    if (value === 1 || value === 2) {
       setIsDisable(true);
     }
+    else if (value === 3) {
+
+      setTmpListBranch(listBranchUnManaged);
+      setIsDisable(false);
+    }
     else {
+      setTmpListBranch(listBranch);
       setIsDisable(false);
     }
   }
@@ -129,7 +147,7 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
           imagePath: values?.["imagePath"]?.file?.response?.url,
         };
         console.log(newValues);
-       
+
         setLoading(false);
 
         if (is_create) {
@@ -162,7 +180,9 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
             message.error(t("CORE.error.system"));
           });
         } else {
-          if (fileList[0].status.toLowerCase() === "done") {
+          if (fileList[0].status.toLowerCase() !== "created") {
+            console.log(newValues);
+
             uploadApi.uploadImage(fileList).then(
               res => {
 
@@ -187,8 +207,8 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
 
               });
           }
-          else if(fileList[0].status.toLowerCase() === "created"){
-            const newValues3 = {...values,imagePath:data.imagePath}
+          else {
+            const newValues3 = { ...values, imagePath: data.imagePath }
             employeeApi.update(data.id, newValues3).then((res) => {
               setLoading(false);
 
@@ -215,9 +235,9 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
       length: 8,
       charset: "alphanumeric",
     });
-    console.log(code);
+   
     setFieldsValue({
-      code: code,
+      code:  code.toUpperCase(),
     });
   };
 
@@ -472,14 +492,17 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
                     message: (<>{t("CORE.EMPLOYEE.ALERT.BRANCH")}</>),
                   },
                 ],
-                initialValue: listBranch?.[0]?.id,
+                initialValue: tmpListBranch?.[0]?.id,
               })(
                 <Select disabled={isDisable}>
-                  {listBranch.map((item) => (
+                  {tmpListBranch.map((item) => (
                     <Option key={item.id} value={item.id}>
                       {item.name}
                     </Option>
                   ))}
+                  <Option key={-1} value={""}>
+                    UnSign
+                  </Option>
                 </Select>
               )}
             </Form.Item>

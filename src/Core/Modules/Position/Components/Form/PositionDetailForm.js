@@ -20,6 +20,7 @@ import { update_identity_table_data_success } from "~/Core/Store/actions/adminTa
 
 /* Api */
  import positionApi from "~/Core/Modules/Position/Api/";
+import TextArea from "antd/lib/input/TextArea";
 
 const PositionDetailForm = ({ form,is_create,action, data }) => {
     const t = useTranslate();
@@ -120,7 +121,7 @@ const PositionDetailForm = ({ form,is_create,action, data }) => {
                                                 },
 
                                             ]
-                                        })(<Input />)}
+                                        })(<TextArea />)}
                                     </Form.Item>
                                 </Col>
                             </Row>

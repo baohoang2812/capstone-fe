@@ -179,7 +179,7 @@
     "CORE.MENU.LAYOUT": "Layout",
     "CORE.MENU.IMPERSONATION": "Mạo danh",
     "CORE.MENU.method-delivery": "Thiết lập phương thức vận chuyển",
-    "CORE.MENU.terms": "Chính sách",
+    "CORE.MENU.CHANGE.PASSWORD": "Thay đổi mật khẩu",
     "TABLE.ROW.selected_row_message": "dòng đã được chọn",
     "TABLE.ROW.selected_all_row_message": "Đã chọn tất cả dòng trong danh sách này",
     "TABLE.ROW.ask_select_all": "Chọn tất cả",
