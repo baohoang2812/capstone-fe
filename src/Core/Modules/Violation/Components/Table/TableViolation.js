@@ -288,6 +288,7 @@ const UserTable = () => {
         visible={visible}
         onCancel={handleCloseModal}
         footer={null}
+        width="900px"
       >
         <ViolationDetail data={data} action={handleCloseModal} />
       </Modal>
@@ -296,6 +297,7 @@ const UserTable = () => {
         visible={visibleExcuse}
         onCancel={handleCloseModal}
         footer={null}
+        width="900px"
       >
         <ExcuseDetail data={data} isShow={isShow} action={handleCloseModal} />
       </Modal>
@@ -305,6 +307,7 @@ const UserTable = () => {
         visible={visibleViolator}
         onCancel={handleCloseModal}
         footer={null}
+        width="900px"
       >
         <UpdateViolatorDetail data={data} action={handleCloseModal} />
       </Modal>
@@ -314,6 +317,7 @@ const UserTable = () => {
         visible={visibleAdminAccept}
         onCancel={handleCloseModal}
         footer={null}
+        width="900px"
       >
         <AdminAcceptViolation data={data} action={handleCloseModal} />
       </Modal>

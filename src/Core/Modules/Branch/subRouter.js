@@ -9,37 +9,31 @@ import intlMessagesEN from "./i18n/localization/en.json";
 import intlMessagesVi from "./i18n/localization/vi.json";
 
 export default {
-  
+  roleName: ["admin"],
   name: "Branch",
   dir: "Branch",
   pathRoot: "branch",
-  title: (
+  title: (t) => {
+    return (
     <span>
       <Icon type="branches" />
-      <span>Branches</span>
+      <span>{t("CORE.BRANCH")}</span>
     </span>
-  ),
+  )},
   showMenu: true,
   routes: [
-    {
-      url: "profile",
-      component: "Pages/Profile",
-      key: "profile-edit",
-      showMenu: false,
-      title: "Profile",
-    },
     {
       url: ":id",
       component: "Pages/BranchDetail",
       key: "branch-create-edit",
       showMenu: false,
-      title: "Branch detail",
+      title: "CORE.BRANCH.UPDATE.ACCOUNT",
     },
     {
       url: "",
       component: "Pages",
       showMenu: true,
-      title: "Branch Management",
+      title: "CORE.BRANCH.MANAGEMENT",
     },
   ],
   redux: redux,

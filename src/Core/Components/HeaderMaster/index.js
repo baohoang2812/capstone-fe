@@ -1,9 +1,9 @@
 import "~/styles/components/header.less";
 import "./style.less";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { Layout, Icon, Dropdown, Avatar, Menu, Badge} from "antd";
+import { Layout, Icon, Dropdown, Avatar, Menu, Badge, Modal } from "antd";
 
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
@@ -15,28 +15,32 @@ import MenuLanguage from "./MenuLanguage";
 import MenuNotify from "./MenuNotify";
 /* Helpers */
 import { logout } from "~/Core/utils/helper/authenticate";
+import ChangePasswordForm from "./Components/ChangePasswordForm";
+// import ChangePasswordForm from "./Components/ChangePasswordForm"
+
 
 // import buttonInfo from "./ButtonInfo";
 
 const { Header } = Layout;
 // const { SubMenu } = Menu;
-
 export const HeaderMaster = ({ url }) => {
+  const [visible,setVisible]= useState(false);
   const t = useTranslate();
 
   /* Ref outside */
   const ref = useRef();
-
-  /* State */
-  // const [oldActiveElement, setOldActiveElement] = useState(null);
-  // const [isHover, setHover] = useState(false);
-
   const handleClick = (e) => {
     if (ref?.current && !ref?.current?.contains(e.target)) {
       // setHover(false);
     }
   };
-
+  const openModel = (record) => {
+    setVisible(true);
+  };
+  const handleCloseModal = () => {
+    console.log(false)
+    setVisible(false);
+  };
   const clickMenuHover = () => {
     // setHover(true);
   };
@@ -48,67 +52,6 @@ export const HeaderMaster = ({ url }) => {
       document.removeEventListener("click", handleClick);
     };
   });
-
-  // const setActive = ({ target }) => {
-  //   let oldElement = oldActiveElement;
-  //   let activeElement = target;
-  //   setOldActiveElement(target);
-
-  //   if (oldElement) {
-  //     oldElement.parentElement.closest("li").classList.remove("active");
-  //   }
-
-  //   while (oldElement && oldElement.parentElement.closest(".has-submenu")) {
-  //     oldElement.parentElement
-  //       .closest(".has-submenu")
-  //       .classList.remove("active");
-  //     oldElement = oldElement.parentElement.closest(".has-submenu");
-  //   }
-
-  //   activeElement.parentElement.closest("li").classList.add("active");
-  //   while (activeElement.parentElement.closest(".has-submenu")) {
-  //     activeElement.parentElement
-  //       .closest(".has-submenu")
-  //       .classList.add("active");
-  //     activeElement = activeElement.parentElement.closest(".has-submenu");
-  //   }
-  // };
-
-  // const renderModuleMenu = (item, account_info, icon_name) => {
-  //   if (item.subMenu) {
-  //     return (
-  //       <SubMenu
-  //         popupClassName="has-submenu"
-  //         title={
-  //           <>
-  //             {t(item.id, item.defaultMessage)}
-  //             {icon_name !== "right" && (
-  //               <Icon
-  //                 className="ant-menu-submenu-arrow"
-  //                 type="down"
-  //                 style={{ fontSize: 10, marginLeft: 5 }}
-  //               />
-  //             )}
-  //           </>
-  //         }
-  //         key={item.id}
-  //       >
-  //         <Menu.ItemGroup className="nav-submenu">
-  //           {item.subMenu.map((subItem) =>
-  //             renderModuleMenu(subItem, account_info, "right")
-  //           )}
-  //         </Menu.ItemGroup>
-  //       </SubMenu>
-  //     );
-  //   } else {
-  //     return (
-  //       <Menu.Item key={item.id}>
-  //         <Link to={item.route}>{t(item.id, item.defaultMessage)}</Link>
-  //       </Menu.Item>
-  //     );
-  //   }
-  // };
-
   const renderMenuProfile = (account_info, t) => (
     <Menu
       className="dropdown-menu dropdown-menu-profile"
@@ -116,16 +59,16 @@ export const HeaderMaster = ({ url }) => {
       mode="vertical"
     >
       <Menu.Item key="terms">
-        <Link to="/employee/profile">
+        <Link to="/profile">
           <Icon type="profile" />
           {t("CORE.EMPLOYEE.PROFILE.TITLE")}
         </Link>
       </Menu.Item>
-      <Menu.Item key="terms">
-        <Link to="/terms">
+      <Menu.Item key="terms" onClick={openModel}>
+        {/* <Link to="/terms"> */}
           <Icon type="setting" />
-          {t("CORE.MENU.terms")}
-        </Link>
+          {t("CORE.MENU.CHANGE.PASSWORD")}
+        {/* </Link> */}
       </Menu.Item>
       <Menu.Item onClick={() => logout()} key="logout">
         <Icon type="logout" />
@@ -135,11 +78,6 @@ export const HeaderMaster = ({ url }) => {
   );
 
   const account_info = JSON.parse(localStorage.getItem("account_info" || "{}"));
-  // let urlModules = {};
-  // urlModules = Object.values(urlModules).sort((a, b) =>
-  //   a.position > b.position ? 1 : -1
-  // );
-
   return (
     <Header className="layout-header">
       <div className="layout-header-wrapper">
@@ -199,6 +137,13 @@ export const HeaderMaster = ({ url }) => {
           </Dropdown>
         </div>
       </div>
+      <Modal
+        title={t("CORE.changePass")}
+        visible={visible}
+        onCancel={handleCloseModal}
+        footer={null}>
+        <ChangePasswordForm action={handleCloseModal}/>
+      </Modal>
     </Header>
   );
 };

@@ -20,9 +20,8 @@ export const SideBar = ({ url }) => {
   };
 
   const renderModuleMenu = (item) => {
-    console.log(item.title);
     if (item.subMenu) {
-      const title = typeof(item.title) === "string" ? item.title : item.title(t)
+      const title = typeof(item.title) === "object" ? item.title : item.title(t)
       return (
         <SubMenu   
           title={title}
@@ -46,7 +45,7 @@ export const SideBar = ({ url }) => {
   return (
     <Sider width={250} collapsible collapsed={collapsed} onCollapse={onCollapse}>
       <div className="header-logo" style={{height: 92, backgroundColor: "rgb(1 30 58", color: "#fff", lineHeight: "92px", textAlign: "center", fontSize: 35}}>
-            <img style={{height:90, width:90}} alt="logo" src="/favicon.png"/>
+            <img style={{height:65, width:90}} alt="logo" src="/mavcalogo.png"/>
       </div>
       <div style={{display: "flex", backgroundColor: "#fff", height: "100%"}}>
         <Menu theme="dark" mode="inline">

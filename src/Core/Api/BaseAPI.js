@@ -17,7 +17,7 @@ const generate_options = (opts = {}) => {
   let headers = {
     Authorization: `Bearer ${localStorage.getItem("token")}`
   };
-
+  console.log(opts)
   if (opts.headers) {
     headers = {
       ...headers,

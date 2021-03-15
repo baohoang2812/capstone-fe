@@ -61,7 +61,18 @@ const UserTable = () => {
       fieldType: "text",
       sorter: true,
       width: 220,
-      render: (text, record) => <span>{`${record?.manager?.firstName} ${record?.manager?.lastName}`}</span>
+      render: (_,record) => {
+        if(record.manager!==null){
+          return( 
+          <span>{`${record?.manager?.lastName} ${record?.manager?.firstName}`}</span>)
+         
+        }
+        else{
+          return (
+            <span> </span>
+          )
+        }
+      }
     },
     
    

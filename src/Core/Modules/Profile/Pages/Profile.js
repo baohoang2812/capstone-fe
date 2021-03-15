@@ -7,7 +7,7 @@ import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 
 /* Components */
 import Header from "~/Core/Modules/Employee/Components/Header/Header";
-import ProfileForm from "~/Core/Modules/Employee/Components/Form/ProfileForm";
+import ProfileForm from "~/Core/Modules/Profile/Components/Form/ProfileForm";
 
 /* Api */
 

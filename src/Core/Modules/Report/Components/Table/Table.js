@@ -101,15 +101,34 @@ const UserTable = () => {
 
     },
     {
-      title: t("CORE.REPORT.CREATED.BY"),
-      dataIndex: "createdByNavigation.firstName",
+      title: t("CORE.REPORT.SUBMITTED.BY"),
+      dataIndex: "submittedBySystem",
       className: "header-filter",
       key: "type",
       fieldType: "text",
       sorter: true,
       width: 220,
-      // render: (text, record) => (
-      //   <span>{`${record.createdByNavigation.firstName} ${record.createdByNavigation.lastName}`}</span>)
+      render: (_, record) => {
+        if (record.submittedBySystem) {
+          return (
+            <span>Mavca System</span>
+          )
+        }
+        else if(record.status.toLowerCase()==="opening"){
+          return (
+            <span></span>
+          )
+        }
+        else {
+          return (
+            <span>Quality Control Manager</span>
+          )
+        }
+
+      }
+
+
+      
     },
 
 

@@ -40,7 +40,7 @@ const ReportViolation = ({ form, is_create, action, data }) => {
         reportApi.update(
           data.id,
           {
-            adminNote:values.adminNote,
+            adminNote: values.adminNote,
             qcNote: "string",
             assignee: 0,
             updatedAt: "2021-03-09T08:12:08.538Z",
@@ -88,49 +88,43 @@ const ReportViolation = ({ form, is_create, action, data }) => {
         <div className="div_custom">
           <Form>
             <Row type="flex" justify="center" align="bottom">
-              <Col span={10}>
+              <Col span={6}>
                 <Form.Item label={t("CORE.REPORT.NAME")}>
                   {getFieldDecorator("name", {})(<span>{data.name}</span>)}
                 </Form.Item>
               </Col>
+              <Col span={5}>
+                <Form.Item label={t("CORE.REPORT.STATUS")}>
+                  {getFieldDecorator("status", {})(<span>{data.status}</span>)}
+                </Form.Item>
+              </Col>
+              <Col span={5}>
+                <Form.Item label={t("CORE.REPORT.CHARGE.CREATE")}>
+                  {getFieldDecorator("createdAt", {})(<span>{moment(data.createdAt).format("DD-MM-YYYY")}</span>)}
+                </Form.Item>
+              </Col>
             </Row>
             <Row type="flex" justify="center" align="bottom">
-              <Col span={10}>
+              <Col span={8}>
+                <Form.Item label={t("CORE.REPORT.BRANCH.NAME")}>
+                  {getFieldDecorator("branchName", {})(<span>{data?.branch?.name}</span>)}
+                </Form.Item>
+              </Col>
+              <Col span={8}>
                 <Form.Item label={t("CORE.REPORT.DESCRIPTION")}>
                   {getFieldDecorator("description", {})(<span>{data.description}</span>)}
                 </Form.Item>
               </Col>
             </Row>
             <Row type="flex" justify="center" align="bottom">
-              <Col span={10}>
-                <Form.Item label={t("CORE.REPORT.STATUS")}>
-                  {getFieldDecorator("status", {})(<span>{data.status}</span>)}
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row type="flex" justify="center" align="bottom">
-              <Col span={10}>
-                <Form.Item label={t("CORE.REPORT.BRANCH.NAME")}>
-                  {getFieldDecorator("branchName", {})(<span>{data?.branch?.name}</span>)}
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row type="flex" justify="center" align="bottom">
-              <Col span={10}>
+              <Col span={16}>
                 <Form.Item label={t("CORE.REPORT.QC.NOTE")}>
                   {getFieldDecorator("qcNote", {})(<span>{data.qcNote}</span>)}
                 </Form.Item>
               </Col>
             </Row>
             <Row type="flex" justify="center" align="bottom">
-              <Col span={10}>
-                <Form.Item label={t("CORE.REPORT.CHARGE.CREATE")}>
-                  {getFieldDecorator("createdAt", {})(<span>{data.createdAt}</span>)}
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row type="flex" justify="center" align="bottom">
-              <Col span={10}>
+              <Col span={16}>
                 <Form.Item label={t("CORE.REPORT.ADMIN.NOTE")}>
                   {getFieldDecorator("adminNote", {})(<TextArea />)}
                 </Form.Item>

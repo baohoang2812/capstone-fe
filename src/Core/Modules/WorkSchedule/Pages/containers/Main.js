@@ -24,7 +24,7 @@ const Main = React.forwardRef((props, ref) => {
             name: `${item.lastName} ${item.firstName}`,
             category: item?.position?.name,
             type: item.isPartTime ? "Full time" : "Part time",
-            image: item.imagePath,
+            imageUrl: item.imagePath,
           }
         })
 
@@ -60,6 +60,7 @@ const Main = React.forwardRef((props, ref) => {
     end.setHours(23, 59, 59, 999);
     return end
   }
+  console.log(employees)
   return (
     <>
       <Header titleHref="../../../../../examples/#example-examples-scheduler-react-javascript-custom-event-editor" />
@@ -69,88 +70,6 @@ const Main = React.forwardRef((props, ref) => {
         startDate={startDate()}
         endDate={endDate()}
         events={workSchedules}
-        // events={[
-
-
-        //   {
-        //     resourceId: "6",
-        //     name: "Ca 1",
-        //     startDate: "2017-02-07 11:00",
-        //     endDate: "2017-02-07 14:00",
-        //     location: "Some office",
-        //     eventType: "Meeting",
-        //     iconCls: "b-fa b-fa-calendar",
-        //   },
-        //   {
-        //     resourceId: "7",
-        //     name: "Ca 2",
-        //     startDate: "2017-02-07 12:00",
-        //     endDate: "2017-02-07 15:00",
-        //     location: "Home office",
-        //     eventType: "Meeting",
-        //     iconCls: "b-fa b-fa-calendar",
-        //   },
-        //   {
-        //     resourceId: "8",
-        //     name: "Ca #3",
-        //     startDate: "2017-02-07 13:00",
-        //     endDate: "2017-02-07 16:00",
-        //     location: "Customer office",
-        //     eventType: "Meeting",
-        //     iconCls: "b-fa b-fa-calendar",
-        //   },
-        //   {
-        //     resourceId: "9",
-        //     name: "Important meeting",
-        //     startDate: "2017-02-07 09:00",
-        //     endDate: "2017-02-07 11:00",
-        //     location: "Some office",
-        //     eventType: "Meeting",
-        //     eventColor: "red",
-        //     iconCls: "b-fa b-fa-exclamation-triangle",
-        //   },
-        //   {
-        //     resourceId: "10",
-        //     name: "Ca #1",
-        //     startDate: "2017-02-07 10:00",
-        //     endDate: "2017-02-07 12:00",
-        //     location: "Home office",
-        //     type: "Dental",
-        //     eventType: "Appointment",
-        //     iconCls: "b-fa b-fa-calendar-alt",
-        //   },
-        //   {
-        //     resourceId: "11",
-        //     name: "Appointment #2",
-        //     startDate: "2017-02-07 11:00",
-        //     endDate: "2017-02-07 13:00",
-        //     location: "Customer office",
-        //     type: "Medical",
-        //     eventType: "Appointment",
-        //     iconCls: "b-fa b-fa-calendar-alt",
-        //   },
-        //   {
-        //     resourceId: "13",
-        //     name: "Appointment #3",
-        //     startDate: "2020-02-07 10:00",
-        //     endDate: "2017-02-07 12:00",
-        //     location: "Home office",
-        //     type: "Medical",
-        //     eventType: "Appointment",
-        //     iconCls: "b-fa b-fa-calendar-alt",
-        //   },
-        //   {
-        //     resourceId: "12",
-        //     name: "Important appointment",
-        //     startDate: "2020-02-07 15:00",
-        //     endDate: "2017-02-07 18:00",
-        //     location: "Customer office",
-        //     type: "Dental",
-        //     eventType: "Appointment",
-        //     eventColor: "red",
-        //     iconCls: "b-fa b-fa-exclamation-triangle",
-        //   },
-        // ]}
         resources={employees}
 
         listeners={{

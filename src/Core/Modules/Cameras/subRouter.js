@@ -9,16 +9,17 @@ import intlMessagesEN from "./i18n/localization/en.json";
 import intlMessagesVi from "./i18n/localization/vi.json";
 
 export default {
-  
+  roleName: ["admin","Branch Manager"],
   name: "Cameras",
   dir: "Cameras",
   pathRoot: "cameras",
-  title: (
+  title: (t) => {
+    return (
     <span>
-      <Icon type="branches" />
-      <span>Cameras</span>
+     <Icon type="video-camera" />
+      <span>{t("CORE.CAMERA")}</span>
     </span>
-  ),
+  )},
   showMenu: true,
   routes: [
     {
@@ -26,13 +27,13 @@ export default {
       component: "Pages/CameraDetail",
       key: "camera-create-edit",
       showMenu: false,
-      title: "Camera detail",
+      title: "CORE.CAMERA.DETAIL",
     },
     {
       url: "",
       component: "Pages",
       showMenu: true,
-      title: "Cameras Management",
+      title: "CORE.CAMERA.MANAGEMENT.TITLE",
     },
   ],
   redux: redux,

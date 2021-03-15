@@ -9,24 +9,19 @@ import intlMessagesEN from "./i18n/localization/en.json";
 import intlMessagesVi from "./i18n/localization/vi.json";
 
 export default {
+  roleName: ["Branch Manager"],
   name: "Violation",
   dir: "Violation",
   pathRoot: "violation",
-  title: (
+  title: (t) => {
+    return (
     <span>
-     <Icon type="read" />
-      <span>Violation</span>
+    <Icon type="read" />
+      <span>{t("CORE.VIOLATION")}</span>
     </span>
-  ),
+  )},
   showMenu: true,
   routes: [
-    {
-      url: "profile",
-      component: "Pages/Profile",
-      key: "profile-edit",
-      showMenu: false,
-      title: "Profile",
-    },
     {
       url: ":id",
       component: "Pages/ViolationDetail",
@@ -38,7 +33,7 @@ export default {
       url: "",
       component: "Pages",
       showMenu: true,
-      title: "Violation Management",
+      title: "CORE.VIOLATION.MANAGEMENT.TITLE",
     },
   ],
   redux: redux,

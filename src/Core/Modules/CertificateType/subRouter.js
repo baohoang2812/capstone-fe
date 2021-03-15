@@ -9,36 +9,31 @@ import intlMessagesEN from "./i18n/localization/en.json";
 import intlMessagesVi from "./i18n/localization/vi.json";
 
 export default {
+  roleName: ["admin"],
   name: "CertificateType",
   dir: "CertificateType",
   pathRoot: "certificateType",
-  title: (
+  title: (t) => {
+    return (
     <span>
-     <Icon type="safety-certificate" />
-      <span>Certificate Type</span>
+      <Icon type="safety-certificate" />
+      <span>{t("CORE.CERTIFICATE")}</span>
     </span>
-  ),
+  )},
   showMenu: true,
   routes: [
-    {
-      url: "profile",
-      component: "Pages/Profile",
-      key: "profile-edit",
-      showMenu: false,
-      title: "Profile",
-    },
     {
       url: ":id",
       component: "Pages/CertificateTypeDetail",
       key: "certificateType-create-edit",
       showMenu: false,
-      title: "Certificate Type detail",
+      title: "CORE.CERTIFICATE.DETAIL",
     },
     {
       url: "",
       component: "Pages",
       showMenu: true,
-      title: "Certificate Type Management",
+      title: "CORE.CERTIFICATE.TYPE.MANAGEMENT.TITLE",
     },
   ],
   redux: redux,

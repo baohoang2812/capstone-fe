@@ -9,36 +9,31 @@ import intlMessagesEN from "./i18n/localization/en.json";
 import intlMessagesVi from "./i18n/localization/vi.json";
 
 export default {
+  roleName: ["admin","Branch Manager"],
   name: "Report",
   dir: "Report",
   pathRoot: "report",
-  title: (
+  title: (t) => {
+    return (
     <span>
      <Icon type="read" />
-      <span>Report</span>
+      <span>{t("CORE.REPORT")}</span>
     </span>
-  ),
+  )},
   showMenu: true,
   routes: [
-    {
-      url: "profile",
-      component: "Pages/Profile",
-      key: "profile-edit",
-      showMenu: false,
-      title: "Profile",
-    },
     {
       url: ":id",
       component: "Pages/ReportDetail",
       key: "report-create-edit",
       showMenu: false,
-      title: "Report detail",
+      title: "CORE.REPORT.DETAIL",
     },
     {
       url: "",
       component: "Pages",
       showMenu: true,
-      title: "Report Management",
+      title: "CORE.REPORT.MANAGEMENT.TITLE",
     },
   ],
   redux: redux,

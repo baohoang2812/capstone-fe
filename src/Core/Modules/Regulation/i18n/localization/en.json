@@ -1,5 +1,5 @@
 {
-    "CORE.REGULATION.MANAGEMENT.TITLE":"Regulation Manager",
+    "CORE.REGULATION.MANAGEMENT.TITLE":"Regulation Management",
     "CORE.REGULATION.CREATE.ACCOUNT":"Create regulation",
     "CORE.REGULATION.UPDATE.ACCOUNT":"Update regulation",
     "CORE.REGULATION.NAME":"Regulation name",
@@ -11,7 +11,9 @@
     "CORE.REGULATION.UPDATE.SUCCESS":"Update regulation success!",
     "CORE.REGULATION.CHARGE.CREATE":"Created date",
     "CORE.REGULATION.CHARGE.UPDATE":"Updated date",
-    "CORE.REGULATION.POINT": "Minus Point"
+    "CORE.REGULATION.POINT": "Minus Point",
+    "CORE.REGULATION":"Regulation",
+    "CORE.REGULATION.DETAIL":"Regulation detail"
     
 
 

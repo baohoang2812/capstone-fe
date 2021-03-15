@@ -1,7 +1,7 @@
-import React, { useCallback } from "react";
+import React, { useCallback,useState, useEffect } from "react";
 import { Avatar, List } from "antd";
 import { Link} from "react-router-dom";
-
+import notiApi from "~/Core/Modules/Notification/Api";
 /* Actions */
 // import { updateListNotification } from "~/Core/Store/actions/notification";
 
@@ -17,40 +17,20 @@ export default ({
   const onMarkAllAsRead = () => {
     // dispatch(updateListNotification("all"));
   }
+  const [listNoti, setListNoti] = useState([]);
 
-  const rederDataNotification = useCallback(
-    () => {
-      
-      let data = [{
-        is_check: true,
-        title: "Hệ thống Mavca",
-        content: "Vui lòng chọn lịch làm việc",
-        datetime: "2 phút trước"
-      },
-      {
-        is_check: false,
-        title: "Hệ thống Mavca",
-        content: "Thích vậy đó, chịu không chịu buộc chịu",
-        datetime: "51 phút trước"
-      },
-      {
-        is_check: false,
-        title: "Hệ thống Mavca",
-        content: "Phát hiện 2 lỗi vi phạm khu vực 2",
-        datetime: "2 giờ trước"
-      },
-      {
-        is_check: false,
-        title: "Hệ thống Mavca",
-        content: "Phát hiện 5 lỗi vi phạm khu vực 3",
-        datetime: "3 giờ trước"
-      }
-    ];
+  useEffect(() => {
+    ( async () => {
+      const res = await notiApi.getList(0, 10);
+        if (res.code !== 200) {
 
-      return data
-    },
-    []
-  )
+          return;
+        }
+        const data = res?.data?.result || [];
+        setListNoti(data);
+    })()
+   
+  }, [])
 
   const onClick = (e, item) => {
     e.preventDefault();
@@ -74,16 +54,16 @@ export default ({
 
       <List
         itemLayout="horizontal"
-        dataSource={rederDataNotification()}
+        dataSource={listNoti}
         renderItem={item => (
           <Link
             onClick={(e) => onClick(e, item)}
             to="#"
           >
-            <List.Item className={!item.is_check && "unread"}>
+            <List.Item className={!item.isRead && "unread"}>
               <List.Item.Meta
                 avatar={<Avatar shape="square" size="large" />}
-                title={<span>{item.title}</span>}
+                title={<span>{item.notification.name}</span>}
                 description={
                   <div className="description">
                     <p style={{
@@ -91,8 +71,8 @@ export default ({
                       WebkitLineClamp: 2,
                       WebkitBoxOrient: "vertical",
                       overflow: "hidden"
-                    }} dangerouslySetInnerHTML={{ __html: item.content }} />
-                    <span>{item.datetime}</span>
+                    }} dangerouslySetInnerHTML={{ __html: item.notification.description }} />
+                    <span>{item.notification.createdAt}</span>
                   </div>
                 }
               />

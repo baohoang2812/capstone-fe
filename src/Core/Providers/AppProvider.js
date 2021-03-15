@@ -4,6 +4,7 @@ import Helmet from "react-helmet";
 
 import Modules from "~/Core/Modules";
 import { checkRole } from "~/Core/Modules/Authenticate/helpers";
+import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 
 /* Components */
 import ErrorBoundary from "~/Core/Components/common/ErrorBoundary";
@@ -49,15 +50,17 @@ async function initModules(isAuthenticated) {
           moduleConfig.isAuthenticate !== undefined
             ? moduleConfig.isAuthenticate
             : true;
+            
         if (
           (isAuthenticated === moduleAuthenticated) ||
           moduleAuthenticated === "Any"
         ) {
           const roleName = moduleConfig.roleName;
-          if (moduleConfig.sagas !== undefined && checkRole(roleName)) {
+
+          if (moduleConfig.sagas !== undefined && checkRole(roleName, isAuthenticated)) {
             listSagas = [...listSagas, ...moduleConfig.sagas];
           }
-          if (moduleConfig.routes !== undefined && checkRole(roleName)) {
+          if (moduleConfig.routes !== undefined && checkRole(roleName, isAuthenticated)) {
             if ( moduleConfig.showMenu ) {
               listArrayRoutes.push({
                 title: moduleConfig.title,
@@ -111,10 +114,12 @@ async function initModules(isAuthenticated) {
 }
 
 function RouteWithTitle({ title, ...props }) {
+  const t = useTranslate();
+
   return (
     <ErrorBoundary>
       <Helmet>
-        <title>{title}</title>
+        <title>{t(title)}</title>
       </Helmet>
       <Route {...props} />
     </ErrorBoundary>

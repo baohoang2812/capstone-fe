@@ -11,5 +11,7 @@
     "CORE.SHIFT.BREAK.SHIFT":"Ca gãy",
     "CORE.SHIFT.UPDATE.ACCOUNT":"Cập nhật ca",
     "CORE.SHIFT.CREATE.SUCCESS":"Tạo mới ca thành công!",
-    "CORE.SHIFT.UPDATE.SUCCESS":"Cập nhật ca thành công!"
+    "CORE.SHIFT.UPDATE.SUCCESS":"Cập nhật ca thành công!",
+    "CORE.SHIFT":"Ca",
+    "CORE.SHIFT.DETAIL":"Chi tiết ca"
 }

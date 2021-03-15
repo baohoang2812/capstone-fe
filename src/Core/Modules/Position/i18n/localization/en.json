@@ -3,5 +3,7 @@
     "CORE.POSITION.DESCRIPTION":"Description",
     "CORE.POSITION.MANAGEMENT.TITLE":"Position Management",
     "CORE.POSITION.CREATE.ACCOUNT":"Create Position",
-    "CORE.POSITION.UPDATE.ACCOUNT":"Update Position"
+    "CORE.POSITION.UPDATE.ACCOUNT":"Update Position",
+    "CORE.POSITION":"Position",
+    "CORE.POSITION.DETAIL":"Position detail"
 }

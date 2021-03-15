@@ -9,24 +9,19 @@ import intlMessagesEN from "./i18n/localization/en.json";
 import intlMessagesVi from "./i18n/localization/vi.json";
 
 export default {
+  roleName: ["Branch Manager","Staff"],
   name: "WorkSchedule",
   dir: "WorkSchedule",
   pathRoot: "workSchedule",
-  title: (
+  title: (t) => {
+    return (
     <span>
-     <Icon type="schedule" />
-      <span>Work Schedule</span>
+       <Icon type="schedule" />
+      <span>{t("CORE.WORKSCHEDULE")}</span>
     </span>
-  ),
+  )},
   showMenu: true,
   routes: [
-    {
-      url: "profile",
-      component: "Pages/Profile",
-      key: "profile-edit",
-      showMenu: false,
-      title: "Profile",
-    },
     {
       url: ":id",
       component: "Pages/WorkScheduleDetail",
@@ -38,7 +33,7 @@ export default {
       url: "",
       component: "Pages",
       showMenu: true,
-      title: "Work Schedule Management",
+      title: "CORE.WORKSCHEDULE.MANAGEMENT",
     },
   ],
   redux: redux,

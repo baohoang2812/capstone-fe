@@ -54,14 +54,14 @@ const BranchDetail = ({ match: { params } }) => {
         <Header
           breadcrumb={[
             {
-              title: t("CORE.BRANCH.MANAGEMENT.TITLE"),
+              title: t("CORE.CAMERA.MANAGEMENT.TITLE"),
               link: "/branch",
             },
             {
               title:
                 params.id === "create"
-                  ? t("CORE.BRANCH.CREATE.ACCOUNT")
-                  : t("CORE.BRANCH.UPDATE.ACCOUNT"),
+                  ? t("CORE.CAMERA.CREATE")
+                  : t("CORE.CAMERA.UPDATE"),
             },
           ]}
           action={action}

@@ -5,5 +5,7 @@
     "CORE.WORKSPACE.CHARGE.CREATE":"Created at",
     "CORE.WORKSPACE.CHARGE.UPDATE":"Updated at",
     "CORE.WORKSPACE.MANAGEMENT.TITLE":"Workspace Management",
-    "CORE.WORKSPACE.CREATE.ACCOUNT":"Create workspace"
+    "CORE.WORKSPACE.CREATE.ACCOUNT":"Create workspace",
+    "CORE.WORKSPACE":"Workspace",
+    "CORE.WORKSPACE.DETAIL":"Workspace detail"
 }

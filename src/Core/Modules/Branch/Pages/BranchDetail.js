@@ -24,7 +24,6 @@ const BranchDetail = ({ match: { params } }) => {
   };
 
   useEffect(() => {
-    console.log(JSON.stringify(params));
     if (params.id === "create") {
       // setLoading(false);
       //   setError(true);
@@ -46,7 +45,6 @@ const BranchDetail = ({ match: { params } }) => {
         });
     }
   }, []);
-  ;
 
   return (
     <>
