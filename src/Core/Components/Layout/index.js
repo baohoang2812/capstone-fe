@@ -29,7 +29,7 @@ const RoutesMaster = ({
   useEffect(() => {
     if (isAuthenticated) {
       if (location.pathname === "/") {
-        history.push("/employee")
+        history.push("/dashboard")
       }
     }
   }, [])
