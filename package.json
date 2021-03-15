@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "schedule": "git+http://github.com/nguyenquangkhai2210/schedule.git",
+    "@ant-design/charts": "^1.0.21",
+    "@date-io/date-fns": "^2.10.8",
+    "@formatjs/intl-pluralrules": "^3.5.1",
     "@material-ui/core": "~4.4.0",
     "@material-ui/icons": "~4.2.1",
     "@material-ui/pickers": "~3.2.4",
-    "@date-io/date-fns": "^2.10.8",
-    "@formatjs/intl-pluralrules": "^3.5.1",
     "antd": "^3.20.0",
     "axios": "^0.18.0",
     "babel-plugin-import": "^1.11.0",
@@ -38,6 +38,7 @@
     "redux": "^4.0.1",
     "redux-persist": "^6.0.0",
     "redux-saga": "^1.0.2",
+    "schedule": "git+http://github.com/nguyenquangkhai2210/schedule.git",
     "socket.io-client": "^2.3.0",
     "uuid": "^3.3.2"
   },

@@ -1,0 +1,25 @@
+{
+    "CORE.CAMERA.MANAGEMENT.TITLE":"Camera Management",
+    "CORE.CAMERA.CREATE":"Create Camera",
+    "CORE.CAMERA.UPDATE":"Update Camera",
+    "CORE.CAMERA.NAME":"Camera name",
+    "CORE.CAMERA.BRANCH.URL":"Server url",
+    "CORE.CAMERA.IP":"IP Camera",
+    "CORE.CAMERA.ADDRESS":"Address",
+    "CORE.CAMERA.PHONE.NUMBER":"Phone number",
+    "CORE.CAMERA.CHARGE.CREATE":"Created at",
+    "CORE.CAMERA.CHARGE.UPDATE":"Updated at",
+    "CORE.CAMERA.WORKSPACE.NAME":"Work space name",
+    "CORE.CAMERA.STATUS":"Status",
+    "CORE.CAMERA.ACTIVE":"Active",
+    "CORE.CAMERA.INACTIVE":"Inactive",
+    "CORE.CAMERA.CREATE.SUCCESS":"Create camera success!",
+    "CORE.CAMERA.UPDATE.SUCCESS":"Update camera success!",
+    "CORE.CAMERA":"Camera", 
+    "CORE.CAMERA.DETAIL":"Camera detail"
+
+
+
+
+    
+}

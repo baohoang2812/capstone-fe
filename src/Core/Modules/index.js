@@ -14,5 +14,6 @@ export default [
   { key: "Violation"},
   { key: "Notification"},
   { key: "Cameras"},
-  { key: "Profile"}
+  { key: "Profile"},
+  { key: "Dashboard"}
 ];
