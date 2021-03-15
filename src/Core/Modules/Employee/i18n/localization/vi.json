@@ -2,7 +2,7 @@
     "CORE.CERTIFICATION.MANAGEMENT.TITLE": "Chứng chỉ",
     "CORE.CERTIFICATION.NAME": "Tên chứng chỉ",
     "CORE.CERTIFICATION.DESCRIPTION": "Mô tả",
-    "CORE.CERTIFICATION.MANAGEMENT.CREATE": "Tạo chứng chỉ",
+    "CORE.CERTIFICATION.MANAGEMENT.CREATE": "Thêm chứng chỉ",
     "CORE.EMPLOYEE.TITLE": "Nhân viên",
     "CORE.EMPLOYEE.TITLE.DETAIL": "Chi tiết nhân viên",
     "CORE.EMPLOYEE.TITLE.ACCOUNT": "Tài khoản",
@@ -62,7 +62,11 @@
     "CORE.ACCOUNT.ALERT.ROLE":"Vui lòng chọn vai trò",
     "CORE.ACCOUNT.CREATE.SUCCESS":"Tạo tài khoản thành công",
     "CORE.ACCOUNT.UPDATE.SUCCESS":"Cập nhật tài khoản thành công",
-    "CORE.EMPLOYEE.NEW.PASSWORD":"Mật khẩu mới"
+    "CORE.EMPLOYEE.NEW.PASSWORD":"Mật khẩu mới",
+    "CORE.EMPLOYEE.ALERT.CERTIFICATE":"Vui lòng chọn chứng chỉ",
+    "CORE.EMPLOYEE.ISSUE.DATE":"Ngày cấp",
+    "CORE.EMPLOYEE.ALERT.ISSUE.DATE":"Vui lòng chọn ngày cấp",
+    "CORE.EMPLOYEE.ADD.CERTIFICATION.SUCCESS":"Thêm chứng chỉ thành công"
     
     
    

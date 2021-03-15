@@ -62,6 +62,10 @@
     "CORE.ACCOUNT.ALERT.ROLE":"Please select role",
     "CORE.ACCOUNT.CREATE.SUCCESS":"Updated account success",
     "CORE.ACCOUNT.UPDATE.SUCCESS":"Created account success",
-    "CORE.EMPLOYEE.NEW.PASSWORD":"New password"
+    "CORE.EMPLOYEE.NEW.PASSWORD":"New password",
+    "CORE.EMPLOYEE.ALERT.CERTIFICATE":"Please select certification",
+    "CORE.EMPLOYEE.ISSUE.DATE":"Issue date",
+    "CORE.EMPLOYEE.ALERT.ISSUE.DATE":"Please select issue date",
+    "CORE.EMPLOYEE.ADD.CERTIFICATION.SUCCESS":"Added certification success"
     
 }

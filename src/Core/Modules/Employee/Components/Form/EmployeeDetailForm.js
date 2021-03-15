@@ -42,6 +42,7 @@ const EmployeeDetailForm = (props) => {
           const result = res.data?.result?.[0] || {};
 
           setData(result);
+          console.log(result,"EmployeeID")
 
           const resAccount = await accountApi.getOne(result.id)
 

@@ -23,6 +23,7 @@ import { certificateTypes as identity } from "~/Core/Modules/CertificateType/Con
 
 /* Api */
 import certificateTypeApi from "~/Core/Modules/CertificateType/Api/";
+import uploadApi from "~/Core/Modules/CertificateType/Api/Upload";
 
 const getBase64 = (file) => {
   return new Promise((resolve, reject) => {
@@ -54,7 +55,7 @@ const CertificateTypeDetailForm = ({ form, data, action, is_create }) => {
       {
         uid: "-4",
         name: "image.png",
-        status: "done",
+        status: "created",
         url: data?.imagePath,
       },
     ]);
@@ -64,13 +65,20 @@ const CertificateTypeDetailForm = ({ form, data, action, is_create }) => {
     validateFields((err, values) => {
       if (!err) {
         setLoading(true);
-        console.log(values);
+        const newValues = {
+          ...values,
+          imagePath: values?.["imagePath"]?.file?.response?.url,
+        };
+        console.log(newValues);
         if (is_create) {
-          certificateTypeApi
-            .create({
-              ...values,
-              imagePath: values?.["imagePath"]?.file?.response?.url,
-            })
+          uploadApi.uploadImage(fileList).then(
+            res => {
+              const newValues2 = {
+                ...newValues,
+                imagePath: res.data[0].uri
+              };
+              certificateTypeApi
+            .create(newValues2)
             .then((res) => {
               setLoading(false);
               if (res.code !== 201) {
@@ -86,27 +94,55 @@ const CertificateTypeDetailForm = ({ form, data, action, is_create }) => {
               message.error(t("CORE.error.system"));
               setLoading(false);
             });
+              
+            }
+          ).catch(() => {
+            message.error(t("CORE.error.system"));
+          });
+          
         } else {
-          certificateTypeApi
-            .update(data.id, {
-              ...values,
-              imagePath: values?.["imagePath"]?.file?.response?.url,
-            })
-            .then((res) => {
+          if (fileList[0].status.toLowerCase() !== "created") {
+            uploadApi.uploadImage(fileList).then(
+              res => {
+                const newData = {
+                  ...values,
+                  imagePath: res.data[0].uri
+                };
+                certificateTypeApi.update(data.id, newData).then((res) => {
+                  setLoading(false);
+
+                  if (res.code !== 200) {
+                    message.error(t("CORE.task_failure"));
+                    return;
+                  }
+                  dispatch(
+                    update_identity_table_data_success(identity, res.data)
+                  );
+                  message.success(t("CORE.CERTIFICATE.TYPE.UPDATE.SUCCESS"));
+                  action();
+                });
+
+              });
+          }
+          else {
+            const newValues3 = { ...values, imagePath: data.imagePath }
+            certificateTypeApi.update(data.id, newValues3).then((res) => {
               setLoading(false);
 
               if (res.code !== 200) {
                 message.error(t("CORE.task_failure"));
                 return;
               }
-              dispatch(update_identity_table_data_success(identity, res.data));
+
+              dispatch(
+                update_identity_table_data_success(identity, res.data.employee)
+              );
               message.success(t("CORE.CERTIFICATE.TYPE.UPDATE.SUCCESS"));
               action();
-            })
-            .catch((e) => {
-              message.error(t("CORE.error.system"));
-              setLoading(false);
             });
+
+          }
+          
         }
       }
     });
@@ -168,8 +204,7 @@ const CertificateTypeDetailForm = ({ form, data, action, is_create }) => {
               <Col span={5}>
                 <Form.Item
                   className="upload-image"
-                  label={t("CORE.CERTIFICATE.TYPE.IMAGE.PATH")}
-                >
+                  label={t("CORE.CERTIFICATE.TYPE.IMAGE.PATH")}>
                   {getFieldDecorator(
                     "imagePath",
                     {}

@@ -2,7 +2,7 @@ import "./style.less";
 
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Select, Row, Col, Form, Card, Button, message, Spin } from "antd";
+import { Select, Row, Col, Form, Card, Button, message, Spin, DatePicker } from "antd";
 
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
@@ -14,8 +14,8 @@ import { update_identity_table_data_success } from "~/Core/Store/actions/adminTa
 import { employees as identity } from "~/Core/Modules/Employee/Configs/constants";
 
 /* Api */
-import accountApi from "~/Core/Modules/Employee/Api/Account";
 import certificationTypeApi from "~/Core/Modules/Employee/Api/CertificationType";
+import certificationApi from "~/Core/Modules/Employee/Api/Certification";
 
 const { Option } = Select;
 const { Meta } = Card;
@@ -45,57 +45,57 @@ const CertificationDetail = ({ form, employeeId, action, data, is_create }) => {
     })();
   }, []);
 
-  useEffect(() => {
-    setFieldsValue({
-      username: data?.username,
-      roleId: data?.roleId,
-    });
-  }, [data]);
+  // useEffect(() => {
+  //   setFieldsValue({
+  //     username: data?.username,
+  //     roleId: data?.roleId,
+  //   });
+  // }, [data]);
 
   const onConfirm = (e) => {
     e.preventDefault();
     validateFields((err, values) => {
       if (!err) {
         setLoading(true);
-
-        const { roleId, password } = values;
-
-        const objReq = {
-          employeeId,
-          password,
-          roleId,
-        };
+        console.log(data, "DATA")
+        const newValues = {
+          ...values,
+          issueDate: values["issueDate"].format("YYYY-MM-DD"),
+          employeeId: data.employeeId
+        }
 
         if (!data?.username) {
-          accountApi
-            .create(objReq)
+          certificationApi
+            .create(newValues)
             .then((res) => {
               setLoading(false);
-
-              if (res.status !== 200) {
+              if (res.code === 200 || res.code === 201) {
+                dispatch(update_identity_table_data_success(identity, res.data));
+                message.success(t("CORE.EMPLOYEE.ADD.CERTIFICATION.SUCCESS"));
+                action();
+              }
+              else {
                 message.error(t("CORE.task_failure"));
                 return;
               }
-
-              dispatch(update_identity_table_data_success(identity, res.data));
-              message.success(t("CORE.EMPLOYEE.CREATE.SUCCESS"));
-              action();
             })
-            .catch(() => {
+            .catch((e) => {
+              console.log(e)
               message.error(t("CORE.error.system"));
             });
         } else {
-          accountApi.update(data.id, objReq).then((res) => {
+          certificationApi.update(data.id, newValues).then((res) => {
             setLoading(false);
-
-            if (res.status !== 200) {
+            if (res.code === 200 || res.code === 201) {
+              dispatch(update_identity_table_data_success(identity, res.data));
+              message.success(t("CORE.EMPLOYEE.ADD.CERTIFICATION.SUCCESS"));
+              action();
+            }
+            else {
               message.error(t("CORE.task_failure"));
               return;
             }
 
-            dispatch(update_identity_table_data_success(identity, res.data));
-            message.success(t("CORE.EMPLOYEE.UPDATE.SUCCESS"));
-            action();
           });
         }
       }
@@ -111,12 +111,12 @@ const CertificationDetail = ({ form, employeeId, action, data, is_create }) => {
       <Form onSubmit={onConfirm}>
         <Row type="flex" justify="center">
           <Col span={16}>
-            <Form.Item label={t("CORE.EMPLOYEE.ROLE")}>
+            <Form.Item label={t("CORE.CERTIFICATION.NAME")}>
               {getFieldDecorator("certificateTypeId", {
                 rules: [
                   {
                     required: true,
-                    message: "Please select role!",
+                    message: (<>{t("CORE.EMPLOYEE.ALERT.CERTIFICATE")}</>),
                   },
                 ],
                 initialValue: listCertificationType?.[0]?.id,
@@ -132,6 +132,7 @@ const CertificationDetail = ({ form, employeeId, action, data, is_create }) => {
             </Form.Item>
           </Col>
         </Row>
+       
         <Row type="flex" justify="center">
           <Col span={12}>
             <Card
@@ -145,6 +146,21 @@ const CertificationDetail = ({ form, employeeId, action, data, is_create }) => {
               />
             </Card>
             ,
+          </Col>
+        </Row>
+        <Row type="flex" justify="center">
+          <Col span={10}>
+            <Form.Item label={t("CORE.EMPLOYEE.ISSUE.DATE")}>
+              {getFieldDecorator("issueDate", {
+                rules: [
+                  {
+                    type: "object",
+                    required: true,
+                    message: (<>{t("CORE.EMPLOYEE.ALERT.ISSUE.DATE")}</>),
+                  },
+                ],
+              })(<DatePicker />)}
+            </Form.Item>
           </Col>
         </Row>
         <Row type="flex" justify="center">

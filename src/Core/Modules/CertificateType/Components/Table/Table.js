@@ -32,7 +32,7 @@ const UserTable = () => {
       width: 200,
       render: (_, record) => {
         return (
-          <ImageThumbnail src={record.image_path}/>
+          <ImageThumbnail src={record.imagePath}/>
         )
       }
     },
