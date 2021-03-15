@@ -15,6 +15,7 @@ import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 
 /* Api */
 import accountApi from "~/Core/Api/ChangePassword";
+import { logout } from "~/Core/utils/helper/authenticate";
 
 const AccountForm = ({ form, action, data, is_create }) => {
   const [loadingDropdown, setLoadingDropdown] = useState(false);
@@ -49,13 +50,24 @@ const AccountForm = ({ form, action, data, is_create }) => {
         };
           accountApi.update(objReq).then((res) => {
             setLoading(false);
-            if (res.code !== 200) {
-              message.error(t("CORE.task_failure"));
+            if(res.code===3003){
+              message.error(t("CORE.TASK.INVALID.PASSWORD"));
               return;
             }
+            if (res.code === 200) {
+              message.success(t("CORE.ACCOUNT.UPDATE.SUCCESS"));
+              setTimeout(()=>{
+                logout()
+              }, 2000)
+            }
+            else{
+              message.error(t("CORE.task_failure"));
+             
+            }
+              
+            
             // dispatch(update_identity_table_data_success(identity, res.data));
-            message.success(t("CORE.ACCOUNT.UPDATE.SUCCESS"));
-            action();
+          
           });
         }
       }

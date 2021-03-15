@@ -18,8 +18,6 @@ import {
 } from "antd";
 import randomstring from "randomstring";
 import moment from "moment";
-import jwt_decode from "jwt-decode";
-
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 
@@ -34,8 +32,6 @@ import employeeApi from "~/Core/Modules/Employee/Api";
 import branchApi from "~/Core/Modules/Employee/Api/Branch";
 import positionApi from "~/Core/Modules/Employee/Api/Position";
 import uploadApi from "~/Core/Modules/Employee/Api/Upload";
-import { set } from "lodash";
-
 const { Option } = Select;
 
 const getBase64 = (file) => {
@@ -62,8 +58,6 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
   const [fileList, setFileList] = useState([]);
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
-  const token = localStorage.getItem("token" || "");
-  const { roleName: role } = jwt_decode(token);
   const [isDisable, setIsDisable] = useState(false);
   const [tmpListBranch, setTmpListBranch] = useState([]);
 
@@ -91,12 +85,11 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
     return current && current > moment().subtract(18, "years");
   }
   function handleChangePosition(value) {
-
-    if (value === 1 || value === 2) {
+    const tmp = listPosition.filter(item => item.id === value);
+    if (tmp[0].name.toLowerCase() === "admin" || tmp[0].name.toLowerCase() === "qc manager") {
       setIsDisable(true);
     }
-    else if (value === 3) {
-
+    else if (tmp[0].name.toLowerCase() === "branch manager") {
       setTmpListBranch(listBranchUnManaged);
       setIsDisable(false);
     }
@@ -235,9 +228,9 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
       length: 8,
       charset: "alphanumeric",
     });
-   
+
     setFieldsValue({
-      code:  code.toUpperCase(),
+      code: code.toUpperCase(),
     });
   };
 
@@ -486,7 +479,7 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
           <Col span={11}>
             <Form.Item label={t("CORE.EMPLOYEE.BRANCH.NAME")}>
               {getFieldDecorator("branchId", {
-              
+
                 initialValue: tmpListBranch?.[0]?.id,
               })(
                 <Select disabled={isDisable}>

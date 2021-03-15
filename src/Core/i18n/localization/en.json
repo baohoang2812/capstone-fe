@@ -344,5 +344,6 @@
     "AUTHENTICATE.rePassword": "Re input password",
     "AUTHENTICATE.LOGIN.HAVE_NOT_ACCOUNT": "Create an account?",
     "AUTHENTICATE.ACTIVE.USER.LINK.TIMEOUT.CONTENT": "This link was voided or timeout. Please try again!",
-    "CORE.VIEW.ALL":"View all"
+    "CORE.VIEW.ALL":"View all",
+    "CORE.TASK.INVALID.PASSWORD":"Invalid username or password"
 }

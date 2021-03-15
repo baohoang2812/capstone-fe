@@ -344,5 +344,6 @@
     "AUTHENTICATE.passwordNew": "Mật khẩu mới",
     "AUTHENTICATE.rePassword": "Nhập lại mật khẩu mới",
     "AUTHENTICATE.LOGIN.HAVE_NOT_ACCOUNT": "Chưa có tài khoản?",
-    "CORE.VIEW.ALL":"Xem tất cả"
+    "CORE.VIEW.ALL":"Xem tất cả",
+    "CORE.TASK.INVALID.PASSWORD":"Tài khoản hoặc mật khẩu không đúng"
 }

@@ -107,6 +107,15 @@ const ExcuseDetail = ({ form, isShow = true, action, data }) => {
                         </Col>
                     </Row>
                     <Row type="flex" justify="center" align="bottom">
+                            <Col span={20}>
+                                <Form.Item label={t("CORE.VIOLATION.CREATED.BY")}>
+                                    {getFieldDecorator("createdBy", {
+
+                                    })(<span>{data.createdBy.lastName} {data.createdBy.firstName}</span>)}
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                    <Row type="flex" justify="center" align="bottom">
                         <Col span={20}>
                             <Form.Item label={t("CORE.VIOLATION.IMAGE.PATH")}>
                                 {getFieldDecorator("imagePath", {

@@ -36,7 +36,8 @@
     "CORE.VIOLATION.VIOLATOR":"Người vi phạm",
     "CORE.VIOLATION.CREATE.SUCCESS":"Cập nhật thành công",
     "CORE.VIOLATION.REJECTED":"Đã từ chối",
-    "CORE.VIOLATION":"Vi phạm"
+    "CORE.VIOLATION":"Vi phạm",
+    "CORE.VIOLATION.CREATED.BY":"Được tạo bởi"
 
 
 

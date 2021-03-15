@@ -36,6 +36,7 @@
     "CORE.VIOLATION.SELECT.VIOLATOR":"Select violator",
     "CORE.VIOLATION.VIOLATOR":"Violator",
     "CORE.VIOLATION.REJECTED":"Rejected",
-    "CORE.VIOLATION":"Violation"
+    "CORE.VIOLATION":"Violation",
+    "CORE.VIOLATION.CREATED.BY":"Created by"
 
 }
