@@ -59,7 +59,7 @@ const UserTable = () => {
       width: 220,
       sorter: true,
       render: (text, record) => (
-        <span>{`${record.firstName} ${record.lastName}`}</span>
+        <span>{`${record.lastName} ${record.firstName}`}</span>
       ),
     },
     {
@@ -88,6 +88,25 @@ const UserTable = () => {
       fieldType: "text",
       sorter: true,
       width: 200,
+    
+      render: (_, record) => {
+        if (record.gender.toLowerCase()==="female") {
+          return (
+          <span> {t("CORE.EMPLOYEE.GENDER.FEMALE")}</span>
+          )
+        }
+        else if  (record.gender.toLowerCase()==="male") {
+          return (
+            <span>{t("CORE.EMPLOYEE.GENDER.MALE")}</span>
+          )
+        }
+        
+        else {
+          return (
+            <span>{t("CORE.EMPLOYEE.GENDER.OTHER")}</span>
+          )
+        }
+      }
     },
     {
       title: t("CORE.EMPLOYEE.PHONE.NUMBER"),

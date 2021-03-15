@@ -25,10 +25,14 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
   const [loading, setLoading] = useState(false);
   const [listBM, setListBM] = useState([]);
   const { getFieldDecorator, validateFields, setFieldsValue } = form;
+  const[visible,setVisible]= useState(false);
   useEffect(() => {
     (async () => {
       const resListBM = await EmployeeApi.getList();
       setListBM(resListBM?.data?.result);
+      if(!is_create){
+        setVisible(true);
+      }
     })();
   }, []);
 
@@ -165,6 +169,9 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
                           {item.firstName} {item.lastName}
                         </Option>
                       ))}
+                      <Option key={data?.manager?.id} value={data?.manager?.id} disable={visible}>
+                      {data?.manager?.lastName} {data?.manager?.firstName}
+                      </Option>
                     </Select>
                   )}
                 </Form.Item>

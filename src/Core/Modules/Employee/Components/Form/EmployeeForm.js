@@ -486,12 +486,7 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
           <Col span={11}>
             <Form.Item label={t("CORE.EMPLOYEE.BRANCH.NAME")}>
               {getFieldDecorator("branchId", {
-                rules: [
-                  {
-                    required: true,
-                    message: (<>{t("CORE.EMPLOYEE.ALERT.BRANCH")}</>),
-                  },
-                ],
+              
                 initialValue: tmpListBranch?.[0]?.id,
               })(
                 <Select disabled={isDisable}>

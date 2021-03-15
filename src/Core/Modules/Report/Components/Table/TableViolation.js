@@ -1,8 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
-import { useDispatch } from "react-redux";
-import { Button, Divider, Modal, message, Tag } from 'antd';
+import { Button, Divider, Modal, Tag } from 'antd';
 import jwt_decode from "jwt-decode";
 
 /* Hooks */
@@ -16,69 +15,29 @@ import { violations as identity } from "~/Core/Modules/Report/Configs/Constants"
 import ViolationDetail from "~/Core/Modules/Report/Components/Form/ViolationDetail";
 import ExcuseDetail from "~/Core/Modules/Report/Components/Form/ExcuseDetail";
 import UpdateViolatorDetail from "~/Core/Modules/Report/Components/Form/UpdateViolatorDetail";
-import { update_identity_table_data_success } from "~/Core/Store/actions/adminTable";
 /* Api */
 import contactApi from "~/Core/Modules/Report/Api/Violation";
-const { confirm } = Modal;
+import AdminAcceptViolation from "../Form/AdminAcceptViolation";
 
 const UserTable = () => {
   const t = useTranslate();
   const [visible, setVisible] = useState(false);
   const [visibleExcuse, setVisibleExcuse] = useState(false);
   const [visibleViolator, setVisibleViolator] = useState(false);
+  const [visibleAdminAccept,setVisibleAdminAccept]= useState(false);
   const [data, setData] = useState({});
   const [isShow, setIsShow] = useState(true);
-  const dispatch = useDispatch();
-
-  const showConfirm = (record) => {
-
-    confirm({
-      title: t("CORE.VIOLATION.CONFIRM"),
-      content: t("CORE.VIOLATION.CONFIRM.CONTENT"),
-      onOk() {
-        contactApi.update(
-          record.id,
-          {
-            excuse: "string",
-            name: "string",
-            description: "string",
-            imagePath: "string",
-            reportId: 0,
-            regulationId: 0,
-            status: "Declined",
-            branchId: 0
-
-          }
-        )
-          .then((res) => {
 
 
-            if (res.code !== 200) {
-              message.error(t("CORE.task_failure"));
-              return;
-            }
-
-
-            dispatch(update_identity_table_data_success(identity, { id: res.data.id, column: "status", data: res.data.status }));
-            message.success(t("CORE.POSITION.CREATE.SUCCESS"));
-
-          })
-          .catch(() => {
-            message.error(t("CORE.error.system"));
-          });
-      },
-      onCancel() {
-        console.log(t("CORE.VIOLATION.CONFIRM.CANCEL"));
-      },
-      okText: t("CORE.VIOLATION.CONFIRM.ACCEPT"),
-      cancelText: t("CORE.VIOLATION.CONFIRM.CANCEL")
-    });
-  }
   const openModel = (record) => {
 
     setVisible(true);
     setData(record);
   };
+  const openModelAdminAccept = (record) =>{
+    setVisibleAdminAccept(true);
+    setData(record);
+  }
 
   const openModelViolator = (record) => {
 
@@ -96,6 +55,7 @@ const UserTable = () => {
     setVisible(false);
     setVisibleExcuse(false);
     setVisibleViolator(false);
+    setVisibleAdminAccept(false);
   };
 
   const defs = useMemo(() => [
@@ -240,7 +200,7 @@ const UserTable = () => {
               {t("CORE.VIOLATION.ACTION.REJECT")}
             </Button>
             <Divider type="vertical" />
-            <Button disabled={!isDisable} onClick={() => { showConfirm(record) }} type="primary">
+            <Button disabled={!isDisable} onClick={() => { openModelAdminAccept(record) }} type="primary">
               {t("CORE.VIOLATION.ACTION.ACCEPT")}
             </Button>
           </>
@@ -304,6 +264,15 @@ const UserTable = () => {
         footer={null}
       >
         <UpdateViolatorDetail data={data} action={handleCloseModal} />
+      </Modal>
+
+      <Modal
+        title={t("CORE.VIOLATION.MANAGEMENT.TITLE")}
+        visible={visibleAdminAccept}
+        onCancel={handleCloseModal}
+        footer={null}
+      >
+        <AdminAcceptViolation data={data} action={handleCloseModal} />
       </Modal>
     </>
   );

@@ -100,7 +100,7 @@ const ReportViolation = ({ form, is_create, action, data }) => {
               </Col>
               <Col span={5}>
                 <Form.Item label={t("CORE.REPORT.CHARGE.CREATE")}>
-                  {getFieldDecorator("createdAt", {})(<span>{data.createdAt}</span>)}
+                  {getFieldDecorator("createdAt", {})(<span>{moment(data.createdAt).format("DD-MM-YYYY")}</span>)}
                 </Form.Item>
               </Col>
             </Row>
