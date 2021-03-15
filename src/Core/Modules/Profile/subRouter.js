@@ -1,8 +1,5 @@
 import "./bootstrap.less";
 
-import React from "react";
-import { Icon } from "antd";
-
 // import redux from "./Store/initRedux";
 // import sagas from "./Store/initSagas";
 import intlMessagesEN from "./i18n/localization/en.json";

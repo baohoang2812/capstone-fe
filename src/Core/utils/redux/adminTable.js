@@ -14,7 +14,7 @@ export const create_tree_list = (list, treeHash, treeKey) => {
   let treeList = [];
 
   for (let i = 0; i < list.length; i++) {
-    let parent = list[i][treeKey];
+    let parent = list[i]?.["parent"]?.[treeKey];
     if (parent && treeHash[parent]) {
       if (!treeHash[parent].children) {
         treeHash[parent].children = [];

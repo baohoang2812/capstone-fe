@@ -2,7 +2,7 @@ import "./style.less";
 
 import React, { useEffect, useState } from "react";
 // import { useDispatch } from "react-redux";
-import {  Row, Col, Form, Input, Button, message, Spin } from "antd";
+import {  Row, Col, Form, Input, Button, message } from "antd";
 
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
@@ -18,7 +18,7 @@ import accountApi from "~/Core/Api/ChangePassword";
 import { logout } from "~/Core/utils/helper/authenticate";
 
 const AccountForm = ({ form, action, data, is_create }) => {
-  const [loadingDropdown, setLoadingDropdown] = useState(false);
+  // const [loadingDropdown, setLoadingDropdown] = useState(false);
   const t = useTranslate();
   const { getFieldDecorator, validateFields, setFieldsValue } = form;
 
@@ -75,7 +75,7 @@ const AccountForm = ({ form, action, data, is_create }) => {
   };
 
   return (
-    <Spin spinning={loadingDropdown}>
+    // <Spin spinning={loadingDropdown}>
       <Form onSubmit={onConfirm}>
         <Row type="flex" justify="center">
           <Col span={12}>
@@ -157,7 +157,7 @@ const AccountForm = ({ form, action, data, is_create }) => {
           </Col>
         </Row>
       </Form>
-    </Spin>
+    // </Spin>
   );
 };
 export default Form.create({ name: "Account_Detail" })(AccountForm);

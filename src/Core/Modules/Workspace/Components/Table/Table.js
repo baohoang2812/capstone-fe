@@ -95,6 +95,8 @@ const UserTable = () => {
       showCheckbox={true}
       scroll={scroll}
       defaultSorter={defaultSorter}
+      treeMode={true}
+      treeKey="id"
       disableClassKey="is_active"
       disableClassMode="toggle"
     />

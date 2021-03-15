@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+
 import { useDispatch } from "react-redux";
 import "./style.less";
 import {
@@ -8,7 +10,7 @@ import {
   Input,
   Button,
   message,
-  Select,
+  Cascader
 } from "antd";
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
@@ -21,32 +23,100 @@ import { workspaces as identity } from "~/Core/Modules/Workspace/Configs/Constan
 
 /* Api */
 import workspaceApi from "~/Core/Modules/Workspace/Api/";
-const { Option } = Select;
+
 const WorkspaceDetailForm = ({ form, is_create, action, data }) => {
   const t = useTranslate();
   /* Redux */
   const dispatch = useDispatch();
+  const listWorkSpace = useSelector(state => state[identity].list);
+
   /* State */
   const [loading, setLoading] = useState(false);
   const { getFieldDecorator, validateFields, setFieldsValue } = form;
+  // const [hashOption, setHashOption] = useState({});
+  const [options, setOptions] = useState([]);
+
+  // useEffect(() => {
+  //   setFieldsValue({
+  //     name: data?.name,
+  //     description: data?.description,
+  //     parent: data?.parent?.name
+      
+  //   });
+  // }, [data]);
 
   useEffect(() => {
-    setFieldsValue({
-      name: data?.name,
-      description: data?.description,
-      parent: data?.parent?.name
-      
-    });
-  }, [data]);
+    const {
+      id,
+      name,
+      description,
+      parent,
+    } = data;
+    console.log(listWorkSpace);
+    const [options] = generateCascaderOptions(listWorkSpace, id);
+    setOptions(options);
+    // setHashOption(hashOption);
+    console.log(parent);
+    const parent_ids = getListParentIds(listWorkSpace, parent?.id);
+    console.log(parent_ids);
+    setFieldsValue({ name, description, parentId: parent_ids });
+
+  }, [JSON.stringify(data), listWorkSpace])
+
+  const generateCascaderOptions = (categories, current_id) => {
+    let hash = {}, options = [];
+
+    for (let i = 0; i < categories.length; i++) {
+      const item = categories[i];
+      hash[item.id] = { value: item.id, label: item.name, children: [] };
+    }
+
+    for (let i = 0; i < categories.length; i++) {
+      const item = categories[i];
+      if (item.id !== current_id) {
+        if (item?.parent?.id && hash[item?.parent?.id]) {
+          hash[item?.parent?.id].children.push(hash[item.id]);
+          continue;
+        }
+        options.push(hash[item.id]);
+      }
+    }
+
+    return [options, hash];
+  }
+
+  const getListParentIds = (options, parent_id, parent_ids = []) => {
+    if (parent_id === null || parent_id === undefined) {
+      return parent_ids.reverse();
+    }
+
+    parent_ids.push(parent_id);
+    const parent = options.find(item => item.id === parent_id);
+
+    if (parent && parent.parent_id !== null) {
+      return getListParentIds(options, parent?.parent?.id, parent_ids);
+    } else {
+      return getListParentIds(options, null, parent_ids);
+    }
+  }
 
   const onConfirm = (e) => {
     e.preventDefault();
     validateFields((err, values) => {
       if (!err) {
         setLoading(true);
+        const { parentId } = values;
+        let parent_id = 1;
+        if (parentId?.length) {
+          parent_id = parentId[parentId.length - 1];
+        }
+        const newValue = {
+          ...values,
+          parentId: parent_id
+        }
         if (is_create) {
           workspaceApi
-            .create(values)
+            .create(newValue)
             .then((res) => {
               setLoading(false);
 
@@ -66,7 +136,7 @@ const WorkspaceDetailForm = ({ form, is_create, action, data }) => {
             });
         } else {
           // objReq.employee.id = data.employee.id;
-          workspaceApi.update(data.id, values).then((res) => {
+          workspaceApi.update(data.id, newValue).then((res) => {
             setLoading(false);
 
             if (res.code !== 200) {
@@ -136,10 +206,7 @@ const WorkspaceDetailForm = ({ form, is_create, action, data }) => {
                     "parentId",
                     {}
                   )(
-                    <Select>
-                      <Option value={1}>Parent 1</Option>
-                     
-                    </Select>
+                    <Cascader placeholder={t("WORKSPACE.PARENT_CATE.PLACEHOLDER")} options={options} changeOnSelect={true} />
                   )}
                 </Form.Item>
               </Col>
