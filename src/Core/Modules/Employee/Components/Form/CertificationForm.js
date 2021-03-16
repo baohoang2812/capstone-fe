@@ -9,7 +9,7 @@ import CertificationDetail from "~/Core/Modules/Employee/Components/Form/Certifi
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 import { Modal } from "antd";
 
-const CertificationForm = () => {
+const CertificationForm = (data) => {
   const [visible, setVisible] = useState(false);
 
   const t = useTranslate();
@@ -37,7 +37,7 @@ const CertificationForm = () => {
         onCancel={handleCloseModal}
         footer={null}
       >
-        <CertificationDetail />
+        <CertificationDetail action={handleCloseModal} data={data}/>
       </Modal>
     </div>
   );

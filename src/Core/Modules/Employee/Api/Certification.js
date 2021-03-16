@@ -7,5 +7,12 @@ class CertificationApi extends BaseApi {
   getOne = (id) => {
     return this.initApi.get(`${this.baseUrl}?Filter.EmployeeId=${id}`);
   };
+  create = (body) => {
+    return this.initApi.post(`${this.baseUrl}`, body);
+  };
+
+  update = (id, body) => {
+    return this.initApi.put(`${this.baseUrl}/${id}`, body);
+  };
 }
 export default new CertificationApi().requestUrl("/v1/certifications");

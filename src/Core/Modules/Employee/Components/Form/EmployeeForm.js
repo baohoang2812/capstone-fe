@@ -84,6 +84,7 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
     // Can not select days before today and today
     return current && current > moment().subtract(18, "years");
   }
+  
   function handleChangePosition(value) {
     const tmp = listPosition.filter(item => item.id === value);
     if (tmp[0].name.toLowerCase() === "admin" || tmp[0].name.toLowerCase() === "qc manager") {
@@ -111,7 +112,7 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
       username: data?.username,
       roleId: data?.roleId,
       gender: data?.gender,
-      birthDate: data?.birthDate ? new moment(data?.birthDate) : null,
+      birthDate: data?.birthDate ? new moment(data?.birthDate) : moment().subtract(18,"year"),
       isPartTime: data?.isPartTime,
       branchId: data?.branch?.id,
       positionId: data?.position?.id,
@@ -139,10 +140,7 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
           birthDate: values["birthDate"].format("YYYY-MM-DD"),
           imagePath: values?.["imagePath"]?.file?.response?.url,
         };
-        console.log(newValues);
-
         setLoading(false);
-
         if (is_create) {
           uploadApi.uploadImage(fileList).then(
             res => {
@@ -155,12 +153,10 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
                 .create(newValues2)
                 .then((res) => {
                   setLoading(false);
-
                   if (res.code !== 201) {
                     message.error(t("CORE.task_failure"));
                     return;
                   }
-
                   dispatch(update_identity_table_data_success(identity, res.data));
                   message.success(t("CORE.EMPLOYEE.CREATE.SUCCESS"));
                   action();
@@ -175,7 +171,6 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
         } else {
           if (fileList[0].status.toLowerCase() !== "created") {
             console.log(newValues);
-
             uploadApi.uploadImage(fileList).then(
               res => {
 
@@ -368,6 +363,7 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
                     message: (<>{t("CORE.EMPLOYEE.ALERT.BIRTHDATE")}</>),
                   },
                 ],
+                initialValue: moment().subtract(18,"year"),
               })(<DatePicker disabledDate={disabledDate} />)}
             </Form.Item>
           </Col>
