@@ -2,6 +2,7 @@ import React, { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import { Button,Modal,Tag } from 'antd';
+import jwt_decode from "jwt-decode";
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 
@@ -25,6 +26,7 @@ const UserTable = () => {
     setData(record);
     console.log(data);
   };
+
   const handleCloseModal = () => {
     setVisible(false);
   };
@@ -163,7 +165,10 @@ const UserTable = () => {
     x: 1620,
     y: `calc(100vh - (178px))`
   }), []);
-
+  const token = localStorage.getItem("token" || "");
+  const {
+    roleName: role,
+  } = jwt_decode(token);
   return (
     <>
       <AdminTable
@@ -175,6 +180,7 @@ const UserTable = () => {
         defaultSorter={defaultSorter}
         disableClassKey="is_active"
         disableClassMode="toggle"
+        options={role==="Branch Manager"?{key:"Filter.Status",value:"submitted"}:null}
       />
       <Modal
         title={t("CORE.REPORT.DETAIL")}

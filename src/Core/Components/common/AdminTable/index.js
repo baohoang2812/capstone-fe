@@ -64,7 +64,8 @@ const AdminTable = ({
   dynamicMode,
   dynamicKey,
   scrollToFirstRowOnChange,
-  dataForSelectorKey
+  dataForSelectorKey,
+  options
 }) => {
 
   const history = useHistory();
@@ -135,12 +136,12 @@ const AdminTable = ({
       table.scrollTop = 0;
     }
   }, [JSON.stringify(pagination), JSON.stringify(filters), JSON.stringify(sorter)])
-
+  
   const getData = (current, pageSize, sorter, filters) => {
     dispatch(
       get_identity_table_data_action(
         identity, api, current, pageSize, sorter, { whereOr, whereAnd }, filters, method.list,
-        treeMode, treeKey, dynamicKey, dataForSelectorKey
+        treeMode, treeKey, dynamicKey, dataForSelectorKey, options
       )
     )
   }
@@ -428,7 +429,8 @@ AdminTable.defaultProps = {
   treeKey: "parent_id",
   expandIconColumnIndex: 1,
   disableClassKey: "is_disable",
-  clearTableAfterChangeRoute: true
+  clearTableAfterChangeRoute: true,
+  options: null
 }
 
 export default React.memo(injectIntl(AdminTable));

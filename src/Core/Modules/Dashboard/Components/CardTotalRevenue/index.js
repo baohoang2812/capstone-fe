@@ -14,35 +14,35 @@ import dashboardApi from "~/Core/Modules/Dashboard/Api";
 
 const data = [
   {
-    type: '家具家电',
+    type: 'Chi nhánh 1',
     sales: 38,
   },
   {
-    type: '粮油副食',
+    type: 'Chi nhánh 2',
     sales: 52,
   },
   {
-    type: '生鲜水果',
+    type: 'Chi nhánh 3',
     sales: 61,
   },
   {
-    type: '美容洗护',
+    type:'Chi nhánh 4',
     sales: 145,
   },
   {
-    type: '母婴用品',
+    type: 'Chi nhánh 5',
     sales: 48,
   },
   {
-    type: '进口食品',
+    type: 'Chi nhánh 6',
     sales: 38,
   },
   {
-    type: '食品饮料',
+    type: 'Chi nhánh 7',
     sales: 38,
   },
   {
-    type: '家庭清洁',
+    type: 'Chi nhánh 8',
     sales: 38,
   },
 ];

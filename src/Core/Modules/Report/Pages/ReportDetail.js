@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+
 
 /* Antd */
 import { Alert, message } from "antd";
@@ -13,15 +13,26 @@ import ReportViolation from "~/Core/Modules/Report/Components/Form/ReportViolati
 
 /* Api */
 import reportApi from "~/Core/Modules/Report/Api";
+import violationApi from "~/Core/Modules/Report/Api/Violation";
+import { Link } from "@material-ui/core";
 
 const ReportDetail = ({ match: { params } }) => {
   const [data, setData] = useState({});
   const [error, setError] = useState(false);
   const t = useTranslate();
-  const history = useHistory();
 
-  const action = () => {
-    history.push("/report");
+
+  const action = async () => {
+    const res = await violationApi.exportViolation();
+    const binaryData = [];
+    binaryData.push(res);
+    const url = window.URL.createObjectURL(new Blob(binaryData, {type: "application/csv"}))
+    const a = document.createElement('a');
+    a.href = url;
+    a.download =data.name+"_Violation.csv";
+    document.body.appendChild(a);
+    a.click();    
+    a.remove();
   };
 
   useEffect(() => {
@@ -61,8 +72,10 @@ const ReportDetail = ({ match: { params } }) => {
             },
           ]}
           action={action}
-          text={t("CORE.back")}
+          text={t("CORE.EXPORT")}
           className="btn-yellow"
+          isDisabled={data?.status?.toLowerCase()==="done"?true:false}
+          
         />
         {error ? (
           <Alert type="error" message={t("CORE.task_failure")} />

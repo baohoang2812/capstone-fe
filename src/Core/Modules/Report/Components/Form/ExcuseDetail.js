@@ -7,7 +7,9 @@ import {
     Form,
     Button,
     Divider,
-    message
+    message,
+    Modal,
+    Upload
 } from "antd";
 import moment from "moment";
 /* Hooks */
@@ -22,6 +24,15 @@ import { violations as identity } from "~/Core/Modules/Report/Configs/Constants"
 /* Api */
 import violationApi from "~/Core/Modules/Report/Api/Violation";
 import employeeApi from "~/Core/Modules/Employee/Api";
+
+function getBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    });
+}
 const ExcuseDetail = ({ form, isShow = true, action, data }) => {
     const t = useTranslate();
     /* Redux */
@@ -31,21 +42,45 @@ const ExcuseDetail = ({ form, isShow = true, action, data }) => {
     // const [loadingDropdown, setLoadingDropdown] = useState(false);
     const { getFieldDecorator, validateFields } = form;
     const [dataEmployee, setDataEmployee] = useState([]);
+    const [fileList, setFileList] = useState([]);
+    const [previewVisible, setPreviewVisible] = useState(false);
+    const [previewTitle, setPreviewTitle] = useState("");
+    const [previewImage, setPreviewImage] = useState(false);
+
     useEffect(() => {
         console.log(data);
 
-        if (data?.employeeIds?.length > 0) {
-            employeeApi.getListFilter(data.employeeIds)
-                .then(res => {
-                    const result = res.data.result;
-                    setDataEmployee(result);
-                })
-        } else {
-            setDataEmployee([])
-        }
+        (async () => {
+            if (data?.employeeIds?.length > 0) {
+                const res = await employeeApi.getListFilter(data.employeeIds)
+                const result = res.data.result;
+                setDataEmployee(result);
+            } else {
+                setDataEmployee([])
+            }
+            if (data?.evidence?.length > 0) {
+                const list = data?.evidence?.map((item, index) => ({
+                    uid: index,
+                    name: "Evidence",
+                    status: "done",
+                    url: item.imagePath,
+                }))
+                setFileList(list);
+            }
+        })()
 
     }, [data]);
+    const handleCancel = () => setPreviewVisible(false);
 
+    const handlePreview = async (file) => {
+        if (!file.url && !file.preview) {
+            file.preview = await getBase64(file.originFileObj);
+        }
+
+        setPreviewImage(file.url || file.preview)
+        setPreviewVisible(true)
+        setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1))
+    }
     const onConfirm = (e) => {
         e.preventDefault();
         validateFields((err, values) => {
@@ -88,11 +123,25 @@ const ExcuseDetail = ({ form, isShow = true, action, data }) => {
             <Col span={24}>
                 <Form onSubmit={onConfirm}>
                     <Row type="flex" justify="center" align="bottom">
-                        <Col span={20}>
+                        <Col span={8}>
                             <Form.Item label={t("CORE.VIOLATION.NAME")}>
                                 {getFieldDecorator("name", {
 
                                 })(<span>{data.name}</span>)}
+                            </Form.Item>
+                        </Col>
+                        <Col span={8}>
+                            <Form.Item label={t("CORE.VIOLATION.CREATED.BY")}>
+                                {getFieldDecorator("createdBy", {
+
+                                })(<span>{data.createdBy.lastName} {data.createdBy.firstName}</span>)}
+                            </Form.Item>
+                        </Col>
+                        <Col span={4}>
+                            <Form.Item label={t("CORE.VIOLATION.CHARGE.CREATE")}>
+                                {getFieldDecorator("createdAt", {
+
+                                })(<span>{moment(data.createdAt).format("DD-MM-YYYY")}</span>)}
                             </Form.Item>
                         </Col>
                     </Row>
@@ -106,33 +155,33 @@ const ExcuseDetail = ({ form, isShow = true, action, data }) => {
                             </Form.Item>
                         </Col>
                     </Row>
-                    <Row type="flex" justify="center" align="bottom">
-                            <Col span={20}>
-                                <Form.Item label={t("CORE.VIOLATION.CREATED.BY")}>
-                                    {getFieldDecorator("createdBy", {
 
-                                    })(<span>{data.createdBy.lastName} {data.createdBy.firstName}</span>)}
-                                </Form.Item>
-                            </Col>
-                        </Row>
                     <Row type="flex" justify="center" align="bottom">
                         <Col span={20}>
                             <Form.Item label={t("CORE.VIOLATION.IMAGE.PATH")}>
-                                {getFieldDecorator("imagePath", {
+                                <Upload
+                                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                                    listType="picture-card"
+                                    fileList={fileList}
+                                    onPreview={handlePreview}
+                                    showUploadList={{
+                                        showRemoveIcon: false
+                                    }}
+                                >
+                                </Upload>
+                                <Modal
+                                    visible={previewVisible}
+                                    title={previewTitle}
+                                    footer={null}
+                                    onCancel={handleCancel}
+                                >
+                                    <img alt="example" style={{ width: '100%' }} src={previewImage} />
+                                </Modal>
 
-                                })(<img alt="example" style={{ width: "100%" }} src={data.imagePath} />)}
                             </Form.Item>
                         </Col>
                     </Row>
-                    <Row type="flex" justify="center" align="bottom">
-                        <Col span={20}>
-                            <Form.Item label={t("CORE.VIOLATION.CHARGE.CREATE")}>
-                                {getFieldDecorator("createdAt", {
 
-                                })(<span>{moment(data.createdAt).format("DD-MM-YYYY")}</span>)}
-                            </Form.Item>
-                        </Col>
-                    </Row>
                     <Row type="flex" justify="center" align="bottom">
                         <Col span={20}>
                             <Form.Item label={t("CORE.VIOLATION.VIOLATOR")}>

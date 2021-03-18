@@ -55,12 +55,12 @@ const HeaderCard = ({
 
   return (
     <div className="header-card">
-      <h4>Biểu đồ tổng doanh thu (₫)</h4>
+      <h4>BIỂU ĐỒ THỐNG KÊ LỖI VI PHẠM</h4>
       <div
         className="header-filter"
         style={{ flex: 1, justifyContent: "flex-end" }}
       >
-        <span className="filter-label">Chọn tháng:</span>
+        <span className="filter-label">Chọn tháng: </span>
         <RangePicker
           dropdownClassName="header-picker"
           format="YYYY-MM"

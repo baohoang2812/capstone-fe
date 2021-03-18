@@ -12,7 +12,10 @@
     "CORE.SHIFT.CREATE.SUCCESS":"Create shift success!",
     "CORE.SHIFT.UPDATE.SUCCESS":"Update shift success!",
     "CORE.SHIFT":"Shift",
-    "CORE.SHIFT.DETAIL":"Shift detail"
+    "CORE.SHIFT.DETAIL":"Shift detail",
+    "CORE.SHIFT.ALERT.START.TIME":"Start time must be less than the end time",
+    "CORE.SHIFT.ALERT.END.TIME":"End time must be greater than start time"
+
 
 
 }

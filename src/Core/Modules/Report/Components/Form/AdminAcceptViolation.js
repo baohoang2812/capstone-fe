@@ -8,6 +8,8 @@ import {
     Button,
     Divider,
     message,
+    Modal,
+    Upload
 } from "antd";
 import moment from "moment";
 /* Hooks */
@@ -22,7 +24,14 @@ import { violations as identity } from "~/Core/Modules/Report/Configs/Constants"
 /* Api */
 import employeeApi from "~/Core/Modules/Employee/Api";
 import violationApi from "~/Core/Modules/Violation/Api/Violation";
-
+function getBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    });
+}
 const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
     const t = useTranslate();
     /* Redux */
@@ -32,6 +41,10 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
     // const [loadingDropdown, setLoadingDropdown] = useState(false);
     const { getFieldDecorator, validateFields} = form;
     const [dataEmployee, setDataEmployee] = useState([]);
+    const [fileList, setFileList] = useState([]);
+    const [previewVisible, setPreviewVisible] = useState(false);
+    const [previewTitle, setPreviewTitle] = useState("");
+    const [previewImage, setPreviewImage] = useState(false);
 
     useEffect(() => {
         console.log(data);
@@ -44,8 +57,28 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
         } else {
             setDataEmployee([])
         }
+        if (data?.evidence?.length > 0) {
+            const list = data?.evidence?.map((item, index) => ({
+                uid: index,
+                name: "Evidence",
+                status: "done",
+                url: item.imagePath,
+            }))
+            setFileList(list);
+        }
 
     }, [data]);
+    const handleCancel = () => setPreviewVisible(false);
+
+    const handlePreview = async (file) => {
+        if (!file.url && !file.preview) {
+            file.preview = await getBase64(file.originFileObj);
+        }
+
+        setPreviewImage(file.url || file.preview)
+        setPreviewVisible(true)
+        setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1))
+    }
     const onConfirm = (e) => {
         e.preventDefault();
         validateFields((err, values) => {
@@ -121,9 +154,24 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
                         <Row type="flex" justify="center" align="bottom">
                             <Col span={20}>
                                 <Form.Item label={t("CORE.VIOLATION.IMAGE.PATH")}>
-                                    {getFieldDecorator("imagePath", {
-
-                                    })(<img alt="example" style={{ width: "100%" }} src={data.imagePath} />)}
+                                <Upload
+                                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                                    listType="picture-card"
+                                    fileList={fileList}
+                                    onPreview={handlePreview}
+                                    showUploadList={{
+                                        showRemoveIcon: false
+                                    }}
+                                >
+                                </Upload>
+                                <Modal
+                                    visible={previewVisible}
+                                    title={previewTitle}
+                                    footer={null}
+                                    onCancel={handleCancel}
+                                >
+                                    <img alt="example" style={{ width: '100%' }} src={previewImage} />
+                                </Modal>
                                 </Form.Item>
                             </Col>
                         </Row>

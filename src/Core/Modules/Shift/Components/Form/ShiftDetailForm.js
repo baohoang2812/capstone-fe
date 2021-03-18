@@ -37,7 +37,28 @@ const ShiftDetailForm = ({ form, is_create, action, data }) => {
       endTime: moment(data?.endTime || "00:00", "HH:mm:ss"),
     });
   }, [data]);
+  function handelChangeStartTime(rule, value, callback){
+    const value2 = form.getFieldValue('endTime');
+    if(moment(value,'h:mma').isBefore(moment(value2,'h:mma'))){
+      form.validateFields(['endTime'], { force: true })
+      callback();
+    }
+    else{
+      callback(t("CORE.SHIFT.ALERT.START.TIME"));
 
+    }
+  }
+  function handelChangeEndTime(rule, value, callback){
+    const value2 = form.getFieldValue('startTime');
+    if((moment(value,'h:mma')).isAfter(moment(value2,'h:mma'))){
+      form.validateFields(['startTime'], { force: true })
+      callback();
+    }
+    else{
+      callback(t("CORE.SHIFT.ALERT.END.TIME"));
+
+    }
+  }
   const onConfirm = (e) => {
     e.preventDefault();
     validateFields((err, values) => {
@@ -126,9 +147,11 @@ const ShiftDetailForm = ({ form, is_create, action, data }) => {
                         type: "object",
                         required: true,
                         message: "Please select time!",
-                      },
+                      },{
+                        validator: handelChangeStartTime
+                      }
                     ],
-                  })(<TimePicker defaultValue={moment('00:00', format)} format={format} />)}
+                  })(<TimePicker initialValue={moment('00:00', format)} format={format} />)}
                 </Form.Item>
               </Col>
             </Row>
@@ -142,8 +165,9 @@ const ShiftDetailForm = ({ form, is_create, action, data }) => {
                         required: true,
                         message: "Please select time!",
                       },
+                      { validator: handelChangeEndTime}
                     ],
-                  })(<TimePicker defaultValue={moment('00:00', format)} format={format} />)}
+                  })(<TimePicker initialValue={moment('00:00', format)} format={format} />)}
                 </Form.Item>
               </Col>
             </Row>
