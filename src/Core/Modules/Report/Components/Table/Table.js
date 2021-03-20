@@ -85,6 +85,11 @@ const UserTable = () => {
             <Tag color="orange">{t("CORE.VIOLATION.OPENING")}</Tag>
           )
         }
+        else if(record.status.toLocaleLowerCase() === 'done') {
+          return (
+            <Tag color="blue">{t("CORE.REPORT.STATUS.DONE")}</Tag>
+          )
+        }
         else {
           return (
             <Tag color="green">{t("CORE.VIOLATION.SUBMITTED")}</Tag>

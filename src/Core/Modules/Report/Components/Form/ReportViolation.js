@@ -31,6 +31,7 @@ const ReportViolation = ({ form, is_create, action, data }) => {
   /* State */
   const [loading, setLoading] = useState(false);
   const[listTmp, setListTmp]= useState([undefined]);
+  const[statusReport, setStatusReport] = useState(0)
   const listViolation = useSelector(state => state[identity].list);
   const { getFieldDecorator, validateFields, setFieldsValue } = form;
   const onConfirm = (e) => {
@@ -47,7 +48,7 @@ const ReportViolation = ({ form, is_create, action, data }) => {
             assignee: 0,
             updatedAt: "2021-03-09T08:12:08.538Z",
             description: "string",
-            status: "string",
+            status: "Done",
             submittedBySystem: true
           }
         )
@@ -57,8 +58,10 @@ const ReportViolation = ({ form, is_create, action, data }) => {
               return;
             }
             dispatch(update_identity_table_data_success(identity, { id: res.data.id, column: "adminNote", data: values.adminNote }));
+            dispatch(update_identity_table_data_success(identity, { id: res.data.id, column: "status", data: values.status }));
             message.success(t("CORE.VIOLATION.CONFIRM.SUCCESS"));
-            setLoading(false)
+            setLoading(false);
+            
           })
           .catch(() => {
             message.error(t("CORE.error.system"));
@@ -88,8 +91,12 @@ const ReportViolation = ({ form, is_create, action, data }) => {
   console.log(Array)
    setListTmp(Array);
    
+  if(data?.status?.toLowerCase()==="done"){
+    setStatusReport(1);
+  }
   }, [listViolation]);
-  
+  console.log(data?.status);
+  console.log(statusReport,"STATUS");
   return (
     <Row type="flex" justify="center">
       <Col span={24}>
@@ -134,7 +141,7 @@ const ReportViolation = ({ form, is_create, action, data }) => {
             <Row type="flex" justify="center" align="bottom">
               <Col span={16}>
                 <Form.Item label={t("CORE.REPORT.ADMIN.NOTE")}>
-                  {getFieldDecorator("adminNote", {})(<TextArea />)}
+                  {getFieldDecorator("adminNote", {})(<TextArea disabled={data?.status?.toLowerCase()==="done"} />)}
                 </Form.Item>
               </Col>
             </Row>
@@ -142,7 +149,7 @@ const ReportViolation = ({ form, is_create, action, data }) => {
               <div className="btn-group">
                 <Button
                   loading={loading}
-                  disabled={listTmp===undefined?true: listTmp.length>0?true:false}
+                  disabled={listTmp===undefined?true: listTmp.length>0?true:statusReport===1?true:false}
                   type="primary"
                   htmlType="submit"
                   className="btn-yellow btn-right"

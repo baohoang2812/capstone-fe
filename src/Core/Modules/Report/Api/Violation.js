@@ -14,8 +14,8 @@ class ReportApi extends BaseApi {
   create = (body) => {
     return this.initApi.post(`${this.baseUrl}`, body);
   };
-  exportViolation=()=>{
-    return this.initApi.get(`${this.baseUrl}/export`);
+  exportViolation=(id)=>{
+    return this.initApi.get(`${this.baseUrl}/export?reportIds=${id}`);
   };
 
   update = (id, body) => {

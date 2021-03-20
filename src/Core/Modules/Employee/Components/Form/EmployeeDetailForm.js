@@ -53,16 +53,7 @@ const EmployeeDetailForm = (props) => {
           }
           setAccount(resAccount.data?.result?.[0] || {});
 
-
-          const resCertifications = await certificationApi.getOne(result.id)
-
-          if (resCertifications.code !== 200) {
-            message.error("CORE.MENU.message_error");
-            setError(true);
-            return;
-          }
-
-          setCertifications(resCertifications.data?.result?.[0] || {});
+          setCertifications(result?.id);
         } catch (error) {
           setError(true);
         }

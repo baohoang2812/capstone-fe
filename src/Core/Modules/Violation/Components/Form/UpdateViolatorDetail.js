@@ -141,11 +141,25 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
                 
                     <Form onSubmit={onConfirm}>
                         <Row type="flex" justify="center" align="bottom">
-                            <Col span={20}>
+                            <Col span={8}>
                                 <Form.Item label={t("CORE.VIOLATION.NAME")}>
                                     {getFieldDecorator("name", {
 
                                     })(<span>{data.name}</span>)}
+                                </Form.Item>
+                            </Col>
+                            <Col span={8}>
+                                <Form.Item label={t("CORE.VIOLATION.CREATED.BY")}>
+                                    {getFieldDecorator("createdBy", {
+
+                                    })(<span>{data.createdBy.lastName} {data.createdBy.firstName}</span>)}
+                                </Form.Item>
+                            </Col>
+                            <Col span={4}>
+                                <Form.Item label={t("CORE.VIOLATION.CHARGE.CREATE")}>
+                                    {getFieldDecorator("createdAt", {
+
+                                    })(<span>{moment(data.createdAt).format("DD-MM-YYYY")}</span>)}
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -159,15 +173,7 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
                                 </Form.Item>
                             </Col>
                         </Row>
-                        <Row type="flex" justify="center" align="bottom">
-                            <Col span={20}>
-                                <Form.Item label={t("CORE.VIOLATION.CREATED.BY")}>
-                                    {getFieldDecorator("createdBy", {
-
-                                    })(<span>{data.createdBy.lastName} {data.createdBy.firstName}</span>)}
-                                </Form.Item>
-                            </Col>
-                        </Row>
+                       
                         <Row type="flex" justify="center" align="bottom">
                             <Col span={20}>
                                 <Form.Item label={t("CORE.VIOLATION.IMAGE.PATH")}>
@@ -192,25 +198,17 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
                                 </Form.Item>
                             </Col>
                         </Row>
-                        <Row type="flex" justify="center" align="bottom">
-                            <Col span={20}>
-                                <Form.Item label={t("CORE.VIOLATION.CHARGE.CREATE")}>
-                                    {getFieldDecorator("createdAt", {
-
-                                    })(<span>{moment(data.createdAt).format("DD-MM-YYYY")}</span>)}
-                                </Form.Item>
-                            </Col>
-                        </Row>
+                       
                         <Row type="flex" justify="center" align="bottom">
                             <Col span={20}>
                                 <Form.Item label={t("CORE.VIOLATION.SELECT.VIOLATOR")}>
                                     {getFieldDecorator("violator", {
                                         rules: [
-                                            { required: true, message: 'Please select violator!', type: 'array' },
+                                            { required: true, message: (<>{t("CORE.VIOLATION.ALERT.VIOLATOR")}</>), type: 'array' },
                                         ],
                                         initialValue: dataEmployee?.[0]?.id,
                                     })(
-                                        <Select mode="multiple" placeholder="Please select violator">
+                                        <Select mode="multiple" placeholder={t("CORE.VIOLATION.ALERT.VIOLATOR")}>
                                             {dataEmployee.map((item) => (
                                                 <Option key={item.id} value={item.id}>
                                                     {`${item.lastName} ${item.firstName}`}

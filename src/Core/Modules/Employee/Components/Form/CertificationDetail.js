@@ -40,7 +40,6 @@ const CertificationDetail = ({ form, employeeId, action, data, is_create }) => {
 
       const resRole = await certificationTypeApi.getList();
       setCertificationType(resRole?.data?.result || []);
-
       setLoadingDropdown(false);
     })();
   }, []);
@@ -61,8 +60,9 @@ const CertificationDetail = ({ form, employeeId, action, data, is_create }) => {
         const newValues = {
           ...values,
           issueDate: values["issueDate"].format("YYYY-MM-DD"),
-          employeeId: data.employeeId
+          employeeId: data
         }
+        console.log(newValues);
 
         if (!data?.username) {
           certificationApi

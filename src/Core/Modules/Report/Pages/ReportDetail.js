@@ -23,10 +23,10 @@ const ReportDetail = ({ match: { params } }) => {
 
 
   const action = async () => {
-    const res = await violationApi.exportViolation();
+    const res = await violationApi.exportViolation(params.id);
     const binaryData = [];
     binaryData.push(res);
-    const url = window.URL.createObjectURL(new Blob(binaryData, {type: "application/csv"}))
+    const url = window.URL.createObjectURL(new Blob(binaryData, {type: "application/csv; charset=utf-18"}))
     const a = document.createElement('a');
     a.href = url;
     a.download =data.name+"_Violation.csv";

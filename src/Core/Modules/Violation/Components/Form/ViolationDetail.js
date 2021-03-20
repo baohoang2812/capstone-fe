@@ -130,11 +130,25 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
 
                 <Form onSubmit={onConfirm}>
                     <Row type="flex" justify="center" align="bottom">
-                        <Col span={20}>
+                        <Col span={8}>
                             <Form.Item label={t("CORE.VIOLATION.NAME")}>
                                 {getFieldDecorator("name", {
 
                                 })(<span>{data.name}</span>)}
+                            </Form.Item>
+                        </Col>
+                        <Col span={8}>
+                            <Form.Item label={t("CORE.VIOLATION.CREATED.BY")}>
+                                {getFieldDecorator("createdBy", {
+
+                                })(<span>{data.createdBy.lastName} {data.createdBy.firstName}</span>)}
+                            </Form.Item>
+                        </Col>
+                        <Col span={4}>
+                            <Form.Item label={t("CORE.VIOLATION.CHARGE.CREATE")}>
+                                {getFieldDecorator("createdAt", {
+
+                                })(<span>{moment(data.createdAt).format("DD-MM-YYYY")}</span>)}
                             </Form.Item>
                         </Col>
                     </Row>
@@ -148,15 +162,7 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
                             </Form.Item>
                         </Col>
                     </Row>
-                    <Row type="flex" justify="center" align="bottom">
-                        <Col span={20}>
-                            <Form.Item label={t("CORE.VIOLATION.CREATED.BY")}>
-                                {getFieldDecorator("createdBy", {
-
-                                })(<span>{data.createdBy.lastName} {data.createdBy.firstName}</span>)}
-                            </Form.Item>
-                        </Col>
-                    </Row>
+                   
                     <Row type="flex" justify="center" align="bottom">
                         <Col span={20}>
                             <Form.Item label={t("CORE.VIOLATION.IMAGE.PATH")}>
@@ -182,15 +188,7 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
                             </Form.Item>
                         </Col>
                     </Row>
-                    <Row type="flex" justify="center" align="bottom">
-                        <Col span={20}>
-                            <Form.Item label={t("CORE.VIOLATION.CHARGE.CREATE")}>
-                                {getFieldDecorator("createdAt", {
-
-                                })(<span>{moment(data.createdAt).format("DD-MM-YYYY")}</span>)}
-                            </Form.Item>
-                        </Col>
-                    </Row>
+                   
                     <Row type="flex" justify="center" align="bottom">
                         <Col span={20}>
                             <Form.Item label={t("CORE.VIOLATION.VIOLATOR")}>
@@ -222,7 +220,12 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
                         <Col span={20}>
                             <Form.Item label={t("CORE.VIOLATION.EXCUSE")}>
                                 {getFieldDecorator("excuse", {
-
+                                    rules: [
+                                        {
+                                            required: true,
+                                            message: (<>{t("CORE.VIOLATION.ALERT.EXCUSE")}</>),
+                                        }
+                                    ]
                                 })(
                                     <TextArea rows={4} />
                                 )}

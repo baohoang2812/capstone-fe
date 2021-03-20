@@ -15,7 +15,7 @@ import { certification as identity } from "~/Core/Modules/Employee/Configs/const
 /* Api */
 import certificationApi from "~/Core/Modules/Employee/Api/Certification";
 
-const UserTable = () => {
+const UserTable = ({data}) => {
   const t = useTranslate();
 
 
@@ -81,6 +81,7 @@ const UserTable = () => {
       defaultSorter={defaultSorter}
       disableClassKey="is_active"
       disableClassMode="toggle"
+      options={{key:"Filter.EmployeeIds", value: data}}
     />
   );
 };

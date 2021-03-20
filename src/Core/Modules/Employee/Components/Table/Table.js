@@ -33,7 +33,8 @@ const UserTable = () => {
       width: 200,
       render: (_, record) => {
         return (
-          <ImageThumbnail src={record.imagePath}/>
+
+          <ImageThumbnail src={record.imagePath} />
         )
       }
     },
@@ -46,9 +47,19 @@ const UserTable = () => {
       fixed: "left",
       sorter: true,
       width: 220,
-      render: (text, record) => (
-        <Link to={`/employee/${record.id}`}>{`${record.code}`}</Link>
-      ),
+      render: (_, record) => {
+        if (role === "Admin") {
+          return (
+            <Link to={`/employee/detail/${record.id}`}>{`${record.code}`}</Link>
+          )
+        }
+        else {
+          return(
+            <Link to={`/employee/profile/${record.id}`}>{`${record.code}`}</Link>
+          )
+        }
+
+      },
     },
     {
       title: t("CORE.EMPLOYEE.FULLNAME"),
@@ -88,19 +99,19 @@ const UserTable = () => {
       fieldType: "text",
       sorter: true,
       width: 200,
-    
+
       render: (_, record) => {
-        if (record.gender.toLowerCase()==="female") {
+        if (record.gender.toLowerCase() === "female") {
           return (
-          <span> {t("CORE.EMPLOYEE.GENDER.FEMALE")}</span>
+            <span> {t("CORE.EMPLOYEE.GENDER.FEMALE")}</span>
           )
         }
-        else if  (record.gender.toLowerCase()==="male") {
+        else if (record.gender.toLowerCase() === "male") {
           return (
             <span>{t("CORE.EMPLOYEE.GENDER.MALE")}</span>
           )
         }
-        
+
         else {
           return (
             <span>{t("CORE.EMPLOYEE.GENDER.OTHER")}</span>
@@ -191,10 +202,10 @@ const UserTable = () => {
 
   const defaultSorter = useMemo(() => ({
     "Sort.Orders": "desc createdAt"
-   }), []);
-  
+  }), []);
+
   const scroll = useMemo(() => ({
-    x: 2500 ,
+    x: 2500,
     y: `calc(100vh - (178px))`
   }), []);
 

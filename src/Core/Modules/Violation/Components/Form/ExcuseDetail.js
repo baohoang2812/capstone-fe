@@ -205,7 +205,7 @@ const ExcuseDetail = ({ form, isShow = true, action, data }) => {
 
                         <Row type="flex" justify="center" align="bottom">
                             {
-                                data?.status === "Excuse" || data?.status === "Rejected" ? (<Col span={20}>
+                                data?.status === "Excused" || data?.status === "Rejected" ? (<Col span={20}>
                                     <Form.Item label={t("CORE.VIOLATION.EXCUSE")}>
                                         {getFieldDecorator("excuse", {
 
