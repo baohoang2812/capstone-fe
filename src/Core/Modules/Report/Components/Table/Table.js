@@ -191,7 +191,7 @@ const UserTable = () => {
         defs={defs}
         api={contactApi}
         identity={identity}
-        showCheckbox={true}
+        showCheckbox={false}
         scroll={scroll}
         defaultSorter={defaultSorter}
         disableClassKey="is_active"

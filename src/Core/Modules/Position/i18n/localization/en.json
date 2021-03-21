@@ -5,5 +5,7 @@
     "CORE.POSITION.CREATE.ACCOUNT":"Create Position",
     "CORE.POSITION.UPDATE.ACCOUNT":"Update Position",
     "CORE.POSITION":"Position",
-    "CORE.POSITION.DETAIL":"Position detail"
+    "CORE.POSITION.DETAIL":"Position detail",
+    "CORE.POSITION.CREATE.SUCCESS":"Create success",
+    "CORE.POSITION.UPDATE.SUCCESS":"Update success"
 }
