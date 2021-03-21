@@ -1,8 +1,0 @@
-{
-    "presets": [
-        ["env", {
-            "modules": "umd",
-            "target" : "ie 11"
-        }]
-    ]
-}
