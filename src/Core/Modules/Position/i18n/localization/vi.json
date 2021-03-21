@@ -6,5 +6,7 @@
     "CORE.POSITION.CREATE.ACCOUNT":"Tạo chức vụ",
     "CORE.POSITION.UPDATE.ACCOUNT":"Cập nhật chức vụ",
     "CORE.POSITION":"Chức vụ",
-    "CORE.POSITION.DETAIL":"Chi tiết chức vụ"
+    "CORE.POSITION.DETAIL":"Chi tiết chức vụ",
+    "CORE.POSITION.CREATE.SUCCESS":"Tạo mới thành công",
+    "CORE.POSITION.UPDATE.SUCCESS":"Cập nhật thành công"
 }
