@@ -264,7 +264,7 @@ const UserTable = () => {
     }
   }
 
-  const defaultSorter = useMemo(() => ({}), []);
+  const defaultSorter = useMemo(() => ({ "Sort.Orders": "desc createdAt" }), []);
 
   const scroll = useMemo(() => ({
     x: 1700,

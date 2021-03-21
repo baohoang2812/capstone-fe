@@ -1,48 +1,47 @@
 import "./style.less";
 
 import React, { useState, useEffect } from "react";
-import { Card, Spin } from "antd";
+import { Card} from "antd";
 import { Bar } from '@ant-design/charts';
 /* Components */
 import HeaderCard from "./HeaderCard";
 
 /* Core helpers */
-import { formatToCurrencyVND } from "~/Core/utils/helper/format";
 
 /* Api */
-import dashboardApi from "~/Core/Modules/Dashboard/Api";
+
 
 const data = [
   {
-    type: '家具家电',
+    type: 'Chi nhánh 1',
     sales: 38,
   },
   {
-    type: '粮油副食',
+    type: 'Chi nhánh 2',
     sales: 52,
   },
   {
-    type: '生鲜水果',
+    type: 'Chi nhánh 3',
     sales: 61,
   },
   {
-    type: '美容洗护',
+    type:'Chi nhánh 4',
     sales: 145,
   },
   {
-    type: '母婴用品',
+    type: 'Chi nhánh 5',
     sales: 48,
   },
   {
-    type: '进口食品',
+    type: 'Chi nhánh 6',
     sales: 38,
   },
   {
-    type: '食品饮料',
+    type: 'Chi nhánh 7',
     sales: 38,
   },
   {
-    type: '家庭清洁',
+    type: 'Chi nhánh 8',
     sales: 38,
   },
 ];
@@ -70,7 +69,7 @@ const CardTotalRevenue = () => {
   const onInitData = () => {
     if (filters) {
       setLoading(true);
-      const { date, label } = filters;
+      // const { date, label } = filters;
       // dashboardApi
       //   .getTotalRevenue(date)
       //   .then((res) => {

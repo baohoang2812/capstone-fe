@@ -19,7 +19,7 @@ import UpdateViolatorDetail from "~/Core/Modules/Report/Components/Form/UpdateVi
 import contactApi from "~/Core/Modules/Report/Api/Violation";
 import AdminAcceptViolation from "../Form/AdminAcceptViolation";
 
-const UserTable = () => {
+const UserTable = (props) => {
   const t = useTranslate();
   const [visible, setVisible] = useState(false);
   const [visibleExcuse, setVisibleExcuse] = useState(false);
@@ -227,7 +227,7 @@ const UserTable = () => {
     x: 1700,
     y: `calc(100vh - (178px))`
   }), []);
-
+  console.log(props.value)
   return (
     <>
       <AdminTable
@@ -239,6 +239,7 @@ const UserTable = () => {
         defaultSorter={defaultSorter}
         disableClassKey="is_active"
         disableClassMode="toggle"
+        options={props.value ? {key: "Filter.ReportIds", value: props.value} : null}
       />
       <Modal
         title={t("CORE.VIOLATION.MANAGEMENT.TITLE")}

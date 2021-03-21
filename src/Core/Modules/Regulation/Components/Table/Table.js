@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
-
+import jwt_decode from "jwt-decode";
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 
@@ -37,7 +37,7 @@ const UserTable = () => {
       dataIndex: "type",
       className: "header-filter",
       key: "type",
-      fieldType: "text",
+      fieldType: "none",
       sorter: true,
       width: 220,
     },
@@ -48,7 +48,7 @@ const UserTable = () => {
       dataIndex: "level",
       className: "header-filter",
       key: "level",
-      fieldType: "number",
+      fieldType: "none",
       sorter: true,
       width: 200,
     },
@@ -57,7 +57,7 @@ const UserTable = () => {
       dataIndex: "minusPoint",
       className: "header-filter",
       key: "point",
-      fieldType: "number",
+      fieldType: "none",
       sorter: true,
       width: 200,
     },
@@ -66,7 +66,7 @@ const UserTable = () => {
       dataIndex: "description",
       className: "header-filter",
       key: "description",
-      fieldType: "text",
+      fieldType: "none",
       sorter: true,
       width: 240,
     },
@@ -75,7 +75,7 @@ const UserTable = () => {
       dataIndex: "created_at",
       className: "header-filter",
       key: "contacts.create_at",
-      fieldType: "date",
+      fieldType: "none",
       sorter: true,
       width: 150,
       render: (text) => moment(text).format("DD/MM/YYYY"),
@@ -101,13 +101,17 @@ const UserTable = () => {
     x: 1080 ,
     y: `calc(100vh - (178px))`
   }), []);
+  const token = localStorage.getItem("token" || "");
+  const {
+    roleName: role,
+  } = jwt_decode(token);
 
   return (
     <AdminTable
       defs={defs}
       api={contactApi}
       identity={identity}
-      showCheckbox={true}
+      showCheckbox={role==="Admin"}
       scroll={scroll}
       defaultSorter={defaultSorter}
       disableClassKey="is_active"

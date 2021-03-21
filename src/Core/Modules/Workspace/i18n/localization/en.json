@@ -6,6 +6,8 @@
     "CORE.WORKSPACE.CHARGE.UPDATE":"Updated at",
     "CORE.WORKSPACE.MANAGEMENT.TITLE":"Workspace Management",
     "CORE.WORKSPACE.CREATE.ACCOUNT":"Create workspace",
+    "CORE.WORKSPACE.UPDATE.ACCOUNT":"Update workspace",
     "CORE.WORKSPACE":"Workspace",
-    "CORE.WORKSPACE.DETAIL":"Workspace detail"
+    "CORE.WORKSPACE.DETAIL":"Workspace detail",
+    "WORKSPACE.PARENT_CATE.PLACEHOLDER":"Workspace parent"
 }

@@ -1,11 +1,11 @@
 import BaseApi from "~/Core/Api/BaseAPI";
 class CertificationApi extends BaseApi {
-  getList = () => {
-    return this.initApi.get(`${this.baseUrl}`);
+  getList = (filter) => {
+    return this.initApi.get(`${this.baseUrl}`, filter);
   };
 
   getOne = (id) => {
-    return this.initApi.get(`${this.baseUrl}?Filter.EmployeeId=${id}`);
+    return this.initApi.get(`${this.baseUrl}?Filter.EmployeeIds=${id}`);
   };
   create = (body) => {
     return this.initApi.post(`${this.baseUrl}`, body);

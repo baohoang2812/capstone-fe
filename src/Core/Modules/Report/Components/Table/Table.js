@@ -2,6 +2,7 @@ import React, { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import { Button,Modal,Tag } from 'antd';
+import jwt_decode from "jwt-decode";
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 
@@ -25,31 +26,32 @@ const UserTable = () => {
     setData(record);
     console.log(data);
   };
+
   const handleCloseModal = () => {
     setVisible(false);
   };
   const defs = useMemo(() => [
-    {
-      title: t("CORE.REPORT.ID"),
-      dataIndex: "id",
-      className: "header-filter",
-      key: "id",
-      fieldType: "number",
-      fixed: "left",
-      sorter: true,
-      width: 220,
-      render: (text, record) => {
+    // {
+    //   title: t("CORE.REPORT.ID"),
+    //   dataIndex: "id",
+    //   className: "header-filter",
+    //   key: "id",
+    //   fieldType: "number",
+    //   fixed: "left",
+    //   sorter: true,
+    //   width: 220,
+    //   render: (text, record) => {
        
-        if (record.status.toLowerCase() === "opening") {
-          return (<Button type="link" style={{paddingLeft:"0"}} onClick={() => openModel(record)}>{`${record.id}`}</Button>)
-        }
-        else {
-          return (
-            <Link to={`/report/${record.id}`}>{`${record.id}`}</Link>
-          )
-        }
-      },
-    },
+    //     if (record.status.toLowerCase() === "opening") {
+    //       return (<Button type="link" style={{paddingLeft:"0"}} onClick={() => openModel(record)}>{`${record.id}`}</Button>)
+    //     }
+    //     else {
+    //       return (
+    //         <Link to={`/report/${record.id}`}>{`${record.id}`}</Link>
+    //       )
+    //     }
+    //   },
+    // },
     {
       title: t("CORE.REPORT.NAME"),
       dataIndex: "name",
@@ -58,6 +60,17 @@ const UserTable = () => {
       fieldType: "text",
       sorter: true,
       width: 220,
+      render: (text, record) => {
+       
+        if (record.status.toLowerCase() === "opening") {
+          return (<Button type="link" style={{paddingLeft:"0"}} onClick={() => openModel(record)}>{`${record.name}`}</Button>)
+        }
+        else {
+          return (
+            <Link to={`/report/${record.id}`}>{`${record.id}`}</Link>
+          )
+        }
+      },
 
     },
     {
@@ -81,6 +94,11 @@ const UserTable = () => {
         if (record.status.toLocaleLowerCase() === 'opening') {
           return (
             <Tag color="orange">{t("CORE.VIOLATION.OPENING")}</Tag>
+          )
+        }
+        else if(record.status.toLocaleLowerCase() === 'done') {
+          return (
+            <Tag color="blue">{t("CORE.REPORT.STATUS.DONE")}</Tag>
           )
         }
         else {
@@ -160,10 +178,13 @@ const UserTable = () => {
   const defaultSorter = useMemo(() => ({ "Sort.Orders": "desc createdAt"}), []);
 
   const scroll = useMemo(() => ({
-    x: 1620,
+    x: 1400,
     y: `calc(100vh - (178px))`
   }), []);
-
+  const token = localStorage.getItem("token" || "");
+  const {
+    roleName: role,
+  } = jwt_decode(token);
   return (
     <>
       <AdminTable
@@ -175,6 +196,7 @@ const UserTable = () => {
         defaultSorter={defaultSorter}
         disableClassKey="is_active"
         disableClassMode="toggle"
+        options={role==="Branch Manager"?{key:"Filter.Status",value:"submitted"}:null}
       />
       <Modal
         title={t("CORE.REPORT.DETAIL")}

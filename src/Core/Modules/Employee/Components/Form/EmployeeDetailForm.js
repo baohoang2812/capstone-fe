@@ -9,7 +9,6 @@ import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 /* Api */
 import employeeApi from "~/Core/Modules/Employee/Api";
 import accountApi from "~/Core/Modules/Employee/Api/Account";
-import certificationApi from "~/Core/Modules/Employee/Api/Certification";
 
 /* Component */
 import AccountForm from "./AccountForm";
@@ -53,16 +52,7 @@ const EmployeeDetailForm = (props) => {
           }
           setAccount(resAccount.data?.result?.[0] || {});
 
-
-          const resCertifications = await certificationApi.getOne(result.id)
-
-          if (resCertifications.code !== 200) {
-            message.error("CORE.MENU.message_error");
-            setError(true);
-            return;
-          }
-
-          setCertifications(resCertifications.data?.result?.[0] || {});
+          setCertifications(result?.id);
         } catch (error) {
           setError(true);
         }

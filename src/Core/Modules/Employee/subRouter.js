@@ -24,8 +24,15 @@ export default {
   routes: [
   
     {
-      url: ":id",
+      url: "detail/:id",
       component: "Pages/EmployeeDetail",
+      key: "employee-create-edit",
+      showMenu: false,
+      title: "CORE.EMPLOYEE.UPDATE.ACCOUNT"
+    },  
+    {
+      url: "profile/:id",
+      component: "Pages/ProfileEmployee",
       key: "employee-create-edit",
       showMenu: false,
       title: "CORE.EMPLOYEE.UPDATE.ACCOUNT"

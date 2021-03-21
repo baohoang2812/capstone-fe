@@ -1,11 +1,14 @@
 import React from "react";
-import { Icon} from "antd";
+import { Icon, Button } from "antd";
 
 /* Components */
 import NavBreadcrumbContentHeader from "~/Core/Components/common/NavBreadcrumbContentHeader";
 
-const Header = ({ breadcrumb, action, icon = "plus", text, className }) => {
- 
+const Header = ({ breadcrumb, action, icon = "plus", text, className, isDisplay = true, isDisabled=true }) => {
+  const handleClick = () => {
+    action();
+  };
+
 
   return (
     <div className="content-header-page">
@@ -20,7 +23,11 @@ const Header = ({ breadcrumb, action, icon = "plus", text, className }) => {
                 <NavBreadcrumbContentHeader data={breadcrumb} />
               </div>
               <div className="nav-right btn-group">
-                
+                {isDisplay ?
+                  (<Button disabled={isDisabled} onClick={handleClick} className={className}>
+                    <span>{text}</span>
+                  </Button>) : null
+                }
               </div>
             </div>
           </div>

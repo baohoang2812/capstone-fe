@@ -9,15 +9,15 @@ import intlMessagesEN from "./i18n/localization/en.json";
 import intlMessagesVi from "./i18n/localization/vi.json";
 
 export default {
-  roleName: ["admin","Branch Manager"],
+  roleName: ["admin","Branch Manager", "QC Manager"],
   name: "Dashboard",
   dir: "Dashboard",
   pathRoot: "dashboard",
   title: (t) => {
     return (
     <span>
-     <Icon type="video-camera" />
-      <span>{t("CORE.CAMERA")}</span>
+    <Icon type="bar-chart" />
+      <span>{t("CORE.STATISTICS")}</span>
     </span>
   )},
   showMenu: true,
@@ -26,7 +26,7 @@ export default {
       url: "",
       component: "Pages",
       showMenu: true,
-      title: "CORE.CAMERA.MANAGEMENT.TITLE",
+      title: "CORE.STATISTICS.MANAGEMENT.TITLE",
     },
   ],
   redux: redux,

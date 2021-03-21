@@ -26,7 +26,8 @@ function* get_indentity_table_data_worker({ payload }) {
     treeMode,
     treeKey,
     dynamicKey,
-    dataForSelectorKey
+    dataForSelectorKey,
+    options
   } = payload;
   console.log(sorter)
 
@@ -45,11 +46,15 @@ function* get_indentity_table_data_worker({ payload }) {
   }
 
   // const opts = { PageIndex: current, Limit: pageSize, where, order: sorter };
-  const opts = { PageIndex: current-1, Limit: pageSize, ...where, ...sorter };
+  const opts = { "Filter.IsDeleted":false, PageIndex: current-1, Limit: pageSize, ...where, ...sorter };
+  if (options) {
+    opts[options.key] = options.value
+  }
+  
   console.log(opts)
   
   yield put({ type: get_action_table(identity, actions.GET_IDENTITY_TABLE_DATA_REQUEST) }); // Trigger loading
-
+  
   try {
     const { data: res } = yield call(api[method], opts);
     const payload = {

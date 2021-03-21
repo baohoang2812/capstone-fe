@@ -13,5 +13,7 @@
     "CORE.SHIFT.CREATE.SUCCESS":"Tạo mới ca thành công!",
     "CORE.SHIFT.UPDATE.SUCCESS":"Cập nhật ca thành công!",
     "CORE.SHIFT":"Ca",
-    "CORE.SHIFT.DETAIL":"Chi tiết ca"
+    "CORE.SHIFT.DETAIL":"Chi tiết ca",
+    "CORE.SHIFT.ALERT.START.TIME":"Thời gian bắt đầu phải nhỏ hơn thời gian kết thúc",
+    "CORE.SHIFT.ALERT.END.TIME":"Thời gian kết thúc phải lớn hơn thời gian bắt đầu"
 }

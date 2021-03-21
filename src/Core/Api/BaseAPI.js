@@ -98,10 +98,18 @@ const put = (apiVersion, customPrefix) => async (path, body, opts) => {
 };
 
 const del = (apiVersion, customPrefix) => async (path, body, opts) => {
+  let listIds = "?"
+  body.ids.forEach(id => {
+      listIds += `ids=${id}&`
+    })
+    if (body.ids.length > 0) {
+      listIds = listIds.slice(0, -1)
+    } else {
+      listIds = ""
+    }
   try {
     const response = await axios.delete(
-      get_prefix(apiVersion, customPrefix, path),
-      { data: body },
+      get_prefix(apiVersion, customPrefix, path) + listIds,
       generate_options(opts)
     );
 
@@ -172,7 +180,17 @@ export default class BaseAPI {
   };
 
   deleteByIds = (ids, options = {}, opts) => {
-    return this.initApi.post(`${this.baseUrl}/deleteByIds`, { ids }, opts);
+    let listIds = "?"
+    ids.forEach(id => {
+      listIds += `ids=${id}&`
+    })
+    if (ids.length > 0) {
+      listIds = listIds.slice(0, -1)
+    } else {
+      listIds = ""
+    }
+
+    return this.initApi.del(`${this.baseUrl}${listIds}`, {}, generate_options(opts));
   };
 
   getOne = (filter, opts) => {

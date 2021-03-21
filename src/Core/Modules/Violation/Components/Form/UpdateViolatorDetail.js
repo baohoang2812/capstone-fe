@@ -8,7 +8,9 @@ import {
     Button,
     Divider,
     message,
-    Select
+    Select,
+    Upload,
+    Modal
 } from "antd";
 import moment from "moment";
 /* Hooks */
@@ -24,7 +26,14 @@ import { violations as identity } from "~/Core/Modules/Violation/Configs/Constan
 import ViolationEmployeeApi from "~/Core/Modules/Violation/Api/ViolationEmployee";
 import employeeApi from "~/Core/Modules/Employee/Api";
 import violationApi from "~/Core/Modules/Violation/Api/Violation";
-
+function getBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    });
+}
 const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
     const t = useTranslate();
     /* Redux */
@@ -33,8 +42,11 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
     const [loading, setLoading] = useState(false);
     // const [loadingDropdown, setLoadingDropdown] = useState(false);
     const { getFieldDecorator, validateFields} = form;
+    const [previewVisible, setPreviewVisible] = useState(false);
+    const [previewTitle, setPreviewTitle] = useState("");
+    const [previewImage, setPreviewImage] = useState(false);
     const [dataEmployee, setDataEmployee] = useState([]);
-
+    const [fileList, setFileList] = useState([]);
     useEffect(() => {
         console.log(data);
         employeeApi.getList()
@@ -43,9 +55,29 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
                 setDataEmployee(result);
             }
             )
+            if (data?.evidence?.length > 0) {
+                const list = data?.evidence?.map((item, index) => ({
+                    uid: index,
+                    name: "Evidence",
+                    status: "done",
+                    url: item.imagePath,
+                }))
+                setFileList(list);
+            }
 
     }, [data]);
     const { Option } = Select;
+    const handleCancel = () => setPreviewVisible(false);
+
+    const handlePreview = async (file) => {
+        if (!file.url && !file.preview) {
+            file.preview = await getBase64(file.originFileObj);
+        }
+
+        setPreviewImage(file.url || file.preview)
+        setPreviewVisible(true)
+        setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1))
+    }
     const onConfirm = (e) => {
         e.preventDefault();
         validateFields((err, values) => {
@@ -109,11 +141,25 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
                 
                     <Form onSubmit={onConfirm}>
                         <Row type="flex" justify="center" align="bottom">
-                            <Col span={20}>
+                            <Col span={8}>
                                 <Form.Item label={t("CORE.VIOLATION.NAME")}>
                                     {getFieldDecorator("name", {
 
                                     })(<span>{data.name}</span>)}
+                                </Form.Item>
+                            </Col>
+                            <Col span={8}>
+                                <Form.Item label={t("CORE.VIOLATION.CREATED.BY")}>
+                                    {getFieldDecorator("createdBy", {
+
+                                    })(<span>{data.createdBy.lastName} {data.createdBy.firstName}</span>)}
+                                </Form.Item>
+                            </Col>
+                            <Col span={4}>
+                                <Form.Item label={t("CORE.VIOLATION.CHARGE.CREATE")}>
+                                    {getFieldDecorator("createdAt", {
+
+                                    })(<span>{moment(data.createdAt).format("DD-MM-YYYY")}</span>)}
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -127,43 +173,42 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
                                 </Form.Item>
                             </Col>
                         </Row>
-                        <Row type="flex" justify="center" align="bottom">
-                            <Col span={20}>
-                                <Form.Item label={t("CORE.VIOLATION.CREATED.BY")}>
-                                    {getFieldDecorator("createdBy", {
-
-                                    })(<span>{data.createdBy.lastName} {data.createdBy.firstName}</span>)}
-                                </Form.Item>
-                            </Col>
-                        </Row>
+                       
                         <Row type="flex" justify="center" align="bottom">
                             <Col span={20}>
                                 <Form.Item label={t("CORE.VIOLATION.IMAGE.PATH")}>
-                                    {getFieldDecorator("imagePath", {
-
-                                    })(<img alt="example" style={{ width: "100%" }} src={data.imagePath} />)}
+                                <Upload
+                                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                                    listType="picture-card"
+                                    fileList={fileList}
+                                    onPreview={handlePreview}
+                                    showUploadList={{
+                                        showRemoveIcon: false
+                                    }}
+                                >
+                                </Upload>
+                                <Modal
+                                    visible={previewVisible}
+                                    title={previewTitle}
+                                    footer={null}
+                                    onCancel={handleCancel}
+                                >
+                                    <img alt="example" style={{ width: '100%' }} src={previewImage} />
+                                </Modal>
                                 </Form.Item>
                             </Col>
                         </Row>
-                        <Row type="flex" justify="center" align="bottom">
-                            <Col span={20}>
-                                <Form.Item label={t("CORE.VIOLATION.CHARGE.CREATE")}>
-                                    {getFieldDecorator("createdAt", {
-
-                                    })(<span>{moment(data.createdAt).format("DD-MM-YYYY")}</span>)}
-                                </Form.Item>
-                            </Col>
-                        </Row>
+                       
                         <Row type="flex" justify="center" align="bottom">
                             <Col span={20}>
                                 <Form.Item label={t("CORE.VIOLATION.SELECT.VIOLATOR")}>
                                     {getFieldDecorator("violator", {
                                         rules: [
-                                            { required: true, message: 'Please select violator!', type: 'array' },
+                                            { required: true, message: (<>{t("CORE.VIOLATION.ALERT.VIOLATOR")}</>), type: 'array' },
                                         ],
                                         initialValue: dataEmployee?.[0]?.id,
                                     })(
-                                        <Select mode="multiple" placeholder="Please select violator">
+                                        <Select mode="multiple" placeholder={t("CORE.VIOLATION.ALERT.VIOLATOR")}>
                                             {dataEmployee.map((item) => (
                                                 <Option key={item.id} value={item.id}>
                                                     {`${item.lastName} ${item.firstName}`}
