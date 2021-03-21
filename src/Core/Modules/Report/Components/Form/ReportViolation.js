@@ -82,7 +82,8 @@ const ReportViolation = ({ form, is_create, action, data }) => {
       adminNote: data?.adminNote,
       qcNote: data?.qcNote,
       branchName: data?.branch?.name,
-      assignee: data?.assigneeNavigation?.id
+      assignee: data?.assigneeNavigation?.id,
+      totalMinusPoint:data?.totalMinusPoint
     });
   }, [data]);
  
@@ -132,9 +133,14 @@ const ReportViolation = ({ form, is_create, action, data }) => {
               </Col>
             </Row>
             <Row type="flex" justify="center" align="bottom">
-              <Col span={16}>
+              <Col span={10}>
                 <Form.Item label={t("CORE.REPORT.QC.NOTE")}>
                   {getFieldDecorator("qcNote", {})(<span>{data.qcNote}</span>)}
+                </Form.Item>
+              </Col>
+              <Col span={6}>
+                <Form.Item label={t("CORE.REPORT.MINUS.POINT")}>
+                  {getFieldDecorator("totalMinusPoint", {})(<span>{data.totalMinusPoint}</span>)}
                 </Form.Item>
               </Col>
             </Row>

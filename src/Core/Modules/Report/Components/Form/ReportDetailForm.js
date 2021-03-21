@@ -33,6 +33,12 @@ const ReportDetailForm = ({ form, is_create, action, data }) => {
   const [loading, setLoading] = useState(false);
   const [listQC, setListQC] = useState([]);
   const { getFieldDecorator, validateFields, setFieldsValue } = form;
+  useEffect(() => {
+    (async () => {
+      const resListQC = await QCApi.getList();
+      setListQC(resListQC?.data?.result);
+    })();
+  }, []);
   const onConfirm = (e) => {
     e.preventDefault();
     validateFields((err, values) => {
@@ -68,12 +74,7 @@ const ReportDetailForm = ({ form, is_create, action, data }) => {
       }
     });
   };
-  useEffect(() => {
-    (async () => {
-      const resListQC = await QCApi.getList();
-      setListQC(resListQC?.data?.result);
-    })();
-  }, []);
+  
   useEffect(() => {
     console.log(data);
     setFieldsValue({
