@@ -23,15 +23,16 @@ import reportApi from "~/Core/Modules/Report/Api";
 import Table from "~/Core/Modules/Report/Components/Table/TableViolation";
 import moment from "moment";
 import TextArea from "antd/lib/input/TextArea";
+import { set_data_for_select_action } from "~/Core/Store/actions/dataForSelect";
 
-const ReportViolation = ({ form, is_create, action, data }) => {
+const ReportViolation = ({ form, is_create, action, data,setData }) => {
   const t = useTranslate();
   /* Redux */
   const dispatch = useDispatch();
   /* State */
   const [loading, setLoading] = useState(false);
   const[listTmp, setListTmp]= useState([undefined]);
-  const[statusReport, setStatusReport] = useState(0)
+  const[statusReport, setStatusReport] = useState(0);
   const listViolation = useSelector(state => state[identity].list);
   const { getFieldDecorator, validateFields, setFieldsValue } = form;
   const onConfirm = (e) => {
@@ -59,6 +60,8 @@ const ReportViolation = ({ form, is_create, action, data }) => {
             }
             dispatch(update_identity_table_data_success(identity, { id: res.data.id, column: "adminNote", data: values.adminNote }));
             dispatch(update_identity_table_data_success(identity, { id: res.data.id, column: "status", data: values.status }));
+            const newData = {...data,status:values.status,adminNote:values.adminNote};
+            setData(newData);
             message.success(t("CORE.VIOLATION.CONFIRM.SUCCESS"));
             setLoading(false);
             
