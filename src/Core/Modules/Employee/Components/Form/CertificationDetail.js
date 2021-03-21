@@ -106,6 +106,7 @@ const CertificationDetail = ({ form, employeeId, action, data, is_create }) => {
     const item = listCertificationType.filter((item) => item.id === value);
     setItemSelect(item?.[0]);
   };
+  
   return (
     <Spin spinning={loadingDropdown}>
       <Form onSubmit={onConfirm}>

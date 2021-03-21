@@ -84,7 +84,7 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
     // Can not select days before today and today
     return current && current > moment().subtract(18, "years");
   }
-  
+
   function handleChangePosition(value) {
     const tmp = listPosition.filter(item => item.id === value);
     if (tmp[0].name.toLowerCase() === "admin" || tmp[0].name.toLowerCase() === "qc manager") {
@@ -112,7 +112,7 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
       username: data?.username,
       roleId: data?.roleId,
       gender: data?.gender,
-      birthDate: data?.birthDate ? new moment(data?.birthDate) : moment().subtract(18,"year"),
+      birthDate: data?.birthDate ? new moment(data?.birthDate) : moment().subtract(18, "year"),
       isPartTime: data?.isPartTime,
       branchId: data?.branch?.id,
       positionId: data?.position?.id,
@@ -197,20 +197,21 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
           }
           else {
             const newValues3 = { ...values, imagePath: data.imagePath }
-            employeeApi.update(data.id, newValues3).then((res) => {
-              setLoading(false);
+            employeeApi.update(data.id, newValues3)
+              .then((res) => {
+                setLoading(false);
 
-              if (res.code !== 200) {
-                message.error(t("CORE.task_failure"));
-                return;
-              }
+                if (res.code !== 200) {
+                  message.error(t("CORE.task_failure"));
+                  return;
+                }
 
-              dispatch(
-                update_identity_table_data_success(identity, res.data.employee)
-              );
-              message.success(t("CORE.EMPLOYEE.UPDATE.SUCCESS"));
-              action();
-            });
+                dispatch(
+                  update_identity_table_data_success(identity, res.data.employee)
+                );
+                message.success(t("CORE.EMPLOYEE.UPDATE.SUCCESS"));
+                action();
+              });
 
           }
         }
@@ -363,7 +364,7 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
                     message: (<>{t("CORE.EMPLOYEE.ALERT.BIRTHDATE")}</>),
                   },
                 ],
-                initialValue: moment().subtract(18,"year"),
+                initialValue: moment().subtract(18, "year"),
               })(<DatePicker disabledDate={disabledDate} />)}
             </Form.Item>
           </Col>

@@ -2,7 +2,16 @@ import "./style.less";
 
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Select, Row, Col, Form, Input, Button, message, Spin } from "antd";
+import { 
+  Select, 
+  Row, 
+  Col, 
+  Form, 
+  Input, 
+  Button, 
+  message, 
+  Spin 
+} from "antd";
 
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
@@ -86,7 +95,8 @@ const AccountForm = ({ form, employeeId, action, data, is_create }) => {
               setLoading(false);
             });
         } else {
-          accountApi.update(data.id, objReq).then((res) => {
+          accountApi.update(data.id, objReq)
+            .then((res) => {
             setLoading(false);
 
             if (res.code !== 200) {
