@@ -9,36 +9,32 @@ import intlMessagesEN from "./i18n/localization/en.json";
 import intlMessagesVi from "./i18n/localization/vi.json";
 
 export default {
+  roleName: ["admin","Branch Manager"],
   name: "Regulation",
   dir: "Regulation",
   pathRoot: "regulation",
-  title: (
+  title: (t) => {
+    return (
     <span>
-      <Icon type="file-text" /> 
-      <span>Regulation</span>
+       <Icon type="file-text" /> 
+      <span>{t("CORE.REGULATION")}</span>
     </span>
-  ),
+  )},
   showMenu: true,
   routes: [
-    {
-      url: "profile",
-      component: "Pages/Profile",
-      key: "profile-edit",
-      showMenu: false,
-      title: "Profile",
-    },
+    
     {
       url: ":id",
       component: "Pages/RegulationDetail",
       key: "regulation-create-edit",
       showMenu: false,
-      title: "Regulation detail",
+      title: "CORE.REGULATION.DETAIL",
     },
     {
       url: "",
       component: "Pages",
       showMenu: true,
-      title: "Regulation Management",
+      title: "CORE.REGULATION.MANAGEMENT.TITLE",
     },
   ],
   redux: redux,

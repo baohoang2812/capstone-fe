@@ -7,8 +7,9 @@ import {
     Form,
     Input,
     Button,
-    Spin,
-    message
+    message,
+    Upload,
+    Modal
 } from "antd";
 import moment from "moment";
 /* Hooks */
@@ -24,6 +25,16 @@ import { violations as identity } from "~/Core/Modules/Violation/Configs/Constan
 import violationApi from "~/Core/Modules/Report/Api/Violation";
 import employeeApi from "~/Core/Modules/Employee/Api";
 
+
+function getBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    });
+}
+
 const ViolationDetail = ({ form, is_create, action, data }) => {
     const t = useTranslate();
     const { TextArea } = Input;
@@ -32,8 +43,13 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
     /* State */
     const [loading, setLoading] = useState(false);
     // const [loadingDropdown, setLoadingDropdown] = useState(false);
-    const { getFieldDecorator, validateFields} = form;
+    const { getFieldDecorator, validateFields } = form;
+    const [fileList, setFileList] = useState([]);
+    const [previewVisible, setPreviewVisible] = useState(false);
+    const [previewTitle, setPreviewTitle] = useState("");
+    const [previewImage, setPreviewImage] = useState(false);
     const [dataEmployee, setDataEmployee] = useState([]);
+
     useEffect(() => {
         if (data?.employeeIds?.length > 0) {
             employeeApi.getListFilter(data.employeeIds)
@@ -45,8 +61,30 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
             setDataEmployee([])
         }
 
+        if (data?.evidence?.length > 0) {
+            const list = data?.evidence?.map((item, index) => ({
+                uid: index,
+                name: "Evidence",
+                status: "done",
+                url: item.imagePath,
+            }))
+            setFileList(list);
+        }
+
+
     }, [data]);
 
+    const handleCancel = () => setPreviewVisible(false);
+
+    const handlePreview = async (file) => {
+        if (!file.url && !file.preview) {
+            file.preview = await getBase64(file.originFileObj);
+        }
+
+        setPreviewImage(file.url || file.preview)
+        setPreviewVisible(true)
+        setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1))
+    }
     const onConfirm = (e) => {
         e.preventDefault();
         validateFields((err, values) => {
@@ -65,6 +103,7 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
                         status: "Excused",
                         branchId: 0
                     }
+
                 )
                     .then((res) => {
                         if (res.code !== 200) {
@@ -81,101 +120,133 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
                         message.error(t("CORE.error.system"));
                         setLoading(false);
                     });
-
             }
         });
     };
+
     return (
         <Row type="flex" justify="center">
             <Col span={24}>
-                <Spin>
-                    <Form onSubmit={onConfirm}>
-                        <Row type="flex" justify="center" align="bottom">
-                            <Col span={20}>
-                                <Form.Item label={t("CORE.VIOLATION.NAME")}>
-                                    {getFieldDecorator("name", {
 
-                                    })(<span>{data.name}</span>)}
-                                </Form.Item>
-                            </Col>
-                        </Row>
+                <Form onSubmit={onConfirm}>
+                    <Row type="flex" justify="center" align="bottom">
+                        <Col span={8}>
+                            <Form.Item label={t("CORE.VIOLATION.NAME")}>
+                                {getFieldDecorator("name", {
 
-                        <Row type="flex" justify="center" align="bottom">
-                            <Col span={20}>
-                                <Form.Item label={t("CORE.VIOLATION.DESCRIPTION")}>
-                                    {getFieldDecorator("description", {
+                                })(<span>{data.name}</span>)}
+                            </Form.Item>
+                        </Col>
+                        <Col span={8}>
+                            <Form.Item label={t("CORE.VIOLATION.CREATED.BY")}>
+                                {getFieldDecorator("createdBy", {
 
-                                    })(<span>{data.description}</span>)}
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                        <Row type="flex" justify="center" align="bottom">
-                            <Col span={20}>
-                                <Form.Item label={t("CORE.VIOLATION.IMAGE.PATH")}>
-                                    {getFieldDecorator("imagePath", {
+                                })(<span>{data.createdBy.lastName} {data.createdBy.firstName}</span>)}
+                            </Form.Item>
+                        </Col>
+                        <Col span={4}>
+                            <Form.Item label={t("CORE.VIOLATION.CHARGE.CREATE")}>
+                                {getFieldDecorator("createdAt", {
 
-                                    })(<img alt="example" style={{ width: "100%" }} src={data.imagePath} />)}
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                        <Row type="flex" justify="center" align="bottom">
-                            <Col span={20}>
-                                <Form.Item label={t("CORE.VIOLATION.CHARGE.CREATE")}>
-                                    {getFieldDecorator("createdAt", {
+                                })(<span>{moment(data.createdAt).format("DD-MM-YYYY")}</span>)}
+                            </Form.Item>
+                        </Col>
+                    </Row>
 
-                                    })(<span>{moment(data.createdAt).format("DD-MM-YYYY")}</span>)}
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                        <Row type="flex" justify="center" align="bottom">
-                            <Col span={20}>
-                                <Form.Item label={t("CORE.VIOLATION.VIOLATOR")}>
-                                    {getFieldDecorator('select-multiple', {
+                    <Row type="flex" justify="center" align="bottom">
+                        <Col span={20}>
+                            <Form.Item label={t("CORE.VIOLATION.DESCRIPTION")}>
+                                {getFieldDecorator("description", {
 
-                                    })(
-                                        <>
-                                            {
-                                                dataEmployee.map(item => {
-                                                    return (
-                                                        <div>
-                                                            {`${item.lastName} ${item.firstName}`}
-                                                        </div>
-                                                    )
-                                                })
-                                            }
-                                        </>
-                                    )}
-                                </Form.Item>
-                            </Col>
-                        </Row>
+                                })(<span>{data.description}</span>)}
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                   
+                    <Row type="flex" justify="center" align="bottom">
+                        <Col span={20}>
+                            <Form.Item label={t("CORE.VIOLATION.IMAGE.PATH")}>
+                                <Upload
+                                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                                    listType="picture-card"
+                                    fileList={fileList}
+                                    onPreview={handlePreview}
+                                    showUploadList={{
+                                        showRemoveIcon: false
+                                    }}
+                                >
+                                </Upload>
+                                <Modal
+                                    visible={previewVisible}
+                                    title={previewTitle}
+                                    footer={null}
+                                    onCancel={handleCancel}
+                                >
+                                    <img alt="example" style={{ width: '100%' }} src={previewImage} />
+                                </Modal>
 
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                   
+                    <Row type="flex" justify="center" align="bottom">
+                        <Col span={20}>
+                            <Form.Item label={t("CORE.VIOLATION.VIOLATOR")}>
+                                {getFieldDecorator('select-multiple', {
 
-                        <Row type="flex" justify="center" align="bottom">
-                            <Col span={20}>
-                                <Form.Item label={t("CORE.VIOLATION.EXCUSE")}>
-                                    {getFieldDecorator("excuse", {
+                                })(
+                                    <>
+                                        {
+                                            dataEmployee.map(item => {
+                                                return (
+                                                    <div>
+                                                        {`${item.lastName} ${item.firstName}`}
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                    </>
+                                )}
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
 
-                                    })(
-                                            <TextArea rows={4} />
-                                        )}
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                        <Row type="flex" justify="center">
-                            <div className="btn-group">
-                                <Button
-                                    loading={loading}
-                                    type="primary"
-                                    htmlType="submit"
-                                    className="btn-yellow btn-right"
-                                    style={{ float: "right" }}
-                                    onClick={onConfirm}>
-                                    {t("CORE.confirm")}
-                                </Button>
-                            </div>
-                        </Row>
-                    </Form>
-                </Spin>
+                        </Col>
+                    </Row>
+
+                    <Row type="flex" justify="center" align="bottom">
+                        <Col span={20}>
+                            <Form.Item label={t("CORE.VIOLATION.EXCUSE")}>
+                                {getFieldDecorator("excuse", {
+                                    rules: [
+                                        {
+                                            required: true,
+                                            message: (<>{t("CORE.VIOLATION.ALERT.EXCUSE")}</>),
+                                        }
+                                    ]
+                                })(
+                                    <TextArea rows={4} />
+                                )}
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row type="flex" justify="center">
+                        <div className="btn-group">
+                            <Button
+                                loading={loading}
+                                type="primary"
+                                htmlType="submit"
+                                className="btn-yellow btn-right"
+                                style={{ float: "right" }}
+                                onClick={onConfirm}>
+                                {t("CORE.confirm")}
+                            </Button>
+                        </div>
+                    </Row>
+                </Form>
+
             </Col>
         </Row >
     );

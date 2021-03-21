@@ -9,7 +9,7 @@ import CertificationDetail from "~/Core/Modules/Employee/Components/Form/Certifi
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 import { Modal } from "antd";
 
-const CertificationForm = () => {
+const CertificationForm = ({data}) => {
   const [visible, setVisible] = useState(false);
 
   const t = useTranslate();
@@ -30,14 +30,14 @@ const CertificationForm = () => {
         text={t("CORE.CERTIFICATION.MANAGEMENT.CREATE")}
         className="btn-yellow"
       />
-      <Table t={t} />
+      <Table t={t} data={data} />
       <Modal
         title={t("CORE.CERTIFICATION.MANAGEMENT.TITLE")}
         visible={visible}
         onCancel={handleCloseModal}
         footer={null}
       >
-        <CertificationDetail />
+        <CertificationDetail action={handleCloseModal} data={data}/>
       </Modal>
     </div>
   );

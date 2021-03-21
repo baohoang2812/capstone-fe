@@ -26,7 +26,7 @@ const ModalDelete = ({
     setLoading(true);
 
     apiDelete(selectedRowKeys).then((res) => {
-      if (res.status !== 200) {
+      if (res.code !== 200) {
         setLoading(false);
         if (Array.isArray(res.message)) {
           message.error(t("CORE.delete_failure"));

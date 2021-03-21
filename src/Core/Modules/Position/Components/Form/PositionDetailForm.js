@@ -7,7 +7,6 @@ import {
     Form,
     Input,
     Button,
-    Spin,
     message
 } from "antd";
 /* Hooks */
@@ -21,6 +20,7 @@ import { update_identity_table_data_success } from "~/Core/Store/actions/adminTa
 
 /* Api */
  import positionApi from "~/Core/Modules/Position/Api/";
+import TextArea from "antd/lib/input/TextArea";
 
 const PositionDetailForm = ({ form,is_create,action, data }) => {
     const t = useTranslate();
@@ -85,7 +85,7 @@ const PositionDetailForm = ({ form,is_create,action, data }) => {
         <Row type="flex" justify="center">
             <Col span={12}>
                 <div className="div_custom">
-                    <Spin>
+                   
                         <Form onSubmit={onConfirm}>
                             <Row type="flex" justify="center" align="bottom">
                                 <Col span={15}>
@@ -121,7 +121,7 @@ const PositionDetailForm = ({ form,is_create,action, data }) => {
                                                 },
 
                                             ]
-                                        })(<Input />)}
+                                        })(<TextArea />)}
                                     </Form.Item>
                                 </Col>
                             </Row>
@@ -139,7 +139,7 @@ const PositionDetailForm = ({ form,is_create,action, data }) => {
                                 </div>
                             </Row>
                         </Form>
-                    </Spin>
+                   
                 </div>
             </Col>
         </Row>

@@ -3,14 +3,14 @@
     "CORE.REPORT.DESCRIPTION":"Mô tả",
     "CORE.REPORT.STATUS":"Trạng thái",
     "CORE.REPORT.BRANCH.NAME":"Tên chi nhánh",
-    "CORE.REPORT.CREATED.BY":"Người tạo",
+    "CORE.REPORT.SUBMITTED.BY":"Người nộp",
     "CORE.REPORT.CHARGE.CREATE":"Ngày tạo",
     "CORE.REPORT.CHARGE.UPDATE":"Ngày cập nhật",
     "CORE.REPORT.MANAGEMENT.TITLE":"Quản lý báo cáo",
     "CORE.REPORT.CREATE.ACCOUNT":"Xem báo cáo",
     "CORE.VIOLATION.MANAGEMENT.TITLE":"Chi tiết vi phạm",
     "CORE.VIOLATION.ID":"ID",
-    "CORE.VIOLATION.IMAGE.PATH":"Hình ảnh",
+    "CORE.VIOLATION.IMAGE.PATH":"Hình ảnh vi phạm",
     "CORE.VIOLATION.NAME":"Tên vi phạm",
     "CORE.REGULATION.NAME":"Loại quy tắc",
     "CORE.VIOLATION.DESCRIPTION":"Mô tả",
@@ -37,7 +37,11 @@
     "CORE.VIOLATION.SUBMITTED":"Đã nộp",
     "CORE.REPORT.ADMIN.NOTE":"Ghi chú của admin",
     "CORE.REPORT.QC.NOTE":"Ghi chú của QC",
-    "CORE.REPORT.ASSIGNEE":"QC phụ trách"
+    "CORE.REPORT.ASSIGNEE":"QC phụ trách",
+    "CORE.REPORT":"Báo cáo",
+    "CORE.EXPORT":"Tải xuống",
+    "CORE.VIOLATION.CREATED.BY":"Được tạo bởi",
+    "CORE.REPORT.STATUS.DONE":"Đã xử lý"
 
 
 

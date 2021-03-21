@@ -13,6 +13,7 @@ import { branches as identity } from "~/Core/Modules/Branch/Configs/constants";
 
 /* Api */
 import branchApi from "~/Core/Modules/Branch/Api/";
+import EmployeeApi from "~/Core/Modules/Branch/Api/EmployeeApi";
 
 const { Option } = Select;
 
@@ -22,15 +23,32 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
   const dispatch = useDispatch();
   /* State */
   const [loading, setLoading] = useState(false);
+  const [listBM, setListBM] = useState([]);
   const { getFieldDecorator, validateFields, setFieldsValue } = form;
+  const[visible,setVisible]= useState(false);
   useEffect(() => {
-    setFieldsValue({
-      name: data?.name,
-      phoneNumber: data?.phoneNumber,
-      address: data?.address,
-      managerId: data?.managerId,
-    });
+    (async () => {
+      const resListBM = await EmployeeApi.getList();
+      setListBM(resListBM?.data?.result);
+      if(!is_create){
+        setVisible(true);
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    console.log(data)
+    if (!(data && Object.keys(data).length === 0 && data.constructor === Object)) {
+      console.log("this")
+      setFieldsValue({
+        name: data?.name,
+        phoneNumber: data?.phoneNumber,
+        address: data?.address,
+        managerId: data?.manager?.id
+      });
+    }
   }, [data]);
+
   const onConfirm = (e) => {
     e.preventDefault();
     validateFields((err, values) => {
@@ -143,11 +161,17 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
                 <Form.Item label={t("CORE.BRANCH.MANAGER.NAME")}>
                   {getFieldDecorator(
                     "managerId",
-                    {}
+                    {initialValue: listBM?.[0]?.id,}
                   )(
                     <Select>
-                      <Option value={32}>Manager 1</Option>
-                      <Option value={2}>Manager 2</Option>
+                      {listBM.map((item) => (
+                        <Option key={item.id} value={item.id}>
+                          {item.firstName} {item.lastName}
+                        </Option>
+                      ))}
+                      <Option key={data?.manager?.id} value={data?.manager?.id} disable={visible}>
+                      {data?.manager?.lastName} {data?.manager?.firstName}
+                      </Option>
                     </Select>
                   )}
                 </Form.Item>

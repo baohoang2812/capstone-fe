@@ -13,7 +13,7 @@ const UserManagement = () => {
   const t = useTranslate();
 
   const createEmployee = () => {
-    history.push("/employee/create")
+    history.push("/employee/detail/create")
   }
 
 

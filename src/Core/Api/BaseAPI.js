@@ -17,7 +17,7 @@ const generate_options = (opts = {}) => {
   let headers = {
     Authorization: `Bearer ${localStorage.getItem("token")}`
   };
-
+  console.log(opts)
   if (opts.headers) {
     headers = {
       ...headers,
@@ -26,7 +26,7 @@ const generate_options = (opts = {}) => {
   }
   
   delete opts.headers;
-  console.log();
+
   return {
     headers,
     ...opts
@@ -53,6 +53,7 @@ const get_prefix = (apiVersion, customPrefix, path) => {
 }
 
 const get = (apiVersion, customPrefix) => async (path, params, opts) => {
+  console.log(opts)
   try {
     const response = await axios.get(
       get_prefix(apiVersion, customPrefix, path) + serialize(params),
@@ -97,10 +98,18 @@ const put = (apiVersion, customPrefix) => async (path, body, opts) => {
 };
 
 const del = (apiVersion, customPrefix) => async (path, body, opts) => {
+  let listIds = "?"
+  body.ids.forEach(id => {
+      listIds += `ids=${id}&`
+    })
+    if (body.ids.length > 0) {
+      listIds = listIds.slice(0, -1)
+    } else {
+      listIds = ""
+    }
   try {
     const response = await axios.delete(
-      get_prefix(apiVersion, customPrefix, path),
-      { data: body },
+      get_prefix(apiVersion, customPrefix, path) + listIds,
       generate_options(opts)
     );
 
@@ -171,7 +180,17 @@ export default class BaseAPI {
   };
 
   deleteByIds = (ids, options = {}, opts) => {
-    return this.initApi.post(`${this.baseUrl}/deleteByIds`, { ids }, opts);
+    let listIds = "?"
+    ids.forEach(id => {
+      listIds += `ids=${id}&`
+    })
+    if (ids.length > 0) {
+      listIds = listIds.slice(0, -1)
+    } else {
+      listIds = ""
+    }
+
+    return this.initApi.del(`${this.baseUrl}${listIds}`, {}, generate_options(opts));
   };
 
   getOne = (filter, opts) => {

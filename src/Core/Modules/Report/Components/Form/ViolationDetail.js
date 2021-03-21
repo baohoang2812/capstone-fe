@@ -7,8 +7,9 @@ import {
     Form,
     Input,
     Button,
-    Spin,
-    message
+    message,
+    Modal,
+    Upload
 } from "antd";
 import moment from "moment";
 /* Hooks */
@@ -23,7 +24,14 @@ import { violations as identity } from "~/Core/Modules/Report/Configs/Constants"
 /* Api */
 import violationApi from "~/Core/Modules/Report/Api/Violation";
 import employeeApi from "~/Core/Modules/Employee/Api";
-
+function getBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    });
+}
 const ViolationDetail = ({ form, is_create, action, data }) => {
     const t = useTranslate();
     const { TextArea } = Input;
@@ -31,6 +39,10 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
     const dispatch = useDispatch();
     /* State */
     const [loading, setLoading] = useState(false);
+    const [fileList, setFileList] = useState([]);
+    const [previewVisible, setPreviewVisible] = useState(false);
+    const [previewTitle, setPreviewTitle] = useState("");
+    const [previewImage, setPreviewImage] = useState(false);
     // const [loadingDropdown, setLoadingDropdown] = useState(false);
     const { getFieldDecorator, validateFields} = form;
     const [dataEmployee, setDataEmployee] = useState([]);
@@ -44,8 +56,27 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
         } else {
             setDataEmployee([])
         }
-
+        if (data?.evidence?.length > 0) {
+            const list = data?.evidence?.map((item, index) => ({
+                uid: index,
+                name: "Evidence",
+                status: "done",
+                url: item.imagePath,
+            }))
+            setFileList(list);
+        }
     }, [data]);
+    const handleCancel = () => setPreviewVisible(false);
+
+    const handlePreview = async (file) => {
+        if (!file.url && !file.preview) {
+            file.preview = await getBase64(file.originFileObj);
+        }
+
+        setPreviewImage(file.url || file.preview)
+        setPreviewVisible(true)
+        setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1))
+    }
 
     const onConfirm = (e) => {
         e.preventDefault();
@@ -86,7 +117,7 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
     return (
         <Row type="flex" justify="center">
             <Col span={24}>
-                <Spin>
+        
                     <Form onSubmit={onConfirm}>
                         <Row type="flex" justify="center" align="bottom">
                             <Col span={20}>
@@ -109,10 +140,34 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
                         </Row>
                         <Row type="flex" justify="center" align="bottom">
                             <Col span={20}>
-                                <Form.Item label={t("CORE.VIOLATION.IMAGE.PATH")}>
-                                    {getFieldDecorator("imagePath", {
+                                <Form.Item label={t("CORE.VIOLATION.CREATED.BY")}>
+                                    {getFieldDecorator("createdBy", {
 
-                                    })(<img alt="example" style={{ width: "100%" }} src={data.imagePath} />)}
+                                    })(<span>{data.createdBy.lastName} {data.createdBy.firstName}</span>)}
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        <Row type="flex" justify="center" align="bottom">
+                            <Col span={20}>
+                                <Form.Item label={t("CORE.VIOLATION.IMAGE.PATH")}>
+                                <Upload
+                                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                                    listType="picture-card"
+                                    fileList={fileList}
+                                    onPreview={handlePreview}
+                                    showUploadList={{
+                                        showRemoveIcon: false
+                                    }}
+                                >
+                                </Upload>
+                                <Modal
+                                    visible={previewVisible}
+                                    title={previewTitle}
+                                    footer={null}
+                                    onCancel={handleCancel}
+                                >
+                                    <img alt="example" style={{ width: '100%' }} src={previewImage} />
+                                </Modal>
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -171,7 +226,7 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
                             </div>
                         </Row>
                     </Form>
-                </Spin>
+            
             </Col>
         </Row >
     );

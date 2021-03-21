@@ -1,8 +1,16 @@
 import BaseApi from "~/Core/Api/BaseAPI";
+import moment from "moment";
+
 class ViolationApi extends BaseApi {
+  // getList = (filters) => {
+  //   console.log(filters);
+  //   return this.initApi.get(`${this.baseUrl}`, filters);
+  // };
+
   getList = (filters) => {
-    console.log(filters);
-    return this.initApi.get(`${this.baseUrl}`, filters);
+    const FromDate = moment().startOf('month').format("YYYY-MM-DD");
+    const toDate = moment().endOf('month').format("YYYY-MM-DD");
+    return this.initApi.get(`${this.baseUrl}`, {...filters, "Filter.FromDate": FromDate, "Filter.ToDate": toDate});
   };
 
   getOne = (id) => {

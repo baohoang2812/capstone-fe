@@ -1,4 +1,6 @@
 {
-    "CORE.NOTIFICATION.DETAIL":"Thông báo chi tiết"
+    "CORE.NOTIFICATION.DETAIL":"Chi tiết thông báo",
+    "CORE.NOTIFICATION":"Thông báo",
+    "CORE.NOTIFICATION.MANAGEMENT":"Quản lý thông báo"
 
 }

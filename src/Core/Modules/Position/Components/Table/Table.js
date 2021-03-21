@@ -22,7 +22,7 @@ const UserTable = () => {
       title: t("CORE.POSITION.NAME"),
       dataIndex: "name",
       className: "header-filter",
-      key: "name",
+      key: "Filter.Name",
       fieldType: "text",
       sorter: true,
       width: 180,
@@ -36,7 +36,7 @@ const UserTable = () => {
       dataIndex: "description",
       className: "header-filter",
       key: "description",
-      fieldType: "text",
+      fieldType: "none",
       sorter: true,
       width: 280,
     },
@@ -46,7 +46,7 @@ const UserTable = () => {
    
   ], [])
 
-  const defaultSorter = useMemo(() => ({ }), []);
+  const defaultSorter = useMemo(() => ({  "Sort.Orders": "desc createdAt"}), []);
   
   const scroll = useMemo(() => ({
     x: 460 ,

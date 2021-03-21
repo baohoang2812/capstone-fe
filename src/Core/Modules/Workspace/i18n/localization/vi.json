@@ -5,5 +5,9 @@
     "CORE.WORKSPACE.CHARGE.CREATE":"Ngày tạo",
     "CORE.WORKSPACE.CHARGE.UPDATE":"Ngày cập nhật",
     "CORE.WORKSPACE.MANAGEMENT.TITLE":"Quản lý khu vực",
-    "CORE.WORKSPACE.CREATE.ACCOUNT":"Tạo khu vực"
+    "CORE.WORKSPACE.CREATE.ACCOUNT":"Tạo khu vực",
+    "CORE.WORKSPACE.UPDATE.ACCOUNT":"Cập nhật khu vực",
+    "CORE.WORKSPACE":"Khu vực",
+    "CORE.WORKSPACE.DETAIL":"Chi tiết khu vực",
+    "WORKSPACE.PARENT_CATE.PLACEHOLDER":"Khu vực cha"
 }

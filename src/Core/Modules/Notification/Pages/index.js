@@ -68,7 +68,7 @@ export const Notify = () => {
 
     (async () => {
       try {
-        const res = await notiApi.getList(0, 10);
+        const res = await notiApi.getList(0, 10,);
         if (res.code !== 200) {
           message.error("CORE.MENU.message_error");
           setError(true);
@@ -77,8 +77,8 @@ export const Notify = () => {
         const listNotification = res?.data?.result || {};
         setListNoti(listNotification);
         console.log(listNotification);
-        // const totalRows = res?.data?.total
-        setTotalRows(30);
+        const totalRows = res?.data?.total
+        setTotalRows(totalRows);
         setLoading(false);
 
       } catch (error) {
@@ -122,8 +122,8 @@ export const Notify = () => {
         const listNotification = res?.data?.result || {};
         setListNoti(listNotification);
         console.log(listNotification);
-        // const totalRows = res?.data?.total
-        setTotalRows(35);
+        const totalRows = res?.data?.total
+        setTotalRows(totalRows);
         setLoading(false);
 
       } catch (error) {
@@ -152,8 +152,8 @@ export const Notify = () => {
         const listNotification = res?.data?.result || {};
         setListNoti(listNotification);
         console.log(listNotification);
-        // const totalRows = res?.data?.total
-        setTotalRows(35);
+        const totalRows = res?.data?.total
+        setTotalRows(totalRows);
         setLoading(false);
 
       } catch (error) {

@@ -6,7 +6,6 @@ import {
     Col,
     Form,
     Button,
-    Spin,
     Divider,
     message,
 } from "antd";
@@ -89,7 +88,7 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
     return (
         <Row type="flex" justify="center">
             <Col span={24}>
-                <Spin>
+                
                     <Form onSubmit={onConfirm}>
                         <Row type="flex" justify="center" align="bottom">
                             <Col span={20}>
@@ -107,6 +106,15 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
                                     {getFieldDecorator("description", {
 
                                     })(<span>{data.description}</span>)}
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        <Row type="flex" justify="center" align="bottom">
+                            <Col span={20}>
+                                <Form.Item label={t("CORE.VIOLATION.CREATED.BY")}>
+                                    {getFieldDecorator("createdBy", {
+
+                                    })(<span>{data.createdBy.lastName} {data.createdBy.firstName}</span>)}
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -187,7 +195,7 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
                             </div>) : null}
                         </Row>
                     </Form>
-                </Spin>
+               
             </Col>
         </Row>
     );

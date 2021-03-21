@@ -3,5 +3,7 @@
     "CORE.WORKSCHEDULE.CREATE":"Create WorkSchedule",
     "CORE.SHIFT.NAME":"Shift Name",
     "CORE.EMPLOYEE.NAME":"Name",
-    "CORE.VIOLATION.CREATE.SUCCESS":"Updated success"
+    "CORE.VIOLATION.CREATE.SUCCESS":"Updated success",
+    "CORE.WORKSCHEDULE":"WorkSchedule",
+    "CORE.WORKSCHEDULE.MANAGEMENT":"WorkSchedule management"
 }

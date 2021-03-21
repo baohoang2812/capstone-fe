@@ -24,6 +24,7 @@ const UserManagement = () => {
         action={() => createReport()}
         text={t("CORE.REPORT.CREATE.ACCOUNT")}
         className="btn-yellow"
+        isDisplay={false}
       />
       <Table t={t} />
     </div>

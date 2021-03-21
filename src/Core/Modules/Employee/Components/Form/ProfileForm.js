@@ -2,6 +2,9 @@ import "./style.less";
 
 import React, { useEffect, useState } from "react";
 import {
+  useParams
+} from "react-router-dom";
+import {
   Select,
   DatePicker,
   Upload,
@@ -11,7 +14,6 @@ import {
   Form,
   Input,
   Modal,
-  Spin,
   message,
 } from "antd";
 import moment from "moment";
@@ -39,6 +41,8 @@ const ProfileForm = ({form}) => {
   const [fileList, setFileList] = useState([]);
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
+  
+  const { id } = useParams();
   // const {
   //   roleName: role
   // } = jwt_decode(token);
@@ -84,7 +88,7 @@ const ProfileForm = ({form}) => {
         uid: "-4",
         name: "image.png",
         status: "done",
-        url: data?.employee?.image_path,
+        url: data?.imagePath,
       },
     ]);
   }, [data]);
@@ -94,14 +98,14 @@ const ProfileForm = ({form}) => {
       (async () => {
         try {
           // setLoading(true);
-          const res = await employeeApi.getProfile();
+          const res = await employeeApi.getOne(id);
           if (res.code !== 200) {
             message.error("CORE.MENU.message_error");
             // setLoading(false);
             // setError(true);
             return;
           }
-          const data = res?.data|| {};
+          const data = res?.data?.result?.[0]|| {};
           setData(data);
           console.log(data);
         } catch (error) {
@@ -109,7 +113,8 @@ const ProfileForm = ({form}) => {
           // setLoading(false);
         }
       })();
-  }, []);
+  }, [id]);
+  console.log(id)
   // const onConfirm = (e) => {
   //   e.preventDefault();
   //   validateFields((err, values) => {
@@ -168,7 +173,7 @@ const ProfileForm = ({form}) => {
     <Row type="flex" justify="center">
       <Col span={20}>
         <div className="div_custom">
-          <Spin>
+          
             <Form>
               <Row type="flex" justify="space-between" align="bottom">
                 <Col span={3}>
@@ -384,7 +389,7 @@ const ProfileForm = ({form}) => {
                 </Col>
               </Row>
             </Form>
-          </Spin>
+         
         </div>
       </Col>
     </Row>

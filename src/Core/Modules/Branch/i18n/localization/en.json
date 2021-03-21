@@ -13,7 +13,8 @@
     "CORE.BRANCH.INACTIVE":"Inactive",
     "CORE.BRANCH.CREATE.SUCCESS":"Create branch success!",
     "CORE.BRANCH.UPDATE.SUCCESS":"Update branch success!",
-    "CORE.BRANCH":"Branches"
+    "CORE.BRANCH":"Branch",
+    "CORE.BRANCH.MANAGEMENT":"Branch Management"
 
 
 

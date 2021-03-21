@@ -6,7 +6,9 @@
     "CORE.CERTIFICATE.TYPE.CHARGE.UPDATE":"Updated date",
     "CORE.CERTIFICATE.TYPE.UPDATE.SUCCESS":"Updated certificate type success!",
     "CORE.CERTIFICATE.TYPE.CREATE.SUCCESS":"Created certificate type success!",
-    "CORE.CERTIFICATE.TYPE.MANAGEMENT.TITLE":"Certificate Type Manager",
+    "CORE.CERTIFICATE.TYPE.MANAGEMENT.TITLE":"Certificate Management",
     "CORE.CERTIFICATE.TYPE.CREATE.ACCOUNT":"Create certificate type",
-    "CORE.CERTIFICATE.TYPE.UPDATE.ACCOUNT":"Update certificate type"
+    "CORE.CERTIFICATE.TYPE.UPDATE.ACCOUNT":"Update certificate type",
+    "CORE.CERTIFICATE.DETAIL":"Certificate detail",
+    "CORE.CERTIFICATE":"Certificate"
 }

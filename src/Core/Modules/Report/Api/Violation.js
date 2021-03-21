@@ -7,9 +7,15 @@ class ReportApi extends BaseApi {
   getOne = (id) => {
     return this.initApi.get(`${this.baseUrl}?Filter.Ids=${id}`);
   };
-
+  getViolationReport = (id) => {
+    return this.initApi.get(`${this.baseUrl}?Filter.ReportIds=${id}`);
+  };
+ 
   create = (body) => {
     return this.initApi.post(`${this.baseUrl}`, body);
+  };
+  exportViolation=(id)=>{
+    return this.initApi.get(`${this.baseUrl}/export?reportIds=${id}`);
   };
 
   update = (id, body) => {

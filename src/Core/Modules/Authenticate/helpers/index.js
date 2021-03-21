@@ -1,3 +1,5 @@
+import jwt_decode from "jwt-decode";
+
 export const setToken = (token) => {
   localStorage.setItem("token", token);
 };
@@ -24,7 +26,7 @@ export const getPermissionsAccountInfo = (permissions) => {
 
 export const removeToken = () => {
   localStorage.removeItem("token");
-}
+};
 
 export const checkLoggedIn = () => {
   const token = localStorage.getItem("token");
@@ -32,7 +34,24 @@ export const checkLoggedIn = () => {
     return true;
   }
   return false;
-}
+};
+
+export const checkRole = (roleName, isAuthenticate) => {
+  const token = localStorage.getItem("token" || "");
+  let role = {};
+
+  try {
+    role = jwt_decode(token);
+  } catch (e) {
+    role = {}
+  }
+
+  if (!isAuthenticate){
+    return true
+  }
+
+  return roleName?.find(item => item.toLowerCase() === role.roleName.toLowerCase()) !== undefined;
+};
 
 export const logout = () => {
   localStorage.removeItem("token");

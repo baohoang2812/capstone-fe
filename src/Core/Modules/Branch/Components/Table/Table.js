@@ -24,7 +24,7 @@ const UserTable = () => {
       title: t("CORE.BRANCH.NAME"),
       dataIndex: "name",
       className: "header-filter",
-      key: "name",
+      key: "Filter.Name",
       fieldType: "text",
       fixed: "left",
       sorter: true,
@@ -61,7 +61,18 @@ const UserTable = () => {
       fieldType: "text",
       sorter: true,
       width: 220,
-      render: (text, record) => <span>{`${record?.manager?.firstName} ${record?.manager?.lastName}`}</span>
+      render: (_,record) => {
+        if(record.manager!==null){
+          return( 
+          <span>{`${record?.manager?.lastName} ${record?.manager?.firstName}`}</span>)
+         
+        }
+        else{
+          return (
+            <span> </span>
+          )
+        }
+      }
     },
     
    
@@ -107,8 +118,10 @@ const UserTable = () => {
    
   ], [])
 
-  const defaultSorter = useMemo(() => ({ }), []);
-  
+ 
+  const defaultSorter = useMemo(() => ({
+    "Sort.Orders": "desc createdAt"
+   }), []);
   const scroll = useMemo(() => ({
     x: 1310 ,
     y: `calc(100vh - (178px))`

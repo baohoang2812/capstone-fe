@@ -26,40 +26,35 @@ function* get_indentity_table_data_worker({ payload }) {
     treeMode,
     treeKey,
     dynamicKey,
-    dataForSelectorKey
+    dataForSelectorKey,
+    options
   } = payload;
+  console.log(sorter)
 
-  const where = Object.keys(filters).reduce((prev, key) => {
-    const fil = filters[key];
+  let where = Object.keys(filters).reduce((prev, key) => {
+    const value = filters[key].value;
 
-    if (fil.operator === "reset") {
-      delete filters[key];
-      return prev;
+    if(value) {
+      prev[key]=value;
     }
-
-    let filter;
-
-    if (fil.type === "date" && fil.operator === "eq") {
-      filter = { $between: fil.value };
-    } else if (fil.type === "date" && fil.operator === "ne") {
-      filter = { $nbetween: fil.value };
-    } else {
-      filter = { [`$${fil.operator}`]: fil.value };
-    }
-
-    prev.push({ [key]: filter });
+    
     return prev;
-  }, []);
+  }, {});
 
   if (defaultFilter.whereAnd) {
     where.push(defaultFilter.whereAnd);
   }
 
   // const opts = { PageIndex: current, Limit: pageSize, where, order: sorter };
-  const opts = { PageIndex: current-1, Limit: pageSize };
-
+  const opts = { "Filter.IsDeleted":false, PageIndex: current-1, Limit: pageSize, ...where, ...sorter };
+  if (options) {
+    opts[options.key] = options.value
+  }
+  
+  console.log(opts)
+  
   yield put({ type: get_action_table(identity, actions.GET_IDENTITY_TABLE_DATA_REQUEST) }); // Trigger loading
-  console.log(opts);
+  
   try {
     const { data: res } = yield call(api[method], opts);
     const payload = {

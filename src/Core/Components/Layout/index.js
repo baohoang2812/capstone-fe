@@ -29,7 +29,7 @@ const RoutesMaster = ({
   useEffect(() => {
     if (isAuthenticated) {
       if (location.pathname === "/") {
-        history.push("/employee")
+        history.push("/dashboard")
       }
     }
   }, [])
@@ -38,7 +38,7 @@ const RoutesMaster = ({
     <div className="site-app">
       <div className="main-page">
         <Layout className="main-wrapper">
-          <Layout className="content full-height">
+          <Layout className="custom-sidebar content full-height">
                 {isAuthenticated ? <SideBar url={listArrayRoutes} /> : null}
             <Content className={`main-content ${userImpersonation?.isImpersonation && "is-impersonation"}`}>
               {isAuthenticated ? <HeaderMaster url={listUrl} /> : null}

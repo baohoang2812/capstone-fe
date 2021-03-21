@@ -4,7 +4,7 @@
     "CORE.REPORT.DESCRIPTION":"Description",
     "CORE.REPORT.STATUS":"Status",
     "CORE.REPORT.BRANCH.NAME":"Branch Name",
-    "CORE.REPORT.CREATED.BY":"Created by",
+    "CORE.REPORT.SUBMITTED.BY":"Submitted by",
     "CORE.REPORT.CHARGE.CREATE":"Created at",
     "CORE.REPORT.CHARGE.UPDATE":"Updated at",
     "CORE.REPORT.MANAGEMENT.TITLE":"Report Management",
@@ -38,6 +38,10 @@
     "CORE.VIOLATION.SUBMITTED":"Submitted",
     "CORE.REPORT.ADMIN.NOTE":"Admin note",
     "CORE.REPORT.QC.NOTE": "QC note",
-    "CORE.REPORT.ASSIGNEE":"Assignee"
+    "CORE.REPORT.ASSIGNEE":"Assignee",
+    "CORE.REPORT":"Report",
+    "CORE.EXPORT":"Export",
+    "CORE.VIOLATION.CREATED.BY":"Created by",
+    "CORE.REPORT.STATUS.DONE":"Done"
 
 }

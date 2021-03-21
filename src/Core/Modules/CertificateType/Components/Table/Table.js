@@ -32,7 +32,7 @@ const UserTable = () => {
       width: 200,
       render: (_, record) => {
         return (
-          <ImageThumbnail src={record.image_path}/>
+          <ImageThumbnail src={record.imagePath}/>
         )
       }
     },
@@ -40,7 +40,7 @@ const UserTable = () => {
       title: t("CORE.CERTIFICATE.TYPE.NAME"),
       dataIndex: "name",
       className: "header-filter",
-      key: "name",
+      key: "Filter.Name",
       fieldType: "text",
       width: 220,
       sorter: true,
@@ -53,7 +53,7 @@ const UserTable = () => {
       dataIndex: "description",
       className: "header-filter",
       key: "description",
-      fieldType: "text",
+      fieldType: "none",
       sorter: true,
       width: 220,
     },
@@ -63,7 +63,7 @@ const UserTable = () => {
       dataIndex: "createAt",
       className: "header-filter",
       key: "contacts.createAt",
-      fieldType: "date",
+      fieldType: "none",
       sorter: true,
       width: 150,
       render: (text) => moment(text).format("DD/MM/YYYY"),
@@ -73,13 +73,15 @@ const UserTable = () => {
       dataIndex: "updatedAt",
       className: "header-filter",
       key: "contacts.updatedAt",
-      fieldType: "date",
+      fieldType: "none",
       sorter: true,
       render: (text) => moment(text).format("DD/MM/YYYY"),
     },
   ], [])
 
-  const defaultSorter = useMemo(() => ({ }), []);
+  const defaultSorter = useMemo(() => ({
+    "Sort.Orders": "desc createdAt"
+   }), []);
   
   const scroll = useMemo(() => ({
     x: 940 ,

@@ -1,2 +1,5 @@
 {
-    "CORE.NOTIFICATION.DETAIL":"Notification detail"}
+    "CORE.NOTIFICATION.DETAIL":"Notification detail",
+    "CORE.NOTIFICATION":"Notification",
+    "CORE.NOTIFICATION.MANAGEMENT":"Notification management"
+}

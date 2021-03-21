@@ -9,36 +9,31 @@ import intlMessagesEN from "./i18n/localization/en.json";
 import intlMessagesVi from "./i18n/localization/vi.json";
 
 export default {
+  roleName: ["admin","Branch Manager","Staff"],
   name: "Notification",
   dir: "Notification",
   pathRoot: "notification",
-  title: (
+  title: (t) => {
+    return (
     <span>
-     <Icon type="team" />
-      <span>Notification</span>
+     <Icon type="notification" />
+      <span>{t("CORE.NOTIFICATION")}</span>
     </span>
-  ),
+  )},
   showMenu: true,
   routes: [
-    {
-      url: "profile",
-      component: "Pages/Profile",
-      key: "profile-edit",
-      showMenu: false,
-      title: "Profile",
-    },
     {
       url: ":id",
       component: "Pages/NotificationDetail",
       key: "Notification-create-edit",
       showMenu: false,
-      title: "Notification detail",
+      title: "CORE.NOTIFICATION.DETAIL",
     },
     {
       url: "",
       component: "Pages",
       showMenu: true,
-      title: "Notification Management",
+      title: "CORE.NOTIFICATION.MANAGEMENT",
     },
   ],
   redux: redux,

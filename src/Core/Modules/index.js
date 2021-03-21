@@ -2,6 +2,7 @@ export default [
   { key: "Authenticate" },
   { key: "NotFound" },
   { key: "Error" },
+  { key: "Dashboard"},
   { key: "Employee" },
   { key: "Branch"},
   { key: "Regulation"},
@@ -12,5 +13,8 @@ export default [
   { key: "WorkSchedule"},
   { key: "Shift"},
   { key: "Violation"},
-  { key: "Notification"}
+  { key: "Notification"},
+  { key: "Cameras"},
+  { key: "Profile"},
+  
 ];

@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import jwt_decode from "jwt-decode";
 
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
@@ -22,7 +23,7 @@ const UserTable = () => {
       title: t("CORE.WORKSPACE.NAME"),
       dataIndex: "name",
       className: "header-filter",
-      key: "name",
+      key: "Filter.Name",
       fieldType: "text",
       sorter: true,
       width: 220,
@@ -80,21 +81,27 @@ const UserTable = () => {
    
   ], [])
 
-  const defaultSorter = useMemo(() => ({ }), []);
+  const defaultSorter = useMemo(() => ({ "Sort.Orders": "desc createdAt" }), []);
   
   const scroll = useMemo(() => ({
     x: 960 ,
     y: `calc(100vh - (178px))`
   }), []);
 
+  const token = localStorage.getItem("token" || "");
+  const {
+    roleName: role,
+  } = jwt_decode(token);
   return (
     <AdminTable
       defs={defs}
       api={contactApi}
       identity={identity}
-      showCheckbox={true}
+      showCheckbox={role==="Branch Manager"}
       scroll={scroll}
       defaultSorter={defaultSorter}
+      treeMode={true}
+      treeKey="id"
       disableClassKey="is_active"
       disableClassMode="toggle"
     />

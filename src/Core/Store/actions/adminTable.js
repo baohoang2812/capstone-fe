@@ -22,11 +22,12 @@ export function get_identity_table_data_action(
   treeMode,
   treeKey,
   dynamicKey,
-  dataForSelectorKey
+  dataForSelectorKey,
+  options
 ) {
   return {
     type: GET_IDENTITY_TABLE_DATA_REQUEST,
-    payload: { identity, api, method, current, pageSize, sorter, defaultFilter, filters, treeMode, treeKey, dynamicKey, dataForSelectorKey }
+    payload: { identity, api, method, current, pageSize, sorter, defaultFilter, filters, treeMode, treeKey, dynamicKey, dataForSelectorKey, options }
   }
 }
 

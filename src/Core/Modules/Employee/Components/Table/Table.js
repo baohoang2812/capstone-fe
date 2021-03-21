@@ -33,7 +33,8 @@ const UserTable = () => {
       width: 200,
       render: (_, record) => {
         return (
-          <ImageThumbnail src={record.imagePath}/>
+
+          <ImageThumbnail src={record.imagePath} />
         )
       }
     },
@@ -46,20 +47,30 @@ const UserTable = () => {
       fixed: "left",
       sorter: true,
       width: 220,
-      render: (text, record) => (
-        <Link to={`/employee/${record.id}`}>{`${record.code}`}</Link>
-      ),
+      render: (_, record) => {
+        if (role === "Admin") {
+          return (
+            <Link to={`/employee/detail/${record.id}`}>{`${record.code}`}</Link>
+          )
+        }
+        else {
+          return(
+            <Link to={`/employee/profile/${record.id}`}>{`${record.code}`}</Link>
+          )
+        }
+
+      },
     },
     {
       title: t("CORE.EMPLOYEE.FULLNAME"),
       dataIndex: "first_name",
       className: "header-filter",
-      key: "first_name",
+      key: "Filter.Name",
       fieldType: "text",
       width: 220,
       sorter: true,
       render: (text, record) => (
-        <span>{`${record.firstName} ${record.lastName}`}</span>
+        <span>{`${record.lastName} ${record.firstName}`}</span>
       ),
     },
     {
@@ -67,7 +78,7 @@ const UserTable = () => {
       dataIndex: "address",
       className: "header-filter",
       key: "address",
-      fieldType: "text",
+      fieldType: "none",
       sorter: true,
       width: 220,
     },
@@ -85,16 +96,35 @@ const UserTable = () => {
       dataIndex: "gender",
       className: "header-filter",
       key: "gender",
-      fieldType: "text",
+      fieldType: "none",
       sorter: true,
       width: 200,
+
+      render: (_, record) => {
+        if (record.gender.toLowerCase() === "female") {
+          return (
+            <span> {t("CORE.EMPLOYEE.GENDER.FEMALE")}</span>
+          )
+        }
+        else if (record.gender.toLowerCase() === "male") {
+          return (
+            <span>{t("CORE.EMPLOYEE.GENDER.MALE")}</span>
+          )
+        }
+
+        else {
+          return (
+            <span>{t("CORE.EMPLOYEE.GENDER.OTHER")}</span>
+          )
+        }
+      }
     },
     {
       title: t("CORE.EMPLOYEE.PHONE.NUMBER"),
       dataIndex: "phoneNumber",
       className: "header-filter",
       key: "phoneNumber",
-      fieldType: "number",
+      fieldType: "none",
       sorter: true,
       width: 200,
     },
@@ -103,7 +133,7 @@ const UserTable = () => {
       dataIndex: "birthDate",
       className: "header-filter",
       key: "birthDate",
-      fieldType: "date",
+      fieldType: "none",
       sorter: true,
       width: 150,
       render: (text) => moment(text).format("DD/MM/YYYY"),
@@ -123,7 +153,7 @@ const UserTable = () => {
       dataIndex: "position_name",
       className: "header-filter",
       key: "position_name",
-      fieldType: "text",
+      fieldType: "none",
       sorter: true,
       width: 200,
       render: (_, record) => record?.position?.name
@@ -133,7 +163,7 @@ const UserTable = () => {
       dataIndex: "createdAt",
       className: "header-filter",
       key: "contacts.createdAt",
-      fieldType: "date",
+      fieldType: "none",
       sorter: true,
       width: 150,
       render: (text) => moment(text).format("DD/MM/YYYY"),
@@ -143,7 +173,7 @@ const UserTable = () => {
       dataIndex: "updated_at",
       className: "header-filter",
       key: "contacts.updated_at",
-      fieldType: "date",
+      fieldType: "none",
       sorter: true,
       width: 150,
       render: (text) => moment(text).format("DD/MM/YYYY"),
@@ -170,10 +200,12 @@ const UserTable = () => {
     },
   ], [])
 
-  const defaultSorter = useMemo(() => ({ }), []);
-  
+  const defaultSorter = useMemo(() => ({
+    "Sort.Orders": "desc createdAt"
+  }), []);
+
   const scroll = useMemo(() => ({
-    x: 2500 ,
+    x: 2500,
     y: `calc(100vh - (178px))`
   }), []);
 

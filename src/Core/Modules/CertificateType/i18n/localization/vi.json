@@ -4,9 +4,11 @@
     "CORE.CERTIFICATE.TYPE.DESCRIPTION":"Mô tả",
     "CORE.CERTIFICATE.TYPE.CHARGE.CREATE":"Ngày tạo",
     "CORE.CERTIFICATE.TYPE.CHARGE.UPDATE":"Ngày cập nhật",
-    "CORE.CERTIFICATE.TYPE.UPDATE.SUCCESS":"Cập nhật loại chứng chỉ thành công!",
-    "CORE.CERTIFICATE.TYPE.CREATE.SUCCESS":"Tạo loại chứng chỉ thành công!",
-    "CORE.CERTIFICATE.TYPE.MANAGEMENT.TITLE":"Quản lý loại chứng chỉ",
-    "CORE.CERTIFICATE.TYPE.CREATE.ACCOUNT":"Tạo loại chứng chỉ",
-    "CORE.CERTIFICATE.TYPE.UPDATE.ACCOUNT":"Cập nhật loại chứng chỉ"
+    "CORE.CERTIFICATE.TYPE.UPDATE.SUCCESS":"Cập nhật bằng cấp thành công!",
+    "CORE.CERTIFICATE.TYPE.CREATE.SUCCESS":"Tạo bằng cấp thành công!",
+    "CORE.CERTIFICATE.TYPE.MANAGEMENT.TITLE":"Quản lý bằng cấp",
+    "CORE.CERTIFICATE.TYPE.CREATE.ACCOUNT":"Tạo bằng cấp",
+    "CORE.CERTIFICATE.TYPE.UPDATE.ACCOUNT":"Cập nhật bằng cấp",
+    "CORE.CERTIFICATE.DETAIL":"Chi tiết bằng cấp ",
+    "CORE.CERTIFICATE":"Bằng cấp"
 }
