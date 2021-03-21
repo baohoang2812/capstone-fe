@@ -14,5 +14,8 @@ class CamerasApi extends BaseApi {
   update = (id, body) => {
     return this.initApi.put(`${this.baseUrl}/${id}`, body);
   };
+  deleteByIds = (ids) => {
+    return this.initApi.del(`${this.baseUrl}`, {ids});
+  };
 }
 export default new CamerasApi().requestUrl("/v1/cameras");

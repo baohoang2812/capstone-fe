@@ -26,7 +26,7 @@ const CertificationDetail = ({ form, employeeId, action, data, is_create }) => {
   const [itemSelect, setItemSelect] = useState({});
 
   const t = useTranslate();
-  const { getFieldDecorator, validateFields, setFieldsValue } = form;
+  const { getFieldDecorator, validateFields} = form;
 
   /* Redux */
   const dispatch = useDispatch();

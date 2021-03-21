@@ -9,7 +9,6 @@ import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 /* Api */
 import employeeApi from "~/Core/Modules/Employee/Api";
 import accountApi from "~/Core/Modules/Employee/Api/Account";
-import certificationApi from "~/Core/Modules/Employee/Api/Certification";
 
 /* Component */
 import AccountForm from "./AccountForm";

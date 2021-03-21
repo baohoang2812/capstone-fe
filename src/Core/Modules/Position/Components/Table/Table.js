@@ -36,7 +36,7 @@ const UserTable = () => {
       dataIndex: "description",
       className: "header-filter",
       key: "description",
-      fieldType: "text",
+      fieldType: "none",
       sorter: true,
       width: 280,
     },

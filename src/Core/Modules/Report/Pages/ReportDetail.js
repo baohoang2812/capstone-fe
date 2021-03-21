@@ -14,7 +14,6 @@ import ReportViolation from "~/Core/Modules/Report/Components/Form/ReportViolati
 /* Api */
 import reportApi from "~/Core/Modules/Report/Api";
 import violationApi from "~/Core/Modules/Report/Api/Violation";
-import { Link } from "@material-ui/core";
 
 const ReportDetail = ({ match: { params } }) => {
   const [data, setData] = useState({});

@@ -10,7 +10,7 @@ class ViolationApi extends BaseApi {
   getList = (filters) => {
     const FromDate = moment().startOf('month').format("YYYY-MM-DD");
     const toDate = moment().endOf('month').format("YYYY-MM-DD");
-    return this.initApi.get(`${this.baseUrl}?Filter.FromDate=${FromDate}&Filter.ToDate=${toDate}`);
+    return this.initApi.get(`${this.baseUrl}`, {...filters, "Filter.FromDate": FromDate, "Filter.ToDate": toDate});
   };
 
   getOne = (id) => {

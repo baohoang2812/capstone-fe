@@ -30,8 +30,7 @@ const EmployeeDetail = ({ match: { params } }) => {
               title:
                 params.id === "create"
                   ? t("CORE.EMPLOYEE.CREATE.ACCOUNT")
-                  : t
-                  ("CORE.EMPLOYEE.UPDATE.ACCOUNT"),
+                  : t("CORE.EMPLOYEE.UPDATE.ACCOUNT"),
             },
           ]}
           action={action}

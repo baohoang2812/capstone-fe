@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import jwt_decode from "jwt-decode";
 
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
@@ -87,12 +88,16 @@ const UserTable = () => {
     y: `calc(100vh - (178px))`
   }), []);
 
+  const token = localStorage.getItem("token" || "");
+  const {
+    roleName: role,
+  } = jwt_decode(token);
   return (
     <AdminTable
       defs={defs}
       api={contactApi}
       identity={identity}
-      showCheckbox={true}
+      showCheckbox={role==="Branch Manager"}
       scroll={scroll}
       defaultSorter={defaultSorter}
       treeMode={true}

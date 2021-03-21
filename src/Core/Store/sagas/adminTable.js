@@ -46,7 +46,7 @@ function* get_indentity_table_data_worker({ payload }) {
   }
 
   // const opts = { PageIndex: current, Limit: pageSize, where, order: sorter };
-  const opts = { PageIndex: current-1, Limit: pageSize, ...where, ...sorter };
+  const opts = { "Filter.IsDeleted":false, PageIndex: current-1, Limit: pageSize, ...where, ...sorter };
   if (options) {
     opts[options.key] = options.value
   }
