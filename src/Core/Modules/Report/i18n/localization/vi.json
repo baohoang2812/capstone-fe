@@ -12,7 +12,7 @@
     "CORE.VIOLATION.ID":"ID",
     "CORE.VIOLATION.IMAGE.PATH":"Hình ảnh vi phạm",
     "CORE.VIOLATION.NAME":"Tên vi phạm",
-    "CORE.REGULATION.NAME":"Loại quy tắc",
+    "CORE.REGULATION.NAME":"Tên quy tắc",
     "CORE.VIOLATION.DESCRIPTION":"Mô tả",
     "CORE.VIOLATION.STATUS":"Trạng thái",
     "CORE.VIOLATION.CHARGE.CREATE":"Ngày tạo",

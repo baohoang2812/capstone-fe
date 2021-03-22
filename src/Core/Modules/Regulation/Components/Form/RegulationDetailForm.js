@@ -9,6 +9,7 @@ import {
   Button,
   message,
   InputNumber,
+  Select
 } from "antd";
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
@@ -24,6 +25,7 @@ import regulationApi from "~/Core/Modules/Regulation/Api/";
 
 const RegulationDetailForm = ({ form, is_create, action, data }) => {
   const t = useTranslate();
+  const { Option } = Select;
   /* Redux */
   const dispatch = useDispatch();
   /* State */
@@ -91,7 +93,7 @@ const RegulationDetailForm = ({ form, is_create, action, data }) => {
           <Form onSubmit={onConfirm}>
             <Row type="flex" justify="center" align="bottom">
               <Col span={15}>
-                <Form.Item label={t("CORE.REGULATION.NAME")}>
+                <Form.Item label ={t("CORE.REGULATION.NAME")}>
                   {getFieldDecorator("name", {
                     rules: [
                       {
@@ -114,14 +116,23 @@ const RegulationDetailForm = ({ form, is_create, action, data }) => {
                     rules: [
                       {
                         required: true,
-                        message: "Please input regulation type!",
+                        message: "Please select regulation type!",
                       },
-                      {
-                        max: 50,
-                        message: "Max length is 50 characters!",
-                      },
+                      
                     ],
-                  })(<Input />)}
+                  })(
+                    <Select>
+                      <Option value="IC">
+                        IC
+                  </Option>
+                      <Option value="QC">
+                        QC
+                  </Option>
+                      <Option value="CC">
+                        CC
+                  </Option>
+                    </Select>
+                  )}
                 </Form.Item>
               </Col>
             </Row>
@@ -163,6 +174,7 @@ const RegulationDetailForm = ({ form, is_create, action, data }) => {
                   {getFieldDecorator("minusPoint", {
                     rules: [
                       {
+
                         required: true,
                         message: "Please input point!",
                       },

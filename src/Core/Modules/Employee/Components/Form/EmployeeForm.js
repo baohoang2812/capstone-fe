@@ -313,7 +313,7 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
                     message: (<>{t("CORE.EMPLOYEE.ALERT.MAX.LENGTH")}</>)
                   },
                 ],
-              })(<Input />)}
+              })(<Input/>)}
             </Form.Item>
           </Col>
         </Row>
@@ -323,12 +323,12 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
               {getFieldDecorator("firstName", {
                 rules: [
                   {
-                    required: true,
+                    required:true,
                     message: (<>{t("CORE.EMPLOYEE.ALERT.FIRST.NAME")}</>),
                     whitespace: true,
                   },
                   {
-                    max: 50,
+                    max:50,
                     message: (<>{t("CORE.EMPLOYEE.ALERT.NAME.MAX.LENGTH")}</>),
                   },
                 ],
@@ -423,40 +423,42 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
                 initialValue: "male",
               })(
                 <Select>
-                  <Option value="male">{t("CORE.EMPLOYEE.GENDER.MALE")}</Option>
-                  <Option value="female">
+                  <Option value ="male">{t("CORE.EMPLOYEE.GENDER.MALE")}</Option>
+                  <Option value ="female">
                     {t("CORE.EMPLOYEE.GENDER.FEMALE")}
                   </Option>
-                  <Option value="other">
+                  <Option value ="other">
                     {t("CORE.EMPLOYEE.GENDER.OTHER")}
                   </Option>
                 </Select>
               )}
             </Form.Item>
           </Col>
-          <Col span={4}>
-            <Form.Item label={t("CORE.EMPLOYEE.POSITION")}>
+          <Col span ={4}>
+            <Form.Item label ={t("CORE.EMPLOYEE.POSITION")}>
               {getFieldDecorator("positionId", {
                 rules: [
                   {
-                    required: true,
+                    required:true,
                     message: (<>{t("CORE.EMPLOYEE.ALERT.POSITION")}</>),
                   },
                 ],
-                initialValue: listPosition?.[0]?.id,
+                initialValue:listPosition?.[0]?.id,
               })(
-                <Select onChange={handleChangePosition}>
+                <Select onChange ={handleChangePosition}>
                   {listPosition.map((item) => (
+
                     <Option key={item.id} value={item.id}>
                       {item.name}
                     </Option>
+
                   ))}
                 </Select>
               )}
             </Form.Item>
           </Col>
-          <Col span={4}>
-            <Form.Item label={t("CORE.EMPLOYEE.JOB.TYPE")}>
+          <Col span ={4}>
+            <Form.Item label ={t("CORE.EMPLOYEE.JOB.TYPE")}>
               {getFieldDecorator("isPartTime", {
                 rules: [
                   {
@@ -467,14 +469,14 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
                 initialValue: true,
               })(
                 <Select>
-                  <Option value={true}>Part time</Option>
-                  <Option value={false}>Full time</Option>
+                  <Option value ={true}>Part time</Option>
+                  <Option value ={false}>Full time</Option>
                 </Select>
               )}
             </Form.Item>
           </Col>
           <Col span={11}>
-            <Form.Item label={t("CORE.EMPLOYEE.BRANCH.NAME")}>
+            <Form.Item label ={t("CORE.EMPLOYEE.BRANCH.NAME")}>
               {getFieldDecorator("branchId", {
 
                 initialValue: tmpListBranch?.[0]?.id,
