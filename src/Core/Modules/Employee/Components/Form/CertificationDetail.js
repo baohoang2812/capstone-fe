@@ -63,7 +63,6 @@ const CertificationDetail = ({ form, employeeId, action, data, is_create }) => {
           employeeId: data
         }
         console.log(newValues);
-
         if (!data?.username) {
           certificationApi
             .create(newValues)
