@@ -11,7 +11,7 @@ import { Modal } from "antd";
 
 const CertificationForm = ({data}) => {
   const [visible, setVisible] = useState(false);
-
+  const [, updateState] = React.useState();
   const t = useTranslate();
 
   const createEmployee = () => {
@@ -19,8 +19,12 @@ const CertificationForm = ({data}) => {
   };
 
   const handleCloseModal = () => {
+    forceUpdate();
     setVisible(false);
   };
+  
+  const forceUpdate = React.useCallback(() => updateState({}), []);
+
 
   return (
     <div className="page-header employee">

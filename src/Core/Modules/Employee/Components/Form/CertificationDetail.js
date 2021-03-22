@@ -9,9 +9,9 @@ import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 
 /* Actions */
 import { update_identity_table_data_success } from "~/Core/Store/actions/adminTable";
-
+import { add_identity_table_data_success } from "~/Core/Store/actions/adminTable";
 /* Constants */
-import { employees as identity } from "~/Core/Modules/Employee/Configs/constants";
+import { certification as identity } from "~/Core/Modules/Employee/Configs/constants";
 
 /* Api */
 import certificationTypeApi from "~/Core/Modules/Employee/Api/CertificationType";
@@ -70,9 +70,11 @@ const CertificationDetail = ({ form, employeeId, action, data, is_create }) => {
             .then((res) => {
               setLoading(false);
               if (res.code === 200 || res.code === 201) {
-                dispatch(update_identity_table_data_success(identity, res.data));
+                const certificateType = listCertificationType.find(item => item.id === res?.data?.certificateTypeId)
+                dispatch(add_identity_table_data_success(identity, {id: res?.data?.id, certificateType}));
                 message.success(t("CORE.EMPLOYEE.ADD.CERTIFICATION.SUCCESS"));
                 action();
+                
               }
               else {
                 message.error(t("CORE.task_failure"));
