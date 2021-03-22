@@ -85,8 +85,8 @@ const WorkspaceDetailForm = ({ form, is_create, action, data }) => {
     return [options, hash];
   }
 
-  const getListParentIds = (options, parent_id, parent_ids = []) => {
-    if (parent_id === null || parent_id === undefined) {
+  const getListParentIds =(options, parent_id, parent_ids = []) => {
+    if (parent_id=== null || parent_id === undefined) {
       return parent_ids.reverse();
     }
 
@@ -106,7 +106,7 @@ const WorkspaceDetailForm = ({ form, is_create, action, data }) => {
       if (!err) {
         setLoading(true);
         const { parentId } = values;
-        let parent_id = 1;
+        let parent_id = null;
         if (parentId?.length) {
           parent_id = parentId[parentId.length - 1];
         }

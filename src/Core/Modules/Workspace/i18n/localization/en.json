@@ -9,5 +9,7 @@
     "CORE.WORKSPACE.UPDATE.ACCOUNT":"Update workspace",
     "CORE.WORKSPACE":"Workspace",
     "CORE.WORKSPACE.DETAIL":"Workspace detail",
-    "WORKSPACE.PARENT_CATE.PLACEHOLDER":"Workspace parent"
+    "WORKSPACE.PARENT_CATE.PLACEHOLDER":"Workspace parent",
+    "CORE.WORKSPACE.CREATE.SUCCESS":"Created workspace success",
+    "CORE.WORKSPACE.UPDATED.SUCCESS":"Updated workspace success"
 }
