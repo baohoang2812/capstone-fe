@@ -18,7 +18,7 @@ import contactApi from "~/Core/Modules/Shift/Api";
 const UserTable = () => {
   const t = useTranslate();
   const defs = useMemo(() => [
-   
+
     {
       title: t("CORE.SHIFT.NAME"),
       dataIndex: "Filter.Name",
@@ -26,14 +26,14 @@ const UserTable = () => {
       key: "name",
       fieldType: "text",
       sorter: true,
-      width: 220,
-      fixed:"left",
+      width: 240,
+      fixed: "left",
       render: (text, record) => (
         <Link to={`/shift/${record.id}`}>{`${record.name}`}</Link>
       ),
-      
+
     },
-  
+
     // {
     //   title: t("CORE.SHIFT.TYPE"),
     //   dataIndex: "isBreakShift",
@@ -55,64 +55,63 @@ const UserTable = () => {
     //   },
     // },
     {
-        title: t("CORE.SHIFT.START.TIME"),
-        dataIndex: "startTime",
-        className: "header-filter",
-        key: "contacts.startTime",
-        fieldType: "date",
-        sorter: true,
-        width: 150,
-        render: (startTime) => {
-          return moment(startTime, "HH:mm:ss").format("HH:mm")
-          // return `${startTime.hours < 10 ? '0' + startTime.hours : startTime.hours}:${startTime.minutes < 10 ? '0' + startTime.minutes : startTime.minutes}`
-        },
+      title: t("CORE.SHIFT.START.TIME"),
+      dataIndex: "startTime",
+      className: "header-filter",
+      key: "contacts.startTime",
+      fieldType: "date",
+      sorter: true,
+      width: 200,
+      render: (startTime) => {
+        return moment(startTime, "HH:mm:ss").format("HH:mm")
+        // return `${startTime.hours < 10 ? '0' + startTime.hours : startTime.hours}:${startTime.minutes < 10 ? '0' + startTime.minutes : startTime.minutes}`
       },
-      {
-        title: t("CORE.SHIFT.END.TIME"),
-        dataIndex: "endTime",
-        className: "header-filter",
-        key: "contacts.updated_at",
-        fieldType: "date",
-        sorter: true,
-        width: 150,
-        render: (endTime) => {
-           return moment(endTime, "HH:mm:ss").format("HH:mm")
-          // return `${endTime.hours < 10 ? '0' + endTime.hours : endTime.hours}:${endTime.minutes < 10 ? '0' + endTime.minutes : endTime.minutes}` 
-        },
+    },
+    {
+      title: t("CORE.SHIFT.END.TIME"),
+      dataIndex: "endTime",
+      className: "header-filter",
+      key: "contacts.updated_at",
+      fieldType: "date",
+      sorter: true,
+      width: 200,
+      render: (endTime) => {
+        return moment(endTime, "HH:mm:ss").format("HH:mm")
+        // return `${endTime.hours < 10 ? '0' + endTime.hours : endTime.hours}:${endTime.minutes < 10 ? '0' + endTime.minutes : endTime.minutes}` 
       },
-      
-      {
-        title: t("CORE.SHIFT.CHARGE.CREATE"),
-        dataIndex: "createdAt",
-        className: "header-filter",
-        key: "contacts.createdAt",
-        fieldType: "date",
-        sorter: true,
-        width: 150,
-        render: (text) => moment(text).format("DD/MM/YYYY"),
-      },
-      {
-        title: t("CORE.SHIFT.CHARGE.UPDATE"),
-        dataIndex: "updatedAt",
-        className: "header-filter",
-        key: "contacts.updated_at",
-        fieldType: "date",
-        sorter: true,
-        width: 150,
-        render: (text) => moment(text).format("DD/MM/YYYY"),
-      },
-      
+    },
+    {
+      title: t("CORE.SHIFT.CHARGE.CREATE"),
+      dataIndex: "createdAt",
+      className: "header-filter",
+      key: "contacts.createdAt",
+      fieldType: "date",
+      sorter: true,
+      width: 200,
+      render: (text) => moment(text).format("DD/MM/YYYY"),
+    },
+    {
+      title: t("CORE.SHIFT.CHARGE.UPDATE"),
+      dataIndex: "updatedAt",
+      className: "header-filter",
+      key: "contacts.updated_at",
+      fieldType: "date",
+      sorter: true,
+      width: 200,
+      render: (text) => moment(text).format("DD/MM/YYYY"),
+    },
 
-    
-   
-    
-   
+
+
+
+
+
   ], [])
 
   const defaultSorter = useMemo(() => ({ "Sort.Orders": "desc createdAt" }), []);
-  
+
   const scroll = useMemo(() => ({
-    x: 820 ,
+    x: 1040,
     y: `calc(100vh - (178px))`
   }), []);
 
