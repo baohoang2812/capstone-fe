@@ -28,9 +28,19 @@ const UserTable = () => {
       fixed: "left",
       sorter: true,
       width: 220,
-      render: (text, record) => (
-        <Link to={`/regulation/${record.id}`}>{`${record.name}`}</Link>
-      ),
+      render: (text, record) => {
+        if(role==="Admin"){
+          return(
+            <Link to={`/regulation/${record.id}`}>{`${record.name}`}</Link>
+          )
+        }
+        else{
+          return(
+            text
+          )
+        }
+       
+      },
     },
     {
       title: t("CORE.REGULATION.TYPE"),

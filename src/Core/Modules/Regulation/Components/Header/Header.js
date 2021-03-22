@@ -4,7 +4,7 @@ import { Icon, Button } from "antd";
 /* Components */
 import NavBreadcrumbContentHeader from "~/Core/Components/common/NavBreadcrumbContentHeader";
 
-const Header = ({ breadcrumb, action, icon = "plus", text, className }) => {
+const Header = ({ breadcrumb, action, icon = "plus", text, className,isDisplay=true }) => {
   const handleClick = () => {
     action();
   };
@@ -22,9 +22,11 @@ const Header = ({ breadcrumb, action, icon = "plus", text, className }) => {
                 <NavBreadcrumbContentHeader data={breadcrumb} />
               </div>
               <div className="nav-right btn-group">
-                <Button onClick={handleClick} className={className}>
+               { isDisplay?
+               <Button onClick={handleClick} className={className}>
                   <span>{text}</span>
-                </Button>
+                </Button> :null
+               }  
               </div>
             </div>
           </div>
