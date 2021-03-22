@@ -15,45 +15,36 @@ import {
 
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
-
 /* Actions */
 import { update_identity_table_data_success } from "~/Core/Store/actions/adminTable";
-
 /* Constants */
 import { employees as identity } from "~/Core/Modules/Employee/Configs/constants";
-
 /* Api */
 import accountApi from "~/Core/Modules/Employee/Api/Account";
 import roleApi from "~/Core/Modules/Employee/Api/Role";
 
 const { Option } = Select;
-
 const AccountForm = ({ form, employeeId, action, data, is_create }) => {
-  const [loadingDropdown, setLoadingDropdown] = useState(false);
-  const [listRole, setRole] = useState([]);
-
-  const t = useTranslate();
-  const { getFieldDecorator, validateFields, setFieldsValue } = form;
-
   /* Redux */
-  const dispatch = useDispatch();
-
+  const dispatch=useDispatch();
   /* State */
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading]= useState(false);
+  const [loadingDropdown, setLoadingDropdown]=useState(false);
+  const [listRole, setRole]=useState([]);
+  const t=useTranslate();
+  const { getFieldDecorator, validateFields, setFieldsValue }= form;
 
-  useEffect(() => {
+  useEffect (() => {
     (async () => {
-      setLoadingDropdown(true);
-
-      const resRole = await roleApi.getList();
+       setLoadingDropdown(true);
+      const resRole= await roleApi.getList();
       setRole(resRole?.data);
-
       setLoadingDropdown(false);
     })();
   }, []);
 
-  useEffect(() => {
-    setFieldsValue({
+  useEffect (() => {
+    setFieldsValue ({
       username: data?.username,
       roleId: data?.role?.id,
     });
@@ -64,27 +55,23 @@ const AccountForm = ({ form, employeeId, action, data, is_create }) => {
     validateFields((err, values) => {
       if (!err) {
         setLoading(true);
-
-        const { username, roleId, password } = values;
-
-        const objReq = {
-          username,
-          employeeId,
+        const { username, roleId, password }= values;
+        const objReq= {
           password,
           roleId,
+          username,
+          employeeId,
         };
 
-        if (!data?.username) {
+        if(!data?.username) {
           accountApi
             .create(objReq)
             .then((res) => {
               setLoading(false);
-
-              if (res.code !== 201) {
-                message.error(t("CORE.task_failure"));
+              if(res.code !== 201) {
+                message.error( t("CORE.task_failure"));
                 return;
               }
-
               dispatch(update_identity_table_data_success(identity, res.data));
               message.success(t("CORE.ACCOUNT.CREATE.SUCCESS"));
               setLoading(false);
@@ -98,7 +85,6 @@ const AccountForm = ({ form, employeeId, action, data, is_create }) => {
           accountApi.update(data.id, objReq)
             .then((res) => {
             setLoading(false);
-
             if (res.code !== 200) {
               message.error(t("CORE.task_failure"));
               return;
@@ -113,18 +99,18 @@ const AccountForm = ({ form, employeeId, action, data, is_create }) => {
     });
   };
 
-  return (
-    <Spin spinning={loadingDropdown}>
-      <Form onSubmit={onConfirm}>
-        <Row type="flex" justify="center">
-          <Col span={12}>
-            <Form.Item label={t("CORE.EMPLOYEE.USERNAME")}>
-              {getFieldDecorator("username", {
-                rules: [
+  return(
+    <Spin spinning ={loadingDropdown}>
+      <Form onSubmit= {onConfirm}>
+        <Row type ="flex" justify="center">
+          <Col span ={12}>
+            <Form.Item label ={t("CORE.EMPLOYEE.USERNAME")}>
+              {getFieldDecorator("username",{
+                rules:[
                   {
-                    required: true,
+                    required:true,
                     message: (<>{t("CORE.ACCOUNT.ALERT.USERNAME")}</>),
-                    whitespace: false,
+                    whitespace:false,
                   },
                   {
                     max:255,

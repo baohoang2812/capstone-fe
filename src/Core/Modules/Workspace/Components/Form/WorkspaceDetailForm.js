@@ -63,25 +63,25 @@ const WorkspaceDetailForm = ({ form, is_create, action, data }) => {
 
   }, [JSON.stringify(data), listWorkSpace])
 
-  const generateCascaderOptions = (categories, current_id) => {
-    let hash = {}, options = [];
+  const generateCascaderOptions=(categories, current_id) => {
+    let hash={}, options=[];
 
-    for (let i = 0; i < categories.length; i++) {
-      const item = categories[i];
-      hash[item.id] = { value: item.id, label: item.name, children: [] };
+    for (let i=0; i< categories.length; i++) {
+      const item=categories[i];
+      hash[item.id]= { value: item.id, label: item.name, children: [] };
     }
 
-    for (let i = 0; i < categories.length; i++) {
-      const item = categories[i];
+    for (let i= 0; i < categories.length; i++) {
+      const item= categories[i];
       if (item.id !== current_id) {
         if (item?.parent?.id && hash[item?.parent?.id]) {
+
           hash[item?.parent?.id].children.push(hash[item.id]);
           continue;
         }
         options.push(hash[item.id]);
       }
     }
-
     return [options, hash];
   }
 
@@ -91,16 +91,16 @@ const WorkspaceDetailForm = ({ form, is_create, action, data }) => {
     }
 
     parent_ids.push(parent_id);
-    const parent = options.find(item => item.id === parent_id);
+    const parent= options.find(item => item.id === parent_id);
 
-    if (parent && parent.parent_id !== null) {
-      return getListParentIds(options, parent?.parent?.id, parent_ids);
+    if (parent&& parent.parent_id !== null) {
+      return getListParentIds(options,parent?.parent?.id, parent_ids);
     } else {
-      return getListParentIds(options, null, parent_ids);
+      return getListParentIds(options,null, parent_ids);
     }
   }
 
-  const onConfirm = (e) => {
+  const onConfirm= (e) => {
     e.preventDefault();
     validateFields((err, values) => {
       if (!err) {
