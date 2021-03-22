@@ -4,7 +4,8 @@
 import React, { useState, useEffect } from 'react';
 import './Popup.scss';
 import Button from '@material-ui/core/Button';
-import { message } from 'antd';
+import { message,
+             } from 'antd';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -87,13 +88,13 @@ const Popup = (props) => {
         const hours = duration.asHours();
         setState({
             ...state,
-            duration: hours/24,
+            duration: hours / 24,
             startDate: moment(state.startDate).format("YYYY-MM-DD") + " " + moment(newShift?.[0].startTime, "HH:mm:ss").format("HH:mm"),
             endDate: moment(state.startDate).format("YYYY-MM-DD") + " " + moment(newShift?.[0].endTime, "HH:mm:ss").format("HH:mm"),
             [target.name]: target.value
         })
     }
-    
+
     /**
      * Saves the modified form data to the record being edited
      */
@@ -107,7 +108,7 @@ const Popup = (props) => {
             message.error('Please select shift!');
         } else {
             props.setEventRecordHandler(state);
-            
+
             const result = [{
                 isDeleted: false,
                 createdBy: 0,
@@ -157,7 +158,9 @@ const Popup = (props) => {
     ));
 
     const shiftItems = shifts.map(resource => (
-        <MenuItem key={resource.id} value={resource.id}>{resource.name} {resource.startTime} {resource.endTime}</MenuItem>
+        <MenuItem key={resource.id} value={resource.id}>
+            {resource.name}
+        ({moment(resource.startTime, "HH:mm:ss").format("HH:mm")} - {moment(resource.endTime, "HH:mm:ss").format("HH:mm")})</MenuItem>
     ));
 
 
@@ -175,17 +178,6 @@ const Popup = (props) => {
                     {t("CORE.WORKSCHEDULE.CREATE")}
                     &nbsp;</header>
                 <article>
-
-                    <FormControl style={{ marginBottom: 10, width: '100%' }}>
-                        <InputLabel>{t("CORE.WORKSPACE.NAME")}</InputLabel>
-                        <Select
-                            name="workspaceName"
-                            onChange={dataChangedLocationHandler}
-                            value={state.workspaceName}
-                        >
-                            {workspaceItems}
-                        </Select>
-                    </FormControl>
                     <FormControl style={{ marginBottom: 10, width: '100%' }}>
                         <InputLabel>{t("CORE.EMPLOYEE.NAME")}</InputLabel>
                         <Select
@@ -197,6 +189,17 @@ const Popup = (props) => {
                         </Select>
                     </FormControl>
                     <FormControl style={{ marginBottom: 10, width: '100%' }}>
+                        <InputLabel>{t("CORE.WORKSPACE.NAME")}</InputLabel>
+                        <Select
+                            name="workspaceName"
+                            onChange={dataChangedLocationHandler}
+                            value={state.workspaceName}
+                        >
+                            {workspaceItems}
+                        </Select>
+                    </FormControl>
+
+                    <FormControl style={{ marginBottom: 10, width: '100%' }}>
                         <InputLabel>{t("CORE.SHIFT.NAME")}</InputLabel>
                         <Select
                             name="shiftName"
@@ -207,7 +210,7 @@ const Popup = (props) => {
                         </Select>
                     </FormControl>
 
-                    <FormControl style={{ marginBottom: 10, width: '49%', marginLeft: 5 }}>
+                    {/* <FormControl style={{ marginBottom: 10, width: '49%', marginLeft: 5 }}>
                         <InputLabel>Công việc</InputLabel>
                         <Select
                             name="eventType"
@@ -217,7 +220,7 @@ const Popup = (props) => {
                             <MenuItem value="Meeting">Phụ bếp</MenuItem>
                             <MenuItem value="Appointment">Phục vụ</MenuItem>
                         </Select>
-                    </FormControl>
+                    </FormControl> */}
                     {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
                             <KeyboardDateTimePicker
                                 name="startDate"
@@ -240,8 +243,25 @@ const Popup = (props) => {
                         </MuiPickersUtilsProvider> */}
                 </article>
                 <footer>
-                    <Button variant="contained" color="secondary" onClick={props.closePopup}>Cancel</Button>
-                    <Button variant="contained" color="primary" onClick={saveClickHandler}>Save</Button>
+                    {/* <Button variant="contained" color="secondary" onClick={props.closePopup}>Cancel</Button>
+                    <Button variant="contained" color="primary" onClick={saveClickHandler}>Save</Button> */}
+                    
+                    
+                    <Button
+                        type="primary"
+                        htmlType="submit"
+                        className="btn-yellow btn-right"
+                        style={{ float: "right" }}
+                        onClick={saveClickHandler}>
+                        {t("CORE.VIOLATION.CONFIRM.ACCEPT")}
+                    </Button>
+                    <Button
+                        type="danger"
+                        className="btn-yellow btn-left"
+                        style={{ float: "right" }}
+                        onClick={props.closePopup}>
+                        {t("CORE.cancel")}
+                    </Button>
                 </footer>
             </div>
         </div >

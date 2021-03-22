@@ -71,7 +71,6 @@ const Main = React.forwardRef((props, ref) => {
         endDate={endDate()}
         events={workSchedules}
         resources={employees}
-
         listeners={{
           beforeEventEdit: (source) => {
             source.eventRecord.resourceId = source.resourceRecord.id;
