@@ -168,7 +168,16 @@ const UserTable = (props) => {
       fieldType: "date",
       sorter: true,
       width: 150,
-      render: (text) => moment(text).format("DD/MM/YYYY"),
+      render: (text,record) => {
+        if(record?.updatedAt===null){
+          return(
+            <span></span>
+          )
+        }
+        else{
+          return(moment(text).format("DD/MM/YYYY"))
+        }
+      }
     },
     {
       title: t("CORE.VIOLATION.ACTION"),
