@@ -52,5 +52,15 @@
             margin-right : 1em;
         }
     }
+    responsiveLevels : {
+        small  : {
+            levelWidth : 600;
+            rowHeight  : 30;
+            barMargin  : 0;
+            eventColor : 'pink'
+        }
+        
+    }
+    
 }
 // eof
