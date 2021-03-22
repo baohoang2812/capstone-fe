@@ -75,6 +75,7 @@ const UserTable = () => {
       key: "contacts.updatedAt",
       fieldType: "none",
       sorter: true,
+      width:150,
       render: (text) => moment(text).format("DD/MM/YYYY"),
     },
   ], [])

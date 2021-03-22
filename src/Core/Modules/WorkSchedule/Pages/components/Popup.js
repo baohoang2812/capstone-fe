@@ -157,7 +157,7 @@ const Popup = (props) => {
     ));
 
     const shiftItems = shifts.map(resource => (
-        <MenuItem key={resource.id} value={resource.id}>{resource.name}</MenuItem>
+        <MenuItem key={resource.id} value={resource.id}>{resource.name} {resource.startTime} {resource.endTime}</MenuItem>
     ));
 
 

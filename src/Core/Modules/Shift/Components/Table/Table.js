@@ -34,26 +34,26 @@ const UserTable = () => {
       
     },
   
-    {
-      title: t("CORE.SHIFT.TYPE"),
-      dataIndex: "isBreakShift",
-      className: "header-filter",
-      key: "description",
-      fieldType: "text",
-      sorter: true,
-      width: 220,
-      render: (_, record) => {
-        if (!record.isBreakShift) {
-          return (
-            <Tag color="green">{t("CORE.SHIFT.FULL.SHIFT")}</Tag>
-          )
-        } else {
-          return (
-            <Tag color="blue">{t("CORE.SHIFT.BREAK.SHIFT")}</Tag>
-          )
-        }
-      },
-    },
+    // {
+    //   title: t("CORE.SHIFT.TYPE"),
+    //   dataIndex: "isBreakShift",
+    //   className: "header-filter",
+    //   key: "description",
+    //   fieldType: "text",
+    //   sorter: true,
+    //   width: 220,
+    //   render: (_, record) => {
+    //     if (!record.isBreakShift) {
+    //       return (
+    //         <Tag color="green">{t("CORE.SHIFT.FULL.SHIFT")}</Tag>
+    //       )
+    //     } else {
+    //       return (
+    //         <Tag color="blue">{t("CORE.SHIFT.BREAK.SHIFT")}</Tag>
+    //       )
+    //     }
+    //   },
+    // },
     {
         title: t("CORE.SHIFT.START.TIME"),
         dataIndex: "startTime",
@@ -112,7 +112,7 @@ const UserTable = () => {
   const defaultSorter = useMemo(() => ({ "Sort.Orders": "desc createdAt" }), []);
   
   const scroll = useMemo(() => ({
-    x: 1040 ,
+    x: 820 ,
     y: `calc(100vh - (178px))`
   }), []);
 
