@@ -125,7 +125,7 @@ const ExcuseDetail = ({ form, isShow = true, action, data }) => {
                                 <Form.Item label={t("CORE.VIOLATION.NAME")}>
                                     {getFieldDecorator("name", {
 
-                                    })(<span>{data.name}</span>)}
+                                    })(<span>{data?.name}</span>)}
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -135,7 +135,7 @@ const ExcuseDetail = ({ form, isShow = true, action, data }) => {
                                 <Form.Item label={t("CORE.VIOLATION.DESCRIPTION")}>
                                     {getFieldDecorator("description", {
 
-                                    })(<span>{data.description}</span>)}
+                                    })(<span>{data?.description}</span>)}
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -144,7 +144,7 @@ const ExcuseDetail = ({ form, isShow = true, action, data }) => {
                                 <Form.Item label={t("CORE.VIOLATION.CREATED.BY")}>
                                     {getFieldDecorator("createdBy", {
 
-                                    })(<span>{data.createdBy.lastName} {data.createdBy.firstName}</span>)}
+                                    })(<span>{data?.createdBy?.lastName} {data?.createdBy?.firstName}</span>)}
                                 </Form.Item>
                             </Col>
                         </Row>
