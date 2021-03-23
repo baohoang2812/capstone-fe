@@ -153,8 +153,10 @@ const ShiftDetailForm = ({ form, is_create, action, data }) => {
                     ],
                   })(<TimePicker initialValue={moment('00:00', format)} format={format} />)}
                 </Form.Item>
+                
               </Col>
             </Row>
+            
             <Row type="flex" justify="center" align="bottom">
               <Col span={15}>
                 <Form.Item label={t("CORE.SHIFT.END.TIME")}>

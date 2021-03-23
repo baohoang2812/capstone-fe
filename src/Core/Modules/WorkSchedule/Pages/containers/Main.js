@@ -71,7 +71,6 @@ const Main = React.forwardRef((props, ref) => {
         endDate={endDate()}
         events={workSchedules}
         resources={employees}
-
         listeners={{
           beforeEventEdit: (source) => {
             source.eventRecord.resourceId = source.resourceRecord.id;
@@ -84,13 +83,13 @@ const Main = React.forwardRef((props, ref) => {
         columns={[
           {
             type: "resourceInfo",
-            text: "Staff",
+            text: "Nhân viên",
             width: 180,
           },
           {
-            text: "Type",
+            text: "Chức vụ",
             field: "category",
-            width: 100,
+            width: 120,
           },
         ]}
       />{" "}

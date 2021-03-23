@@ -38,6 +38,7 @@ const PositionDetailForm = ({ form,is_create,action, data }) => {
       
     });
   }, [data]);
+
   const onConfirm = (e) => {
     e.preventDefault();
     validateFields((err, values) => {
@@ -48,13 +49,11 @@ const PositionDetailForm = ({ form,is_create,action, data }) => {
             .create(values)
             .then((res) => {
               setLoading(false);
-
               if (res.code !== 201) {
                 message.error(t("CORE.task_failure"));
                 return;
               }
               setLoading(false);
-
               dispatch(update_identity_table_data_success(identity, res.data));
               message.success(t("CORE.POSITION.CREATE.SUCCESS"));
               action();
@@ -66,13 +65,11 @@ const PositionDetailForm = ({ form,is_create,action, data }) => {
           // objReq.employee.id = data.employee.id;
           positionApi.update(data.id, values).then((res) => {
             setLoading(false);
-
             if (res.code !== 200) {
               message.error(t("CORE.task_failure"));
               return;
             }
             setLoading(false);
-
             dispatch(update_identity_table_data_success(identity, res.data));
             message.success(t("CORE.POSITION.UPDATE.SUCCESS"));
             action();

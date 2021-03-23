@@ -28,9 +28,19 @@ const UserTable = () => {
       fixed: "left",
       sorter: true,
       width: 220,
-      render: (text, record) => (
-        <Link to={`/regulation/${record.id}`}>{`${record.name}`}</Link>
-      ),
+      render: (text, record) => {
+        if(role==="Admin"){
+          return(
+            <Link to={`/regulation/${record.id}`}>{`${record.name}`}</Link>
+          )
+        }
+        else{
+          return(
+            text
+          )
+        }
+       
+      },
     },
     {
       title: t("CORE.REGULATION.TYPE"),
@@ -88,7 +98,16 @@ const UserTable = () => {
       fieldType: "date",
       sorter: true,
       width: 150,
-      render: (text) => moment(text).format("DD/MM/YYYY"),
+      render: (text,record) => {
+        if(record?.updatedAt===null){
+          return(
+            <span></span>
+          )
+        }
+        else{
+          return(moment(text).format("DD/MM/YYYY"))
+        }
+      }
     },
     
     

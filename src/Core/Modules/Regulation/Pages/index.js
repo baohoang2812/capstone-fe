@@ -6,7 +6,7 @@ import Header from "~/Core/Modules/Regulation/Components/Header/Header";
 import Table from "~/Core/Modules/Regulation/Components/Table/Table";
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
-
+import jwt_decode from "jwt-decode";
 const UserManagement = () => {
   const history = useHistory();
 
@@ -15,13 +15,17 @@ const UserManagement = () => {
   const createBranch = () => {
     history.push("/regulation/create")
   }
-
+  const token = localStorage.getItem("token" || "");
+  const {
+    roleName: role,
+  } = jwt_decode(token);
 
   return (
     <div className="page-header regulation">
       <Header
         breadcrumb={[{ title: t("CORE.REGULATION.MANAGEMENT.TITLE") }]}
         action={() => createBranch()}
+        isDisplay={role==='Admin'}
         text={t("CORE.REGULATION.CREATE.ACCOUNT")}
         className="btn-yellow"
       />

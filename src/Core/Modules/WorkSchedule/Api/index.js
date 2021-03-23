@@ -1,7 +1,7 @@
 import BaseApi from "~/Core/Api/BaseAPI";
 class WorkScheduleApi extends BaseApi {
-  getList = (filters) => {
-    return this.initApi.get(`${this.baseUrl}`, filters);
+  getList = () => {
+    return this.initApi.get(`${this.baseUrl}?Filter.IsDeleted=${false}`);
   };
 
   getOne = (id) => {

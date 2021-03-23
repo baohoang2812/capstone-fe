@@ -43,6 +43,7 @@ const EmployeeDetailForm = (props) => {
           setData(result);
           console.log(result,"EmployeeID")
 
+
           const resAccount = await accountApi.getOne(result.id)
 
           if (resAccount.code !== 200) {
@@ -60,6 +61,7 @@ const EmployeeDetailForm = (props) => {
 
     }
   }, []);
+  
   const callback = (key) => {
     console.log(key);
   };

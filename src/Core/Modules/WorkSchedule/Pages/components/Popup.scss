@@ -15,13 +15,13 @@
 }
 .popup {
     position      : absolute;
-    left          : 25%;
-    right         : 25%;
-    top           : 25%;
-    bottom        : 25%;
+    left          : 24%;
+    right         : 24%;
+    top           : 24%;
+    bottom        : 24%;
     margin        : auto;
-    height        : 26em;
-    width         : 40em;
+    height        : 20em;
+    width         : 39em;
     background    : rgb(248, 249, 250);;
     box-shadow: 0 3px 6px rgba(0,0,0,.12), 0 3px 6px rgba(0,0,0,.24);
 
@@ -33,7 +33,7 @@
         font-weight   : 700;
         background    : rgb(255, 245, 230);
         padding       : 0.5em;
-        border-bottom : solid 1px rgb(254, 172, 49);
+        border-bottom : solid 1px #11438e;
     }
 
     article {
@@ -45,11 +45,22 @@
         text-align : center;
         padding-bottom : 1em;
         button {
-            width         : 7em;
+            width         : 6em;
+            margin-right : 1em;
         }
         button:first-child {
             margin-right : 1em;
         }
     }
+    responsiveLevels : {
+        small  : {
+            levelWidth : 600;
+            rowHeight  : 30;
+            barMargin  : 0;
+            eventColor : 'pink'
+        }
+        
+    }
+    
 }
 // eof
