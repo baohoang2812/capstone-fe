@@ -12,6 +12,7 @@
     bottom           : 0;
     margin           : auto;
     background-color : rgba(0,0,0, 0.5);
+    resize: none;
 }
 .popup {
     position      : absolute;
@@ -24,9 +25,10 @@
     width         : 39em;
     background    : rgb(248, 249, 250);;
     box-shadow: 0 3px 6px rgba(0,0,0,.12), 0 3px 6px rgba(0,0,0,.24);
-
+    resize: none;
     display        : flex;
     flex-direction : column;
+    
 
     header {
         font-size     : 2em;
@@ -61,6 +63,7 @@
         }
         
     }
+    
     
 }
 // eof
