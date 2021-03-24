@@ -2,13 +2,19 @@ import "./style.less";
 import React, { useState, useEffect } from "react";
 import { Bar } from '@ant-design/charts';
 import { Card } from "antd";
+import jwt_decode from "jwt-decode";
 /* Components */
 import reportApi from "~/Core/Modules/Dashboard/Api";
+import violationApi from "~/Core/Modules/Dashboard/Api/ViolationApi";
 import moment from "moment";
 import HeaderCard from "./HeaderCard";
 const CardTotalRevenue = () => {
   const [FromDate,setFromDate]=useState(null);
   const [toDate,setToDate]=useState(null);
+  const token = localStorage.getItem("token" || "");
+  const {
+    roleName: role,
+  } = jwt_decode(token);
   const [config, setConfig]= useState({
     data: [],
     xField: 'Point',
@@ -29,18 +35,35 @@ const CardTotalRevenue = () => {
     (async () => {
       const  FromDate = moment().startOf('month').subtract(1,'month').format("YYYY-MM-DD");
       const toDate = moment().endOf('month').subtract(1,'month').format("YYYY-MM-DD");
-      const list = await reportApi.getList("Done",FromDate,toDate);
-      const data = list?.data?.result?.map((item) => (
-        {
-          Branch: item?.branch?.name,
-          Point: item?.totalMinusPoint
-        }
-      )
-      )
-     setConfig({
-       ...config,
-       data:data,})
-       console.log(data);
+      if(role==="Admin"){
+        const list = await reportApi.getList("Done",FromDate,toDate);
+        const data = list?.data?.result?.map((item) => (
+          {
+            Branch: item?.branch?.name,
+            Point: item?.totalMinusPoint
+          }
+        )
+        )
+       setConfig({
+         ...config,
+         data:data,})
+         console.log(data);
+
+      }
+      else {
+        const listVio = await violationApi.getList(FromDate);
+        const data = listVio?.data?.map((item) => (
+          {
+            Branch: item?.regulationName,
+            Point: item?.totalMinusPoint
+          }
+        ))
+        setConfig({
+          ...config,
+          data:data,})
+          console.log(data);
+      }
+      
 
     })();
   }, []);
@@ -50,19 +73,35 @@ const CardTotalRevenue = () => {
     (async () => {
       
       if(FromDate!==null && toDate!==null){
-      const list = await reportApi.getList("Done",FromDate,toDate);
-      console.log(list,"List");
-      const data = list?.data?.result?.map((item) => (
-        {
-          Branch: item?.branch?.name,
-          Point: item?.totalMinusPoint
+        if(role==="Admin"){
+          const list = await reportApi.getList("Done",FromDate,toDate);
+          console.log(list,"List");
+          const data = list?.data?.result?.map((item) => (
+            {
+              Branch: item?.branch?.name,
+              Point: item?.totalMinusPoint
+            }
+          )
+          )
+         setConfig({
+           ...config,
+           data:data,})
+           console.log(data);
         }
-      )
-      )
-     setConfig({
-       ...config,
-       data:data,})
-       console.log(data);
+        else{
+          const listVio = await violationApi.getList(FromDate);
+        const data = listVio?.data?.map((item) => (
+          {
+            Branch: item?.regulationName,
+            Point: item?.totalMinusPoint
+          }
+        ))
+        setConfig({
+          ...config,
+          data:data,})
+          console.log(data);
+        }
+    
      }
     })();
   }, [FromDate,toDate]);
