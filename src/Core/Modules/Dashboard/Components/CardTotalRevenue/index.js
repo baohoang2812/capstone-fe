@@ -7,42 +7,9 @@ import { Bar } from '@ant-design/charts';
 import HeaderCard from "./HeaderCard";
 import reportApi from "~/Core/Modules/Dashboard/Api";
 import { values } from "lodash";
+import moment from "moment";
 
 
-// const data = [
-//   {
-//     type: 'Chi nhánh 1',
-//     sales: 38,
-//   },
-//   {
-//     type: 'Chi nhánh 2',
-//     sales: 52,
-//   },
-//   {
-//     type: 'Chi nhánh 3',
-//     sales: 61,
-//   },
-//   {
-//     type:'Chi nhánh 4',
-//     sales: 145,
-//   },
-//   {
-//     type: 'Chi nhánh 5',
-//     sales: 48,
-//   },
-//   {
-//     type: 'Chi nhánh 6',
-//     sales: 38,
-//   },
-//   {
-//     type: 'Chi nhánh 7',
-//     sales: 38,
-//   },
-//   {
-//     type: 'Chi nhánh 8',
-//     sales: 38,
-//   },
-// ];
 
 const CardTotalRevenue = () => {
   /* State */
@@ -50,6 +17,8 @@ const CardTotalRevenue = () => {
   const [listReport, setListReport] = useState([]);
   const [filters, setFilters] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [FromDate,setFromDate]=useState(null);
+  const [toDate,setToDate]=useState(null);
   const [config, setConfig] = useState({
     data: [],
     xField: 'Point',
@@ -69,8 +38,9 @@ const CardTotalRevenue = () => {
 
   useEffect(() => {
     (async () => {
-
-      const list = await reportApi.getList("Done");
+      const  FromDate = moment().startOf('month').subtract(1,'month').format("YYYY-MM-DD");
+     const toDate = moment().endOf('month').subtract(1,'month').format("YYYY-MM-DD");
+      const list = await reportApi.getList("Done",FromDate,toDate);
       console.log(list,"List");
       const data = list?.data?.result?.map((item) => (
         {
@@ -79,7 +49,6 @@ const CardTotalRevenue = () => {
         }
       )
       )
-      
      setConfig({
        ...config,
        data:data,})
@@ -87,6 +56,27 @@ const CardTotalRevenue = () => {
 
     })();
   }, []);
+
+
+  useEffect(() => {
+    (async () => {
+      if(FromDate!==null && toDate!==null){
+      const list = await reportApi.getList("Done",FromDate,toDate);
+      console.log(list,"List");
+      const data = list?.data?.result?.map((item) => (
+        {
+          Branch: item?.branch?.name,
+          Point: item?.totalMinusPoint
+        }
+      )
+      )
+     setConfig({
+       ...config,
+       data:data,})
+       console.log(data);
+     }
+    })();
+  }, [FromDate,toDate]);
   
   const onInitData = () => {
     if (filters) {

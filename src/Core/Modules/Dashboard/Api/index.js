@@ -1,7 +1,8 @@
 import BaseApi from "~/Core/Api/BaseAPI";
 class ReportApi extends BaseApi {
-  getList = (status) => {
-    return this.initApi.get(`${this.baseUrl}?Filter.IsDeleted=${false}&Filter.Status=${status}`);
+  getList = (status,startMonth,endMonth) => {
+    return this.initApi.get(`${this.baseUrl}?Filter.IsDeleted=${false}&Filter.Status=${status}&
+    Filter.FromDate=${startMonth}&Filter.FromDate=${endMonth}`);
   };
 
   getOne = (id) => {
