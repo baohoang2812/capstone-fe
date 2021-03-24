@@ -1,9 +1,11 @@
 import React, {  } from "react";
 import { DatePicker } from "antd";
 import moment from "moment";
+import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 const { MonthPicker } = DatePicker;
 const HeaderCard = ({setFromDate,setToDate})=> {
   /* State */
+  const t=useTranslate();
   const changeMonth = (value) => {
     if(value!==null){
       const startMonth=moment(value).startOf('month').format("YYYY-MM-DD");
@@ -20,13 +22,13 @@ const HeaderCard = ({setFromDate,setToDate})=> {
 
   return (
     <div className ="header-card">
-      <h4>BIỂU ĐỒ THỐNG KÊ LỖI VI PHẠM</h4>
+      <h4>{t("CORE.STATISTICS.NAME")}</h4>
      
       <div
         className="header-filter"
         style={{flex: 1, justifyContent: "flex-end" }}
       >
-        <span className="filter-label">Chọn tháng: </span>
+        <span className="filter-label">{t("CORE.STATISTICS.SELECT.MONTH")} :</span>
         <MonthPicker disabledDate={disabledDate} defaultValue={moment().subtract(1,'month')} onChange={changeMonth} placeholder="Select Month" />
       </div>
     </div>
