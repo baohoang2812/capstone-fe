@@ -16,11 +16,9 @@ import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 import workspaceApi from "~/Core/Modules/WorkSchedule/Api/WorkspaceApi";
 import shiftApi from "~/Core/Modules/WorkSchedule/Api/ShiftApi";
 import workScheduleApi from "~/Core/Modules/WorkSchedule/Api/WorkScheduleApi";
-
-
-
 import contactApi from "~/Core/Modules/WorkSchedule/Api";
 import moment from "moment";
+
 const Popup = (props) => {
     const [workspaces, setWorkspaces] = useState([]);
     const [shifts, setShifts] = useState([]);
@@ -40,13 +38,10 @@ const Popup = (props) => {
                     return {
                         id: item.id,
                         name: item.name
-
                     }
                 })
-
                 setWorkspaces(listWorkspace);
             });
-
         shiftApi.getList()
             .then(res => {
                 const listShift = res?.data?.result?.map(item => {
@@ -58,12 +53,8 @@ const Popup = (props) => {
                     }
                 })
                 setShifts(listShift);
-
             })
-
-
     }, [])
-
     /**
      * Sets the changed value to state
      * @param {HTMLElement} target The input that changed
