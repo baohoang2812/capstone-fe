@@ -6,15 +6,17 @@ import jwt_decode from "jwt-decode";
 import NavBreadcrumbContentHeader from "~/Core/Components/common/NavBreadcrumbContentHeader";
 
 const Header = ({ breadcrumb, action, icon = "plus", text, className }) => {
+  
+  
+  const token =localStorage.getItem("token" || "");
+  const{
+    roleName: role,
+  } =jwt_decode(token);
+  
   const handleClick = () => {
     action();
   };
 
-  const token = localStorage.getItem("token" || "");
-  const {
-    roleName: role,
-  } = jwt_decode(token);
-  
   return (
     <div className="content-header-page">
       <div className="content-header-add">
