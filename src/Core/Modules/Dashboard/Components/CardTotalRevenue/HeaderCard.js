@@ -1,14 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, {  } from "react";
 import { DatePicker } from "antd";
-import moment, { months } from "moment";
-import reportApi from "~/Core/Modules/Dashboard/Api";
-import { set } from "lodash";
+import moment from "moment";
 const { MonthPicker } = DatePicker;
-
 const HeaderCard = ({setFromDate,setToDate})=> {
   /* State */
   const changeMonth = (value) => {
-   
     if(value!==null){
       const startMonth=moment(value).startOf('month').format("YYYY-MM-DD");
       const endMonth=moment(value).endOf('month').format("YYYY-MM-DD");
@@ -23,11 +19,12 @@ const HeaderCard = ({setFromDate,setToDate})=> {
   }
 
   return (
-    <div className="header-card">
+    <div className ="header-card">
       <h4>BIỂU ĐỒ THỐNG KÊ LỖI VI PHẠM</h4>
+     
       <div
         className="header-filter"
-        style={{ flex: 1, justifyContent: "flex-end" }}
+        style={{flex: 1, justifyContent: "flex-end" }}
       >
         <span className="filter-label">Chọn tháng: </span>
         <MonthPicker disabledDate={disabledDate} defaultValue={moment().subtract(1,'month')} onChange={changeMonth} placeholder="Select Month" />

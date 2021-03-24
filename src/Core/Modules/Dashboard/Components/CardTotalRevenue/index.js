@@ -1,47 +1,35 @@
 import "./style.less";
-
 import React, { useState, useEffect } from "react";
-import { Card } from "antd";
 import { Bar } from '@ant-design/charts';
+import { Card } from "antd";
 /* Components */
-import HeaderCard from "./HeaderCard";
 import reportApi from "~/Core/Modules/Dashboard/Api";
-import { values } from "lodash";
 import moment from "moment";
-
-
-
+import HeaderCard from "./HeaderCard";
 const CardTotalRevenue = () => {
-  /* State */
-
-  const [listReport, setListReport] = useState([]);
-  const [filters, setFilters] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [FromDate,setFromDate]=useState(null);
   const [toDate,setToDate]=useState(null);
-  const [config, setConfig] = useState({
+  const [config, setConfig]= useState({
     data: [],
     xField: 'Point',
     yField: 'Branch',
     seriesField: 'Branch',
     color:function color(_ref) {
-      var type = _ref.type;
-      return type === '美容洗护' ? '#FAAD14' : '#5B8FF9';
+      var type =_ref.type;
+      return type=== '美容洗护' ? '#FAAD14' : '#5B8FF9';
     },
-    legend: false,
+    legend:false,
     meta: {
-      type: { alias: '类别' },
-      sales: { alias: '销售额' },
+      Branch: { alias: '类别' },
+      Point: { alias: '销售额' },
     }
   });
- 
 
   useEffect(() => {
     (async () => {
       const  FromDate = moment().startOf('month').subtract(1,'month').format("YYYY-MM-DD");
-     const toDate = moment().endOf('month').subtract(1,'month').format("YYYY-MM-DD");
+      const toDate = moment().endOf('month').subtract(1,'month').format("YYYY-MM-DD");
       const list = await reportApi.getList("Done",FromDate,toDate);
-     
       const data = list?.data?.result?.map((item) => (
         {
           Branch: item?.branch?.name,
@@ -60,6 +48,7 @@ const CardTotalRevenue = () => {
 
   useEffect(() => {
     (async () => {
+      
       if(FromDate!==null && toDate!==null){
       const list = await reportApi.getList("Done",FromDate,toDate);
       console.log(list,"List");
@@ -80,7 +69,7 @@ const CardTotalRevenue = () => {
   
  
   return (
-    <div className="card-total-revenue card-default">
+    <div className ="card-total-revenue card-default">
       <Card title={<HeaderCard setFromDate={setFromDate} setToDate={setToDate} />} bordered={false}>
         {/* <Spin spinning={loading}> */}
         <Bar {...config} />
@@ -90,4 +79,4 @@ const CardTotalRevenue = () => {
   );
 };
 
-export default React.memo(CardTotalRevenue);
+export default  React.memo(CardTotalRevenue);
