@@ -41,12 +41,13 @@ const Main = React.forwardRef((props, ref) => {
             startDate: moment(item?.workSchedule?.workDate).format("YYYY-MM-DD")+" "+ moment(item?.workSchedule?.shift?.startTime, "HH:mm:ss").format("HH:mm"),
             endDate: moment(item?.workSchedule?.workDate).format("YYYY-MM-DD")+" "+ moment(item?.workSchedule?.shift?.endTime, "HH:mm:ss").format("HH:mm"),
             location: "Some office",
-            eventType: "Meeting",
             iconCls: "b-fa b-fa-calendar",
-            shiftName: item?.workSchedule?.shift?.id
+            shiftName: item?.workSchedule?.shift?.id,
+            workScheduleId: item?.workSchedule?.id
           }
         })
         setWorkSchedules(listWorkSchedule);
+        
       })
 
   }, [])

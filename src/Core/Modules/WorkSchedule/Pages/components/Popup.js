@@ -24,10 +24,14 @@ const Popup = (props) => {
     const [shifts, setShifts] = useState([]);
     const [state, setState] = useState({
         name: '',
-        eventType: 'Meeting',
         location: '',
         ...props?.eventRecord?.data
     });
+    const [state2, setState2] = useState({
+        name: '',
+        location: '',
+        ...props?.eventRecord?.data
+    })
 
     const t = useTranslate();
 
@@ -83,7 +87,7 @@ const Popup = (props) => {
             ...state,
             duration: hours / 24,
             startDate: moment(state.startDate).format("YYYY-MM-DD") + " " + moment(newShift?.[0].startTime, "HH:mm:ss").format("HH:mm"),
-            endDate: moment(state.startDate).format("YYYY-MM-DD") + " " + moment(newShift?.[0].endTime, "HH:mm:ss").format("HH:mm"),
+            endDate: moment(state.endDate).format("YYYY-MM-DD") + " " + moment(newShift?.[0].endTime, "HH:mm:ss").format("HH:mm"),
             [target.name]: target.value
         })
     }
@@ -100,42 +104,54 @@ const Popup = (props) => {
         else if (state.shiftName === null) {
             message.error('Please select shift!');
         } else {
-            props.setEventRecordHandler(state);
-
-            const result = [{
-                isDeleted: false,
-                createdBy: 0,
+            const result = {
                 shiftId: state.shiftName,
-                workDate: moment(new Date(state.startDate)).format("YYYY-MM-DDThh:mm:ss"),
-
-            }]
-            contactApi.create(state.shiftName, result)
+                workDate: moment(new Date(state.startDate)).format("YYYY-MM-DD"),
+                workspaceId: state.workspaceName,
+                employeeId: state.resourceId
+            }
+                console.log(state.workScheduleId,"LOg");
+            if(state.workScheduleId===null || state.workScheduleId=== undefined){
+                workScheduleApi.create(result)
                 .then((res) => {
                     if (res.code !== 201) {
                         message.error(t("CORE.task_failure"));
                         return;
                     }
-                    const values = {
-                        workScheduleId: res?.data?.[0]?.id,
-                        workspaceId: state.workspaceName,
-                        employeeId: state.resourceId
-                    };
-                    workScheduleApi.create(values).then((res) => {
-                        if (res.code !== 201) {
-                            message.error(t("CORE.task_failure"));
-                            return;
-                        }
-                        // dispatch(update_identity_table_data_success(identity, res.data));
                         message.success(t("CORE.SHIFT.CREATE.SUCCESS"));
+                        props.setEventRecordHandler({...state,workScheduleId: res?.data?.workScheduleId});
                         props.closePopup();
-                    })
-                        .catch(() => {
-                            message.error(t("CORE.error.system"));
-                        });
+                        console.log(state,"LOG Stete");
                 })
                 .catch(() => {
                     message.error(t("CORE.error.system"));
                 });
+            }
+            else{
+                const result2 = {
+                    shiftId: state.shiftName,
+                    workDate: moment(new Date(state.startDate)).format("YYYY-MM-DD"),
+                    workspaceId: state2.workspaceName,
+                    employeeId: state2.resourceId,
+                    newWorkspaceId:state.workspaceName,
+                    newEmployeeId:state.resourceId,
+                    workScheduleId:state.workScheduleId
+                }
+                workScheduleApi.update(result2)
+                .then((res) => {
+                    if (res.code !== 200) {
+                        message.error(t("CORE.task_failure"));
+                        return;
+                    }
+                        message.success(t("CORE.SHIFT.UPDATE.SUCCESS"));
+                        props.setEventRecordHandler(state);
+                        props.closePopup();
+                })
+                .catch(() => {
+                    message.error(t("CORE.error.system"));
+                });
+            }
+           
         }
     } // saveClickHandler
 
