@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { DatePicker } from "antd";
-import moment from "moment";
+import moment, { months } from "moment";
 import reportApi from "~/Core/Modules/Dashboard/Api";
 import { set } from "lodash";
 const { MonthPicker } = DatePicker;
@@ -17,6 +17,10 @@ const HeaderCard = ({setFromDate,setToDate})=> {
       
     }
   };
+  function disabledDate(current) {
+    // Can not select days before today and today
+    return current && current > moment().subtract(1,'month');
+  }
 
   return (
     <div className="header-card">
@@ -26,7 +30,7 @@ const HeaderCard = ({setFromDate,setToDate})=> {
         style={{ flex: 1, justifyContent: "flex-end" }}
       >
         <span className="filter-label">Chọn tháng: </span>
-        <MonthPicker onChange={changeMonth} placeholder="Select Month" />
+        <MonthPicker disabledDate={disabledDate} defaultValue={moment().subtract(1,'month')} onChange={changeMonth} placeholder="Select Month" />
       </div>
     </div>
   );
