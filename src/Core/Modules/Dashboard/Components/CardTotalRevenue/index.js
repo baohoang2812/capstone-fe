@@ -41,7 +41,7 @@ const CardTotalRevenue = () => {
       const  FromDate = moment().startOf('month').subtract(1,'month').format("YYYY-MM-DD");
      const toDate = moment().endOf('month').subtract(1,'month').format("YYYY-MM-DD");
       const list = await reportApi.getList("Done",FromDate,toDate);
-      console.log(list,"List");
+     
       const data = list?.data?.result?.map((item) => (
         {
           Branch: item?.branch?.name,
@@ -78,36 +78,10 @@ const CardTotalRevenue = () => {
     })();
   }, [FromDate,toDate]);
   
-  const onInitData = () => {
-    if (filters) {
-      setLoading(true);
-      // const { date, label } = filters;
-      // dashboardApi
-      //   .getTotalRevenue(date)
-      //   .then((res) => {
-      //     setLoading(false);
-      //     let sourceData = [];
-      //     for (const key in res.count_one) {
-      //       const record = {
-      //         week: convert_key(key),
-      //         [label[0]]: res.count_one[key],
-      //         [label[1]]: res.count_two[key],
-      //       };
-      //       sourceData.push(record);
-      //     }
-      //     getChartData(sourceData, label);
-      //   })
-      //   .catch(() => setLoading(false));
-    }
-  };
-
-  useEffect(() => {
-    onInitData();
-  }, [JSON.stringify(filters)]);
-
+ 
   return (
     <div className="card-total-revenue card-default">
-      <Card title={<HeaderCard setFilters={setFilters} />} bordered={false}>
+      <Card title={<HeaderCard setFromDate={setFromDate} setToDate={setToDate} />} bordered={false}>
         {/* <Spin spinning={loading}> */}
         <Bar {...config} />
         {/* </Spin> */}

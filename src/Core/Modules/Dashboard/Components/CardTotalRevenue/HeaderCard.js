@@ -2,29 +2,20 @@ import React, { useState, useEffect } from "react";
 import { DatePicker } from "antd";
 import moment from "moment";
 import reportApi from "~/Core/Modules/Dashboard/Api";
+import { set } from "lodash";
 const { MonthPicker } = DatePicker;
 
-const HeaderCard = ({
-  setFilters
-}) => {
-
+const HeaderCard = ({setFromDate,setToDate})=> {
   /* State */
-  const [value, setValue] = useState();
   const changeMonth = (value) => {
-    (async () => {
+   
     if(value!==null){
       const startMonth=moment(value).startOf('month').format("YYYY-MM-DD");
       const endMonth=moment(value).endOf('month').format("YYYY-MM-DD");
+      setFromDate(startMonth);
+      setToDate(endMonth);
       
     }
-      
-     
-     
-      
-      
-    
-
-    })();
   };
 
   return (
