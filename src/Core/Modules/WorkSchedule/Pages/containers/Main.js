@@ -43,7 +43,8 @@ const Main = React.forwardRef((props, ref) => {
             location: "Some office",
             iconCls: "b-fa b-fa-calendar",
             shiftName: item?.workSchedule?.shift?.id,
-            workScheduleId: item?.workSchedule?.id
+            workScheduleId: item?.workSchedule?.id,
+            workCheck: moment(item?.workSchedule?.workDate).format("YYYY-MM-DD")
           }
         })
         setWorkSchedules(listWorkSchedule);

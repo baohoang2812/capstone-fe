@@ -22,6 +22,7 @@ import moment from "moment";
 const Popup = (props) => {
     const [workspaces, setWorkspaces] = useState([]);
     const [shifts, setShifts] = useState([]);
+    const[disableBtn, setDisableBtn]= useState(false);
     const [state, setState] = useState({
         name: '',
         location: '',
@@ -34,6 +35,13 @@ const Popup = (props) => {
     })
 
     const t = useTranslate();
+    useEffect(() => { 
+        console.log(props.workCheck,"LOG BTN");
+        if(moment()>moment(new Date(state.startDate))){
+            setDisableBtn(true);
+        }
+    }, [])
+
 
     useEffect(() => {
         workspaceApi.getList()
@@ -58,7 +66,10 @@ const Popup = (props) => {
                 })
                 setShifts(listShift);
             })
+            
     }, [])
+
+
     /**
      * Sets the changed value to state
      * @param {HTMLElement} target The input that changed
@@ -266,6 +277,7 @@ const Popup = (props) => {
                     <Button
                         type="primary"
                         htmlType="submit"
+                        disabled={disableBtn}
                         className="btn-yellow btn-right"
                         style={{ float: "right" }}
                         onClick={saveClickHandler}>
