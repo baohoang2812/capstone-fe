@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Avatar, List } from "antd";
 import { Link} from "react-router-dom";
 import notiApi from "~/Core/Modules/Notification/Api";
+import moment from "moment";
 /* Actions */
 // import { updateListNotification } from "~/Core/Store/actions/notification";
 
@@ -63,7 +64,7 @@ export default ({
             <List.Item className ={!item.isRead && "unread"}>
               <List.Item.Meta
                 avatar ={<Avatar shape="square" size="large" />}
-                title ={<span>{item.notification.name}</span>}
+                title ={<span>{item?.notification?.name}</span>}
                 description ={
                   <div className ="description">
                     <p style ={{
@@ -71,8 +72,10 @@ export default ({
                       WebkitLineClamp: 2,
                       WebkitBoxOrient: "vertical",
                       overflow: "hidden"
-                    }} dangerouslySetInnerHTML={{ __html: item.notification.description }} />
-                    <span>{item.notification.createdAt}</span>
+                    }} dangerouslySetInnerHTML={{ __html: item?.notification?.description }} />
+                    <span>{
+                      moment(item?.notification?.createdAt).format("DD-MM-YYYY HH:mm")
+                    }</span>
                   </div>
                 }
               />
