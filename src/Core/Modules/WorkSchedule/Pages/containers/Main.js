@@ -31,7 +31,7 @@ const Main = React.forwardRef((props, ref) => {
         setEmployees(listEmployee);
       });
 
-    workScheduleApi.getList()
+    workScheduleApi.getList(0,900)
       .then(res => {
         const listWorkSchedule = res?.data?.result?.map(item => {
           return {
