@@ -4,6 +4,7 @@
     "CORE.SHIFT.NAME":"Tên ca",
     "CORE.EMPLOYEE.NAME":"Tên nhân viên",
     "CORE.WORKSCHEDULE":"Lịch làm việc",
-    "CORE.WORKSCHEDULE.MANAGEMENT":"Quản lý lịch làm việc"
+    "CORE.WORKSCHEDULE.MANAGEMENT":"Quản lý lịch làm việc",
+    "CORE.DUPLICATE.SHIFT":"Ca này đã tồn tại, vui lòng chọn ca khác"
 
 }

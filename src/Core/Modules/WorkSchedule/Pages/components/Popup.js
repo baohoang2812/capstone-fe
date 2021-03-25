@@ -114,14 +114,21 @@ const Popup = (props) => {
             if(state.workScheduleId===null || state.workScheduleId=== undefined){
                 workScheduleApi.create(result)
                 .then((res) => {
-                    if (res.code !== 201) {
-                        message.error(t("CORE.task_failure"));
-                        return;
-                    }
+                    if (res.code === 201) {
                         message.success(t("CORE.SHIFT.CREATE.SUCCESS"));
                         props.setEventRecordHandler({...state,workScheduleId: res?.data?.workScheduleId});
                         props.closePopup();
                         console.log(state,"LOG Stete");
+                    } else if(res.code===3000){
+                        message.error(t("CORE.DUPLICATE.SHIFT"));
+                        return;
+                    }
+                    else{
+                        message.error(t("CORE.task_failure"));
+                        return;
+
+                    }
+                       
                 })
                 .catch(() => {
                     message.error(t("CORE.error.system"));
