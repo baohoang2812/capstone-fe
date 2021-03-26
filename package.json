@@ -70,5 +70,5 @@
     "babel-plugin-root-import": "^6.2.0",
     "redux-devtools-extension": "^2.13.8"
   },
-  "homepage": "https://capstone-fe.azurewebsites.net"
+  "homepage": "https://mavca-admin.azurewebsites.net"
 }
