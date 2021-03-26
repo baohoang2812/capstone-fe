@@ -12,5 +12,6 @@
     "WORKSPACE.PARENT_CATE.PLACEHOLDER":"Khu vực cha",
     "CORE.WORKSPACE.CREATE.SUCCESS":"Tạo mới thành công",
     "CORE.WORKSPACE.UPDATED.SUCCESS":"Cập nhật thành công",
-    "CORE.WORKSPACE.CERTIFICATE":"Chứng chỉ"
+    "CORE.WORKSPACE.CERTIFICATE":"Chứng chỉ",
+    "CORE.WORKSPACE.CERTIFICATE.ALERT":"Vui lòng chọn loại chứng chỉ"
 }

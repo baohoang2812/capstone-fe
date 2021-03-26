@@ -10,7 +10,8 @@ import {
   Input,
   Button,
   message,
-  Cascader
+  Cascader,
+  Select
 } from "antd";
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
@@ -23,7 +24,8 @@ import { workspaces as identity } from "~/Core/Modules/Workspace/Configs/Constan
 
 /* Api */
 import workspaceApi from "~/Core/Modules/Workspace/Api/";
-
+import certificationTypeApi from "~/Core/Modules/Workspace/Api/CertificationType";
+const { Option } = Select;
 const WorkspaceDetailForm = ({ form, is_create, action, data }) => {
   const t = useTranslate();
   /* Redux */
@@ -35,16 +37,30 @@ const WorkspaceDetailForm = ({ form, is_create, action, data }) => {
   const { getFieldDecorator, validateFields, setFieldsValue } = form;
   // const [hashOption, setHashOption] = useState({});
   const [options, setOptions] = useState([]);
+  const [listCertificationType, setCertificationType] = useState([]);
 
   // useEffect(() => {
   //   setFieldsValue({
   //     name: data?.name,
   //     description: data?.description,
   //     parent: data?.parent?.name
-      
+
   //   });
   // }, [data]);
-
+  useEffect(() => {
+    (async () => {
+      const resRole = await certificationTypeApi.getList();
+      setCertificationType(resRole?.data?.result || []);
+    })();
+  }, []);
+  useEffect (() => {
+    console.log(data?.certificateTypes?.map((item) => (item.id))
+    ,"IDS");
+    setFieldsValue ({
+      certificateTypeIds: data?.certificateTypes?.map((item) => (item.id))
+     
+    });
+  }, [data]);
   useEffect(() => {
     const {
       id,
@@ -63,16 +79,16 @@ const WorkspaceDetailForm = ({ form, is_create, action, data }) => {
 
   }, [JSON.stringify(data), listWorkSpace])
 
-  const generateCascaderOptions=(categories, current_id) => {
-    let hash={}, options=[];
+  const generateCascaderOptions = (categories, current_id) => {
+    let hash = {}, options = [];
 
-    for (let i=0; i< categories.length; i++) {
-      const item=categories[i];
-      hash[item.id]= { value: item.id, label: item.name, children: [] };
+    for (let i = 0; i < categories.length; i++) {
+      const item = categories[i];
+      hash[item.id] = { value: item.id, label: item.name, children: [] };
     }
 
-    for (let i= 0; i < categories.length; i++) {
-      const item= categories[i];
+    for (let i = 0; i < categories.length; i++) {
+      const item = categories[i];
       if (item.id !== current_id) {
         if (item?.parent?.id && hash[item?.parent?.id]) {
 
@@ -85,22 +101,22 @@ const WorkspaceDetailForm = ({ form, is_create, action, data }) => {
     return [options, hash];
   }
 
-  const getListParentIds =(options, parent_id, parent_ids = []) => {
-    if (parent_id=== null || parent_id === undefined) {
+  const getListParentIds = (options, parent_id, parent_ids = []) => {
+    if (parent_id === null || parent_id === undefined) {
       return parent_ids.reverse();
     }
 
     parent_ids.push(parent_id);
-    const parent= options.find(item => item.id === parent_id);
+    const parent = options.find(item => item.id === parent_id);
 
-    if (parent&& parent.parent_id !== null) {
-      return getListParentIds(options,parent?.parent?.id, parent_ids);
+    if (parent && parent.parent_id !== null) {
+      return getListParentIds(options, parent?.parent?.id, parent_ids);
     } else {
-      return getListParentIds(options,null, parent_ids);
+      return getListParentIds(options, null, parent_ids);
     }
   }
 
-  const onConfirm= (e) => {
+  const onConfirm = (e) => {
     e.preventDefault();
     validateFields((err, values) => {
       if (!err) {
@@ -180,7 +196,7 @@ const WorkspaceDetailForm = ({ form, is_create, action, data }) => {
                 </Form.Item>
               </Col>
             </Row>
-           
+
             <Row type="flex" justify="center" align="bottom">
               <Col span={15}>
                 <Form.Item label={t("CORE.WORKSPACE.DESCRIPTION")}>
@@ -211,7 +227,26 @@ const WorkspaceDetailForm = ({ form, is_create, action, data }) => {
                 </Form.Item>
               </Col>
             </Row>
-           
+
+            <Row type="flex" justify="center" align="bottom">
+              <Col span={15}>
+                <Form.Item label={t("CORE.WORKSPACE.CERTIFICATE")}>
+                  {getFieldDecorator(
+                    "certificateTypeIds",
+                    {}
+                  )(
+                    <Select mode="multiple" placeholder={t("CORE.WORKSPACE.CERTIFICATE.ALERT")}>
+                      {listCertificationType.map((item) => (
+                        <Option key={item.id} value={item.id}>
+                          {`${item.name}`}
+                        </Option>
+                      ))}
+                    </Select>,
+                  )}
+                </Form.Item>
+              </Col>
+            </Row>
+
 
             <Row type="flex" justify="center">
               <div className="btn-group">

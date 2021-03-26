@@ -54,7 +54,7 @@ const UserTable = () => {
       width: 220,
       render: (_, record) => record?.certificateTypes?.map((item) =>{
         return(
-          <Tag style={{marginTop:"5px"}} color="blue">{item?.name}</Tag>
+          <Tag style={{marginTop:"10px",marginRight:"30px"}} color="blue">{item?.name}</Tag>
         )
       })
     },

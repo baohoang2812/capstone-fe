@@ -12,5 +12,6 @@
     "WORKSPACE.PARENT_CATE.PLACEHOLDER":"Workspace parent",
     "CORE.WORKSPACE.CREATE.SUCCESS":"Created workspace success",
     "CORE.WORKSPACE.UPDATED.SUCCESS":"Updated workspace success", 
-    "CORE.WORKSPACE.CERTIFICATE":"Certificate Type"
+    "CORE.WORKSPACE.CERTIFICATE":"Certificate Type",
+    "CORE.WORKSPACE.CERTIFICATE.ALERT":"Please select certificate type"
 }

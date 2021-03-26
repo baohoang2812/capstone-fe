@@ -48,7 +48,7 @@ const AccountForm = ({ form, employeeId, action, data, is_create }) => {
       username: data?.username,
       roleId: data?.role?.id,
     });
-  }, [data]);
+  },[data]);
 
   const onConfirm = (e) => {
     e.preventDefault();
