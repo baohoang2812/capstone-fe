@@ -36,8 +36,8 @@ const Popup = (props) => {
 
     const t = useTranslate();
     useEffect(() => { 
-        console.log(props.workCheck,"LOG BTN");
-        if(moment()>moment(new Date(state.startDate))){
+        console.log(moment(new Date(state.startDate)),"LOG BTN");
+        if(moment()>=moment(new Date(state.startDate))){
             setDisableBtn(true);
         }
     }, [])
@@ -163,6 +163,8 @@ const Popup = (props) => {
                     }
                         message.success(t("CORE.SHIFT.UPDATE.SUCCESS"));
                         props.setEventRecordHandler(state);
+                        
+                        
                         props.closePopup();
                 })
                 .catch(() => {

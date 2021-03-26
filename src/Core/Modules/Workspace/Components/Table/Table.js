@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import { Tag } from "antd";
 import jwt_decode from "jwt-decode";
 
 /* Hooks */
@@ -42,6 +43,20 @@ const UserTable = () => {
       fieldType: "text",
       sorter: true,
       width: 220,
+    },
+    {
+      title: t("CORE.WORKSPACE.CERTIFICATE"),
+      dataIndex: "certificateTypes",
+      className: "header-filter",
+      key: "description",
+      fieldType: "text",
+      sorter: true,
+      width: 220,
+      render: (_, record) => record?.certificateTypes?.map((item) =>{
+        return(
+          <Tag style={{marginTop:"5px"}} color="blue">{item?.name}</Tag>
+        )
+      })
     },
     {
         title: t("CORE.WORKSPACE.PARENT"),
