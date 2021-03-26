@@ -25,12 +25,11 @@ jobs:
         username: ${{ secrets.AzureAppService_ContainerUsername_f66e1852bd014094a30fe6c884bd8c59 }}
         password: ${{ secrets.AzureAppService_ContainerPassword_5cc88e15b4cf4868adaf6f5e2e1b1937 }}
 
-    - name: Build and push container image to registry
-      uses: docker/build-push-action@v2.2.1
-      with:
-        push: true
-        tags: mavca-admin:${{ github.sha }}
-        file: ./Dockerfile
+    - name: Build and push image to ACR
+      id: build-image
+      run: |
+        docker build "$GITHUB_WORKSPACE/" -f  "Dockerfile" -t mavcaadmin.azurecr.io/mavca-admin:${{ github.sha }}
+        docker push mavcaadmin.azurecr.io/mavca-admin:${{ github.sha }}
 
   deploy:
     runs-on: ubuntu-latest
