@@ -1,0 +1,50 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
+name: Build and deploy container app to Azure Web App - mavca-admin
+
+on:
+  push:
+    branches:
+      - develop
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: 'ubuntu-latest'
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - uses: azure/docker-login@v1
+      with:
+        login-server: https://mavcaadmin.azurecr.io/
+        username: ${{ secrets.AzureAppService_ContainerUsername_f66e1852bd014094a30fe6c884bd8c59 }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_5cc88e15b4cf4868adaf6f5e2e1b1937 }}
+
+    - name: Build and push container image to registry
+      uses: docker/build-push-action@v2.2.1
+      with:
+        push: true
+        tags: mavca-admin:${{ github.sha }}
+        file: ./Dockerfile
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+    - name: Deploy to Azure Web App
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'mavca-admin'
+        slot-name: 'production'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_2a668b42b86c4ca583d8972108ac5ab4 }}
+        images: 'mavcaadmin.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_f66e1852bd014094a30fe6c884bd8c59 }}/mavca-admin:${{ github.sha }}'
