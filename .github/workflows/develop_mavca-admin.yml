@@ -30,29 +30,6 @@ jobs:
       run: |
         docker build "$GITHUB_WORKSPACE/" -f  "Dockerfile" -t mavcaadmin.azurecr.io/mavca-admin:${{ github.sha }}
         docker push mavcaadmin.azurecr.io/mavca-admin:${{ github.sha }}
-        
-    - name: Set Web App ACR authentication
-      uses: Azure/appservice-settings@v1
-      with: 
-        app-name: mavca-admin
-        app-settings-json: | 
-          [
-            {
-              "name": "DOCKER_REGISTRY_SERVER_URL",
-              "value": "mavcaadmin.azurecr.io",
-              "slotSetting": false
-            },
-            {
-              "name": "DOCKER_REGISTRY_SERVER_USERNAME",
-              "value": "${{ secrets.AzureAppService_ContainerUsername_f66e1852bd014094a30fe6c884bd8c59 }}",
-              "slotSetting": false
-            },
-            {
-              "name": "DOCKER_REGISTRY_SERVER_PASSWORD",
-              "value": "${{ secrets.AzureAppService_ContainerPassword_5cc88e15b4cf4868adaf6f5e2e1b1937 }}",
-              "slotSetting": false
-            }
-          ]
 
   deploy:
     runs-on: ubuntu-latest
@@ -69,4 +46,4 @@ jobs:
         app-name: 'mavca-admin'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_2a668b42b86c4ca583d8972108ac5ab4 }}
-        images: 'mavcaadmin.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_f66e1852bd014094a30fe6c884bd8c59 }}/mavca-admin:${{ github.sha }}'
+        images: 'mavcaadmin.azurecr.io/mavca-admin:${{ github.sha }}'
