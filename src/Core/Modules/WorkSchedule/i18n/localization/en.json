@@ -6,5 +6,6 @@
     "CORE.VIOLATION.CREATE.SUCCESS":"Updated success",
     "CORE.WORKSCHEDULE":"WorkSchedule",
     "CORE.WORKSCHEDULE.MANAGEMENT":"WorkSchedule management",
-    "CORE.DUPLICATE.SHIFT":"This shift already existed, please choose another shift!"
+    "CORE.DUPLICATE.SHIFT":"This shift already existed, please choose another shift!",
+    "CORE.NO.CERTIFICATE":"Employee can not work in this workspace!"
 }

@@ -134,6 +134,10 @@ const Popup = (props) => {
                         message.error(t("CORE.DUPLICATE.SHIFT"));
                         return;
                     }
+                    else if(res.code===3002){
+                        message.error(t("CORE.NO.CERTIFICATE"));
+                        return;
+                    }
                     else{
                         message.error(t("CORE.task_failure"));
                         return;

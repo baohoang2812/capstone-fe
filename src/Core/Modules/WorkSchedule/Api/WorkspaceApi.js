@@ -1,7 +1,7 @@
 import BaseApi from "~/Core/Api/BaseAPI";
 class WorkspaceApi extends BaseApi {
   getList = () => {
-    return this.initApi.get(`${this.baseUrl}?Filter.IsDeleted=${false}`);
+    return this.initApi.get(`${this.baseUrl}?Filter.IsDeleted=${false}&PageIndex=${0}&Limit=${900}`);
   };
 
   getOne = (id) => {
