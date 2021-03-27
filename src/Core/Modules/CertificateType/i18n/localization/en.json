@@ -10,5 +10,8 @@
     "CORE.CERTIFICATE.TYPE.CREATE.ACCOUNT":"Create certificate type",
     "CORE.CERTIFICATE.TYPE.UPDATE.ACCOUNT":"Update certificate type",
     "CORE.CERTIFICATE.DETAIL":"Certificate detail",
-    "CORE.CERTIFICATE":"Certificate"
+    "CORE.CERTIFICATE":"Certificate",
+    "CORE.CERTIFICATE.ALERT.NAME":"Please input certificate type name!",
+    "CORE.CERTIFICATE.ALERT.DESCRIPTION":"Please input certificate type description!",
+    "CORE.CERTIFICATE.ALERT.LENGTH":"Max length is 255 characters!"
 }
