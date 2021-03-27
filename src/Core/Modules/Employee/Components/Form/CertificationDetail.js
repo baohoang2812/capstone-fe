@@ -17,12 +17,12 @@ import { certification as identity } from "~/Core/Modules/Employee/Configs/const
 import certificationTypeApi from "~/Core/Modules/Employee/Api/CertificationType";
 import certificationApi from "~/Core/Modules/Employee/Api/Certification";
 
-const { Option } = Select;
-const { Meta } = Card;
+const { Option }= Select;
+const { Meta }= Card;
 
 const CertificationDetail = ({ form, employeeId, action, data, is_create }) => {
   const [loadingDropdown, setLoadingDropdown] = useState(false);
-  const [listCertificationType, setCertificationType] = useState([]);
+  const [listCertificationType, setCertificationType]= useState([]);
   const [itemSelect, setItemSelect] = useState({});
 
   const t = useTranslate();

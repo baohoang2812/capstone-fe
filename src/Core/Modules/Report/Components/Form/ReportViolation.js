@@ -153,6 +153,7 @@ const ReportViolation = ({ form, is_create, action, data,setData }) => {
                   {getFieldDecorator("adminNote", {})(<TextArea disabled={data?.status?.toLowerCase()==="done"} />)}
                 </Form.Item>
               </Col>
+             
             </Row>
             <Row type="flex" justify="center">
               <div className="btn-group">

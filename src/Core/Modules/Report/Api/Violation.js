@@ -15,7 +15,7 @@ class ReportApi extends BaseApi {
     return this.initApi.post(`${this.baseUrl}`, body);
   };
   exportViolation=(id)=>{
-    return this.initApi.get(`${this.baseUrl}/export?reportIds=${id}`);
+    return this.initApi.get(`${this.baseUrl}/csv?reportId=${id}`);
   };
 
   update = (id, body) => {

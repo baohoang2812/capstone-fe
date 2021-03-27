@@ -14,7 +14,14 @@
     "CORE.BRANCH.CREATE.SUCCESS":"Tạo chi nhánh thành công",
     "CORE.BRANCH.UPDATE.SUCCESS":"Cập nhật chi nhánh thành công",
     "CORE.BRANCH":"Chi nhánh",
-    "CORE.BRANCH.MANAGEMENT":"Quản lý chi nhánh"
+    "CORE.BRANCH.MANAGEMENT":"Quản lý chi nhánh",
+    "CORE.BRANCH.ALERT.NAME":"Vui lòng nhập tên chi nhánh",
+    "CORE.BRANCH.ALERT.MAX.LENGTH":"Tối đa 255 ký tự",
+    "CORE.BRANCH.ALERT.DESCRIPTION":"Vui lòng nhập địa chỉ",
+    "CORE.BRANCH.ALERT.PHONE.NUMBER": "Vui lòng nhập số điện thoại.",
+    "CORE.BRANCH.ALERT.MAX.LENGTH.11":"Tối đa 11 ký tự.",
+    "CORE.BRANCH.ALERT.MIN.LENGTH.10":"Tối thiểu 10 ký tự.",
+    "CORE.BRANCH.ALERT.VALID.NUMBER":"Không đúng định dạng số điện thoại."
 
     
 }

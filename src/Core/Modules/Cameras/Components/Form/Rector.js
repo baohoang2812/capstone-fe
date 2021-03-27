@@ -1,144 +1,263 @@
+import { Button } from "antd";
 import React from "react";
-
+import { Stage, Layer, Line, Rect } from "react-konva";
 class Rector extends React.Component {
-  static defaultProps = {
-    width: 320,
-    height: 200,
-    strokeStyle: "#F00",
-    lineWidth: 1,
-    onSelected: () => {},
+  state = {
+    indexBox: 0,
+    listBox: [
+      {
+        points: [],
+        curMousePos: [0, 0],
+        isMouseOverStartPoint: false,
+        isFinished: false,
+      },
+    ],
   };
 
-  canvas = null;
-  ctx = null;
-  isDirty = false;
-  isDrag = false;
-  startX = -1;
-  startY = -1;
-  curX = -1;
-  curY = -1;
-
-  componentDidMount(props) {
-    this.ctx = this.canvas.getContext("2d");
-    this.ctx.strokeStyle = this.props.strokeStyle;
-    this.ctx.lineWidth = this.props.lineWidth;
-
-    this.addMouseEvents();
+  componentDidUpdate(prevProps) {
+    const { config: prevConfig } = prevProps;
+    const { config: nextConfig } = this.props;
+  
+    if (nextConfig && nextConfig !== prevConfig) {
+      this.setState({
+        listBox: nextConfig
+      })
+    }
   }
 
-  componentDidUpdate() {
-    const { config } = this.props;
-    console.log(config);
-    requestAnimationFrame(this.updateFrame);
-  }
+  getMousePos = (stage) => {
+    return [stage.getPointerPosition().x, stage.getPointerPosition().y];
+  };
 
-  updateFrame = () => {
-    const { config } = this.props;
-    requestAnimationFrame(this.updateFrame);
-    this.ctx.clearRect(0, 0, this.props.width, this.props.height);
+  handleClick = (event) => {
+    const {
+      state: { listBox, indexBox },
+      props: { setConfig },
+      getMousePos,
+    } = this;
+    const stage = event.target.getStage();
+    const mousePos = getMousePos(stage);
 
-    this.ctx.strokeStyle = "blue";
-    if (config && config.length >= 0) {
-      config.forEach((rect) => {
-        this.ctx.strokeRect(rect.x, rect.y, rect.w, rect.h);
+    let dummyListBox = listBox;
+    const { isFinished, isMouseOverStartPoint, points } = dummyListBox[
+      indexBox
+    ];
+
+    if (isFinished) {
+      this.setState({
+        indexBox: indexBox + 1,
+        listBox: [
+          ...listBox,
+          {
+            points: [],
+            curMousePos: [0, 0],
+            isMouseOverStartPoint: false,
+            isFinished: false,
+          },
+        ],
       });
-    }
-  };
 
-  updateCanvas = () => {
-    if (this.isDrag) {
-      requestAnimationFrame(this.updateCanvas);
-    }
-    if (!this.isDirty) {
+      setConfig(listBox);
       return;
     }
-    this.ctx.strokeStyle = "#F00";
+    if (isMouseOverStartPoint && points.length >= 3) {
+      dummyListBox[indexBox].isFinished = true;
 
-    this.ctx.clearRect(0, 0, this.props.width, this.props.height);
-    if (this.isDrag) {
-      const rect = {
-        x: this.startX,
-        y: this.startY,
-        w: this.curX - this.startX,
-        h: this.curY - this.startY,
-      };
-      this.ctx.strokeRect(rect.x, rect.y, rect.w, rect.h);
+      this.setState({
+        listBox: dummyListBox,
+      });
+      setConfig(dummyListBox);
+    } else {
+      dummyListBox[indexBox].points = [...points, mousePos];
+
+      this.setState({
+        listBox: dummyListBox,
+      });
+      setConfig(dummyListBox);
     }
-    this.isDirty = false;
   };
 
-  componentWillUnmount() {
-    this.removeMouseEvents();
-  }
+  handleMouseMove = (event) => {
+    const { indexBox, listBox } = this.state;
+    let dummyListBox = listBox;
 
-  addMouseEvents() {
-    document
-      .getElementById("canvas-image")
-      .addEventListener("mousedown", this.onMouseDown, false);
-    document
-      .getElementById("canvas-image")
-      .addEventListener("mousemove", this.onMouseMove, false);
-    document
-      .getElementById("canvas-image")
-      .addEventListener("mouseup", this.onMouseUp, false);
-  }
-  removeMouseEvents() {
-    document
-      .getElementById("canvas-image")
-      .removeEventListener("mousedown", this.onMouseDown, false);
-    document
-      .getElementById("canvas-image")
-      .removeEventListener("mousemove", this.onMouseMove, false);
-    document
-      .getElementById("canvas-image")
-      .removeEventListener("mouseup", this.onMouseUp, false);
-  }
+    const { getMousePos } = this;
+    const stage = event.target.getStage();
+    const mousePos = getMousePos(stage);
 
-  onMouseDown = (e) => {
-    this.isDrag = true;
-    this.curX = this.startX = e.offsetX;
-    this.curY = this.startY = e.offsetY;
-    requestAnimationFrame(this.updateCanvas);
+    dummyListBox[indexBox].curMousePos = mousePos;
+    this.setState({
+      listBox: dummyListBox,
+    });
   };
 
-  onMouseMove = (e) => {
-    if (!this.isDrag) return;
-    this.curX = e.offsetX;
-    this.curY = e.offsetY;
-    this.isDirty = true;
+  handleMouseOverStartPoint = (event) => {
+    const { indexBox, listBox } = this.state;
+    let dummyListBox = listBox;
+
+    const { isFinished, points } = dummyListBox[indexBox];
+
+    if (isFinished || points.length < 3) return;
+    event.target.scale({ x: 2, y: 2 });
+    dummyListBox[indexBox].isMouseOverStartPoint = true;
+
+    this.setState({
+      listBox: dummyListBox,
+    });
   };
 
-  onMouseUp = (e) => {
-    this.isDrag = false;
-    this.isDirty = true;
+  handleMouseOutStartPoint = (event) => {
+    const { indexBox, listBox } = this.state;
+    let dummyListBox = listBox;
 
-    const rect = {
-      x: Math.min(this.startX, this.curX),
-      y: Math.min(this.startY, this.curY),
-      w: Math.abs(e.offsetX - this.startX),
-      h: Math.abs(e.offsetY - this.startY),
-    };
-    this.props.onSelected(rect);
+    event.target.scale({ x: 1, y: 1 });
+    dummyListBox[indexBox].isMouseOverStartPoint = false;
+
+    this.setState({
+      listBox: dummyListBox,
+    });
+  };
+
+  handleDragStartPoint = (event) => {
+    console.log("start", event);
+  };
+
+  handleDragMovePoint = (event) => {
+    const { indexBox, listBox } = this.state;
+    let dummyListBox = listBox;
+
+    const points = dummyListBox[indexBox]?.points;
+    const index = event.target.index - 1;
+    const pos = [event.target.attrs.x, event.target.attrs.y];
+    const dummyData = [
+      ...points.slice(0, index),
+      pos,
+      ...points.slice(index + 1),
+    ];
+
+    dummyListBox[indexBox].points = dummyData;
+
+    this.setState({
+      listBox: dummyListBox,
+    });
+  };
+
+  handleDragOutPoint = (event) => {
+    console.log("end", event);
+  };
+
+  handleRender = (item) => {
+    const { points, curMousePos, isFinished } = item;
+
+    return points
+      .concat(isFinished ? [] : curMousePos)
+      .reduce((a, b) => a.concat(b), []);
+  };
+
+  handleUndo = () => {
+    const { listBox, indexBox } = this.state;
+
+    let dummyListBox = listBox;
+
+    let { points } = dummyListBox[indexBox];
+
+    if (points.length > 1) {
+      points.pop();
+      dummyListBox[indexBox].points = points;
+      dummyListBox[indexBox].isMouseOverStartPoint = false;
+      dummyListBox[indexBox].isFinished = false;
+    } else {
+      dummyListBox.pop();
+      this.setState({
+        indexBox: indexBox - 1,
+      });
+    }
+
+    this.setState({
+      listBox: dummyListBox,
+    });
   };
 
   render() {
+    const {
+      state: { listBox, indexBox },
+      props: { image, getNewImage },
+      handleClick,
+      handleMouseMove,
+      handleMouseOverStartPoint,
+      handleMouseOutStartPoint,
+      handleDragStartPoint,
+      handleDragMovePoint,
+      handleDragEndPoint,
+    } = this;
+
     return (
-      <div id="canvas-image">
-        <canvas
-          style={{
-            border: "1px solid blue",
-            width: "640px",
-            height: "480px",
-            background:
-              `url("${this.props.image}") no-repeat center center`,
-          }}
-          width={this.props.width}
-          height={this.props.height}
-          ref={(c) => {
-            this.canvas = c;
-          }}
-        />
-      </div>
+      <>
+        <Button style={{
+          margin: 15
+        }} type="primary" onClick={this.handleUndo}>
+          Undo
+        </Button>
+        <Button
+          onClick={getNewImage}
+        >
+          Get new image
+        </Button>
+        <div style={{ width: 642, height: 482, border: "solid 1px black" }}>
+          <Stage
+            width={642}
+            height={482}
+            onMouseDown={handleClick}
+            onMouseMove={handleMouseMove}
+            style={{
+              backgroundImage: `url("${image}")`,
+              backgroundRepeat: "no-repeat, repeat",
+            }}
+          >
+            <Layer>
+              {listBox.map((item) => (
+                <Line
+                  points={this.handleRender(item)}
+                  stroke="black"
+                  strokeWidth={5}
+                  closed={item?.isFinished}
+                />
+              ))}
+
+              {listBox[indexBox]?.points?.map((point, index) => {
+                const width = 6;
+                const x = point[0] - width / 2;
+                const y = point[1] - width / 2;
+                const startPointAttr =
+                  index === 0
+                    ? {
+                        hitStrokeWidth: 12,
+                        onMouseOver: handleMouseOverStartPoint,
+                        onMouseOut: handleMouseOutStartPoint,
+                      }
+                    : null;
+                return (
+                  <Rect
+                    key={index}
+                    x={x}
+                    y={y}
+                    width={width}
+                    height={width}
+                    fill="white"
+                    stroke="black"
+                    strokeWidth={3}
+                    onDragStart={handleDragStartPoint}
+                    onDragMove={handleDragMovePoint}
+                    onDragEnd={handleDragEndPoint}
+                    draggable
+                    {...startPointAttr}
+                  />
+                );
+              })}
+            </Layer>
+          </Stage>
+        </div>
+      </>
     );
   }
 }

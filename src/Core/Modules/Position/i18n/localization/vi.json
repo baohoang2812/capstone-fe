@@ -8,5 +8,9 @@
     "CORE.POSITION":"Chức vụ",
     "CORE.POSITION.DETAIL":"Chi tiết chức vụ",
     "CORE.POSITION.CREATE.SUCCESS":"Tạo mới thành công",
-    "CORE.POSITION.UPDATE.SUCCESS":"Cập nhật thành công"
+    "CORE.POSITION.UPDATE.SUCCESS":"Cập nhật thành công",
+    "CORE.POSITION.ALERT.NAME":"Vui lòng nhập tên chức vụ",
+    "CORE.POSITION.MAX.LENGTH":"Tối đa 50 ký tự",
+    "CORE.POSITION.DESCRIPTION.MAX.LENGTH":"Tối đa 500 ký tự",
+    "CORE.POSITION.ALERT.DESCRIPTION":"Vui lòng nhập mô tả"
 }

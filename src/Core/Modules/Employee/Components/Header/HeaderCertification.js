@@ -3,14 +3,18 @@ import { Button } from "antd";
 import jwt_decode from "jwt-decode";
 
 const Header = ({ breadcrumb, action, icon = "plus", text, className }) => {
-  const handleClick = () => {
-    action();
-  };
-
-  const token = localStorage.getItem("token" || "");
-  const {
-    roleName: role,
+  const token =localStorage.getItem("token" || "");
+  const{
+    roleName:role,
   } = jwt_decode(token);
+
+
+
+  const handleClick =() => {
+     action();
+    };
+
+  
   
   return (
     <div className="content-header-page">
@@ -24,8 +28,8 @@ const Header = ({ breadcrumb, action, icon = "plus", text, className }) => {
                 </div> */}
                 {/* <NavBreadcrumbContentHeader data={breadcrumb} /> */}
               </div>
-              <div className="nav-right btn-group">
-                {role === "Admin" ? (<Button onClick={handleClick} className={className}>
+              <div className= "nav-right btn-group">
+                {role=== "Admin" ? (<Button onClick={handleClick} className={className}>
                   <span>{text}</span>
                 </Button>) : null}
               </div>

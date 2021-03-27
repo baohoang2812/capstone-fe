@@ -98,7 +98,7 @@ const RegulationDetailForm = ({ form, is_create, action, data }) => {
                     rules: [
                       {
                         required: true,
-                        message: "Please input regulation name!",
+                        message: (<>{t( "CORE.REGULATION.ALERT.NAME")}</>)
                       },
                       {
                         max: 255,
@@ -116,7 +116,7 @@ const RegulationDetailForm = ({ form, is_create, action, data }) => {
                     rules: [
                       {
                         required: true,
-                        message: "Please select regulation type!",
+                        message: (<>{t("CORE.REGULATION.ALERT.TYPE")}</>)
                       },
                       
                     ],
@@ -143,7 +143,7 @@ const RegulationDetailForm = ({ form, is_create, action, data }) => {
                     rules: [
                       {
                         required: true,
-                        message: "Please input description!",
+                        message: (<>{t("CORE.REGULATION.ALERT.DESCRIPTION")}</>)
                       },
                       {
                         max: 2000,
@@ -161,7 +161,7 @@ const RegulationDetailForm = ({ form, is_create, action, data }) => {
                     rules: [
                       {
                         required: true,
-                        message: "Please input level!",
+                        message:(<>{t("CORE.REGULATION.ALERT.LEVEL")}</>)
                       },
                     ],
                   })(<InputNumber min={1} max={9} />)}
@@ -176,7 +176,7 @@ const RegulationDetailForm = ({ form, is_create, action, data }) => {
                       {
 
                         required: true,
-                        message: "Please input point!",
+                        message: (<>{t("CORE.REGULATION.ALERT.POINT")}</>)
                       },
                     ],
                   })(<InputNumber min={1} max={9} />)}

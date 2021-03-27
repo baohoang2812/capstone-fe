@@ -39,6 +39,7 @@
     "CORE.VIOLATION":"Violation",
     "CORE.VIOLATION.CREATED.BY":"Created by",
     "CORE.VIOLATION.ALERT.EXCUSE":"Please input excuse",
-    "CORE.VIOLATION.ALERT.VIOLATOR":"Please select violator"
+    "CORE.VIOLATION.ALERT.VIOLATOR":"Please select violator",
+    "CORE.VIOLATION.MINUS.POINT":"Minus point"
 
 }

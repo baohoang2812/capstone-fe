@@ -101,11 +101,11 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
                     rules: [
                       {
                         required: true,
-                        message: "Please input branch name!",
+                        message: (<>{t("CORE.BRANCH.ALERT.NAME")}</>)
                       },
                       {
                         max: 255,
-                        message: "Max length is 255 characters!",
+                        message: (<>{t("CORE.BRANCH.ALERT.MAX.LENGTH")}</>)
                       },
                     ],
                   })(<Input />)}
@@ -119,11 +119,11 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
                     rules: [
                       {
                         required: true,
-                        message: "Please input branch address!",
+                        message: (<>{t("CORE.BRANCH.ALERT.DESCRIPTION")}</>)
                       },
                       {
                         max: 255,
-                        message: "Max length is 255 characters!",
+                        message: (<>{t("CORE.BRANCH.ALERT.MAX.LENGTH")}</>)
                       },
                     ],
                   })(<Input />)}
@@ -137,19 +137,19 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
                     rules: [
                       {
                         required: true,
-                        message: "Please input phone number!",
+                        message:(<>{t("CORE.BRANCH.ALERT.PHONE.NUMBER")}</>)
                       },
                       {
                         pattern: new RegExp(/(84|0[3|5|7|8|9])+([0-9]{8})\b/g),
-                        message: "The input is not valid phone number!",
+                        message: (<>{t("CORE.BRANCH.ALERT.VALID.NUMBER")}</>)
                       },
                       {
                         max: 11,
-                        message: "Max length is 11 characters!",
+                        message: (<>{t("CORE.BRANCH.ALERT.MAX.LENGTH.11")}</>)
                       },
                       {
                         min: 10,
-                        message: "Min length is 10 characters!",
+                        message: (<>{t("CORE.BRANCH.ALERT.MIN.LENGTH.10")}</>)
                       },
                     ],
                   })(<Input />)}

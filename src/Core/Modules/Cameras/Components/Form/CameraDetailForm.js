@@ -13,20 +13,29 @@ import { update_identity_table_data_success } from "~/Core/Store/actions/adminTa
 import { cameras as identity } from "~/Core/Modules/Cameras/Configs/constants";
 
 /* Api */
-import camerasApi from "~/Core/Modules/Cameras/Api/";
+import camerasApi from "~/Core/Modules/Cameras/Api/"; 
+import cameraConfigApi from "~/Core/Modules/Cameras/Api/CameraConfigApi";
 
 /* Components */
 import Rector from "~/Core/Modules/Cameras/Components/Form/Rector";
 
 const BranchDetailForm = ({ form, data, action, is_create }) => {
-  const t = useTranslate();
+  const t=useTranslate();
   /* Redux */
-  const dispatch = useDispatch();
+  const dispatch=useDispatch();
   /* State */
-  const [loading, setLoading] = useState(false);
-  const { getFieldDecorator, validateFields, setFieldsValue } = form;
-  const [config, setConfig] = useState([]);
-  const [imagePath, setImagePath] = useState([]);
+  const [loading, setLoading]=useState(false);
+  const { getFieldDecorator, validateFields, setFieldsValue }= form;
+  const [config, setConfig]= useState([
+    {
+      points: [],
+      curMousePos: [0, 0],
+      isMouseOverStartPoint: false,
+      isFinished: false,
+    },
+  ]);
+
+  const [imagePath, setImagePath]= useState([]);
 
   useEffect(() => {
     setFieldsValue({
@@ -38,30 +47,18 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
       port: "string",
     });
     setImagePath(data.imagePath);
-    if(data?.config?.length > 0) {
-      setConfig(JSON.parse(data?.config))
+    if (data?.listBox?.length > 0) {
+      setConfig([
+        ...data.listBox,
+        {
+          points: [],
+          curMousePos: [0, 0],
+          isMouseOverStartPoint: false,
+          isFinished: false,
+        },
+      ]);
     }
   }, [data]);
-
-  const onSelected = (rect) => {
-    const configTmp = [
-      ...config,
-      {
-        selected: false,
-        index: config.length,
-        ...rect,
-      },
-    ];
-    setConfig(configTmp);
-  };
-
-  const undo = () => {
-    let configTmp =
-      config.length >= 2
-        ? config.filter((item) => item.index !== config.length - 1)
-        : [];
-    setConfig(configTmp);
-  };
 
   const handleGetNewImage = async () => {
     const res = await axios.get(
@@ -76,6 +73,7 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
       if (!err) {
         setLoading(true);
         console.log(values);
+        console.log(config);
         if (is_create) {
           camerasApi
             .create(values)
@@ -85,6 +83,25 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
                 message.error(t("CORE.task_failure"));
                 return;
               }
+              const cameraId = res?.data?.id;
+
+              const listCamConfig = config.map((item) => {
+                const point1 = item?.points?.[0];
+                const point2 = item?.points?.[1];
+                const point3 = item?.points?.[2];
+                const point4 = item?.points?.[3];
+                return {
+                  point1,
+                  point2,
+                  point3,
+                  point4,
+                  cameraId,
+                };
+              });
+              cameraConfigApi.create(listCamConfig)
+              .then((res) => {
+                console.log(res)
+              });
               dispatch(update_identity_table_data_success(identity, res.data));
               message.success(t("CORE.BRANCH.CREATE.SUCCESS"));
               action();
@@ -119,6 +136,9 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
       }
     });
   };
+
+  console.log(config);
+
   return (
     <Row type="flex" justify="center">
       <Col>
@@ -179,34 +199,13 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
               </Col>
             </Row>
             <Row type="flex" justify="center" align="bottom">
-              <Col span={23}>
-                <Button
-                  type="primary"
-                  style={{ float: "left", margin: 20 }}
-                  onClick={undo}
-                >
-                  Undo
-                </Button>
-                <Button
-                  type="primary"
-                  style={{ float: "left", margin: 20 }}
-                  onClick={handleGetNewImage}
-                >
-                  Get new image
-                </Button>
-              </Col>
-            </Row>
-            <Row type="flex" justify="center" align="bottom">
-              <Col span={23}>
-                <div>
-                  <Rector
-                    width="640"
-                    height="480"
-                    onSelected={onSelected}
-                    config={config}
-                    image={imagePath}
-                  />
-                </div>
+              <Col>
+                <Rector
+                  image={imagePath}
+                  setConfig={setConfig}
+                  config={config}
+                  getNewImage={handleGetNewImage}
+                />
               </Col>
             </Row>
             <Row type="flex" justify="center">

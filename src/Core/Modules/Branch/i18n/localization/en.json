@@ -14,7 +14,14 @@
     "CORE.BRANCH.CREATE.SUCCESS":"Create branch success!",
     "CORE.BRANCH.UPDATE.SUCCESS":"Update branch success!",
     "CORE.BRANCH":"Branch",
-    "CORE.BRANCH.MANAGEMENT":"Branch Management"
+    "CORE.BRANCH.MANAGEMENT":"Branch Management",
+    "CORE.BRANCH.ALERT.NAME":"Please input branch name!",
+    "CORE.BRANCH.ALERT.MAX.LENGTH":"Max length is 255 characters!",
+    "CORE.BRANCH.ALERT.DESCRIPTION":"Please input branch address!",
+    "CORE.BRANCH.ALERT.PHONE.NUMBER": "Please input phone number!",
+    "CORE.BRANCH.ALERT.MAX.LENGTH.11":"Max length is 11 characters!",
+    "CORE.BRANCH.ALERT.MIN.LENGTH.10":"Min length is 10 characters!",
+    "CORE.BRANCH.ALERT.VALID.NUMBER":"The input is not valid phone number!"
 
 
 

@@ -9,10 +9,10 @@ import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 
 /* Components */
 import Header from "~/Core/Modules/Workspace/Components/Header/Header";
-import WorkspaceDetailForm from "~/Core/Modules/Workspace/Components/Form/WorkspaceDetailForm";
 
 /* Api */
 import workspaceApi from "~/Core/Modules/Workspace/Api";
+import WorkspaceDetailForm from "../Components/Form/WorkspaceDetailForm";
 
 const WorkspaceDetail = ({ match: { params } }) => {
   const [data, setData] = useState({});
@@ -70,7 +70,8 @@ const WorkspaceDetail = ({ match: { params } }) => {
           <WorkspaceDetailForm
             action={action}
             is_create={params.id === "create"}
-            data={data}
+             data={data}
+            id={params.id}
           />
         )}
       </div>

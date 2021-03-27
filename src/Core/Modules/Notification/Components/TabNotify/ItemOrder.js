@@ -9,7 +9,7 @@ export const ItemOrder = ({ detail }) => {
     id: detail.notification.id,
     name: detail.notification.name,
     description: detail.notification.description,
-    datetime: moment(detail.notification.updatedAt).format('DD-MM-YYYY HH:mm:ss'),
+    datetime: moment(detail.notification.createdAt).format('DD-MM-YYYY HH:mm'),
     payloadID: "_.get(payload.id, detail)",
     is_check: detail.isRead
   };
