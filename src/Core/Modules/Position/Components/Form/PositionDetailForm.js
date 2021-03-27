@@ -91,11 +91,11 @@ const PositionDetailForm = ({ form,is_create,action, data }) => {
                                             rules: [
                                                 {
                                                     required: true,
-                                                    message: "Please input position name!"
+                                                    message: (<>{t("CORE.POSITION.ALERT.NAME")}</>)
                                                 },
                                                 {
                                                     max: 50,
-                                                    message: "Max length 50 characters!"
+                                                    message: (<>{t("CORE.POSITION.MAX.LENGTH")}</>)
                                                 },
                                             ]
                                         })(<Input />)}
@@ -110,11 +110,11 @@ const PositionDetailForm = ({ form,is_create,action, data }) => {
                                             rules: [
                                                 {
                                                     required: true,
-                                                    message: "Please input description!"
+                                                    message: (<>{t("CORE.POSITION.ALERT.DESCRIPTION")}</>)
                                                 },
                                                 {
                                                     max: 500,
-                                                    message: "Max length 500 characters!"
+                                                    message:  (<>{t("CORE.POSITION.DESCRIPTION.MAX.LENGTH")}</>)
                                                 },
 
                                             ]

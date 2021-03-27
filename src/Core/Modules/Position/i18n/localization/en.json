@@ -7,5 +7,9 @@
     "CORE.POSITION":"Position",
     "CORE.POSITION.DETAIL":"Position detail",
     "CORE.POSITION.CREATE.SUCCESS":"Created success",
-    "CORE.POSITION.UPDATE.SUCCESS":"Updated success"
+    "CORE.POSITION.UPDATE.SUCCESS":"Updated success",
+    "CORE.POSITION.ALERT.NAME":"Please input position name!",
+    "CORE.POSITION.MAX.LENGTH":"Max length is 50 characters!",
+    "CORE.POSITION.DESCRIPTION.MAX.LENGTH":"Max length is 500 character",
+    "CORE.POSITION.ALERT.DESCRIPTION":"Please input description!"
 }
