@@ -133,6 +133,18 @@ const UserTable = () => {
       width: 220,
     },
     {
+      title: t("CORE.VIOLATION.WORKSPACE"),
+      dataIndex: "workspace",
+      className: "header-filter",
+      key: "workspace",
+      fieldType: "text",
+      sorter: true,
+      width: 220,
+      render:(_,record)=> (
+        <span>{record?.workspace?.[0]?.name}</span>
+      )
+    },
+    {
       title: t("CORE.VIOLATION.MINUS.POINT"),
       dataIndex: "minusPoint",
       className: "header-filter",
@@ -226,7 +238,7 @@ const UserTable = () => {
   const defaultSorter = useMemo(() => ({ "Sort.Orders": "desc createdAt" }), []);
 
   const scroll = useMemo(() => ({
-    x: 1650,
+    x: 1870,
     y: `calc(100vh - (178px))`
   }), []);
 
