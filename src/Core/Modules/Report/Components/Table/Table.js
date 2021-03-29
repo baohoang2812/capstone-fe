@@ -242,6 +242,7 @@ const UserTable = () => {
         visible={visible}
         onCancel={handleCloseModal}
         footer={null}
+        width="900px"
       >
         <ReportDetailForm data={data} action={handleCloseModal} />
 

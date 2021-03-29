@@ -147,14 +147,21 @@ const ExcuseDetail = ({ form, isShow = true, action, data }) => {
                     </Row>
 
                     <Row type="flex" justify="center" align="bottom">
-                        <Col span={20}>
-                            <Form.Item label={t("CORE.VIOLATION.DESCRIPTION")}>
-                                {getFieldDecorator("description", {
+                            <Col span={16}>
+                                <Form.Item label={t("CORE.VIOLATION.DESCRIPTION")}>
+                                    {getFieldDecorator("description", {
 
-                                })(<span>{data.description}</span>)}
-                            </Form.Item>
-                        </Col>
-                    </Row>
+                                    })(<span>{data?.description}</span>)}
+                                </Form.Item>
+                            </Col>
+                            <Col span={4}>
+                                <Form.Item label={t("CORE.VIOLATION.WORKSPACE")}>
+                                    {getFieldDecorator("workspace", {
+
+                                    })(<span>{data?.workspace?.[0]?.name}</span>)}
+                                </Form.Item>
+                            </Col>
+                        </Row>
 
                     <Row type="flex" justify="center" align="bottom">
                         <Col span={20}>
