@@ -18,6 +18,7 @@ import { logout } from "~/Core/utils/helper/authenticate";
 import ChangePasswordForm from "./Components/ChangePasswordForm";
 import notiApi from "~/Core/Modules/Notification/Api";
 // import ChangePasswordForm from "./Components/ChangePasswordForm"
+import ExcuseDetail from "~/Core/Components/HeaderMaster/Components/ExcuseDetail";
 
 
 // import buttonInfo from "./ButtonInfo";
@@ -25,8 +26,10 @@ import notiApi from "~/Core/Modules/Notification/Api";
 const { Header } = Layout;
 // const { SubMenu } = Menu;
 export const HeaderMaster = ({ url }) => {
-  const [visible,setVisible]= useState(false);
+  const [visible, setVisible] = useState(false);
   const t = useTranslate();
+  const [visibleExcuse, setVisibleExcuse] = useState(false);
+  const [data, setData] = useState({});
 
   /* Ref outside */
   const ref = useRef();
@@ -49,56 +52,64 @@ export const HeaderMaster = ({ url }) => {
 
   useEffect(() => {
     // document.addEventListener("click", handleClick);
-    document.addEventListener("click",handleClick);
+    document.addEventListener("click", handleClick);
     return () => {
       // document.removeEventListener("click", handleClick);
-     document.removeEventListener("click",handleClick);
+      document.removeEventListener("click", handleClick);
     };
   });
   useEffect(() => {
-    ( async () => {
+    (async () => {
       const res = await notiApi.getList(0, 5);
-        if (res.code !== 200) {
+      if (res.code !== 200) {
 
-          return;
-        }
-        const data = res?.data?.totalUnread
-        setCountNoti(data);
+        return;
+      }
+      const data = res?.data?.totalUnread
+      setCountNoti(data);
     })()
-   
+
   }, [])
   const renderMenuProfile = (account_info, t) => (
     <Menu
       // className="dropdown-menu dropdown-menu-profile"
-      className ="dropdown-menu dropdown-menu-profile"
+      className="dropdown-menu dropdown-menu-profile"
       selectedKeys={[]}
-      mode ="vertical"
+      mode="vertical"
     >
-      <Menu.Item key ="terms">
-        <Link to ="/profile">
-          <Icon type ="profile" />
+      <Menu.Item key="terms">
+        <Link to="/profile">
+          <Icon type="profile" />
           {t("CORE.EMPLOYEE.PROFILE.TITLE")}
         </Link>
       </Menu.Item>
-      <Menu.Item key ="terms" onClick ={openModel}>
+      <Menu.Item key="terms" onClick={openModel}>
         {/* <Link to="/terms"> */}
-          <Icon type ="setting" />
-          {t("CORE.MENU.CHANGE.PASSWORD")}
+        <Icon type="setting" />
+        {t("CORE.MENU.CHANGE.PASSWORD")}
         {/* </Link> */}
       </Menu.Item>
-      <Menu.Item onClick ={() => logout()} key="logout">
-        <Icon type ="logout" />
+      <Menu.Item onClick={() => logout()} key="logout">
+        <Icon type="logout" />
         {t("CORE.logout")}
       </Menu.Item>
     </Menu>
   );
 
+  const openModelExcuse = (data) => {
+    setVisibleExcuse(true);
+    setData(data);
+  };
+  const handleCloseModalExcuse = () => {
+    setVisibleExcuse(false);
+  };
+
   const account_info = JSON.parse(localStorage.getItem("account_info" || "{}"));
   return (
-    <Header className ="layout-header">
-      <div className ="layout-header-wrapper">
-        <div className ="header-left">
-          <div className ="header-logo">
+    <Header className="layout-header">
+      <div className="layout-header-wrapper">
+        <div className="header-left">
+          <div className="header-logo">
             {/* <Link to="/user" className="logo">
               <img
                 className="logo-image"
@@ -107,7 +118,7 @@ export const HeaderMaster = ({ url }) => {
               />
             </Link> */}
           </div>
-          <div className ="header-nav-menu" ref={ref} onClick={clickMenuHover}>
+          <div className="header-nav-menu" ref={ref} onClick={clickMenuHover}>
             {/* <Menu
               mode="horizontal"
               triggerSubMenuAction={isHover ? "hover" : "click"}
@@ -118,20 +129,29 @@ export const HeaderMaster = ({ url }) => {
             </Menu> */}
           </div>
         </div>
-        <div className ="header-right">
+        <div className="header-right">
           <Dropdown
-            overlay ={<MenuNotify />}
-            trigger ={["click"]}
+            overlay={<MenuNotify setData={setData} openModelExcuse={openModelExcuse}/>}
+            trigger={["hover"]}
           >
-            <div className ="action-icon dropdown-notification">
-              <Badge count ={countNoti}>
-                <Icon type ="notification" />
+            <div className="action-icon dropdown-notification">
+              <Badge count={countNoti}>
+                <Icon type="notification" />
               </Badge>
             </div>
           </Dropdown>
+          <Modal
+            title={t("CORE.VIOLATION.MANAGEMENT.TITLE")}
+            visible={visibleExcuse}
+            onCancel={handleCloseModalExcuse}
+            footer={null}
+            width="900px"
+          >
+            <ExcuseDetail ID={data} action={handleCloseModalExcuse} />
+          </Modal>
           <MenuLanguage />
-          <Dropdown overlay ={renderMenuProfile(account_info, t)}>
-            <span className ="dropdown-user">
+          <Dropdown overlay={renderMenuProfile(account_info, t)}>
+            <span className="dropdown-user">
               <span
                 style={{
                   padding: "5px 15px",
@@ -144,21 +164,21 @@ export const HeaderMaster = ({ url }) => {
               </span>
               <Avatar
                 style={{ backgroundColor: "white" }}
-                size ="middle"
-                className ="avatar"
-                src ={account_info.image_path}
-                alt ="avatar"
+                size="middle"
+                className="avatar"
+                src={account_info.image_path}
+                alt="avatar"
               />
             </span>
           </Dropdown>
         </div>
       </div>
       <Modal
-        title ={t("CORE.changePass")}
-        visible ={visible}
-        onCancel ={handleCloseModal}
-        footer ={null}>
-        <ChangePasswordForm action={handleCloseModal}/>
+        title={t("CORE.changePass")}
+        visible={visible}
+        onCancel={handleCloseModal}
+        footer={null}>
+        <ChangePasswordForm action={handleCloseModal} />
       </Modal>
     </Header>
   );

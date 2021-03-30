@@ -124,28 +124,29 @@ const ReportViolation = ({ form, is_create, action, data,setData }) => {
               </Col>
             </Row>
             <Row type="flex" justify="center" align="bottom">
-              <Col span={8}>
+              <Col span={6}>
                 <Form.Item label={t("CORE.REPORT.BRANCH.NAME")}>
                   {getFieldDecorator("branchName", {})(<span>{data?.branch?.name}</span>)}
                 </Form.Item>
               </Col>
-              <Col span={8}>
+              <Col span={5}>
                 <Form.Item label={t("CORE.REPORT.DESCRIPTION")}>
                   {getFieldDecorator("description", {})(<span>{data.description}</span>)}
                 </Form.Item>
               </Col>
-            </Row>
-            <Row type="flex" justify="center" align="bottom">
-              <Col span={10}>
-                <Form.Item label={t("CORE.REPORT.QC.NOTE")}>
-                  {getFieldDecorator("qcNote", {})(<span>{data.qcNote}</span>)}
-                </Form.Item>
-              </Col>
-              <Col span={6}>
+              <Col span={5}>
                 <Form.Item label={t("CORE.REPORT.MINUS.POINT")}>
                   {getFieldDecorator("totalMinusPoint", {})(<span>{data.totalMinusPoint}</span>)}
                 </Form.Item>
               </Col>
+            </Row>
+            <Row type="flex" justify="center" align="bottom">
+              <Col span={16}>
+                <Form.Item label={t("CORE.REPORT.QC.NOTE")}>
+                  {getFieldDecorator("qcNote", {})(<span>{data.qcNote}</span>)}
+                </Form.Item>
+              </Col>
+              
             </Row>
             <Row type="flex" justify="center" align="bottom">
               <Col span={16}>

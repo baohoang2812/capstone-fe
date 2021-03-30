@@ -11,7 +11,9 @@ export const ItemOrder = ({ detail }) => {
     description: detail.notification.description,
     datetime: moment(detail.notification.createdAt).format('DD-MM-YYYY HH:mm'),
     payloadID: "_.get(payload.id, detail)",
-    is_check: detail.isRead
+    is_check: detail.isRead,
+    type: detail.notification.type,
+    navigationId: detail.notification.navigationId
   };
   const t = useTranslate();
   const { Meta } = Card;
@@ -21,6 +23,20 @@ export const ItemOrder = ({ detail }) => {
   const handleCloseModal = () => {
     setVisible(false);
   };
+  const renderLink = (item) => {
+
+    if (item?.type === "Report") {
+      return (
+        <Link to={`/report/${item?.navigationId}`} className="link-detail">Xem chi tiết</Link>
+      )
+    }
+    else if (item?.notification?.type === "Violation") {
+      return (
+       ""
+        // <Link onClick={openModelExcuse(item?.notification?.navigationId)}>{item?.notification?.name}</Link>
+      )
+    }
+  }
   return (
     <Col className="gutter-row" span={12}>
       <div className={`tab-notify-item ${!dummiesItem.isRead && 'mark-as-read'}`}>
@@ -31,7 +47,7 @@ export const ItemOrder = ({ detail }) => {
           <h4>{dummiesItem.name}</h4>
           <div className="item-summary">{dummiesItem.description}</div>
           <span className="item-datetime">{dummiesItem.datetime}</span>
-          <Link onClick={openModel} className="link-detail">Xem chi tiết</Link>
+          {renderLink(dummiesItem)}
         </div>
       </div>
       <Modal

@@ -5,9 +5,6 @@ import {
     Row,
     Col,
     Form,
-    Button,
-    Divider,
-    message,
     Modal,
     Upload
 } from "antd";
@@ -16,13 +13,11 @@ import moment from "moment";
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 
 /* Actions */
-import { update_identity_table_data_success } from "~/Core/Store/actions/adminTable";
 
 /* Constants */
-import { violations as identity } from "~/Core/Modules/Report/Configs/Constants";
 
 /* Api */
-import violationApi from "~/Core/Modules/Report/Api/Violation";
+import vioApi from "~/Core/Api/VioAPI";
 import employeeApi from "~/Core/Modules/Employee/Api";
 
 function getBase64(file) {
@@ -33,33 +28,38 @@ function getBase64(file) {
         reader.onerror = error => reject(error);
     });
 }
-const ExcuseDetail = ({ form, isShow = true, action, data }) => {
+const ExcuseDetail = ({ form, action, ID }) => {
     const t = useTranslate();
     /* Redux */
-    const dispatch = useDispatch();
     /* State */
-    const [loading, setLoading] = useState(false);
-    // const [loadingDropdown, setLoadingDropdown] = useState(false);
     const { getFieldDecorator, validateFields } = form;
     const [dataEmployee, setDataEmployee] = useState([]);
     const [fileList, setFileList] = useState([]);
     const [previewVisible, setPreviewVisible] = useState(false);
     const [previewTitle, setPreviewTitle] = useState("");
     const [previewImage, setPreviewImage] = useState(false);
+    const[data,setData]= useState([]);
 
     useEffect(() => {
-        console.log(data);
+        (async ()=> { 
+            const Vio = await vioApi.getOne(ID);
+            setData(Vio);
+        }
+        )()
+    },[ID]);
+    console.log(data,"DATA")
+    useEffect(() => {
 
         (async () => {
-            if (data?.employeeIds?.length > 0) {
+            if (data?.data?.result?.[0]?.employeeIds?.length > 0) {
                 const res = await employeeApi.getListFilter(data.employeeIds)
                 const result = res.data.result;
                 setDataEmployee(result);
             } else {
                 setDataEmployee([])
             }
-            if (data?.evidence?.length > 0) {
-                const list = data?.evidence?.map((item, index) => ({
+            if (data?.data?.result?.[0]?.evidence?.length > 0) {
+                const list = data?.data?.result?.[0]?.evidence?.map((item, index) => ({
                     uid: index,
                     name: "Evidence",
                     status: "done",
@@ -81,67 +81,31 @@ const ExcuseDetail = ({ form, isShow = true, action, data }) => {
         setPreviewVisible(true)
         setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1))
     }
-    const onConfirm = (e) => {
-        e.preventDefault();
-        validateFields((err, values) => {
-            if (!err) {
-                setLoading(true);
-                violationApi.update(
-                    data.id,
-                    {
-                        excuse: "string",
-                        name: "string",
-                        description: "string",
-                        imagePath: "string",
-                        reportId: 0,
-                        regulationId: 0,
-                        status: "Confirmed",
-                        branchId: 0
-                    }
-                )
-                    .then((res) => {
-                        if (res.code !== 200) {
-                            message.error(t("CORE.task_failure"));
-
-                            return;
-                        }
-                        dispatch(update_identity_table_data_success(identity, { id: res.data.id, column: "status", data: res.data.status }));
-                        message.success(t("CORE.VIOLATION.CONFIRM.SUCCESS"));
-                        setLoading(false);
-                        action();
-                    })
-                    .catch(() => {
-                        message.error(t("CORE.error.system"));
-                        setLoading(false);
-                    });
-
-            }
-        });
-    };
+   
     return (
         <Row type="flex" justify="center">
             <Col span={24}>
-                <Form onSubmit={onConfirm}>
+                <Form>
                     <Row type="flex" justify="center" align="bottom">
                         <Col span={8}>
                             <Form.Item label={t("CORE.VIOLATION.NAME")}>
                                 {getFieldDecorator("name", {
 
-                                })(<span>{data.name}</span>)}
+                                })(<span>{data?.data?.result?.[0]?.name}</span>)}
                             </Form.Item>
                         </Col>
                         <Col span={8}>
                             <Form.Item label={t("CORE.VIOLATION.CREATED.BY")}>
                                 {getFieldDecorator("createdBy", {
 
-                                })(<span>{data.createdBy.lastName} {data.createdBy.firstName}</span>)}
+                                })(<span>{data?.data?.result?.[0]?.createdBy?.lastName} {data?.data?.result?.[0]?.createdBy?.firstName}</span>)}
                             </Form.Item>
                         </Col>
                         <Col span={4}>
                             <Form.Item label={t("CORE.VIOLATION.CHARGE.CREATE")}>
                                 {getFieldDecorator("createdAt", {
 
-                                })(<span>{moment(data.createdAt).format("DD-MM-YYYY")}</span>)}
+                                })(<span>{moment(data?.data?.result?.[0]?.createdAt).format("DD-MM-YYYY")}</span>)}
                             </Form.Item>
                         </Col>
                     </Row>
@@ -151,14 +115,14 @@ const ExcuseDetail = ({ form, isShow = true, action, data }) => {
                                 <Form.Item label={t("CORE.VIOLATION.DESCRIPTION")}>
                                     {getFieldDecorator("description", {
 
-                                    })(<span>{data?.description}</span>)}
+                                    })(<span>{data?.data?.result?.[0]?.description}</span>)}
                                 </Form.Item>
                             </Col>
                             <Col span={4}>
                                 <Form.Item label={t("CORE.VIOLATION.WORKSPACE")}>
                                     {getFieldDecorator("workspace", {
 
-                                    })(<span>{data?.workspace?.[0]?.name}</span>)}
+                                    })(<span>{data?.data?.result?.[0]?.workspace?.[0]?.name}</span>)}
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -181,7 +145,6 @@ const ExcuseDetail = ({ form, isShow = true, action, data }) => {
                                     title={t("CORE.VIOLATION.IMAGE.PATH")}
                                     footer={null}
                                     onCancel={handleCancel}
-                                    width="900px"
                                 >
                                     <img alt="example" style={{ width: '100%' }} src={previewImage} />
                                 </Modal>
@@ -201,7 +164,7 @@ const ExcuseDetail = ({ form, isShow = true, action, data }) => {
                                             dataEmployee.map(item => {
                                                 return (
                                                     <div>
-                                                        {`${item.lastName} ${item.firstName}`}
+                                                        {`${item?.lastName} ${item?.firstName}`}
                                                     </div>
                                                 )
                                             })
@@ -218,33 +181,12 @@ const ExcuseDetail = ({ form, isShow = true, action, data }) => {
                                 <Form.Item label={t("CORE.VIOLATION.EXCUSE")}>
                                     {getFieldDecorator("excuse", {
 
-                                    })(<span>{data.excuse}</span>)}
+                                    })(<span>{data?.data?.result?.[0].excuse}</span>)}
                                 </Form.Item>
                             </Col>) : null
                         }
                     </Row>
-                    <Row type="flex" justify="center">
-                        {isShow ? (<div className="btn-group">
-                            <Button
-                                loading={loading}
-                                type="primary"
-                                htmlType="submit"
-                                className="btn-yellow btn-right"
-                                style={{ float: "right" }}
-                                onClick={onConfirm}>
-                                {t("CORE.reject")}
-                            </Button>
-                            <Divider type="vertical" />
-                            <Button
-                                loading={loading}
-                                type="danger"
-                                className="btn-yellow btn-right"
-                                style={{ float: "right" }}
-                                onClick={action}>
-                                {t("CORE.cancel")}
-                            </Button>
-                        </div>) : null}
-                    </Row>
+                   
                 </Form>
             </Col>
         </Row>
