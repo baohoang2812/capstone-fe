@@ -197,9 +197,10 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
                                 </Upload>
                                 <Modal
                                     visible={previewVisible}
-                                    title={previewTitle}
+                                    title={t("CORE.VIOLATION.IMAGE.PATH")}
                                     footer={null}
                                     onCancel={handleCancel}
+                                    width="900px"
                                 >
                                     <img alt="example" style={{ width: '100%' }} src={previewImage} />
                                 </Modal>
