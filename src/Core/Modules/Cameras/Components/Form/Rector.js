@@ -17,11 +17,11 @@ class Rector extends React.Component {
   componentDidUpdate(prevProps) {
     const { config: prevConfig } = prevProps;
     const { config: nextConfig } = this.props;
-  
+
     if (nextConfig && nextConfig !== prevConfig) {
       this.setState({
-        listBox: nextConfig
-      })
+        listBox: nextConfig,
+      });
     }
   }
 
@@ -168,9 +168,24 @@ class Rector extends React.Component {
       dummyListBox[indexBox].isFinished = false;
     } else {
       dummyListBox.pop();
-      this.setState({
-        indexBox: indexBox - 1,
-      });
+      if (indexBox === 0) {
+        this.setState({
+          indexBox: 0,
+          listBox: [
+            {
+              points: [],
+              curMousePos: [0, 0],
+              isMouseOverStartPoint: false,
+              isFinished: false,
+            },
+          ],
+        });
+        return;
+      } else {
+        this.setState({
+          indexBox: indexBox - 1,
+        });
+      }
     }
 
     this.setState({
@@ -190,19 +205,20 @@ class Rector extends React.Component {
       handleDragMovePoint,
       handleDragEndPoint,
     } = this;
+    console.log(listBox, indexBox);
 
     return (
       <>
-        <Button style={{
-          margin: 15
-        }} type="primary" onClick={this.handleUndo}>
+        <Button
+          style={{
+            margin: 15,
+          }}
+          type="primary"
+          onClick={this.handleUndo}
+        >
           Undo
         </Button>
-        <Button
-          onClick={getNewImage}
-        >
-          Get new image
-        </Button>
+        <Button onClick={getNewImage}>Get new image</Button>
         <div style={{ width: 642, height: 482, border: "solid 1px black" }}>
           <Stage
             width={642}
@@ -210,7 +226,7 @@ class Rector extends React.Component {
             onMouseDown={handleClick}
             onMouseMove={handleMouseMove}
             style={{
-              backgroundImage: `url("${image}")`,
+              backgroundImage:`url("${image}")`,
               backgroundRepeat: "no-repeat, repeat",
             }}
           >

@@ -13,20 +13,19 @@ import { update_identity_table_data_success } from "~/Core/Store/actions/adminTa
 import { cameras as identity } from "~/Core/Modules/Cameras/Configs/constants";
 
 /* Api */
-import camerasApi from "~/Core/Modules/Cameras/Api/"; 
-import cameraConfigApi from "~/Core/Modules/Cameras/Api/CameraConfigApi";
+import camerasApi from "~/Core/Modules/Cameras/Api/";
 
 /* Components */
 import Rector from "~/Core/Modules/Cameras/Components/Form/Rector";
 
 const BranchDetailForm = ({ form, data, action, is_create }) => {
-  const t=useTranslate();
+  const t = useTranslate();
   /* Redux */
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
   /* State */
-  const [loading, setLoading]=useState(false);
-  const { getFieldDecorator, validateFields, setFieldsValue }= form;
-  const [config, setConfig]= useState([
+  const [loading, setLoading] = useState(false);
+  const { getFieldDecorator, validateFields, setFieldsValue } = form;
+  const [config, setConfig] = useState([
     {
       points: [],
       curMousePos: [0, 0],
@@ -35,7 +34,7 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
     },
   ]);
 
-  const [imagePath, setImagePath]= useState([]);
+  const [imagePath, setImagePath] = useState([]);
 
   useEffect(() => {
     setFieldsValue({
@@ -62,7 +61,7 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
 
   const handleGetNewImage = async () => {
     const res = await axios.get(
-      `${data?.customUrl}/images?cameraId=${data?.ip}`
+     `${data?.customUrl}/images?cameraId=${data?.ip}`
     );
     setImagePath(res?.data?.imagePath);
   };
@@ -74,34 +73,40 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
         setLoading(true);
         console.log(values);
         console.log(config);
+
+        
+
         if (is_create) {
+          let listCamConfig = config.map((item) => {
+            const point1 = JSON.stringify(item?.points?.[0]);
+            const point2 = JSON.stringify(item?.points?.[1]);
+            const point3 = JSON.stringify(item?.points?.[2]);
+            const point4 = JSON.stringify(item?.points?.[3]);
+            return {
+              point1,
+              point2,
+              point3,
+              point4,
+              cameraId: 1
+            };
+          });
+  
+          listCamConfig.splice(-1,1);
+
+          const newValue = {
+            ...values,
+            cameraConfig: listCamConfig
+          }
+
           camerasApi
-            .create(values)
+            .create(newValue)
             .then((res) => {
               setLoading(false);
               if (res.code !== 201) {
                 message.error(t("CORE.task_failure"));
                 return;
               }
-              const cameraId = res?.data?.id;
-
-              const listCamConfig = config.map((item) => {
-                const point1 = item?.points?.[0];
-                const point2 = item?.points?.[1];
-                const point3 = item?.points?.[2];
-                const point4 = item?.points?.[3];
-                return {
-                  point1,
-                  point2,
-                  point3,
-                  point4,
-                  cameraId,
-                };
-              });
-              cameraConfigApi.create(listCamConfig)
-              .then((res) => {
-                console.log(res)
-              });
+             
               dispatch(update_identity_table_data_success(identity, res.data));
               message.success(t("CORE.BRANCH.CREATE.SUCCESS"));
               action();
@@ -111,13 +116,32 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
             });
         } else {
           console.log(values);
+          let listCamConfig = config.map((item) => {
+            const point1 = JSON.stringify(item?.points?.[0]);
+            const point2 = JSON.stringify(item?.points?.[1]);
+            const point3 = JSON.stringify(item?.points?.[2]);
+            const point4 = JSON.stringify(item?.points?.[3]);
+            return {
+              id: 0,
+              point1,
+              point2,
+              point3,
+              point4,
+              cameraId: 1
+            };
+          });
+          
+          if(listCamConfig?.[listCamConfig.length-1] === {}){
+            listCamConfig.splice(-1,1);
+          }
+
           camerasApi
             .update(data.id, {
               ...values,
-              port: "string",
+              port: 0,
               workspaceId: 1,
               imagePath,
-              config: JSON.stringify(config),
+              cameraConfig: listCamConfig
             })
             .then((res) => {
               setLoading(false);
