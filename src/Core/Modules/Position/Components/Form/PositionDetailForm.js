@@ -89,7 +89,7 @@ const PositionDetailForm = ({ form,is_create,action, data }) => {
                                     <Form.Item label={t("CORE.POSITION.NAME")}>
                                         {getFieldDecorator("name", {
                                             rules: [
-                                                {
+                                                {   whitespace: true,
                                                     required: true,
                                                     message: (<>{t("CORE.POSITION.ALERT.NAME")}</>)
                                                 },
@@ -108,7 +108,7 @@ const PositionDetailForm = ({ form,is_create,action, data }) => {
                                     <Form.Item label={t("CORE.POSITION.DESCRIPTION")}>
                                         {getFieldDecorator("description", {
                                             rules: [
-                                                {
+                                                {   whitespace: true,
                                                     required: true,
                                                     message: (<>{t("CORE.POSITION.ALERT.DESCRIPTION")}</>)
                                                 },

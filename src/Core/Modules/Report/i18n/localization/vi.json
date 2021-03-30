@@ -28,7 +28,7 @@
     "CORE.VIOLATION.CONFIRM.ACCEPT":"Đồng ý",
     "CORE.VIOLATION.CONFIRM.CANCEL":"Hủy",
     "CORE.VIOLATION.CONFIRMED":"Đã xác nhận",
-    "CORE.VIOLATION.OPENING":"Đang chờ",
+    "CORE.VIOLATION.OPENING":"Đang mở",
     "CORE.VIOLATION.REJECTED":"Đã từ chối",
     "CORE.VIOLATION.STATUS.EXCUSE":"Biện minh",
     "CORE.VIOLATION.CONFIRM.SUCCESS":"Cập nhật thành công",
@@ -42,8 +42,8 @@
     "CORE.EXPORT":"Tải xuống",
     "CORE.VIOLATION.CREATED.BY":"Được tạo bởi",
     "CORE.REPORT.STATUS.DONE":"Đã xử lý",
-    "CORE.REPORT.MINUS.POINT":"Điểm trừ"
-
+    "CORE.REPORT.MINUS.POINT":"Điểm trừ",
+    "CORE.VIOLATION.WORKSPACE":"Khu vực vi phạm"
 
 
 
