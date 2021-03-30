@@ -292,7 +292,11 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
               }
             >
               {getFieldDecorator("code", {
-                rules: [{ required: true, message: (<>{t("CORE.EMPLOYEE.ALERT.CODE")}</>) }],
+                rules: [{ 
+                  required: true, 
+                  whitespace: true,
+                  message: (<>{t("CORE.EMPLOYEE.ALERT.CODE")}</>) 
+                }],
               })(<Input />)}
             </Form.Item>
           </Col>
@@ -304,8 +308,10 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
                     type: "email",
                     message: (<>{t("CORE.EMPLOYEE.ALERT.ERROR.EMAIL")}</>)
                   },
+                  
                   {
                     required: true,
+                    whitespace: true,
                     message: (<>{t("CORE.EMPLOYEE.ALERT.EMAIL")}</>)
                   },
                   {
@@ -327,6 +333,7 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
                     message: (<>{t("CORE.EMPLOYEE.ALERT.FIRST.NAME")}</>),
                     whitespace: true,
                   },
+                 
                   {
                     max:50,
                     message: (<>{t("CORE.EMPLOYEE.ALERT.NAME.MAX.LENGTH")}</>),
@@ -374,6 +381,7 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
                 rules: [
                   {
                     required: true,
+                    whitespace: true,
                     message: (<>{t("CORE.EMPLOYEE.ALERT.PHONE.NUMBER")}</>),
                   },
                   {
@@ -403,6 +411,7 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
                   {
                     required: true,
                     message: (<>{t("CORE.EMPLOYEE.ALERT.ADDRESS")}</>),
+                    whitespace: true,
 
                   }
                 ]

@@ -108,7 +108,7 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
               }
              
               dispatch(update_identity_table_data_success(identity, res.data));
-              message.success(t("CORE.BRANCH.CREATE.SUCCESS"));
+              message.success(t("CORE.CAMERA.CREATE.SUCCESS"));
               action();
             })
             .catch(() => {
@@ -153,7 +153,7 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
               dispatch(
                 update_identity_table_data_success(identity, res.data.branch)
               );
-              message.success(t("CORE.BRANCH.UPDATE.SUCCESS"));
+              message.success(t("CORE.CAMERA.UPDATE.SUCCESS"));
               action();
             });
         }
@@ -170,12 +170,12 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
           <Form onSubmit={onConfirm}>
             <Row type="flex" justify="center" align="bottom">
               <Col span={15}>
-                <Form.Item label={t("CORE.BRANCH.NAME")}>
+                <Form.Item label={t("CORE.CAMERA.NAME")}>
                   {getFieldDecorator("name", {
                     rules: [
                       {
                         required: true,
-                        message: "Please input branch name!",
+                        message: "Please input camera name!",
                       },
                       {
                         max: 255,
@@ -188,12 +188,12 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
             </Row>
             <Row type="flex" justify="center" align="bottom">
               <Col span={15}>
-                <Form.Item label={t("CORE.CAMERA.BRANCH.URL")}>
+                <Form.Item label={t("CORE.CAMERA.URL")}>
                   {getFieldDecorator("customUrl", {
                     rules: [
                       {
                         required: true,
-                        message: "Please input branch name!",
+                        message: "Please input camera url!",
                       },
                       {
                         max: 255,
@@ -211,7 +211,7 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
                     rules: [
                       {
                         required: true,
-                        message: "Please input branch name!",
+                        message: "Please input camera IP!",
                       },
                       {
                         max: 255,

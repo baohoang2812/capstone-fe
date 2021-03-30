@@ -118,6 +118,7 @@ const CertificationDetail = ({ form, employeeId, action, data, is_create }) => {
                 rules: [
                   {
                     required: true,
+              
                     message: (<>{t("CORE.EMPLOYEE.ALERT.CERTIFICATE")}</>),
                   },
                 ],
@@ -158,6 +159,7 @@ const CertificationDetail = ({ form, employeeId, action, data, is_create }) => {
                   {
                     type: "object",
                     required: true,
+                    whitespace: true,
                     message: (<>{t("CORE.EMPLOYEE.ALERT.ISSUE.DATE")}</>),
                   },
                 ],

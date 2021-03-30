@@ -3,7 +3,7 @@
     "CORE.CAMERA.CREATE":"Create Camera",
     "CORE.CAMERA.UPDATE":"Update Camera",
     "CORE.CAMERA.NAME":"Camera name",
-    "CORE.CAMERA.BRANCH.URL":"Server url",
+    "CORE.CAMERA.URL":"Server url",
     "CORE.CAMERA.IP":"IP Camera",
     "CORE.CAMERA.ADDRESS":"Address",
     "CORE.CAMERA.PHONE.NUMBER":"Phone number",
