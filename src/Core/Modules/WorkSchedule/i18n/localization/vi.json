@@ -6,6 +6,7 @@
     "CORE.WORKSCHEDULE":"Lịch làm việc",
     "CORE.WORKSCHEDULE.MANAGEMENT":"Quản lý lịch làm việc",
     "CORE.DUPLICATE.SHIFT":"Ca này đã tồn tại, vui lòng chọn ca khác",
-    "CORE.NO.CERTIFICATE":"Nhân viên không thể làm ở khu vực này"
+    "CORE.NO.CERTIFICATE":"Nhân viên không thể làm ở khu vực này",
+    "CORE.VIOLATION.REMOVE":"Xóa"
 }
 

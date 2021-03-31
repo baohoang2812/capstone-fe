@@ -15,5 +15,9 @@ class WorkScheduleApi extends BaseApi {
   update = (body) => {
     return this.initApi.put(`${this.baseUrl}`, body);
   };
+
+  delete = (body) => {
+    return this.initApi.delelte(`${this.baseUrl}`, body);
+  };
 }
 export default new WorkScheduleApi().requestUrl("/v1/scheduleSpacesEmployees");

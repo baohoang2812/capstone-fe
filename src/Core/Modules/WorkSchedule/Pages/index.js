@@ -30,6 +30,11 @@ const Schedule = () => {
         showPopup(true);
        
     }
+
+    const removeRevordHandler = (state) => {
+        const { selectedEvents } = main.current.schedulerInstance;
+        selectedEvents[0].remove()
+    }
     // const scheduler = new Scheduler({
     //     features : {
     //         columnLines : false,
@@ -66,6 +71,7 @@ const Schedule = () => {
                         eventStore={eventStore}
                         resourceStore={resourceStore}
                         setEventRecordHandler={setEventRecordHandler}
+                        removeRevordHandler={removeRevordHandler}
                     ></Popup> :
                     null}
             </div>
