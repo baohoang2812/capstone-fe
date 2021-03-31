@@ -3,7 +3,7 @@
     "CORE.CAMERA.CREATE":"Tạo camera",
     "CORE.CAMERA.UPDATE":"Cập nhật camera",
     "CORE.CAMERA.NAME":"Tên camera",
-    "CORE.CAMERA.BRANCH.URL": "Địa chỉ máy chủ",
+    "CORE.CAMERA.URL": "Địa chỉ máy chủ",
     "CORE.CAMERA.IP":"IP Camera",
     "CORE.CAMERA.ADDRESS":"Địa chỉ",
     "CORE.CAMERA.PHONE.NUMBER":"Số điện thoại",

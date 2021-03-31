@@ -110,7 +110,7 @@ const AccountForm = ({ form, employeeId, action, data, is_create }) => {
                   {
                     required:true,
                     message: (<>{t("CORE.ACCOUNT.ALERT.USERNAME")}</>),
-                    whitespace:false,
+                    whitespace:true,
                   },
                   {
                     max:255,
@@ -128,6 +128,7 @@ const AccountForm = ({ form, employeeId, action, data, is_create }) => {
                 rules: [
                   {
                     required: true,
+                    whitespace: true,
                     message: (<>{t("CORE.ACCOUNT.ALERT.PASSWORD")}</>),
                   },
                   {

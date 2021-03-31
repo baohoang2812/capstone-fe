@@ -168,7 +168,7 @@ const CertificateTypeDetailForm = ({ form, data, action, is_create }) => {
                 <Form.Item label = {t("CORE.CERTIFICATE.TYPE.NAME")}>
                   {getFieldDecorator("name", {
                     rules: [
-                      {
+                      { whitespace: true,
                         required: true,
                         message: (<>{t("CORE.CERTIFICATE.ALERT.NAME")}</>)
                       },
@@ -186,7 +186,7 @@ const CertificateTypeDetailForm = ({ form, data, action, is_create }) => {
                 <Form.Item label = {t("CORE.CERTIFICATE.TYPE.DESCRIPTION")}>
                   {getFieldDecorator("description",{
                     rules: [
-                      {
+                      { whitespace: true,
                         required: true,
                         message: (<>{t("CORE.CERTIFICATE.ALERT.DESCRIPTION")}</>)
                       },

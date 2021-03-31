@@ -183,7 +183,7 @@ const WorkspaceDetailForm = ({ form, is_create, action, data }) => {
                 <Form.Item label={t("CORE.WORKSPACE.NAME")}>
                   {getFieldDecorator("name", {
                     rules: [
-                      {
+                      { whitespace:true,
                         required: true,
                         message: "Please input workspace name!",
                       },
@@ -202,7 +202,7 @@ const WorkspaceDetailForm = ({ form, is_create, action, data }) => {
                 <Form.Item label={t("CORE.WORKSPACE.DESCRIPTION")}>
                   {getFieldDecorator("description", {
                     rules: [
-                      {
+                      { whitespace:true,
                         required: true,
                         message: "Please input description!",
                       },

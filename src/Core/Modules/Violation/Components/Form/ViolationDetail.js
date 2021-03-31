@@ -230,7 +230,7 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
                             <Form.Item label={t("CORE.VIOLATION.EXCUSE")}>
                                 {getFieldDecorator("excuse", {
                                     rules: [
-                                        {
+                                        {   whitespace: true,
                                             required: true,
                                             message: (<>{t("CORE.VIOLATION.ALERT.EXCUSE")}</>),
                                         }

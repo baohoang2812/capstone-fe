@@ -99,7 +99,7 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
                 <Form.Item label={t("CORE.BRANCH.NAME")}>
                   {getFieldDecorator("name", {
                     rules: [
-                      {
+                      {whitespace:true,
                         required: true,
                         message: (<>{t("CORE.BRANCH.ALERT.NAME")}</>)
                       },
@@ -117,7 +117,7 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
                 <Form.Item label={t("CORE.BRANCH.ADDRESS")}>
                   {getFieldDecorator("address", {
                     rules: [
-                      {
+                      { whitespace:true,
                         required: true,
                         message: (<>{t("CORE.BRANCH.ALERT.DESCRIPTION")}</>)
                       },
@@ -161,7 +161,7 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
                 <Form.Item label={t("CORE.BRANCH.MANAGER.NAME")}>
                   {getFieldDecorator(
                     "managerId",
-                    {initialValue: listBM?.[0]?.id,}
+                    
                   )(
                     <Select>
                       {listBM.map((item) => (

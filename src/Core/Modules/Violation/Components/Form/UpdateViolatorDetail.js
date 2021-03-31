@@ -215,7 +215,7 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
                                         rules: [
                                             { required: true, message: (<>{t("CORE.VIOLATION.ALERT.VIOLATOR")}</>), type: 'array' },
                                         ],
-                                        initialValue: dataEmployee?.[0]?.id,
+                                        
                                     })(
                                         <Select mode="multiple" placeholder={t("CORE.VIOLATION.ALERT.VIOLATOR")}>
                                             {dataEmployee.map((item) => (

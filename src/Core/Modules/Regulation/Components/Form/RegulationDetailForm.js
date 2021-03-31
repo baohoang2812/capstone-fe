@@ -96,7 +96,7 @@ const RegulationDetailForm = ({ form, is_create, action, data }) => {
                 <Form.Item label ={t("CORE.REGULATION.NAME")}>
                   {getFieldDecorator("name", {
                     rules: [
-                      {
+                      { whitespace: true,
                         required: true,
                         message: (<>{t( "CORE.REGULATION.ALERT.NAME")}</>)
                       },
@@ -141,7 +141,7 @@ const RegulationDetailForm = ({ form, is_create, action, data }) => {
                 <Form.Item label={t("CORE.REGULATION.DESCRIPTION")}>
                   {getFieldDecorator("description", {
                     rules: [
-                      {
+                      {whitespace: true,
                         required: true,
                         message: (<>{t("CORE.REGULATION.ALERT.DESCRIPTION")}</>)
                       },
@@ -164,7 +164,7 @@ const RegulationDetailForm = ({ form, is_create, action, data }) => {
                         message:(<>{t("CORE.REGULATION.ALERT.LEVEL")}</>)
                       },
                     ],
-                  })(<InputNumber min={1} max={9} />)}
+                  })(<InputNumber min={1} max={3} />)}
                 </Form.Item>
               </Col>
             </Row>
