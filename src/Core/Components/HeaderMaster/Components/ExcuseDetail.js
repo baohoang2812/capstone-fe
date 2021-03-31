@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./style.less";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 import {
     Row,
     Col,
@@ -32,11 +32,11 @@ const ExcuseDetail = ({ form, action, ID }) => {
     const t = useTranslate();
     /* Redux */
     /* State */
-    const { getFieldDecorator, validateFields } = form;
+    const { getFieldDecorator } = form;
     const [dataEmployee, setDataEmployee] = useState([]);
     const [fileList, setFileList] = useState([]);
     const [previewVisible, setPreviewVisible] = useState(false);
-    const [previewTitle, setPreviewTitle] = useState("");
+    // const [previewTitle, setPreviewTitle] = useState("");
     const [previewImage, setPreviewImage] = useState(false);
     const[data,setData]= useState([]);
 
@@ -79,7 +79,7 @@ const ExcuseDetail = ({ form, action, ID }) => {
 
         setPreviewImage(file.url || file.preview)
         setPreviewVisible(true)
-        setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1))
+        // setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1))
     }
    
     return (

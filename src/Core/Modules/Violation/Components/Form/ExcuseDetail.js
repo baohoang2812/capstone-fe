@@ -40,7 +40,7 @@ const ExcuseDetail = ({ form, isShow = true, action, data }) => {
     const [loading, setLoading] = useState(false);
     const [fileList, setFileList] = useState([]);
     const [previewVisible, setPreviewVisible] = useState(false);
-    const [previewTitle, setPreviewTitle] = useState("");
+    // const [previewTitle, setPreviewTitle] = useState("");
     const [previewImage, setPreviewImage] = useState(false);
     // const [loadingDropdown, setLoadingDropdown] = useState(false);
     const { getFieldDecorator, validateFields } = form;
@@ -77,7 +77,7 @@ const ExcuseDetail = ({ form, isShow = true, action, data }) => {
 
         setPreviewImage(file.url || file.preview)
         setPreviewVisible(true)
-        setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1))
+        // setPreviewTitle(file.name || file.url.substring(file .url.lastIndexOf('/') + 1))
     }
     const onConfirm = (e) => {
         e.preventDefault();

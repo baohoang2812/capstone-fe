@@ -22,7 +22,7 @@ import { reports as identity } from "~/Core/Modules/Report/Configs/Constants";
 import QCApi from "~/Core/Modules/Report/Api/GetQC";
 import reportApi from "~/Core/Modules/Report/Api";
 import moment from "moment";
-import TextArea from "antd/lib/input/TextArea";
+// import TextArea from "antd/lib/input/TextArea";
 
 const { Option } = Select;
 const ReportDetailForm = ({ form, is_create, action, data }) => {

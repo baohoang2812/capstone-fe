@@ -16,7 +16,7 @@ import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 import workspaceApi from "~/Core/Modules/WorkSchedule/Api/WorkspaceApi";
 import shiftApi from "~/Core/Modules/WorkSchedule/Api/ShiftApi";
 import workScheduleApi from "~/Core/Modules/WorkSchedule/Api/WorkScheduleApi";
-import contactApi from "~/Core/Modules/WorkSchedule/Api";
+// import contactApi from "~/Core/Modules/WorkSchedule/Api";
 import moment from "moment";
 
 const Popup = (props) => {
@@ -170,6 +170,7 @@ const Popup = (props) => {
                         
                         
                         props.closePopup();
+                        setState2({})
                 })
                 .catch(() => {
                     message.error(t("CORE.error.system"));

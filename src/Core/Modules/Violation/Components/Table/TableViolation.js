@@ -9,7 +9,7 @@ import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 
 /* Components */
 import AdminTable from "~/Core/Components/common/AdminTable";
-import ImageThumbnail from "~/Core/Components/common/ImageThumbnail";
+// import ImageThumbnail from "~/Core/Components/common/ImageThumbnail";
 /* Constants */
 import { violations as identity } from "~/Core/Modules/Violation/Configs/Constants";
 import ViolationDetail from "~/Core/Modules/Violation/Components/Form/ViolationDetail";

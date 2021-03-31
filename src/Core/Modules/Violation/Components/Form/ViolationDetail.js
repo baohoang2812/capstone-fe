@@ -46,7 +46,7 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
     const { getFieldDecorator, validateFields } = form;
     const [fileList, setFileList] = useState([]);
     const [previewVisible, setPreviewVisible] = useState(false);
-    const [previewTitle, setPreviewTitle] = useState("");
+    // const [previewTitle, setPreviewTitle] = useState("");
     const [previewImage, setPreviewImage] = useState(false);
     const [dataEmployee, setDataEmployee] = useState([]);
 
@@ -83,7 +83,7 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
 
         setPreviewImage(file.url || file.preview)
         setPreviewVisible(true)
-        setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1))
+        // setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1))
     }
     const onConfirm = (e) => {
         e.preventDefault();

@@ -7,10 +7,10 @@ import { Row, Col } from "antd";
 import CardTotalRevenue from "~/Core/Modules/Dashboard/Components/CardTotalRevenue";
 
 /* Hooks */
-import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
+// import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 
 const Main = () => {
-  const [t, lang] = useTranslate(true);
+  // const [t, lang] = useTranslate(true);
 
   return (
     <article>

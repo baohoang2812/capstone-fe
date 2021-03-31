@@ -23,7 +23,7 @@ import reportApi from "~/Core/Modules/Report/Api";
 import Table from "~/Core/Modules/Report/Components/Table/TableViolation";
 import moment from "moment";
 import TextArea from "antd/lib/input/TextArea";
-import { set_data_for_select_action } from "~/Core/Store/actions/dataForSelect";
+// import { set_data_for_select_action } from "~/Core/Store/actions/dataForSelect";
 
 const ReportViolation = ({ form, is_create, action, data,setData }) => {
   const t = useTranslate();

@@ -17,9 +17,9 @@ export const ItemOrder = ({ detail }) => {
   };
   const t = useTranslate();
   const { Meta } = Card;
-  const openModel = () => {
-    setVisible(true);
-  };
+  // const openModel = () => {
+  //   setVisible(true);
+  // };
   const handleCloseModal = () => {
     setVisible(false);
   };
