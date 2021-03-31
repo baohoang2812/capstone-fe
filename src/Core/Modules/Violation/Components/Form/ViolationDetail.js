@@ -129,39 +129,47 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
             <Col span={24}>
 
                 <Form onSubmit={onConfirm}>
-                    <Row type="flex" justify="center" align="bottom">
-                        <Col span={8}>
+                <Row type="flex" justify="center" align="bottom">
+                            
+                            <Col span={8}>
                             <Form.Item label={t("CORE.VIOLATION.NAME")}>
                                 {getFieldDecorator("name", {
 
-                                })(<span>{data.name}</span>)}
+                                })(<span>{data?.name}</span>)}
                             </Form.Item>
                         </Col>
                         <Col span={8}>
                             <Form.Item label={t("CORE.VIOLATION.CREATED.BY")}>
                                 {getFieldDecorator("createdBy", {
 
-                                })(<span>{data.createdBy.lastName} {data.createdBy.firstName}</span>)}
+                                })(<span>{data?.createdBy?.lastName} {data?.createdBy?.firstName}</span>)}
                             </Form.Item>
                         </Col>
                         <Col span={4}>
                             <Form.Item label={t("CORE.VIOLATION.CHARGE.CREATE")}>
                                 {getFieldDecorator("createdAt", {
 
-                                })(<span>{moment(data.createdAt).format("DD-MM-YYYY")}</span>)}
+                                })(<span>{moment(data?.createdAt).format("DD-MM-YYYY")}</span>)}
                             </Form.Item>
                         </Col>
-                    </Row>
+                        </Row>
 
-                    <Row type="flex" justify="center" align="bottom">
-                        <Col span={20}>
-                            <Form.Item label={t("CORE.VIOLATION.DESCRIPTION")}>
-                                {getFieldDecorator("description", {
+                        <Row type="flex" justify="center" align="bottom">
+                            <Col span={16}>
+                                <Form.Item label={t("CORE.VIOLATION.DESCRIPTION")}>
+                                    {getFieldDecorator("description", {
 
-                                })(<span>{data.description}</span>)}
-                            </Form.Item>
-                        </Col>
-                    </Row>
+                                    })(<span>{data?.description}</span>)}
+                                </Form.Item>
+                            </Col>
+                            <Col span={4}>
+                                <Form.Item label={t("CORE.VIOLATION.WORKSPACE")}>
+                                    {getFieldDecorator("workspace", {
+
+                                    })(<span>{data?.workspace?.[0]?.name}</span>)}
+                                </Form.Item>
+                            </Col>
+                        </Row>
                    
                     <Row type="flex" justify="center" align="bottom">
                         <Col span={20}>
@@ -178,9 +186,10 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
                                 </Upload>
                                 <Modal
                                     visible={previewVisible}
-                                    title={previewTitle}
+                                    title={t("CORE.VIOLATION.IMAGE.PATH")}
                                     footer={null}
                                     onCancel={handleCancel}
+                                    width="900px"
                                 >
                                     <img alt="example" style={{ width: '100%' }} src={previewImage} />
                                 </Modal>
@@ -221,7 +230,7 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
                             <Form.Item label={t("CORE.VIOLATION.EXCUSE")}>
                                 {getFieldDecorator("excuse", {
                                     rules: [
-                                        {
+                                        {   whitespace: true,
                                             required: true,
                                             message: (<>{t("CORE.VIOLATION.ALERT.EXCUSE")}</>),
                                         }

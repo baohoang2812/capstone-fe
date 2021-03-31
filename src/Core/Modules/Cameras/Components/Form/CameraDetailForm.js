@@ -25,7 +25,15 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
   /* State */
   const [loading, setLoading] = useState(false);
   const { getFieldDecorator, validateFields, setFieldsValue } = form;
-  const [config, setConfig] = useState([]);
+  const [config, setConfig] = useState([
+    {
+      points: [],
+      curMousePos: [0, 0],
+      isMouseOverStartPoint: false,
+      isFinished: false,
+    },
+  ]);
+
   const [imagePath, setImagePath] = useState([]);
 
   useEffect(() => {
@@ -38,34 +46,22 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
       port: "string",
     });
     setImagePath(data.imagePath);
-    if(data?.config?.length > 0) {
-      setConfig(JSON.parse(data?.config))
+    if (data?.listBox?.length > 0) {
+      setConfig([
+        ...data.listBox,
+        {
+          points: [],
+          curMousePos: [0, 0],
+          isMouseOverStartPoint: false,
+          isFinished: false,
+        },
+      ]);
     }
   }, [data]);
 
-  const onSelected = (rect) => {
-    const configTmp = [
-      ...config,
-      {
-        selected: false,
-        index: config.length,
-        ...rect,
-      },
-    ];
-    setConfig(configTmp);
-  };
-
-  const undo = () => {
-    let configTmp =
-      config.length >= 2
-        ? config.filter((item) => item.index !== config.length - 1)
-        : [];
-    setConfig(configTmp);
-  };
-
   const handleGetNewImage = async () => {
     const res = await axios.get(
-      `${data?.customUrl}/images?cameraId=${data?.ip}`
+     `${data?.customUrl}/images?cameraId=${data?.ip}`
     );
     setImagePath(res?.data?.imagePath);
   };
@@ -76,17 +72,43 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
       if (!err) {
         setLoading(true);
         console.log(values);
+        console.log(config);
+
+        
+
         if (is_create) {
+          let listCamConfig = config.map((item) => {
+            const point1 = JSON.stringify(item?.points?.[0]);
+            const point2 = JSON.stringify(item?.points?.[1]);
+            const point3 = JSON.stringify(item?.points?.[2]);
+            const point4 = JSON.stringify(item?.points?.[3]);
+            return {
+              point1,
+              point2,
+              point3,
+              point4,
+              cameraId: 1
+            };
+          });
+  
+          listCamConfig.splice(-1,1);
+
+          const newValue = {
+            ...values,
+            cameraConfig: listCamConfig
+          }
+
           camerasApi
-            .create(values)
+            .create(newValue)
             .then((res) => {
               setLoading(false);
               if (res.code !== 201) {
                 message.error(t("CORE.task_failure"));
                 return;
               }
+             
               dispatch(update_identity_table_data_success(identity, res.data));
-              message.success(t("CORE.BRANCH.CREATE.SUCCESS"));
+              message.success(t("CORE.CAMERA.CREATE.SUCCESS"));
               action();
             })
             .catch(() => {
@@ -94,13 +116,32 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
             });
         } else {
           console.log(values);
+          let listCamConfig = config.map((item) => {
+            const point1 = JSON.stringify(item?.points?.[0]);
+            const point2 = JSON.stringify(item?.points?.[1]);
+            const point3 = JSON.stringify(item?.points?.[2]);
+            const point4 = JSON.stringify(item?.points?.[3]);
+            return {
+              id: 0,
+              point1,
+              point2,
+              point3,
+              point4,
+              cameraId: 1
+            };
+          });
+          
+          if(listCamConfig?.[listCamConfig.length-1] === {}){
+            listCamConfig.splice(-1,1);
+          }
+
           camerasApi
             .update(data.id, {
               ...values,
-              port: "string",
+              port: 0,
               workspaceId: 1,
               imagePath,
-              config: JSON.stringify(config),
+              cameraConfig: listCamConfig
             })
             .then((res) => {
               setLoading(false);
@@ -112,13 +153,16 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
               dispatch(
                 update_identity_table_data_success(identity, res.data.branch)
               );
-              message.success(t("CORE.BRANCH.UPDATE.SUCCESS"));
+              message.success(t("CORE.CAMERA.UPDATE.SUCCESS"));
               action();
             });
         }
       }
     });
   };
+
+  console.log(config);
+
   return (
     <Row type="flex" justify="center">
       <Col>
@@ -126,12 +170,12 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
           <Form onSubmit={onConfirm}>
             <Row type="flex" justify="center" align="bottom">
               <Col span={15}>
-                <Form.Item label={t("CORE.BRANCH.NAME")}>
+                <Form.Item label={t("CORE.CAMERA.NAME")}>
                   {getFieldDecorator("name", {
                     rules: [
                       {
                         required: true,
-                        message: "Please input branch name!",
+                        message: "Please input camera name!",
                       },
                       {
                         max: 255,
@@ -144,12 +188,12 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
             </Row>
             <Row type="flex" justify="center" align="bottom">
               <Col span={15}>
-                <Form.Item label={t("CORE.CAMERA.BRANCH.URL")}>
+                <Form.Item label={t("CORE.CAMERA.URL")}>
                   {getFieldDecorator("customUrl", {
                     rules: [
                       {
                         required: true,
-                        message: "Please input branch name!",
+                        message: "Please input camera url!",
                       },
                       {
                         max: 255,
@@ -167,7 +211,7 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
                     rules: [
                       {
                         required: true,
-                        message: "Please input branch name!",
+                        message: "Please input camera IP!",
                       },
                       {
                         max: 255,
@@ -179,34 +223,13 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
               </Col>
             </Row>
             <Row type="flex" justify="center" align="bottom">
-              <Col span={23}>
-                <Button
-                  type="primary"
-                  style={{ float: "left", margin: 20 }}
-                  onClick={undo}
-                >
-                  Undo
-                </Button>
-                <Button
-                  type="primary"
-                  style={{ float: "left", margin: 20 }}
-                  onClick={handleGetNewImage}
-                >
-                  Get new image
-                </Button>
-              </Col>
-            </Row>
-            <Row type="flex" justify="center" align="bottom">
-              <Col span={23}>
-                <div>
-                  <Rector
-                    width="640"
-                    height="480"
-                    onSelected={onSelected}
-                    config={config}
-                    image={imagePath}
-                  />
-                </div>
+              <Col>
+                <Rector
+                  image={imagePath}
+                  setConfig={setConfig}
+                  config={config}
+                  getNewImage={handleGetNewImage}
+                />
               </Col>
             </Row>
             <Row type="flex" justify="center">

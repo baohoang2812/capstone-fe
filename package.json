@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "konva": "^7.2.5",
+    "react-konva": "16.13.0-6",
     "@ant-design/charts": "^1.0.21",
     "@date-io/date-fns": "^2.10.8",
     "@formatjs/intl-pluralrules": "^3.5.1",
@@ -64,11 +66,16 @@
       "last 1 safari version"
     ]
   },
+  "keywords": [
+    "canvas",
+    "react",
+    "konva"
+  ],
   "devDependencies": {
     "@babel/plugin-proposal-optional-chaining": "^7.9.0",
     "babel-plugin-dynamic-import-node": "^2.2.0",
     "babel-plugin-root-import": "^6.2.0",
     "redux-devtools-extension": "^2.13.8"
   },
-  "homepage": "https://capstone-fe.azurewebsites.net"
+  "homepage": "https://mavca-admin.azurewebsites.net"
 }

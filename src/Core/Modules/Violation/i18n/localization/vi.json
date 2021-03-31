@@ -12,7 +12,7 @@
     "CORE.VIOLATION.ID":"ID",
     "CORE.VIOLATION.IMAGE.PATH":"Hình ảnh vi phạm",
     "CORE.VIOLATION.NAME":"Tên vi phạm",
-    "CORE.REGULATION.NAME":"Loại quy tắc",
+    "CORE.REGULATION.NAME":"Tên quy tắc",
     "CORE.VIOLATION.DESCRIPTION":"Mô tả",
     "CORE.VIOLATION.STATUS":"Trạng thái",
     "CORE.VIOLATION.CHARGE.CREATE":"Ngày tạo",
@@ -28,7 +28,7 @@
     "CORE.VIOLATION.CONFIRM.ACCEPT":"Đồng ý",
     "CORE.VIOLATION.CONFIRM.CANCEL":"Hủy",
     "CORE.VIOLATION.CONFIRMED":"Đã xác nhận",
-    "CORE.VIOLATION.OPENING":"Đang chờ",
+    "CORE.VIOLATION.OPENING":"Đang mở",
     "CORE.VIOLATION.DECLINED":"Từ chối",
     "CORE.VIOLATION.STATUS.EXCUSE":"Biện minh",
     "CORE.VIOLATION.CONFIRM.SUCCESS":"Cập nhật thành công",
@@ -39,7 +39,10 @@
     "CORE.VIOLATION":"Vi phạm",
     "CORE.VIOLATION.CREATED.BY":"Được tạo bởi",
     "CORE.VIOLATION.ALERT.EXCUSE":"Vui lòng nhập lý do từ chối",
-    "CORE.VIOLATION.ALERT.VIOLATOR":"Vui lòng chọn người vi phạm"
+    "CORE.VIOLATION.ALERT.VIOLATOR":"Vui lòng chọn người vi phạm",
+    "CORE.VIOLATION.MINUS.POINT":"Điểm trừ",
+    "CORE.VIOLATION.WORKSPACE":"Khu vực vi phạm"
+
 
 
 

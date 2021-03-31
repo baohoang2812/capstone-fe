@@ -38,6 +38,7 @@ const PositionDetailForm = ({ form,is_create,action, data }) => {
       
     });
   }, [data]);
+
   const onConfirm = (e) => {
     e.preventDefault();
     validateFields((err, values) => {
@@ -48,13 +49,11 @@ const PositionDetailForm = ({ form,is_create,action, data }) => {
             .create(values)
             .then((res) => {
               setLoading(false);
-
               if (res.code !== 201) {
                 message.error(t("CORE.task_failure"));
                 return;
               }
               setLoading(false);
-
               dispatch(update_identity_table_data_success(identity, res.data));
               message.success(t("CORE.POSITION.CREATE.SUCCESS"));
               action();
@@ -66,13 +65,11 @@ const PositionDetailForm = ({ form,is_create,action, data }) => {
           // objReq.employee.id = data.employee.id;
           positionApi.update(data.id, values).then((res) => {
             setLoading(false);
-
             if (res.code !== 200) {
               message.error(t("CORE.task_failure"));
               return;
             }
             setLoading(false);
-
             dispatch(update_identity_table_data_success(identity, res.data));
             message.success(t("CORE.POSITION.UPDATE.SUCCESS"));
             action();
@@ -92,13 +89,13 @@ const PositionDetailForm = ({ form,is_create,action, data }) => {
                                     <Form.Item label={t("CORE.POSITION.NAME")}>
                                         {getFieldDecorator("name", {
                                             rules: [
-                                                {
+                                                {   whitespace: true,
                                                     required: true,
-                                                    message: "Please input position name!"
+                                                    message: (<>{t("CORE.POSITION.ALERT.NAME")}</>)
                                                 },
                                                 {
                                                     max: 50,
-                                                    message: "Max length 50 characters!"
+                                                    message: (<>{t("CORE.POSITION.MAX.LENGTH")}</>)
                                                 },
                                             ]
                                         })(<Input />)}
@@ -111,13 +108,13 @@ const PositionDetailForm = ({ form,is_create,action, data }) => {
                                     <Form.Item label={t("CORE.POSITION.DESCRIPTION")}>
                                         {getFieldDecorator("description", {
                                             rules: [
-                                                {
+                                                {   whitespace: true,
                                                     required: true,
-                                                    message: "Please input description!"
+                                                    message: (<>{t("CORE.POSITION.ALERT.DESCRIPTION")}</>)
                                                 },
                                                 {
                                                     max: 500,
-                                                    message: "Max length 500 characters!"
+                                                    message:  (<>{t("CORE.POSITION.DESCRIPTION.MAX.LENGTH")}</>)
                                                 },
 
                                             ]

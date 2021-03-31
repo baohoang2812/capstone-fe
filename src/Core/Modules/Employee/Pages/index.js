@@ -9,14 +9,10 @@ import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 
 const UserManagement = () => {
   const history = useHistory();
-
   const t = useTranslate();
-
   const createEmployee = () => {
     history.push("/employee/detail/create")
   }
-
-
   return (
     <div className="page-header employee">
       <Header

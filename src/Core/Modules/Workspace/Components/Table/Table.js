@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import { Tag } from "antd";
 import jwt_decode from "jwt-decode";
 
 /* Hooks */
@@ -44,6 +45,20 @@ const UserTable = () => {
       width: 220,
     },
     {
+      title: t("CORE.WORKSPACE.CERTIFICATE"),
+      dataIndex: "certificateTypes",
+      className: "header-filter",
+      key: "description",
+      fieldType: "text",
+      sorter: true,
+      width: 220,
+      render: (_, record) => record?.certificateTypes?.map((item) =>{
+        return(
+          <Tag style={{marginTop:"10px",marginRight:"30px"}} color="blue">{item?.name}</Tag>
+        )
+      })
+    },
+    {
         title: t("CORE.WORKSPACE.PARENT"),
         dataIndex: "parent",
         className: "header-filter",
@@ -71,7 +86,16 @@ const UserTable = () => {
         fieldType: "date",
         sorter: true,
         width: 150,
-        render: (text) => moment(text).format("DD/MM/YYYY"),
+        render: (text,record) => {
+          if(record?.updatedAt===null){
+            return(
+              <span></span>
+            )
+          }
+          else{
+            return(moment(text).format("DD/MM/YYYY"))
+          }
+        }
       },
       
 

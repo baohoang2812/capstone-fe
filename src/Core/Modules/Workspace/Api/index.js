@@ -3,7 +3,7 @@ class WorkspaceApi extends BaseApi {
   getList = (filters) => {
     return this.initApi.get(`${this.baseUrl}`, filters);
   };
-
+  
   getOne = (id) => {
     return this.initApi.get(`${this.baseUrl}?Filter.Ids=${id}`);
   };

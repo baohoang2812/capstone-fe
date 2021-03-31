@@ -9,20 +9,20 @@ import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 
 /* Actions */
 import { update_identity_table_data_success } from "~/Core/Store/actions/adminTable";
-
+import { add_identity_table_data_success } from "~/Core/Store/actions/adminTable";
 /* Constants */
-import { employees as identity } from "~/Core/Modules/Employee/Configs/constants";
+import { certification as identity } from "~/Core/Modules/Employee/Configs/constants";
 
 /* Api */
 import certificationTypeApi from "~/Core/Modules/Employee/Api/CertificationType";
 import certificationApi from "~/Core/Modules/Employee/Api/Certification";
 
-const { Option } = Select;
-const { Meta } = Card;
+const { Option }= Select;
+const { Meta }= Card;
 
 const CertificationDetail = ({ form, employeeId, action, data, is_create }) => {
   const [loadingDropdown, setLoadingDropdown] = useState(false);
-  const [listCertificationType, setCertificationType] = useState([]);
+  const [listCertificationType, setCertificationType]= useState([]);
   const [itemSelect, setItemSelect] = useState({});
 
   const t = useTranslate();
@@ -63,16 +63,17 @@ const CertificationDetail = ({ form, employeeId, action, data, is_create }) => {
           employeeId: data
         }
         console.log(newValues);
-
         if (!data?.username) {
           certificationApi
             .create(newValues)
             .then((res) => {
               setLoading(false);
               if (res.code === 200 || res.code === 201) {
-                dispatch(update_identity_table_data_success(identity, res.data));
+                const certificateType = listCertificationType.find(item => item.id === res?.data?.certificateTypeId)
+                dispatch(add_identity_table_data_success(identity, {id: res?.data?.id, certificateType}));
                 message.success(t("CORE.EMPLOYEE.ADD.CERTIFICATION.SUCCESS"));
                 action();
+                
               }
               else {
                 message.error(t("CORE.task_failure"));
@@ -106,6 +107,7 @@ const CertificationDetail = ({ form, employeeId, action, data, is_create }) => {
     const item = listCertificationType.filter((item) => item.id === value);
     setItemSelect(item?.[0]);
   };
+  
   return (
     <Spin spinning={loadingDropdown}>
       <Form onSubmit={onConfirm}>
@@ -116,6 +118,7 @@ const CertificationDetail = ({ form, employeeId, action, data, is_create }) => {
                 rules: [
                   {
                     required: true,
+              
                     message: (<>{t("CORE.EMPLOYEE.ALERT.CERTIFICATE")}</>),
                   },
                 ],
@@ -156,6 +159,7 @@ const CertificationDetail = ({ form, employeeId, action, data, is_create }) => {
                   {
                     type: "object",
                     required: true,
+                    whitespace: true,
                     message: (<>{t("CORE.EMPLOYEE.ALERT.ISSUE.DATE")}</>),
                   },
                 ],

@@ -23,15 +23,16 @@ import reportApi from "~/Core/Modules/Report/Api";
 import Table from "~/Core/Modules/Report/Components/Table/TableViolation";
 import moment from "moment";
 import TextArea from "antd/lib/input/TextArea";
+import { set_data_for_select_action } from "~/Core/Store/actions/dataForSelect";
 
-const ReportViolation = ({ form, is_create, action, data }) => {
+const ReportViolation = ({ form, is_create, action, data,setData }) => {
   const t = useTranslate();
   /* Redux */
   const dispatch = useDispatch();
   /* State */
   const [loading, setLoading] = useState(false);
   const[listTmp, setListTmp]= useState([undefined]);
-  const[statusReport, setStatusReport] = useState(0)
+  const[statusReport, setStatusReport] = useState(0);
   const listViolation = useSelector(state => state[identity].list);
   const { getFieldDecorator, validateFields, setFieldsValue } = form;
   const onConfirm = (e) => {
@@ -59,6 +60,8 @@ const ReportViolation = ({ form, is_create, action, data }) => {
             }
             dispatch(update_identity_table_data_success(identity, { id: res.data.id, column: "adminNote", data: values.adminNote }));
             dispatch(update_identity_table_data_success(identity, { id: res.data.id, column: "status", data: values.status }));
+            const newData = {...data,status:values.status,adminNote:values.adminNote};
+            setData(newData);
             message.success(t("CORE.VIOLATION.CONFIRM.SUCCESS"));
             setLoading(false);
             
@@ -82,7 +85,8 @@ const ReportViolation = ({ form, is_create, action, data }) => {
       adminNote: data?.adminNote,
       qcNote: data?.qcNote,
       branchName: data?.branch?.name,
-      assignee: data?.assigneeNavigation?.id
+      assignee: data?.assigneeNavigation?.id,
+      totalMinusPoint:data?.totalMinusPoint
     });
   }, [data]);
  
@@ -120,14 +124,19 @@ const ReportViolation = ({ form, is_create, action, data }) => {
               </Col>
             </Row>
             <Row type="flex" justify="center" align="bottom">
-              <Col span={8}>
+              <Col span={6}>
                 <Form.Item label={t("CORE.REPORT.BRANCH.NAME")}>
                   {getFieldDecorator("branchName", {})(<span>{data?.branch?.name}</span>)}
                 </Form.Item>
               </Col>
-              <Col span={8}>
+              <Col span={5}>
                 <Form.Item label={t("CORE.REPORT.DESCRIPTION")}>
                   {getFieldDecorator("description", {})(<span>{data.description}</span>)}
+                </Form.Item>
+              </Col>
+              <Col span={5}>
+                <Form.Item label={t("CORE.REPORT.MINUS.POINT")}>
+                  {getFieldDecorator("totalMinusPoint", {})(<span>{data.totalMinusPoint}</span>)}
                 </Form.Item>
               </Col>
             </Row>
@@ -137,6 +146,7 @@ const ReportViolation = ({ form, is_create, action, data }) => {
                   {getFieldDecorator("qcNote", {})(<span>{data.qcNote}</span>)}
                 </Form.Item>
               </Col>
+              
             </Row>
             <Row type="flex" justify="center" align="bottom">
               <Col span={16}>
@@ -144,6 +154,7 @@ const ReportViolation = ({ form, is_create, action, data }) => {
                   {getFieldDecorator("adminNote", {})(<TextArea disabled={data?.status?.toLowerCase()==="done"} />)}
                 </Form.Item>
               </Col>
+             
             </Row>
             <Row type="flex" justify="center">
               <div className="btn-group">

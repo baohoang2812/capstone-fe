@@ -10,7 +10,8 @@ import {
   Input,
   Button,
   message,
-  Cascader
+  Cascader,
+  Select
 } from "antd";
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
@@ -23,7 +24,8 @@ import { workspaces as identity } from "~/Core/Modules/Workspace/Configs/Constan
 
 /* Api */
 import workspaceApi from "~/Core/Modules/Workspace/Api/";
-
+import certificationTypeApi from "~/Core/Modules/Workspace/Api/CertificationType";
+const { Option } = Select;
 const WorkspaceDetailForm = ({ form, is_create, action, data }) => {
   const t = useTranslate();
   /* Redux */
@@ -35,16 +37,30 @@ const WorkspaceDetailForm = ({ form, is_create, action, data }) => {
   const { getFieldDecorator, validateFields, setFieldsValue } = form;
   // const [hashOption, setHashOption] = useState({});
   const [options, setOptions] = useState([]);
+  const [listCertificationType, setCertificationType] = useState([]);
 
   // useEffect(() => {
   //   setFieldsValue({
   //     name: data?.name,
   //     description: data?.description,
   //     parent: data?.parent?.name
-      
+
   //   });
   // }, [data]);
-
+  useEffect(() => {
+    (async () => {
+      const resRole = await certificationTypeApi.getList();
+      setCertificationType(resRole?.data?.result || []);
+    })();
+  }, []);
+  useEffect (() => {
+    console.log(data?.certificateTypes?.map((item) => (item.id))
+    ,"IDS");
+    setFieldsValue ({
+      certificateTypeIds: data?.certificateTypes?.map((item) => (item.id))
+     
+    });
+  }, [data]);
   useEffect(() => {
     const {
       id,
@@ -75,13 +91,13 @@ const WorkspaceDetailForm = ({ form, is_create, action, data }) => {
       const item = categories[i];
       if (item.id !== current_id) {
         if (item?.parent?.id && hash[item?.parent?.id]) {
+
           hash[item?.parent?.id].children.push(hash[item.id]);
           continue;
         }
         options.push(hash[item.id]);
       }
     }
-
     return [options, hash];
   }
 
@@ -106,7 +122,7 @@ const WorkspaceDetailForm = ({ form, is_create, action, data }) => {
       if (!err) {
         setLoading(true);
         const { parentId } = values;
-        let parent_id = 1;
+        let parent_id = null;
         if (parentId?.length) {
           parent_id = parentId[parentId.length - 1];
         }
@@ -167,7 +183,7 @@ const WorkspaceDetailForm = ({ form, is_create, action, data }) => {
                 <Form.Item label={t("CORE.WORKSPACE.NAME")}>
                   {getFieldDecorator("name", {
                     rules: [
-                      {
+                      { whitespace:true,
                         required: true,
                         message: "Please input workspace name!",
                       },
@@ -180,13 +196,13 @@ const WorkspaceDetailForm = ({ form, is_create, action, data }) => {
                 </Form.Item>
               </Col>
             </Row>
-           
+
             <Row type="flex" justify="center" align="bottom">
               <Col span={15}>
                 <Form.Item label={t("CORE.WORKSPACE.DESCRIPTION")}>
                   {getFieldDecorator("description", {
                     rules: [
-                      {
+                      { whitespace:true,
                         required: true,
                         message: "Please input description!",
                       },
@@ -211,7 +227,26 @@ const WorkspaceDetailForm = ({ form, is_create, action, data }) => {
                 </Form.Item>
               </Col>
             </Row>
-           
+
+            <Row type="flex" justify="center" align="bottom">
+              <Col span={15}>
+                <Form.Item label={t("CORE.WORKSPACE.CERTIFICATE")}>
+                  {getFieldDecorator(
+                    "certificateTypeIds",
+                    {}
+                  )(
+                    <Select mode="multiple" placeholder={t("CORE.WORKSPACE.CERTIFICATE.ALERT")}>
+                      {listCertificationType.map((item) => (
+                        <Option key={item.id} value={item.id}>
+                          {`${item.name}`}
+                        </Option>
+                      ))}
+                    </Select>,
+                  )}
+                </Form.Item>
+              </Col>
+            </Row>
+
 
             <Row type="flex" justify="center">
               <div className="btn-group">

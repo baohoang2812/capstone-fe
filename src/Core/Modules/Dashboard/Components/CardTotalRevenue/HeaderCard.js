@@ -1,77 +1,35 @@
-import React, { useState, useEffect } from "react";
-
+import React, {  } from "react";
 import { DatePicker } from "antd";
 import moment from "moment";
-
-const { RangePicker } = DatePicker;
-
-const HeaderCard = ({
-  setFilters
-}) => {
-
+import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
+const { MonthPicker } = DatePicker;
+const HeaderCard = ({setFromDate,setToDate})=> {
   /* State */
-  const [value, setValue] = useState();
-
-  const onInitData = () => {
-    const monthTwo = moment(),
-      monthOne = moment(monthTwo).subtract(1, "months");
-    const date_one_from = monthOne.startOf("month").format("YYYY-MM-DD");
-    const date_one_to = monthOne.endOf("month").format("YYYY-MM-DD");
-    const date_two_from = monthTwo.startOf("month").format("YYYY-MM-DD");
-    const date_two_to = monthTwo.endOf("month").format("YYYY-MM-DD");
-    const date = {
-      date_one: { from: date_one_from, to: date_one_to },
-      date_two: { from: date_two_from, to: date_two_to },
-    };
-    const label = [monthOne.format("MM-YYYY"), monthTwo.format("MM-YYYY")];
-
-    setFilters({ date, label });
-    setValue([monthOne, monthTwo]);
+  const t=useTranslate();
+  const changeMonth = (value) => {
+    if(value!==null){
+      const startMonth=moment(value).startOf('month').format("YYYY-MM-DD");
+      const endMonth=moment(value).endOf('month').format("YYYY-MM-DD");
+      setFromDate(startMonth);
+      setToDate(endMonth);
+      
+    }
   };
-
-  const onOk = (value) => {
-    const monthOne = value[0],
-      monthTwo = value[1];
-    const date_one_from = monthOne.startOf("month").format("YYYY-MM-DD");
-    const date_one_to = monthOne.endOf("month").format("YYYY-MM-DD");
-    const date_two_from = monthTwo.startOf("month").format("YYYY-MM-DD");
-    const date_two_to = monthTwo.endOf("month").format("YYYY-MM-DD");
-    const date = {
-      date_one: { from: date_one_from, to: date_one_to },
-      date_two: { from: date_two_from, to: date_two_to },
-    };
-    const label = [monthOne.format("MM-YYYY"), monthTwo.format("MM-YYYY")];
-
-    setFilters({ date, label });
-  };
-
-  const onPanelChange = (value) => {
-    setValue(value);
-  };
-
-  useEffect(() => {
-    onInitData();
-  }, []);
+  function disabledDate(current) {
+    // Can not select days before today and today
+    return current && current > moment().subtract(1,'month');
+  }
 
   return (
-    <div className="header-card">
-      <h4>BIỂU ĐỒ THỐNG KÊ LỖI VI PHẠM</h4>
+    <div className ="header-card">
+      <h4>{t("CORE.STATISTICS.NAME")}</h4>
+     
       <div
         className="header-filter"
-        style={{ flex: 1, justifyContent: "flex-end" }}
+        style={{flex: 1, justifyContent: "flex-end" }}
       >
-        <span className="filter-label">Chọn tháng: </span>
-        <RangePicker
-          dropdownClassName="header-picker"
-          format="YYYY-MM"
-          mode={["month", "month"]}
-          showTime={{
-            defaultValue: value,
-          }}
-          value={value}
-          onPanelChange={onPanelChange}
-          onOk={onOk}
-        />
+        <span className="filter-label">{t("CORE.STATISTICS.SELECT.MONTH")} :</span>
+        <MonthPicker disabledDate={disabledDate} defaultValue={moment().subtract(1,'month')} onChange={changeMonth} placeholder="Select Month" />
       </div>
     </div>
   );

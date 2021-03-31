@@ -1,7 +1,7 @@
 import BaseApi from "~/Core/Api/BaseAPI";
 class WorkScheduleApi extends BaseApi {
-  getList = (filters) => {
-    return this.initApi.get(`${this.baseUrl}`, filters);
+  getList = (pageIndex,pageSize,filters) => {
+    return this.initApi.get(`${this.baseUrl}?PageIndex=${pageIndex}&Limit=${pageSize}`, filters);
   };
 
   getOne = (id) => {
@@ -12,8 +12,8 @@ class WorkScheduleApi extends BaseApi {
     return this.initApi.post(`${this.baseUrl}`, body);
   };
 
-  update = (id, body) => {
-    return this.initApi.put(`${this.baseUrl}/${id}`, body);
+  update = (body) => {
+    return this.initApi.put(`${this.baseUrl}`, body);
   };
 }
 export default new WorkScheduleApi().requestUrl("/v1/scheduleSpacesEmployees");

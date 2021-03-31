@@ -33,6 +33,12 @@ const ReportDetailForm = ({ form, is_create, action, data }) => {
   const [loading, setLoading] = useState(false);
   const [listQC, setListQC] = useState([]);
   const { getFieldDecorator, validateFields, setFieldsValue } = form;
+  useEffect(() => {
+    (async () => {
+      const resListQC = await QCApi.getList();
+      setListQC(resListQC?.data?.result);
+    })();
+  }, []);
   const onConfirm = (e) => {
     e.preventDefault();
     validateFields((err, values) => {
@@ -68,12 +74,7 @@ const ReportDetailForm = ({ form, is_create, action, data }) => {
       }
     });
   };
-  useEffect(() => {
-    (async () => {
-      const resListQC = await QCApi.getList();
-      setListQC(resListQC?.data?.result);
-    })();
-  }, []);
+  
   useEffect(() => {
     console.log(data);
     setFieldsValue({
@@ -96,42 +97,39 @@ const ReportDetailForm = ({ form, is_create, action, data }) => {
         <div className="div_custom">
           <Form>
             <Row type="flex" justify="center" align="bottom">
-              <Col span={20}>
+              <Col span={8}>
                 <Form.Item label={t("CORE.REPORT.NAME")}>
-                  {getFieldDecorator("name", {})(<span>{data.name}</span>)}
+                  {getFieldDecorator("name", {})(<span>{data?.name}</span>)}
                 </Form.Item>
               </Col>
-            </Row>
-            <Row type="flex" justify="center" align="bottom">
-              <Col span={20}>
-                <Form.Item label={t("CORE.REPORT.BRANCH.NAME")}>
-                  {getFieldDecorator("branchName", {})(<span>{data.branch.name}</span>)}
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row type="flex" justify="center" align="bottom">
-              <Col span={20}>
-                <Form.Item label={t("CORE.REPORT.CHARGE.CREATE")}>
-                  {getFieldDecorator("createdAt", {})(<span>{data.createdAt}</span>)}
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row type="flex" justify="center" align="bottom">
-              <Col span={20}>
+              <Col span={8}>
                 <Form.Item label={t("CORE.REPORT.STATUS")}>
-                  {getFieldDecorator("status", {})(<span>{data.status}</span>)}
+                  {getFieldDecorator("status", {})(<span>{data?.status}</span>)}
+                </Form.Item>
+              </Col>
+              <Col span={4}>
+                <Form.Item label={t("CORE.REPORT.CHARGE.CREATE")}>
+                  {getFieldDecorator("createdAt", {})(<span>{moment(data?.createdAt).format("DD-MM-YYYY")}</span>)}
                 </Form.Item>
               </Col>
             </Row>
             <Row type="flex" justify="center" align="bottom">
-              <Col span={20}>
+              <Col span={8}>
+                <Form.Item label={t("CORE.REPORT.BRANCH.NAME")}>
+                  {getFieldDecorator("branchName", {})(<span>{data?.branch?.name}</span>)}
+                </Form.Item>
+              </Col>
+              <Col span={12}>
                 <Form.Item label={t("CORE.REPORT.DESCRIPTION")}>
                   {getFieldDecorator("description", {
 
-                  })(<TextArea/>)}
+                  })(<span>{data?.description}</span>)}
                 </Form.Item>
               </Col>
             </Row>
+           
+           
+           
             <Row type="flex" justify="center" align="bottom">
               <Col span={20}>
                 <Form.Item label={t("CORE.REPORT.ASSIGNEE")}>

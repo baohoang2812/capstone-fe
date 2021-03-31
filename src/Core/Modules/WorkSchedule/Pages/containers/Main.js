@@ -31,7 +31,7 @@ const Main = React.forwardRef((props, ref) => {
         setEmployees(listEmployee);
       });
 
-    workScheduleApi.getList()
+    workScheduleApi.getList(0,900)
       .then(res => {
         const listWorkSchedule = res?.data?.result?.map(item => {
           return {
@@ -41,12 +41,14 @@ const Main = React.forwardRef((props, ref) => {
             startDate: moment(item?.workSchedule?.workDate).format("YYYY-MM-DD")+" "+ moment(item?.workSchedule?.shift?.startTime, "HH:mm:ss").format("HH:mm"),
             endDate: moment(item?.workSchedule?.workDate).format("YYYY-MM-DD")+" "+ moment(item?.workSchedule?.shift?.endTime, "HH:mm:ss").format("HH:mm"),
             location: "Some office",
-            eventType: "Meeting",
             iconCls: "b-fa b-fa-calendar",
-            shiftName: item?.workSchedule?.shift?.id
+            shiftName: item?.workSchedule?.shift?.id,
+            workScheduleId: item?.workSchedule?.id,
+            workCheck: moment(item?.workSchedule?.workDate).format("YYYY-MM-DD")
           }
         })
         setWorkSchedules(listWorkSchedule);
+        
       })
 
   }, [])
@@ -71,7 +73,6 @@ const Main = React.forwardRef((props, ref) => {
         endDate={endDate()}
         events={workSchedules}
         resources={employees}
-
         listeners={{
           beforeEventEdit: (source) => {
             source.eventRecord.resourceId = source.resourceRecord.id;
@@ -84,13 +85,13 @@ const Main = React.forwardRef((props, ref) => {
         columns={[
           {
             type: "resourceInfo",
-            text: "Staff",
+            text: "Nhân viên",
             width: 180,
           },
           {
-            text: "Type",
+            text: "Chức vụ",
             field: "category",
-            width: 100,
+            width: 120,
           },
         ]}
       />{" "}

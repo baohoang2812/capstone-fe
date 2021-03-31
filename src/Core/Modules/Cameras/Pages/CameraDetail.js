@@ -24,7 +24,6 @@ const BranchDetail = ({ match: { params } }) => {
   };
 
   useEffect(() => {
-    console.log(JSON.stringify(params));
     if (params.id === "create") {
       // setLoading(false);
       //   setError(true);
@@ -38,10 +37,33 @@ const BranchDetail = ({ match: { params } }) => {
             setError(true);
             return;
           }
-          const data = res?.data?.result?.[0] || {};
+          let data = res?.data?.result?.[0] || {};
+          const listBoxObj = data?.cameraConfig
+          const listBox = listBoxObj.map(item => {
+            const point_1 = JSON.parse(item?.point1)
+            const point_2 = JSON.parse(item?.point2)
+            const point_3 = JSON.parse(item?.point3)
+            const point_4 = JSON.parse(item?.point4)
+
+            return {
+              points: [point_1, point_2, point_3, point_4],
+              curMousePos: [0, 0],
+              isMouseOverStartPoint: true,
+              isFinished: true
+            } 
+          })
+          console.log(listBox)
+
+          data = {
+            ...data,
+            listBox
+          }
+          
           setData(data);
         })
-        .catch(() => {
+        .catch((e) => {
+          console.log(e)
+
           setError(true);
         });
     }

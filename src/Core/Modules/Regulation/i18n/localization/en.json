@@ -13,8 +13,12 @@
     "CORE.REGULATION.CHARGE.UPDATE":"Updated date",
     "CORE.REGULATION.POINT": "Minus Point",
     "CORE.REGULATION":"Regulation",
-    "CORE.REGULATION.DETAIL":"Regulation detail"
-    
+    "CORE.REGULATION.DETAIL":"Regulation detail",
+    "CORE.REGULATION.ALERT.NAME":"Please input regulation name!",
+    "CORE.REGULATION.ALERT.TYPE":"Please select regulation type!",
+    "CORE.REGULATION.ALERT.DESCRIPTION":"Please input description!",
+    "CORE.REGULATION.ALERT.LEVEL": "Please input level!",
+    "CORE.REGULATION.ALERT.POINT":"Please input point!"
 
 
 

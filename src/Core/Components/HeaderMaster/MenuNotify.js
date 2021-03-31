@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Avatar, List } from "antd";
-import { Link} from "react-router-dom";
+import {
+  Avatar,
+  List,
+  Modal
+} from "antd";
+import { Link } from "react-router-dom";
 import notiApi from "~/Core/Modules/Notification/Api";
+import moment from "moment";
+import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
+
 /* Actions */
 // import { updateListNotification } from "~/Core/Store/actions/notification";
 
@@ -10,7 +17,8 @@ import notiApi from "~/Core/Modules/Notification/Api";
 // import AttentionImg from "~/Core/Modules/Notification/assets/Attention.png";
 
 export default ({
-  handleOpenModal
+  setData,
+  openModelExcuse
 }) => {
   // const listNotification = useSelector(state => state.NotificationCore.listNotificationHeader)
 
@@ -18,27 +26,59 @@ export default ({
     // dispatch(updateListNotification("all"));
   }
   const [listNoti, setListNoti] = useState([]);
-
+  const t = useTranslate();
   useEffect(() => {
-    ( async () => {
-      const res = await notiApi.getList(0, 10);
-        if (res.code !== 200) {
+    (async () => {
+      const res = await notiApi.getList(0, 5);
+      if (res.code !== 200) {
 
-          return;
-        }
-        const data = res?.data?.result || [];
-        setListNoti(data);
+        return;
+      }
+      const data = res?.data?.result || [];
+      setListNoti(data);
     })()
-   
+
   }, [])
 
-  const onClick = (e, item) => {
-    e.preventDefault();
-    handleOpenModal(item);
+  const onClick = (item) => {
+   changeStatus(item?.notification?.id)
     return;
+  };
+
+  const changeStatus= (id)=>{
+    const res = notiApi.update(id,{ isRead:true});
+    if (res.code !== 200) {
+      return;
+    }
+  }
+  const renderLink = (item) => {
+
+    if (item?.notification?.type === "Report") {
+      return (
+        <Link to={`/report/${item?.notification?.navigationId}`}>{item?.notification?.name}</Link>
+      )
+    }
+    else if (item?.notification?.type === "Violation") {
+      return (
+        <Link onClick={() => openModelExcuse(item?.notification?.navigationId)}>{item?.notification?.name}</Link>
+      )
+    }
+    else if (item?.notification?.type === "Workschedule") {
+      return (
+        <Link to={`/workSchedule/`}>{item?.notification?.name}</Link>
+      )
+    }
+    else if (item?.notification?.type === "Info") {
+      return (
+        <Link>{item?.notification?.name}</Link>
+      )
+    }
+    
   }
 
+
   return (
+    <>
     <div className="dropdown-menu-notify">
       <h4 className="title" style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <span>
@@ -57,13 +97,14 @@ export default ({
         dataSource={listNoti}
         renderItem={item => (
           <Link
-            onClick={(e) => onClick(e, item)}
-            to="#"
+            onClick={() => onClick(item)}
           >
             <List.Item className={!item.isRead && "unread"}>
               <List.Item.Meta
                 avatar={<Avatar shape="square" size="large" />}
-                title={<span>{item.notification.name}</span>}
+                title={
+                  renderLink(item)
+                }
                 description={
                   <div className="description">
                     <p style={{
@@ -71,16 +112,22 @@ export default ({
                       WebkitLineClamp: 2,
                       WebkitBoxOrient: "vertical",
                       overflow: "hidden"
-                    }} dangerouslySetInnerHTML={{ __html: item.notification.description }} />
-                    <span>{item.notification.createdAt}</span>
+                    }} dangerouslySetInnerHTML={{ __html: item?.notification?.description }} />
+                    <span>{
+                      moment(item?.notification?.createdAt).format("DD-MM-YYYY HH:mm")
+                    }</span>
                   </div>
                 }
               />
+             
             </List.Item>
+           
           </Link>
         )}
       />
-      <Link to="/notification/" className="link-read-all">Xem tất cả</Link>
+      
+      <Link to="/notification/" className="link-read-all">Xem tất cả</Link>     
     </div>
+   </>
   )
 }

@@ -84,7 +84,7 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
     // Can not select days before today and today
     return current && current > moment().subtract(18, "years");
   }
-  
+
   function handleChangePosition(value) {
     const tmp = listPosition.filter(item => item.id === value);
     if (tmp[0].name.toLowerCase() === "admin" || tmp[0].name.toLowerCase() === "qc manager") {
@@ -112,7 +112,7 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
       username: data?.username,
       roleId: data?.roleId,
       gender: data?.gender,
-      birthDate: data?.birthDate ? new moment(data?.birthDate) : moment().subtract(18,"year"),
+      birthDate: data?.birthDate ? new moment(data?.birthDate) : moment().subtract(18, "year"),
       isPartTime: data?.isPartTime,
       branchId: data?.branch?.id,
       positionId: data?.position?.id,
@@ -197,20 +197,21 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
           }
           else {
             const newValues3 = { ...values, imagePath: data.imagePath }
-            employeeApi.update(data.id, newValues3).then((res) => {
-              setLoading(false);
+            employeeApi.update(data.id, newValues3)
+              .then((res) => {
+                setLoading(false);
 
-              if (res.code !== 200) {
-                message.error(t("CORE.task_failure"));
-                return;
-              }
+                if (res.code !== 200) {
+                  message.error(t("CORE.task_failure"));
+                  return;
+                }
 
-              dispatch(
-                update_identity_table_data_success(identity, res.data.employee)
-              );
-              message.success(t("CORE.EMPLOYEE.UPDATE.SUCCESS"));
-              action();
-            });
+                dispatch(
+                  update_identity_table_data_success(identity, res.data.employee)
+                );
+                message.success(t("CORE.EMPLOYEE.UPDATE.SUCCESS"));
+                action();
+              });
 
           }
         }
@@ -291,7 +292,11 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
               }
             >
               {getFieldDecorator("code", {
-                rules: [{ required: true, message: (<>{t("CORE.EMPLOYEE.ALERT.CODE")}</>) }],
+                rules: [{ 
+                  required: true, 
+                  whitespace: true,
+                  message: (<>{t("CORE.EMPLOYEE.ALERT.CODE")}</>) 
+                }],
               })(<Input />)}
             </Form.Item>
           </Col>
@@ -303,8 +308,10 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
                     type: "email",
                     message: (<>{t("CORE.EMPLOYEE.ALERT.ERROR.EMAIL")}</>)
                   },
+                  
                   {
                     required: true,
+                    whitespace: true,
                     message: (<>{t("CORE.EMPLOYEE.ALERT.EMAIL")}</>)
                   },
                   {
@@ -312,7 +319,7 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
                     message: (<>{t("CORE.EMPLOYEE.ALERT.MAX.LENGTH")}</>)
                   },
                 ],
-              })(<Input />)}
+              })(<Input/>)}
             </Form.Item>
           </Col>
         </Row>
@@ -322,12 +329,13 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
               {getFieldDecorator("firstName", {
                 rules: [
                   {
-                    required: true,
+                    required:true,
                     message: (<>{t("CORE.EMPLOYEE.ALERT.FIRST.NAME")}</>),
                     whitespace: true,
                   },
+                 
                   {
-                    max: 50,
+                    max:50,
                     message: (<>{t("CORE.EMPLOYEE.ALERT.NAME.MAX.LENGTH")}</>),
                   },
                 ],
@@ -363,7 +371,7 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
                     message: (<>{t("CORE.EMPLOYEE.ALERT.BIRTHDATE")}</>),
                   },
                 ],
-                initialValue: moment().subtract(18,"year"),
+                initialValue: moment().subtract(18, "year"),
               })(<DatePicker disabledDate={disabledDate} />)}
             </Form.Item>
           </Col>
@@ -373,6 +381,7 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
                 rules: [
                   {
                     required: true,
+                    whitespace: true,
                     message: (<>{t("CORE.EMPLOYEE.ALERT.PHONE.NUMBER")}</>),
                   },
                   {
@@ -402,6 +411,7 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
                   {
                     required: true,
                     message: (<>{t("CORE.EMPLOYEE.ALERT.ADDRESS")}</>),
+                    whitespace: true,
 
                   }
                 ]
@@ -422,40 +432,42 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
                 initialValue: "male",
               })(
                 <Select>
-                  <Option value="male">{t("CORE.EMPLOYEE.GENDER.MALE")}</Option>
-                  <Option value="female">
+                  <Option value ="male">{t("CORE.EMPLOYEE.GENDER.MALE")}</Option>
+                  <Option value ="female">
                     {t("CORE.EMPLOYEE.GENDER.FEMALE")}
                   </Option>
-                  <Option value="other">
+                  <Option value ="other">
                     {t("CORE.EMPLOYEE.GENDER.OTHER")}
                   </Option>
                 </Select>
               )}
             </Form.Item>
           </Col>
-          <Col span={4}>
-            <Form.Item label={t("CORE.EMPLOYEE.POSITION")}>
+          <Col span ={4}>
+            <Form.Item label ={t("CORE.EMPLOYEE.POSITION")}>
               {getFieldDecorator("positionId", {
                 rules: [
                   {
-                    required: true,
+                    required:true,
                     message: (<>{t("CORE.EMPLOYEE.ALERT.POSITION")}</>),
                   },
                 ],
-                initialValue: listPosition?.[0]?.id,
+                initialValue:listPosition?.[0]?.id,
               })(
-                <Select onChange={handleChangePosition}>
+                <Select onChange ={handleChangePosition}>
                   {listPosition.map((item) => (
+
                     <Option key={item.id} value={item.id}>
                       {item.name}
                     </Option>
+
                   ))}
                 </Select>
               )}
             </Form.Item>
           </Col>
-          <Col span={4}>
-            <Form.Item label={t("CORE.EMPLOYEE.JOB.TYPE")}>
+          <Col span ={4}>
+            <Form.Item label ={t("CORE.EMPLOYEE.JOB.TYPE")}>
               {getFieldDecorator("isPartTime", {
                 rules: [
                   {
@@ -466,14 +478,14 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
                 initialValue: true,
               })(
                 <Select>
-                  <Option value={true}>Part time</Option>
-                  <Option value={false}>Full time</Option>
+                  <Option value ={true}>Part time</Option>
+                  <Option value ={false}>Full time</Option>
                 </Select>
               )}
             </Form.Item>
           </Col>
           <Col span={11}>
-            <Form.Item label={t("CORE.EMPLOYEE.BRANCH.NAME")}>
+            <Form.Item label ={t("CORE.EMPLOYEE.BRANCH.NAME")}>
               {getFieldDecorator("branchId", {
 
                 initialValue: tmpListBranch?.[0]?.id,

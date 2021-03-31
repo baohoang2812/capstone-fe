@@ -9,5 +9,10 @@
     "CORE.WORKSPACE.UPDATE.ACCOUNT":"Update workspace",
     "CORE.WORKSPACE":"Workspace",
     "CORE.WORKSPACE.DETAIL":"Workspace detail",
-    "WORKSPACE.PARENT_CATE.PLACEHOLDER":"Workspace parent"
+    "WORKSPACE.PARENT_CATE.PLACEHOLDER":"Workspace parent",
+    "CORE.WORKSPACE.CREATE.SUCCESS":"Created workspace success",
+    "CORE.WORKSPACE.UPDATE.SUCCESS":"Updated workspace success", 
+    "CORE.WORKSPACE.CERTIFICATE":"Certificate Type",
+    "CORE.WORKSPACE.CERTIFICATE.ALERT":"Please select certificate type"
+    
 }

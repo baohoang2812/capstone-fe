@@ -16,7 +16,9 @@ import MenuNotify from "./MenuNotify";
 /* Helpers */
 import { logout } from "~/Core/utils/helper/authenticate";
 import ChangePasswordForm from "./Components/ChangePasswordForm";
+import notiApi from "~/Core/Modules/Notification/Api";
 // import ChangePasswordForm from "./Components/ChangePasswordForm"
+import ExcuseDetail from "~/Core/Components/HeaderMaster/Components/ExcuseDetail";
 
 
 // import buttonInfo from "./ButtonInfo";
@@ -24,8 +26,10 @@ import ChangePasswordForm from "./Components/ChangePasswordForm";
 const { Header } = Layout;
 // const { SubMenu } = Menu;
 export const HeaderMaster = ({ url }) => {
-  const [visible,setVisible]= useState(false);
+  const [visible, setVisible] = useState(false);
   const t = useTranslate();
+  const [visibleExcuse, setVisibleExcuse] = useState(false);
+  const [data, setData] = useState({});
 
   /* Ref outside */
   const ref = useRef();
@@ -44,16 +48,31 @@ export const HeaderMaster = ({ url }) => {
   const clickMenuHover = () => {
     // setHover(true);
   };
+  const [countNoti, setCountNoti] = useState(0);
 
   useEffect(() => {
+    // document.addEventListener("click", handleClick);
     document.addEventListener("click", handleClick);
-
     return () => {
+      // document.removeEventListener("click", handleClick);
       document.removeEventListener("click", handleClick);
     };
   });
+  useEffect(() => {
+    (async () => {
+      const res = await notiApi.getList(0, 5);
+      if (res.code !== 200) {
+
+        return;
+      }
+      const data = res?.data?.totalUnread
+      setCountNoti(data);
+    })()
+
+  }, [])
   const renderMenuProfile = (account_info, t) => (
     <Menu
+      // className="dropdown-menu dropdown-menu-profile"
       className="dropdown-menu dropdown-menu-profile"
       selectedKeys={[]}
       mode="vertical"
@@ -66,8 +85,8 @@ export const HeaderMaster = ({ url }) => {
       </Menu.Item>
       <Menu.Item key="terms" onClick={openModel}>
         {/* <Link to="/terms"> */}
-          <Icon type="setting" />
-          {t("CORE.MENU.CHANGE.PASSWORD")}
+        <Icon type="setting" />
+        {t("CORE.MENU.CHANGE.PASSWORD")}
         {/* </Link> */}
       </Menu.Item>
       <Menu.Item onClick={() => logout()} key="logout">
@@ -76,6 +95,14 @@ export const HeaderMaster = ({ url }) => {
       </Menu.Item>
     </Menu>
   );
+
+  const openModelExcuse = (data) => {
+    setVisibleExcuse(true);
+    setData(data);
+  };
+  const handleCloseModalExcuse = () => {
+    setVisibleExcuse(false);
+  };
 
   const account_info = JSON.parse(localStorage.getItem("account_info" || "{}"));
   return (
@@ -104,15 +131,24 @@ export const HeaderMaster = ({ url }) => {
         </div>
         <div className="header-right">
           <Dropdown
-            overlay={<MenuNotify />}
-            trigger={["click"]}
+            overlay={<MenuNotify setData={setData} openModelExcuse={openModelExcuse}/>}
+            trigger={["hover"]}
           >
             <div className="action-icon dropdown-notification">
-              <Badge count={22}>
+              <Badge count={countNoti}>
                 <Icon type="notification" />
               </Badge>
             </div>
           </Dropdown>
+          <Modal
+            title={t("CORE.VIOLATION.MANAGEMENT.TITLE")}
+            visible={visibleExcuse}
+            onCancel={handleCloseModalExcuse}
+            footer={null}
+            width="900px"
+          >
+            <ExcuseDetail ID={data} action={handleCloseModalExcuse} />
+          </Modal>
           <MenuLanguage />
           <Dropdown overlay={renderMenuProfile(account_info, t)}>
             <span className="dropdown-user">
@@ -142,7 +178,7 @@ export const HeaderMaster = ({ url }) => {
         visible={visible}
         onCancel={handleCloseModal}
         footer={null}>
-        <ChangePasswordForm action={handleCloseModal}/>
+        <ChangePasswordForm action={handleCloseModal} />
       </Modal>
     </Header>
   );

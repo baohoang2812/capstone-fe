@@ -9,6 +9,7 @@ import './App.scss';
 import 'bryntum-schedulerpro/schedulerpro.stockholm.css';
 import 'bryntum-react-shared/resources/shared.scss';
 import Main from './containers/Main';
+// import Scheduler from "bryntum-schedulerpro"
 import Popup from './components/Popup';
 
 const Schedule = () => {
@@ -27,7 +28,15 @@ const Schedule = () => {
         setResourceStore(resourceStore);
         setEventRecord(eventRecord);
         showPopup(true);
+       
     }
+    // const scheduler = new Scheduler({
+    //     features : {
+    //         columnLines : false,
+    //         eventResize : false
+    //     }
+    // });
+   
 
     const setEventRecordHandler = (state) => {
         eventRecord.set({ ...state });
@@ -43,10 +52,11 @@ const Schedule = () => {
         setEventRecord(null);
         showPopup(false)
     }
+   
 
     return (
         <>
-            <Main showEditor={showEditor} ref={main} />
+            <Main  showEditor={showEditor} ref ={main} />
             <div>
                 {popupShown ?
                     <Popup

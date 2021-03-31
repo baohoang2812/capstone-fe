@@ -129,7 +129,7 @@ const CertificateTypeDetailForm = ({ form, data, action, is_create }) => {
             certificateTypeApi.update(data.id, newValues3).then((res) => {
               setLoading(false);
 
-              if (res.code !== 200) {
+              if (res.code !== 200){
                 message.error(t("CORE.task_failure"));
                 return;
               }
@@ -159,67 +159,67 @@ const CertificateTypeDetailForm = ({ form, data, action, is_create }) => {
   };
   const handleChange = ({ fileList }) => setFileList(fileList);
   return (
-    <Row type="flex" justify="center">
-      <Col span={12}>
-        <div className="div_custom">
-          <Form onSubmit={onConfirm}>
-            <Row type="flex" justify="center" align="bottom">
-              <Col span={15}>
-                <Form.Item label={t("CORE.CERTIFICATE.TYPE.NAME")}>
+    <Row type = "flex" justify = "center">
+      <Col span = {12}>
+        <div className = "div_custom">
+          <Form onSubmit = {onConfirm}>
+            <Row type = "flex" justify = "center" align= "bottom">
+              <Col span = {15}>
+                <Form.Item label = {t("CORE.CERTIFICATE.TYPE.NAME")}>
                   {getFieldDecorator("name", {
                     rules: [
-                      {
+                      { whitespace: true,
                         required: true,
-                        message: "Please input certificate type name!",
+                        message: (<>{t("CORE.CERTIFICATE.ALERT.NAME")}</>)
                       },
                       {
                         max: 255,
-                        message: "Max length is 255 characters!",
+                        message: (<>{t("CORE.CERTIFICATE.ALERT.LENGTH")}</>)
                       },
                     ],
-                  })(<Input />)}
+                  })(<Input/>)}
                 </Form.Item>
               </Col>
             </Row>
-            <Row type="flex" justify="center" align="bottom">
-              <Col span={15}>
-                <Form.Item label={t("CORE.CERTIFICATE.TYPE.DESCRIPTION")}>
-                  {getFieldDecorator("description", {
+            <Row type = "flex" justify = "center" align = "bottom">
+              <Col span = {15}>
+                <Form.Item label = {t("CORE.CERTIFICATE.TYPE.DESCRIPTION")}>
+                  {getFieldDecorator("description",{
                     rules: [
-                      {
+                      { whitespace: true,
                         required: true,
-                        message: "Please input certificate type description!",
+                        message: (<>{t("CORE.CERTIFICATE.ALERT.DESCRIPTION")}</>)
                       },
                       {
                         max: 255,
-                        message: "Max length is 255 characters!",
+                        message: (<>{t("CORE.CERTIFICATE.ALERT.LENGTH")}</>)
                       },
                     ],
-                  })(<Input />)}
+                  })(<Input/>)}
                 </Form.Item>
               </Col>
             </Row>
 
-            <Row type="flex" justify="center" align="bottom">
-              <Col span={5}>
+            <Row type = "flex" justify = "center" align = "bottom">
+              <Col span = {5}>
                 <Form.Item
-                  className="upload-image"
-                  label={t("CORE.CERTIFICATE.TYPE.IMAGE.PATH")}>
+                  className = "upload-image"
+                  label = {t("CORE.CERTIFICATE.TYPE.IMAGE.PATH")}>
                   {getFieldDecorator(
                     "imagePath",
                     {}
                   )(
                     <Upload
-                      action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                      listType="picture-card"
-                      fileList={fileList}
-                      onPreview={handlePreview}
-                      onChange={handleChange}
+                      action = "https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                      listType = "picture-card"
+                      fileList = {fileList}
+                      onPreview = {handlePreview}
+                      onChange = {handleChange}
                     >
                       {fileList.length >= 1 ? null : (
                         <div>
-                          <Icon type="plus" />
-                          <div className="ant-upload-text">Upload</div>
+                          <Icon type ="plus" />
+                          <div className ="ant-upload-text">Upload</div>
                         </div>
                       )}
                     </Upload>
@@ -227,18 +227,17 @@ const CertificateTypeDetailForm = ({ form, data, action, is_create }) => {
                 </Form.Item>
               </Col>
             </Row>
-            <Row type="flex" justify="center">
+            <Row type = "flex" justify = "center">
               <Col span={5}>
                 <Modal
-                  visible={previewVisible}
-                  footer={null}
-                  onCancel={handleCancel}
+                  visible = {previewVisible}
+                  footer = {null}
+                  onCancel = {handleCancel}
                 >
                   <img
-                    alt="example"
-                    style={{ width: "100%" }}
-                    src={previewImage}
-                  />
+                    alt ="example"
+                    style ={{ width: "100%" }}
+                    src={previewImage}/>
                 </Modal>
               </Col>
             </Row>

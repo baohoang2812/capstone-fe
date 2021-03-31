@@ -67,21 +67,13 @@ const UserTable = () => {
         }
         else {
           return (
-            <Link to={`/report/${record.id}`}>{`${record.id}`}</Link>
+            <Link to={`/report/${record.id}`}>{`${record.name}`}</Link>
           )
         }
       },
 
     },
-    {
-      title: t("CORE.REPORT.DESCRIPTION"),
-      dataIndex: "description",
-      className: "header-filter",
-      key: "description",
-      fieldType: "text",
-      sorter: true,
-      width: 220,
-    },
+   
     {
       title: t("CORE.REPORT.STATUS"),
       dataIndex: "status",
@@ -109,6 +101,43 @@ const UserTable = () => {
       }
     },
     {
+      title: t("CORE.REPORT.MINUS.POINT"),
+      dataIndex: "totalMinusPoint",
+      className: "header-filter",
+      key: "totalMinusPoint",
+      fieldType: "text",
+      sorter: true,
+      width: 150,
+
+    },
+    {
+      title: t("CORE.REPORT.DESCRIPTION"),
+      dataIndex: "description",
+      className: "header-filter",
+      key: "description",
+      fieldType: "text",
+      sorter: true,
+      width: 220,
+    },
+    {
+      title: t("CORE.REPORT.ADMIN.NOTE"),
+      dataIndex: "adminNote",
+      className: "header-filter",
+      key: "adminNote",
+      fieldType: "text",
+      sorter: true,
+      width: 220,
+    },
+    {
+      title: t("CORE.REPORT.QC.NOTE"),
+      dataIndex: "qcNote",
+      className: "header-filter",
+      key: "qcNote",
+      fieldType: "text",
+      sorter: true,
+      width: 220,
+    },
+    {
       title: t("CORE.REPORT.BRANCH.NAME"),
       dataIndex: "branch.name",
       className: "header-filter",
@@ -118,6 +147,7 @@ const UserTable = () => {
       width: 220,
 
     },
+   
     {
       title: t("CORE.REPORT.SUBMITTED.BY"),
       dataIndex: "submittedBySystem",
@@ -168,7 +198,16 @@ const UserTable = () => {
       fieldType: "date",
       sorter: true,
       width: 150,
-      render: (text) => moment(text).format("DD/MM/YYYY"),
+      render: (text,record) => {
+        if(record?.updatedAt===null){
+          return(
+            <span></span>
+          )
+        }
+        else{
+          return(moment(text).format("DD/MM/YYYY"))
+        }
+      }
     },
 
 
@@ -178,7 +217,7 @@ const UserTable = () => {
   const defaultSorter = useMemo(() => ({ "Sort.Orders": "desc createdAt"}), []);
 
   const scroll = useMemo(() => ({
-    x: 1400,
+    x: 1550,
     y: `calc(100vh - (178px))`
   }), []);
   const token = localStorage.getItem("token" || "");
@@ -196,13 +235,14 @@ const UserTable = () => {
         defaultSorter={defaultSorter}
         disableClassKey="is_active"
         disableClassMode="toggle"
-        options={role==="Branch Manager"?{key:"Filter.Status",value:"submitted"}:null}
+        options={role==="Branch Manager"?{key:"Filter.Status",value:"Done"}:null}
       />
       <Modal
         title={t("CORE.REPORT.DETAIL")}
         visible={visible}
         onCancel={handleCloseModal}
         footer={null}
+        width="900px"
       >
         <ReportDetailForm data={data} action={handleCloseModal} />
 

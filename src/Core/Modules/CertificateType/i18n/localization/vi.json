@@ -10,5 +10,8 @@
     "CORE.CERTIFICATE.TYPE.CREATE.ACCOUNT":"Tạo bằng cấp",
     "CORE.CERTIFICATE.TYPE.UPDATE.ACCOUNT":"Cập nhật bằng cấp",
     "CORE.CERTIFICATE.DETAIL":"Chi tiết bằng cấp ",
-    "CORE.CERTIFICATE":"Bằng cấp"
+    "CORE.CERTIFICATE":"Bằng cấp",
+    "CORE.CERTIFICATE.ALERT.NAME":"Vui lòng nhập tên chứng chỉ!",
+    "CORE.CERTIFICATE.ALERT.DESCRIPTION":"Vui lòng nhập mô tả",
+    "CORE.CERTIFICATE.ALERT.LENGTH":"Tối đa 255 ký tự"
 }

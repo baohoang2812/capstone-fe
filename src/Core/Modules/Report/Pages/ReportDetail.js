@@ -73,7 +73,8 @@ const ReportDetail = ({ match: { params } }) => {
           action={action}
           text={t("CORE.EXPORT")}
           className="btn-yellow"
-          isDisabled={data?.status?.toLowerCase()==="done"?true:false}
+          isDisabled={data?.status?.toLowerCase()==="done"?false:true}
+          setData={setData}
           
         />
         {error ? (

@@ -28,50 +28,6 @@ const UserTable = () => {
   const [visibleAdminAccept, setVisibleAdminAccept] = useState(false);
   const [data, setData] = useState({});
   const [isShow, setIsShow] = useState(true);
-
-  // const showConfirm = (record) => {
-  //   confirm({
-  //     title: t("CORE.VIOLATION.CONFIRM"),
-  //     content: t("CORE.VIOLATION.CONFIRM.CONTENT"),
-  //     onOk() {
-  //       contactApi.update(
-  //         record.id,
-  //         {
-  //           excuse: "string",
-  //           name: "string",
-  //           description: "string",
-  //           imagePath: "string",
-  //           reportId: 0,
-  //           regulationId: 0,
-  //           status: "Accepted Excuse",
-  //           branchId: 0
-
-  //         }
-  //       )
-  //         .then((res) => {
-
-
-  //           if (res.code !== 200) {
-  //             message.error(t("CORE.task_failure"));
-  //             return;
-  //           }
-
-
-  //           dispatch(update_identity_table_data_success(identity, { id: res.data.id, column: "status", data: res.data.status }));
-  //           message.success(t("CORE.POSITION.CREATE.SUCCESS"));
-
-  //         })
-  //         .catch(() => {
-  //           message.error(t("CORE.error.system"));
-  //         });
-  //     },
-  //     onCancel() {
-  //       console.log(t("CORE.VIOLATION.CONFIRM.CANCEL"));
-  //     },
-  //     okText: t("CORE.VIOLATION.CONFIRM.ACCEPT"),
-  //     cancelText: t("CORE.VIOLATION.CONFIRM.CANCEL")
-  //   });
-  // }
   const openModel = (record) => {
 
     setVisible(true);
@@ -103,27 +59,12 @@ const UserTable = () => {
 
   const defs = useMemo(() => [
 
-    {
-      title: t("CORE.VIOLATION.IMAGE.PATH"),
-      dataIndex: "imagePath",
-      className: "header-filter header-image",
-      key: "imagePath",
-      fieldType: "none",
-
-      sorter: true,
-      width: 200,
-      render: (_, record) => {
-        return (
-          <ImageThumbnail src={record.imagePath} />
-        )
-      }
-    },
 
     {
       title: t("CORE.VIOLATION.NAME"),
       dataIndex: "name",
       className: "header-filter",
-      key: "name",
+      key: "Filter.name",
       fieldType: "text",
       sorter: true,
       width: 240,
@@ -191,6 +132,27 @@ const UserTable = () => {
       sorter: true,
       width: 220,
     },
+    {
+      title: t("CORE.VIOLATION.WORKSPACE"),
+      dataIndex: "workspace",
+      className: "header-filter",
+      key: "workspace",
+      fieldType: "text",
+      sorter: true,
+      width: 220,
+      render:(_,record)=> (
+        <span>{record?.workspace?.[0]?.name}</span>
+      )
+    },
+    {
+      title: t("CORE.VIOLATION.MINUS.POINT"),
+      dataIndex: "minusPoint",
+      className: "header-filter",
+      key: "minusPoint",
+      fieldType: "text",
+      sorter: true,
+      width: 150,
+    },
 
 
     {
@@ -211,7 +173,16 @@ const UserTable = () => {
       fieldType: "date",
       sorter: true,
       width: 150,
-      render: (text) => moment(text).format("DD/MM/YYYY"),
+      render: (text,record) => {
+        if(record?.updatedAt===null){
+          return(
+            <span></span>
+          )
+        }
+        else{
+          return(moment(text).format("DD/MM/YYYY"))
+        }
+      }
     },
     {
       title: t("CORE.VIOLATION.ACTION"),
@@ -267,7 +238,7 @@ const UserTable = () => {
   const defaultSorter = useMemo(() => ({ "Sort.Orders": "desc createdAt" }), []);
 
   const scroll = useMemo(() => ({
-    x: 1700,
+    x: 1870,
     y: `calc(100vh - (178px))`
   }), []);
 

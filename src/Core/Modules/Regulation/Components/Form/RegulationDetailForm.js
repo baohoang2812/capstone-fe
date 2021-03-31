@@ -9,6 +9,7 @@ import {
   Button,
   message,
   InputNumber,
+  Select
 } from "antd";
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
@@ -24,6 +25,7 @@ import regulationApi from "~/Core/Modules/Regulation/Api/";
 
 const RegulationDetailForm = ({ form, is_create, action, data }) => {
   const t = useTranslate();
+  const { Option } = Select;
   /* Redux */
   const dispatch = useDispatch();
   /* State */
@@ -91,12 +93,12 @@ const RegulationDetailForm = ({ form, is_create, action, data }) => {
           <Form onSubmit={onConfirm}>
             <Row type="flex" justify="center" align="bottom">
               <Col span={15}>
-                <Form.Item label={t("CORE.REGULATION.NAME")}>
+                <Form.Item label ={t("CORE.REGULATION.NAME")}>
                   {getFieldDecorator("name", {
                     rules: [
-                      {
+                      { whitespace: true,
                         required: true,
-                        message: "Please input regulation name!",
+                        message: (<>{t( "CORE.REGULATION.ALERT.NAME")}</>)
                       },
                       {
                         max: 255,
@@ -114,14 +116,23 @@ const RegulationDetailForm = ({ form, is_create, action, data }) => {
                     rules: [
                       {
                         required: true,
-                        message: "Please input regulation type!",
+                        message: (<>{t("CORE.REGULATION.ALERT.TYPE")}</>)
                       },
-                      {
-                        max: 50,
-                        message: "Max length is 50 characters!",
-                      },
+                      
                     ],
-                  })(<Input />)}
+                  })(
+                    <Select>
+                      <Option value="IC">
+                        IC
+                  </Option>
+                      <Option value="QC">
+                        QC
+                  </Option>
+                      <Option value="CC">
+                        CC
+                  </Option>
+                    </Select>
+                  )}
                 </Form.Item>
               </Col>
             </Row>
@@ -130,9 +141,9 @@ const RegulationDetailForm = ({ form, is_create, action, data }) => {
                 <Form.Item label={t("CORE.REGULATION.DESCRIPTION")}>
                   {getFieldDecorator("description", {
                     rules: [
-                      {
+                      {whitespace: true,
                         required: true,
-                        message: "Please input description!",
+                        message: (<>{t("CORE.REGULATION.ALERT.DESCRIPTION")}</>)
                       },
                       {
                         max: 2000,
@@ -150,10 +161,10 @@ const RegulationDetailForm = ({ form, is_create, action, data }) => {
                     rules: [
                       {
                         required: true,
-                        message: "Please input level!",
+                        message:(<>{t("CORE.REGULATION.ALERT.LEVEL")}</>)
                       },
                     ],
-                  })(<InputNumber min={1} max={9} />)}
+                  })(<InputNumber min={1} max={3} />)}
                 </Form.Item>
               </Col>
             </Row>
@@ -163,8 +174,9 @@ const RegulationDetailForm = ({ form, is_create, action, data }) => {
                   {getFieldDecorator("minusPoint", {
                     rules: [
                       {
+
                         required: true,
-                        message: "Please input point!",
+                        message: (<>{t("CORE.REGULATION.ALERT.POINT")}</>)
                       },
                     ],
                   })(<InputNumber min={1} max={9} />)}

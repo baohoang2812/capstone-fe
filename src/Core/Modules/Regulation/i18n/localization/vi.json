@@ -13,5 +13,10 @@
     "CORE.REGULATION.CHARGE.UPDATE":"Ngày cập nhật",
     "CORE.REGULATION.POINT": "Điểm trừ",
     "CORE.REGULATION":"Quy tắc",
-    "CORE.REGULATION.DETAIL":"Chi tiết quy tắc"
+    "CORE.REGULATION.DETAIL":"Chi tiết quy tắc",
+    "CORE.REGULATION.ALERT.NAME":"Vui lòng nhập tên quy tắc",
+    "CORE.REGULATION.ALERT.TYPE":"Vui lòng chọn loại quy tắc",
+    "CORE.REGULATION.ALERT.DESCRIPTION":"Vui lòng nhập mô tả",
+    "CORE.REGULATION.ALERT.LEVEL": "Vui lòng nhập cấp độ",
+    "CORE.REGULATION.ALERT.POINT":"Vui lòng nhập điểm"
 }
