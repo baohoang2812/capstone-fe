@@ -43,7 +43,7 @@ const UserTable = ({data}) => {
       sorter: true,
       width: 220,
       render: (text, record) => (
-        <Link to={`/employee/${record?.certificateType?.id}`}>{`${record?.certificateType?.name}`}</Link>
+        <span>{`${record?.certificateType?.name}`}</span>
       ),
     },
     {

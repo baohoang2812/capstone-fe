@@ -99,31 +99,31 @@ const ReportDetailForm = ({ form, is_create, action, data }) => {
             <Row type="flex" justify="center" align="bottom">
               <Col span={8}>
                 <Form.Item label={t("CORE.REPORT.NAME")}>
-                  {getFieldDecorator("name", {})(<span>{data?.name}</span>)}
+                  {getFieldDecorator("name", {})(<span style={{fontWeight:800}}>{data?.name}</span>)}
                 </Form.Item>
               </Col>
               <Col span={8}>
                 <Form.Item label={t("CORE.REPORT.STATUS")}>
-                  {getFieldDecorator("status", {})(<span>{data?.status}</span>)}
+                  {getFieldDecorator("status", {})(<span style={{fontWeight:800}}>{data?.status}</span>)}
                 </Form.Item>
               </Col>
               <Col span={4}>
                 <Form.Item label={t("CORE.REPORT.CHARGE.CREATE")}>
-                  {getFieldDecorator("createdAt", {})(<span>{moment(data?.createdAt).format("DD-MM-YYYY")}</span>)}
+                  {getFieldDecorator("createdAt", {})(<span style={{fontWeight:800}}>{moment(data?.createdAt).format("DD-MM-YYYY")}</span>)}
                 </Form.Item>
               </Col>
             </Row>
             <Row type="flex" justify="center" align="bottom">
               <Col span={8}>
                 <Form.Item label={t("CORE.REPORT.BRANCH.NAME")}>
-                  {getFieldDecorator("branchName", {})(<span>{data?.branch?.name}</span>)}
+                  {getFieldDecorator("branchName", {})(<span style={{fontWeight:800}}>{data?.branch?.name}</span>)}
                 </Form.Item>
               </Col>
               <Col span={12}>
                 <Form.Item label={t("CORE.REPORT.DESCRIPTION")}>
                   {getFieldDecorator("description", {
 
-                  })(<span>{data?.description}</span>)}
+                  })(<span style={{fontWeight:800}}>{data?.description}</span>)}
                 </Form.Item>
               </Col>
             </Row>
@@ -139,7 +139,7 @@ const ReportDetailForm = ({ form, is_create, action, data }) => {
                     <Select>
                       {listQC.map((item) => (
                         <Option key={item.id} value={item.id}>
-                          {item.firstName} {item.lastName}
+                          {item?.firstName} {item?.lastName}
                         </Option>
                       ))}
                     </Select>
