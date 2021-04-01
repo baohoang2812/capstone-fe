@@ -109,41 +109,41 @@ const ReportViolation = ({ form, is_create, action, data,setData }) => {
             <Row type="flex" justify="center" align="bottom">
               <Col span={6}>
                 <Form.Item label={t("CORE.REPORT.NAME")}>
-                  {getFieldDecorator("name", {})(<span>{data.name}</span>)}
+                  {getFieldDecorator("name", {})(<span style={{fontWeight:800}}>{data?.name}</span>)}
                 </Form.Item>
               </Col>
               <Col span={5}>
                 <Form.Item label={t("CORE.REPORT.STATUS")}>
-                  {getFieldDecorator("status", {})(<span>{data.status}</span>)}
+                  {getFieldDecorator("status", {})(<span style={{fontWeight:800}}>{data?.status}</span>)}
                 </Form.Item>
               </Col>
               <Col span={5}>
                 <Form.Item label={t("CORE.REPORT.CHARGE.CREATE")}>
-                  {getFieldDecorator("createdAt", {})(<span>{moment(data.createdAt).format("DD-MM-YYYY")}</span>)}
+                  {getFieldDecorator("createdAt", {})(<span style={{fontWeight:800}}>{moment(data?.createdAt).format("DD-MM-YYYY")}</span>)}
                 </Form.Item>
               </Col>
             </Row>
             <Row type="flex" justify="center" align="bottom">
               <Col span={6}>
                 <Form.Item label={t("CORE.REPORT.BRANCH.NAME")}>
-                  {getFieldDecorator("branchName", {})(<span>{data?.branch?.name}</span>)}
+                  {getFieldDecorator("branchName", {})(<span style={{fontWeight:800}}>{data?.branch?.name}</span>)}
                 </Form.Item>
               </Col>
               <Col span={5}>
                 <Form.Item label={t("CORE.REPORT.DESCRIPTION")}>
-                  {getFieldDecorator("description", {})(<span>{data.description}</span>)}
+                  {getFieldDecorator("description", {})(<span style={{fontWeight:800}}>{data?.description}</span>)}
                 </Form.Item>
               </Col>
               <Col span={5}>
                 <Form.Item label={t("CORE.REPORT.MINUS.POINT")}>
-                  {getFieldDecorator("totalMinusPoint", {})(<span>{data.totalMinusPoint}</span>)}
+                  {getFieldDecorator("totalMinusPoint", {})(<span style={{fontWeight:800}}>{data?.totalMinusPoint}</span>)}
                 </Form.Item>
               </Col>
             </Row>
             <Row type="flex" justify="center" align="bottom">
               <Col span={16}>
                 <Form.Item label={t("CORE.REPORT.QC.NOTE")}>
-                  {getFieldDecorator("qcNote", {})(<span>{data.qcNote}</span>)}
+                  {getFieldDecorator("qcNote", {})(<span style={{fontWeight:800}}>{data?.qcNote}</span>)}
                 </Form.Item>
               </Col>
               
