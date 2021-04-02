@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import "./style.less";
-import { Row, Col, Form, Input, Button, message } from "antd";
+import { Row, Col, Form, Input, Button, message,Select } from "antd";
 import axios from "axios";
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
@@ -14,16 +14,17 @@ import { cameras as identity } from "~/Core/Modules/Cameras/Configs/constants";
 
 /* Api */
 import camerasApi from "~/Core/Modules/Cameras/Api/";
-
+import workspaceApi from "~/Core/Modules/Cameras/Api/WorkspaceApi";
 /* Components */
 import Rector from "~/Core/Modules/Cameras/Components/Form/Rector";
-
+const { Option } = Select;
 const BranchDetailForm = ({ form, data, action, is_create }) => {
   const t = useTranslate();
   /* Redux */
   const dispatch = useDispatch();
   /* State */
   const [loading, setLoading] = useState(false);
+  const [listWorkspace,setListWorkspace]= useState([]);
   const { getFieldDecorator, validateFields, setFieldsValue } = form;
   const [config, setConfig] = useState([
     {
@@ -36,6 +37,13 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
 
   const [imagePath, setImagePath] = useState([]);
 
+  useEffect(() => {
+    (async () => {
+      const Workspace= await workspaceApi.getList();
+      setListWorkspace(Workspace?.data?.result);
+    })();
+ 
+  }, []);
   useEffect(() => {
     setFieldsValue({
       name: data?.name,
@@ -219,6 +227,29 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
                       },
                     ],
                   })(<Input />)}
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row type="flex" justify="center" align="bottom">
+              <Col span={15}>
+                <Form.Item label={t("CORE.CAMERA.WORKSPACE")}>
+                  {getFieldDecorator("workspaceId", {
+                    rules: [
+                      {
+                        required: true,
+                        message: "Please select workspace!",
+                      },
+                     
+                    ],
+                  })(
+                    <Select>
+                  {listWorkspace.map((item) => (
+                    <Option key={item.id} value={item.id}>
+                      {item.name}
+                    </Option>
+                  ))}
+                </Select>
+                )}
                 </Form.Item>
               </Col>
             </Row>
