@@ -44,7 +44,8 @@
     "CORE.VIOLATION.CREATED.BY":"Created by",
     "CORE.REPORT.STATUS.DONE":"Done",
     "CORE.REPORT.MINUS.POINT":"Minus point",
-    "CORE.VIOLATION.WORKSPACE":"Workspace"
+    "CORE.VIOLATION.WORKSPACE":"Workspace",
+    "CORE.REPORT.STATUS.TIME":"Time to submit"
    
 
 }
