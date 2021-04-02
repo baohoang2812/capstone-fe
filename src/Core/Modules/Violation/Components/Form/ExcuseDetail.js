@@ -66,6 +66,9 @@ const ExcuseDetail = ({ form, isShow = true, action, data }) => {
             }))
             setFileList(list);
         }
+        else{
+            setFileList([]);
+        }
 
     }, [data]);
     const handleCancel = () => setPreviewVisible(false);
