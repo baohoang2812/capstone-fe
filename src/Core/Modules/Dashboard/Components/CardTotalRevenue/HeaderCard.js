@@ -22,7 +22,7 @@ const HeaderCard = ({setFromDate,setToDate})=> {
 
   return (
     <div className ="header-card">
-      <h4>{t("CORE.STATISTICS.NAME")}</h4>
+      <h4>{t("CORE.STATISTICS.NAME.MONTH")}</h4>
      
       <div
         className="header-filter"
