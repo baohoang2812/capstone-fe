@@ -65,6 +65,9 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
             }))
             setFileList(list);
         }
+        else{
+            setFileList([]);
+        }
     }, [data]);
     const handleCancel = () => setPreviewVisible(false);
 

@@ -60,21 +60,6 @@ const UserTable = (props) => {
 
   const defs = useMemo(() => [
 
-    {
-      title: t("CORE.VIOLATION.IMAGE.PATH"),
-      dataIndex: "imagePath",
-      className: "header-filter header-image",
-      key: "imagePath",
-      fieldType: "none",
-
-      sorter: true,
-      width: 200,
-      render: (_, record) => {
-        return (
-          <ImageThumbnail src={record.imagePath} />
-        )
-      }
-    },
 
     {
       title: t("CORE.VIOLATION.NAME"),
@@ -233,7 +218,7 @@ const UserTable = (props) => {
   const defaultSorter = useMemo(() => ({ "Sort.Orders": "desc createdAt"}), []);
 
   const scroll = useMemo(() => ({
-    x: 1700,
+    x: 1500,
     y: `calc(100vh - (178px))`
   }), []);
   console.log(props.value)
