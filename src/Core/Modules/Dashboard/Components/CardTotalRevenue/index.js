@@ -50,7 +50,7 @@ const CardTotalRevenue = () => {
          console.log(data);
 
       }
-      else {
+      else if(role==="Branch Manager") {
         const listVio = await violationApi.getList(FromDate);
         const data = listVio?.data?.map((item) => (
           {
