@@ -64,6 +64,9 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
                 }))
                 setFileList(list);
             }
+            else{
+                setFileList([]);
+            }
 
     }, [data]);
     const { Option } = Select;
