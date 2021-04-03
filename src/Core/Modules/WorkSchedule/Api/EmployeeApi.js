@@ -2,7 +2,7 @@ import BaseApi from "~/Core/Api/BaseAPI";
 
 class ProfileApi extends BaseApi {
   getList = () => {
-    return this.initApi.get(`${this.baseUrl}?Filter.IsDeleted=${false}`);
+    return this.initApi.get(`${this.baseUrl}?Filter.IsDeleted=${false}&Filter.ExcludeBranchModerator=${true}`);
   };
 
   update = (id, body) => {
