@@ -43,7 +43,7 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
     /* State */
     const [loading, setLoading] = useState(false);
     // const [loadingDropdown, setLoadingDropdown] = useState(false);
-    const { getFieldDecorator, validateFields } = form;
+    const { getFieldDecorator, validateFields,setFieldsValue } = form;
     const [fileList, setFileList] = useState([]);
     const [previewVisible, setPreviewVisible] = useState(false);
     // const [previewTitle, setPreviewTitle] = useState("");
@@ -51,11 +51,15 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
     const [dataEmployee, setDataEmployee] = useState([]);
 
     useEffect(() => {
+        setFieldsValue({
+            excuse:""
+          });
         if (data?.employeeIds?.length > 0) {
             employeeApi.getListFilter(data.employeeIds)
                 .then(res => {
                     const result = res.data.result;
                     setDataEmployee(result);
+
                 })
         } else {
             setDataEmployee([])
@@ -70,7 +74,10 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
             }))
             setFileList(list);
         }
-
+        else{
+            setFileList([]);
+        }
+        
 
     }, [data]);
 
@@ -135,21 +142,21 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
                             <Form.Item label={t("CORE.VIOLATION.NAME")}>
                                 {getFieldDecorator("name", {
 
-                                })(<span>{data?.name}</span>)}
+                                })(<span style={{fontWeight:800}}>{data?.name}</span>)}
                             </Form.Item>
                         </Col>
                         <Col span={8}>
                             <Form.Item label={t("CORE.VIOLATION.CREATED.BY")}>
                                 {getFieldDecorator("createdBy", {
 
-                                })(<span>{data?.createdBy?.lastName} {data?.createdBy?.firstName}</span>)}
+                                })(<span style={{fontWeight:800}}>{data?.createdBy?.lastName} {data?.createdBy?.firstName}</span>)}
                             </Form.Item>
                         </Col>
                         <Col span={4}>
                             <Form.Item label={t("CORE.VIOLATION.CHARGE.CREATE")}>
                                 {getFieldDecorator("createdAt", {
 
-                                })(<span>{moment(data?.createdAt).format("DD-MM-YYYY")}</span>)}
+                                })(<span style={{fontWeight:800}}>{moment(data?.createdAt).format("DD-MM-YYYY | HH:mm")}</span>)}
                             </Form.Item>
                         </Col>
                         </Row>
@@ -159,14 +166,14 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
                                 <Form.Item label={t("CORE.VIOLATION.DESCRIPTION")}>
                                     {getFieldDecorator("description", {
 
-                                    })(<span>{data?.description}</span>)}
+                                    })(<span style={{fontWeight:800}}>{data?.description}</span>)}
                                 </Form.Item>
                             </Col>
                             <Col span={4}>
                                 <Form.Item label={t("CORE.VIOLATION.WORKSPACE")}>
                                     {getFieldDecorator("workspace", {
 
-                                    })(<span>{data?.workspace?.[0]?.name}</span>)}
+                                    })(<span style={{fontWeight:800}}>{data?.workspace?.[0]?.name}</span>)}
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -209,7 +216,7 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
                                             dataEmployee.map(item => {
                                                 return (
                                                     <div>
-                                                        {`${item.lastName} ${item.firstName}`}
+                                                       <span style={{fontWeight:800}}>{`${item.lastName} ${item.firstName}`}</span> 
                                                     </div>
                                                 )
                                             })

@@ -95,7 +95,7 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
                                 <Form.Item label={t("CORE.VIOLATION.NAME")}>
                                     {getFieldDecorator("name", {
 
-                                    })(<span>{data.name}</span>)}
+                                    })(<span style={{fontWeight:800}}>{data.name}</span>)}
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -105,7 +105,7 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
                                 <Form.Item label={t("CORE.VIOLATION.DESCRIPTION")}>
                                     {getFieldDecorator("description", {
 
-                                    })(<span>{data.description}</span>)}
+                                    })(<span style={{fontWeight:800}}>{data.description}</span>)}
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -114,7 +114,7 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
                                 <Form.Item label={t("CORE.VIOLATION.CREATED.BY")}>
                                     {getFieldDecorator("createdBy", {
 
-                                    })(<span>{data.createdBy.lastName} {data.createdBy.firstName}</span>)}
+                                    })(<span style={{fontWeight:800}}>{data.createdBy.lastName} {data.createdBy.firstName}</span>)}
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -132,7 +132,7 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
                                 <Form.Item label={t("CORE.VIOLATION.CHARGE.CREATE")}>
                                     {getFieldDecorator("createdAt", {
 
-                                    })(<span>{moment(data.createdAt).format("DD-MM-YYYY")}</span>)}
+                                    })(<span style={{fontWeight:800}}>{moment(data.createdAt).format("DD-MM-YYYY")}</span>)}
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -147,7 +147,7 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
                                                 dataEmployee.map(item => {
                                                     return (
                                                         <div>
-                                                            {`${item.lastName} ${item.firstName}`}
+                                                           <span style={{fontWeight:800}}>{`${item.lastName} ${item.firstName}`}</span> 
                                                         </div>
                                                     )
                                                 })
@@ -164,7 +164,7 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
                                     <Form.Item label={t("CORE.VIOLATION.EXCUSE")}>
                                         {getFieldDecorator("excuse", {
 
-                                        })(<span>{data.excuse}</span>)}
+                                        })(<span style={{fontWeight:800}}>{data.excuse}</span>)}
                                     </Form.Item>
                                 </Col>) : null
                             }

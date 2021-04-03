@@ -74,7 +74,7 @@ const ReportDetail = ({ match: { params } }) => {
           text={t("CORE.EXPORT")}
           className="btn-yellow"
           isDisabled={data?.status?.toLowerCase()==="done"?false:true}
-          setData={setData}
+         
           
         />
         {error ? (
@@ -84,6 +84,7 @@ const ReportDetail = ({ match: { params } }) => {
             action={action}
             is_create={params.id === "create"}
             data={data}
+            setData={setData}
           />
         )}
       </div>

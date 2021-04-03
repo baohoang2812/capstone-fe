@@ -29,7 +29,7 @@ const UserTable = () => {
       fieldType: "none",
       fixed: "left",
       sorter: true,
-      width: 200,
+      width: 240,
       render: (_, record) => {
         return (
           <ImageThumbnail src={record.imagePath}/>
@@ -42,7 +42,7 @@ const UserTable = () => {
       className: "header-filter",
       key: "Filter.Name",
       fieldType: "text",
-      width: 220,
+      width: 240,
       sorter: true,
       render: (text, record) => (
         <Link to={`/certificateType/${record.id}`}>{`${record.name}`}</Link>
@@ -55,7 +55,7 @@ const UserTable = () => {
       key: "description",
       fieldType: "none",
       sorter: true,
-      width: 220,
+      width: 240,
     },
     
     {
@@ -65,7 +65,7 @@ const UserTable = () => {
       key: "contacts.createAt",
       fieldType: "none",
       sorter: true,
-      width: 150,
+      width: 240,
       render: (text) => moment(text).format("DD/MM/YYYY"),
     },
     {
@@ -75,8 +75,17 @@ const UserTable = () => {
       key: "contacts.updatedAt",
       fieldType: "none",
       sorter: true,
-      width:150,
-      render: (text) => moment(text).format("DD/MM/YYYY"),
+      width:240,
+      render: (text,record) => {
+        if(record?.updatedAt===null){
+          return(
+            <span></span>
+          )
+        }
+        else{
+          return(moment(text).format("DD/MM/YYYY"))
+        }
+      }
     },
   ], [])
 
@@ -85,7 +94,7 @@ const UserTable = () => {
    }), []);
   
   const scroll = useMemo(() => ({
-    x: 940 ,
+    x: 1200 ,
     y: `calc(100vh - (178px))`
   }), []);
 

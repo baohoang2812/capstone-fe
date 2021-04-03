@@ -43,7 +43,8 @@
     "CORE.VIOLATION.CREATED.BY":"Được tạo bởi",
     "CORE.REPORT.STATUS.DONE":"Đã xử lý",
     "CORE.REPORT.MINUS.POINT":"Điểm trừ",
-    "CORE.VIOLATION.WORKSPACE":"Khu vực vi phạm"
+    "CORE.VIOLATION.WORKSPACE":"Khu vực vi phạm",
+    "CORE.REPORT.STATUS.TIME":"Chờ nộp"
 
 
 

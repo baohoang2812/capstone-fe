@@ -93,7 +93,12 @@ const UserTable = () => {
             <Tag color="blue">{t("CORE.REPORT.STATUS.DONE")}</Tag>
           )
         }
-        else {
+        else if(record.status.toLocaleLowerCase() === 'time to submit') {
+          return (
+            <Tag color="yellow">{t("CORE.REPORT.STATUS.TIME")}</Tag>
+          )
+        }
+        else if(record.status.toLocaleLowerCase() === 'submitted') {
           return (
             <Tag color="green">{t("CORE.VIOLATION.SUBMITTED")}</Tag>
           )

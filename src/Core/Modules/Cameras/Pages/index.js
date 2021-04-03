@@ -13,7 +13,7 @@ const UserManagement = () => {
   const t = useTranslate();
 
   const createCamera = () => {
-    history.push("/camera/create")
+    history.push("/cameras/create")
   }
 
 

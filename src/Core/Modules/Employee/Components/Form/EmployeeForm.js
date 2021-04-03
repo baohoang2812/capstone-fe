@@ -287,7 +287,7 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
                   >
                     {t("CORE.EMPLOYEE.CODE")}
                   </label>
-                  <Button onClick={randomCode}>{t("CORE.EMPLOYEE.GENERATE.CODE")}</Button>
+                  <Button disabled={!is_create} onClick={randomCode}>{t("CORE.EMPLOYEE.GENERATE.CODE")}</Button>
                 </>
               }
             >
@@ -297,7 +297,7 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
                   whitespace: true,
                   message: (<>{t("CORE.EMPLOYEE.ALERT.CODE")}</>) 
                 }],
-              })(<Input />)}
+              })(<Input disabled={!is_create}/>)}
             </Form.Item>
           </Col>
           <Col span={13}>

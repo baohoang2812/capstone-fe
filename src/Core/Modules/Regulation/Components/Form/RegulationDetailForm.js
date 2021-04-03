@@ -93,12 +93,13 @@ const RegulationDetailForm = ({ form, is_create, action, data }) => {
           <Form onSubmit={onConfirm}>
             <Row type="flex" justify="center" align="bottom">
               <Col span={15}>
-                <Form.Item label ={t("CORE.REGULATION.NAME")}>
+                <Form.Item label={t("CORE.REGULATION.NAME")}>
                   {getFieldDecorator("name", {
                     rules: [
-                      { whitespace: true,
+                      {
+                        whitespace: true,
                         required: true,
-                        message: (<>{t( "CORE.REGULATION.ALERT.NAME")}</>)
+                        message: (<>{t("CORE.REGULATION.ALERT.NAME")}</>)
                       },
                       {
                         max: 255,
@@ -118,7 +119,7 @@ const RegulationDetailForm = ({ form, is_create, action, data }) => {
                         required: true,
                         message: (<>{t("CORE.REGULATION.ALERT.TYPE")}</>)
                       },
-                      
+
                     ],
                   })(
                     <Select>
@@ -141,7 +142,8 @@ const RegulationDetailForm = ({ form, is_create, action, data }) => {
                 <Form.Item label={t("CORE.REGULATION.DESCRIPTION")}>
                   {getFieldDecorator("description", {
                     rules: [
-                      {whitespace: true,
+                      {
+                        whitespace: true,
                         required: true,
                         message: (<>{t("CORE.REGULATION.ALERT.DESCRIPTION")}</>)
                       },
@@ -161,10 +163,20 @@ const RegulationDetailForm = ({ form, is_create, action, data }) => {
                     rules: [
                       {
                         required: true,
-                        message:(<>{t("CORE.REGULATION.ALERT.LEVEL")}</>)
+                        message: (<>{t("CORE.REGULATION.ALERT.LEVEL")}</>)
                       },
                     ],
-                  })(<InputNumber min={1} max={3} />)}
+                  })(<Select>
+                    <Option value="1">
+                      1
+                  </Option>
+                    <Option value="2">
+                      2
+                  </Option>
+                    <Option value="3">
+                      3
+                  </Option>
+                  </Select>)}
                 </Form.Item>
               </Col>
             </Row>

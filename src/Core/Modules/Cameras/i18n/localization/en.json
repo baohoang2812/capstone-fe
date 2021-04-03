@@ -16,7 +16,8 @@
     "CORE.CAMERA.CREATE.SUCCESS":"Create camera success!",
     "CORE.CAMERA.UPDATE.SUCCESS":"Update camera success!",
     "CORE.CAMERA":"Camera", 
-    "CORE.CAMERA.DETAIL":"Camera detail"
+    "CORE.CAMERA.DETAIL":"Camera detail",
+    "CORE.CAMERA.WORKSPACE":"Workspace"
 
 
 
