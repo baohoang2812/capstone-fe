@@ -167,13 +167,13 @@ const RegulationDetailForm = ({ form, is_create, action, data }) => {
                       },
                     ],
                   })(<Select>
-                    <Option value="1">
+                    <Option value={1}>
                       1
                   </Option>
-                    <Option value="2">
+                    <Option value={2}>
                       2
                   </Option>
-                    <Option value="3">
+                    <Option value={3}>
                       3
                   </Option>
                   </Select>)}
