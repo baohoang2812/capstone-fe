@@ -1,5 +1,7 @@
 {
     "CORE.NOTIFICATION.DETAIL":"Notification detail",
     "CORE.NOTIFICATION":"Notification",
-    "CORE.NOTIFICATION.MANAGEMENT":"Notification Management"
+    "CORE.NOTIFICATION.MANAGEMENT":"Notification Management",
+    "CORE.NOTIFICATION.VIEW.DETAIL":"View detail",
+    "CORE.NOTIFICATION.NO":"Do not have new notification."
 }

@@ -180,7 +180,7 @@ export const Notify = () => {
   const tabList = [
     {
       key: 'tab1',
-      tab: 'Tất cả',
+      tab: 'All notification',
     }
   ];
 
@@ -189,14 +189,14 @@ export const Notify = () => {
       <div className="notify-page page">
         <Header
           breadcrumb={[
-            { title: "Thông báo" }
+            { title: "Notification" }
           ]}
         />
         <div className="page-wrapper">
           <div className="page-container">
             <div className="card-notify">
               <Card
-                extra={<Link to="#" onClick={readAll} className="mask-all-as-read">Đánh dấu đã đọc</Link>}
+                extra={<Link to="#" onClick={readAll} className="mask-all-as-read"></Link>}
                 tabList={tabList}
                 activeTabKey={key}
                 onTabChange={key => {
