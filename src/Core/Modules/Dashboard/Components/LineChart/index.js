@@ -12,15 +12,17 @@ const DemoLine = () => {
     roleName: role,
   } = jwt_decode(token);
   const [data, setData] = useState([]);
+  const [fromDate,setFromDate]= useState(moment().startOf('year').format("YYYY-MM-DD"));
+  const [toDate,setToDate] = useState(moment().endOf('year').format("YYYY-MM-DD"));
   useEffect(() => {
  
 
     (async () => {
-      const  FromDate = moment().startOf('year').format("YYYY-MM-DD");
-      const toDate = moment().endOf('year').format("YYYY-MM-DD");
+      // setFromDate(moment().startOf('year').format("YYYY-MM-DD"));
+      // setToDate(moment().endOf('year').format("YYYY-MM-DD"));
       if(role==="Admin"){
      
-      const list = await reportApi.getList("Done",FromDate,toDate);
+      const list = await reportApi.getList("Done",fromDate,toDate);
       const data = list?.data?.result?.map((item) => (
         {
           branch: item?.branch?.name,
@@ -35,7 +37,7 @@ const DemoLine = () => {
        console.log(data);
      }
      else if(role==="Branch Manager"){
-      const listVio = await violationApi.getList(FromDate);
+      const listVio = await violationApi.getList(fromDate);
       const data = listVio?.data?.map((item) => (
         {
           Branch: item?.regulationName,

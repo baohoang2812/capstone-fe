@@ -2,9 +2,10 @@ import "./style.less";
 
 import React from "react";
 import { Row, Empty, Pagination } from "antd";
+// import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 // import { updateListNotification } from "~/Core/Store/actions/notification";
 // import PopUpNotifyPage from "~/Core/Modules/Notification/Component/PopUpNotiDetail/withPopUpNotiDetail";
-
+// const t = useTranslate();
 const TabNotify = (Component) => ({
   listNoti,
   pagination,
@@ -48,7 +49,7 @@ const TabNotify = (Component) => ({
               />
             ))
           ) : (
-            <Empty description={<span>Không có thông báo</span>} />
+            <Empty description={<span>Do not have notification</span>} />
           )}
         </Row>
         {pagination && listNoti && listNoti.length > 0 && (
@@ -59,7 +60,7 @@ const TabNotify = (Component) => ({
               defaultCurrent={1}
               current={pageIndex}
               showTotal={(total, range) =>
-                `${range[0]}-${range[1]} of ${total} dòng`
+                `${range[0]}-${range[1]} of ${total} rows`
               }
               showSizeChanger={true}
               pageSizeOptions={["5", "10", "20", "50", "100", "200", "500"]}

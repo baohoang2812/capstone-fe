@@ -1,6 +1,7 @@
 {
     "CORE.NOTIFICATION.DETAIL":"Chi tiết thông báo",
     "CORE.NOTIFICATION":"Thông báo",
-    "CORE.NOTIFICATION.MANAGEMENT":"Quản lý thông báo"
-
+    "CORE.NOTIFICATION.MANAGEMENT":"Quản lý thông báo",
+    "CORE.NOTIFICATION.VIEW.DETAIL":"Xem chi tiết",
+    "CORE.NOTIFICATION.NO":"Không có thông báo mới"
 }
