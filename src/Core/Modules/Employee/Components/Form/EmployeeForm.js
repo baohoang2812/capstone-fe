@@ -153,13 +153,19 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
                 .create(newValues2)
                 .then((res) => {
                   setLoading(false);
-                  if (res.code !== 201) {
+                  if(res.code===3000){
+                    message.error(t("CORE.EMPLOYEE.ALERT.DUPLICATE.CODE"));
+                    return;
+                  }
+                   else if (res.code !== 201) {
                     message.error(t("CORE.task_failure"));
                     return;
                   }
+                  else{
                   dispatch(update_identity_table_data_success(identity, res.data));
                   message.success(t("CORE.EMPLOYEE.CREATE.SUCCESS"));
                   action();
+                  }
                 })
                 .catch(() => {
                   message.error(t("CORE.error.system"));

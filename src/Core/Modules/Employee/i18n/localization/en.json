@@ -66,6 +66,7 @@
     "CORE.EMPLOYEE.ALERT.CERTIFICATE":"Please select certification",
     "CORE.EMPLOYEE.ISSUE.DATE":"Issue date",
     "CORE.EMPLOYEE.ALERT.ISSUE.DATE":"Please select issue date",
-    "CORE.EMPLOYEE.ADD.CERTIFICATION.SUCCESS":"Added certification success"
+    "CORE.EMPLOYEE.ADD.CERTIFICATION.SUCCESS":"Added certification success",
+    "CORE.EMPLOYEE.ALERT.DUPLICATE.CODE":"This code is existed"
     
 }

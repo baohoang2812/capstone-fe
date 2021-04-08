@@ -36,12 +36,12 @@ const DemoLine = () => {
        console.log(data);
      }
      else if(role==="Branch Manager"){
-      const listVio = await violationApi.getList(FromDate);
+      const listVio = await violationTrendingApi.getList(FromDate,toDate);
       const data = listVio?.data?.map((item) => (
         {
           name: item?.regulationName,
           point: item?.totalMinusPoint,
-          month: moment(item?.createdAt).format("MM-YYYY")
+          month: moment(item?.month).format("MM-YYYY")
         }
       ))
       setConfig({

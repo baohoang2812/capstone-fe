@@ -15,13 +15,9 @@ const DemoLine = () => {
   const [fromDate,setFromDate]= useState(moment().startOf('year').format("YYYY-MM-DD"));
   const [toDate,setToDate] = useState(moment().endOf('year').format("YYYY-MM-DD"));
   useEffect(() => {
- 
-
+    console.log(data,"Data change");
     (async () => {
-      // setFromDate(moment().startOf('year').format("YYYY-MM-DD"));
-      // setToDate(moment().endOf('year').format("YYYY-MM-DD"));
       if(role==="Admin"){
-     
       const list = await reportApi.getList("Done",fromDate,toDate);
       const data = list?.data?.result?.map((item) => (
         {
@@ -34,7 +30,7 @@ const DemoLine = () => {
      setConfig({
        ...config,
        data:data,})
-       console.log(data);
+     
      }
      else if(role==="Branch Manager"){
       const listVio = await violationApi.getList(fromDate);
@@ -48,12 +44,18 @@ const DemoLine = () => {
       setConfig({
         ...config,
         data:data,})
-        console.log(data);
      }
 
     })();
 
   }, []);
+  useEffect(() => {
+    console.log(data,"Data change");
+    
+     setConfig({
+       ...config,
+       data:data,})
+  }, [data]);
   
   const [config, setConfig]= useState({
     data: data,
@@ -78,7 +80,7 @@ const DemoLine = () => {
   });
   return (
     <div className ="card-total-revenue card-default">
-    <Card title={<HeaderCard  />} bordered={false}>
+    <Card title={<HeaderCard setData={setData} />} bordered={false}>
       {/* <Spin spinning={loading}> */}
       <Line {...config} />
       {/* </Spin> */}

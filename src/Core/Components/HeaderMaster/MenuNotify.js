@@ -100,7 +100,7 @@ export default ({
           >
             <List.Item className={!item.isRead && "unread"}>
               <List.Item.Meta
-                avatar={<Avatar shape="square" size="large" />}
+                avatar={<Avatar src="/mavcalogo.png" shape="square" size="large" />}
                 title={
                   renderLink(item)
                 }
