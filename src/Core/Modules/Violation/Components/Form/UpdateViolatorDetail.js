@@ -237,14 +237,14 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
                         <Row type="flex" justify="center">
                             {isShow ? (<div className="btn-group">
 
-                                <Button
+                                {/* <Button
                                     loading={loading}
                                     type="danger"
                                     className="btn-yellow btn-left"
                                     style={{ float: "right" }}
                                     onClick={action}>
                                     {t("CORE.cancel")}
-                                </Button>
+                                </Button> */}
                                 <Divider type="vertical" />
 
                                 <Button

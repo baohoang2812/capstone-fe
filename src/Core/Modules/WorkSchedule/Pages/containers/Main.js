@@ -85,11 +85,11 @@ const Main = React.forwardRef((props, ref) => {
         columns={[
           {
             type: "resourceInfo",
-            text: "Nhân viên",
+            text: "Employee",
             width: 180,
           },
           {
-            text: "Chức vụ",
+            text: "Position",
             field: "category",
             width: 120,
           },
