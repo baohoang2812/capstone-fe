@@ -232,22 +232,12 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
 
                                 <Button
                                     loading={loading}
-                                    type="danger"
-                                    className="btn-yellow btn-left"
-                                    style={{ float: "right" }}
-                                    onClick={action}>
-                                    {t("CORE.cancel")}
-                                </Button>
-                                <Divider type="vertical" />
-
-                                <Button
-                                    loading={loading}
                                     type="primary"
                                     htmlType="submit"
                                     className="btn-yellow btn-right"
                                     style={{ float: "right" }}
                                     onClick={onConfirm}>
-                                    {t("CORE.VIOLATION.CONFIRM.ACCEPT")}
+                                    {t("CORE.confirm")}
                                 </Button>
                             </div>) : null}
                         </Row>
