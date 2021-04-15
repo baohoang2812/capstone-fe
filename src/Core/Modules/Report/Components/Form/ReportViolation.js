@@ -151,7 +151,7 @@ const ReportViolation = ({ form, is_create, action, data,setData }) => {
               </Col>
               <Col span={10}>
                 <Form.Item label={t("CORE.REPORT.QC.NOTE")}>
-                  {getFieldDecorator("qcNote", {})(<span style={{fontWeight:800}}>{data?.qcNote}</span>)}
+                  {getFieldDecorator("qcNote", {})(<span style={{fontWeight:800}}>{data?.qcNote && data?.qcNote?.length > 0 ? data?.qcNote : "N/A"}</span>)}
                 </Form.Item>
               </Col>
               

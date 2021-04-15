@@ -160,8 +160,7 @@ const ExcuseDetail = ({ form, isShow = true, action, data }) => {
                             <Col span={4}>
                                 <Form.Item label={t("CORE.VIOLATION.WORKSPACE")}>
                                     {getFieldDecorator("workspace", {
-
-                                    })(<span style={{fontWeight:800}}>{data?.workspace?.[0]?.name}</span>)}
+                                    })(<span style={{fontWeight:800}}>{data?.workspace?.length >0 ? data?.workspace?.[0]?.name : "N/A"}</span>)}
                                 </Form.Item>
                             </Col>
                         </Row>
