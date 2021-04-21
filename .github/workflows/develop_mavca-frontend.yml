@@ -47,4 +47,4 @@ jobs:
         app-name: 'mavca-frontend'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_f325f120b5c14a78bed038c727606317 }}
-        images: 'mavcafrontend.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_9db703237639496986222d0ddd2b655a }}/mavca-fe:${{ github.sha }}'
+        images: 'mavcafrontend.azurecr.io/mavca-fe:${{ github.sha }}'
