@@ -48,9 +48,13 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
     const [dataEmployee, setDataEmployee] = useState([]);
     const [fileList, setFileList] = useState([]);
     useEffect(() => {
-        console.log(data);
+       
+        const vioID = data?.violator.map((item) =>(
+            item.id
+        ))
+       
         setFieldsValue({
-            violator:[]
+           violator:vioID 
           });
         employeeApi.getList()
             .then(res => {
@@ -172,20 +176,14 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
                         </Row>
 
                         <Row type="flex" justify="center" align="bottom">
-                            <Col span={16}>
+                            <Col span={20}>
                                 <Form.Item label={t("CORE.VIOLATION.DESCRIPTION")}>
                                     {getFieldDecorator("description", {
 
                                     })(<span style={{fontWeight:800}}>{data?.description}</span>)}
                                 </Form.Item>
                             </Col>
-                            <Col span={4}>
-                                <Form.Item label={t("CORE.VIOLATION.WORKSPACE")}>
-                                    {getFieldDecorator("workspace", {
-
-                                    })(<span style={{fontWeight:800}}>{data?.workspace?.length >0 ? data?.workspace?.[0]?.name : "N/A"}</span>)}
-                                </Form.Item>
-                            </Col>
+                            
                         </Row>
                        
                         <Row type="flex" justify="center" align="bottom">
@@ -215,13 +213,13 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
                         </Row>
                        
                         <Row type="flex" justify="center" align="bottom">
-                            <Col span={20}>
+                            <Col span={14}>
                                 <Form.Item label={t("CORE.VIOLATION.SELECT.VIOLATOR")}>
                                     {getFieldDecorator("violator", {
                                         rules: [
                                             { required: true, message: (<>{t("CORE.VIOLATION.ALERT.VIOLATOR")}</>), type: 'array' },
                                         ],
-                                        
+                                       
                                     })(
                                         <Select mode="multiple" placeholder={t("CORE.VIOLATION.ALERT.VIOLATOR")}>
                                             {dataEmployee.map((item) => (
@@ -231,6 +229,14 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
                                             ))}
                                         </Select>,
                                     )}
+                                </Form.Item>
+                            </Col>
+                            <Col span={2}></Col>
+                            <Col span={4}>
+                                <Form.Item label={t("CORE.VIOLATION.WORKSPACE")}>
+                                    {getFieldDecorator("workspace", {
+
+                                    })(<span style={{fontWeight:800}}>{data?.workspace?.length >0 ? data?.workspace?.[0]?.name : "N/A"}</span>)}
                                 </Form.Item>
                             </Col>
                         </Row>

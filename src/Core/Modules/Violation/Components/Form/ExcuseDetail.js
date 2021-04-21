@@ -149,20 +149,14 @@ const ExcuseDetail = ({ form, isShow = true, action, data }) => {
                         </Row>
 
                         <Row type="flex" justify="center" align="bottom">
-                            <Col span={16}>
+                            <Col span={20}>
                                 <Form.Item label={t("CORE.VIOLATION.DESCRIPTION")}>
                                     {getFieldDecorator("description", {
 
                                     })(<span style={{fontWeight:800}}>{data?.description}</span>)}
                                 </Form.Item>
                             </Col>
-                            <Col span={4}>
-                                <Form.Item label={t("CORE.VIOLATION.WORKSPACE")}>
-                                    {getFieldDecorator("workspace", {
-
-                                    })(<span style={{fontWeight:800}}>{data?.workspace?.length >0 ? data?.workspace?.[0]?.name : "N/A"}</span>)}
-                                </Form.Item>
-                            </Col>
+                           
                         </Row>
                        
                         <Row type="flex" justify="center" align="bottom">
@@ -191,24 +185,32 @@ const ExcuseDetail = ({ form, isShow = true, action, data }) => {
                             </Col>
                         </Row>
                        
-                        <Row type="flex" justify="center" align="bottom">
-                            <Col span={20}>
+                        <Row justify="center" align="bottom">
+                            <Col span={16} offset={2}>
                                 <Form.Item label={t("CORE.VIOLATION.VIOLATOR")}>
                                     {getFieldDecorator('select-multiple', {
 
                                     })(
                                         <>
                                             {
-                                                dataEmployee.map(item => {
+                                               dataEmployee?.length>0 ? dataEmployee.map(item => {
                                                     return (
                                                         <div>
                                                             <span style={{fontWeight:800}}>{`${item.lastName} ${item.firstName}`}</span>
                                                         </div>
                                                     )
                                                 })
+                                                : <span style={{fontWeight:800}}>N/A</span>
                                             }
                                         </>
                                     )}
+                                </Form.Item>
+                            </Col>
+                            <Col span={4}>
+                                <Form.Item label={t("CORE.VIOLATION.WORKSPACE")}>
+                                    {getFieldDecorator("workspace", {
+
+                                    })(<span style={{fontWeight:800}}>{data?.workspace?.length >0 ? data?.workspace?.[0]?.name : "N/A"}</span>)}
                                 </Form.Item>
                             </Col>
                         </Row>
