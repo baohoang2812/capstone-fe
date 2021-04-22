@@ -1,0 +1,22 @@
+{
+    
+    "CORE.ATTENDANCE":"Điểm danh",
+    "CORE.ATTENDANCE.MANAGEMENT.TITLE":"Quản lý điểm danh",
+    "CORE.EMPLOYEE.NAME":"Tên nhân viên",
+    "CORE.SHIFT.NAME":"Tên ca",
+    "CORE.WORKSPACE.NAME":"khu vực",
+    "CORE.WORK.DATE":"Ngày làm việc",
+    "CORE.ATTENDANCE.ACTION":"Hành động",
+    "CORE.ATTENDANCE.ACTION.REJECT":"Vắng mặt",
+    "CORE.VIOLATION.ACTION.ACCEPT":"Có mặt",
+    "CORE.ATTENDANCE.STATUS":"Trạng thái",
+    "CORE.EMPLOYEE.POSITION":"Chức vụ",
+    "CORE.START.DATE":"Ngày bắt đầu",
+    "CORE.END.DATE":"Ngày kết thúc",
+    "CORE.DURATION":"Tổng số giờ",
+    "CORE.TIME.KEEPING.MANAGEMENT.TITLE":"Chấm công",
+    "CORE.ATTENDANCE.UPDATE.SUCCESS":"Cập nhật thành công",
+    "CORE.TIMEKEEPING.DETAIL":"Chi tiết chấm công"
+
+
+}
