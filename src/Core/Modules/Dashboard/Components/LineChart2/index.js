@@ -5,14 +5,13 @@ import jwt_decode from "jwt-decode";
 import HeaderCard from "./HeaderCard";
 import moment from "moment";
 
-import violationApi from "~/Core/Modules/Dashboard/Api/ViolationApi";
 import violationTrendingApi from "~/Core/Modules/Dashboard/Api/ViolationTrending";
 const DemoLine = () => {
   const token = localStorage.getItem("token" || "");
   const {
     roleName: role,
   } = jwt_decode(token);
-  const [data, setData] = useState([]);
+  // const [data, setData] = useState([]);
   useEffect(() => {
  
 
@@ -55,7 +54,7 @@ const DemoLine = () => {
   }, []);
   
   const [config, setConfig]= useState({
-    data: data,
+    data: [],
     xField: 'month',
     yField: 'point',
     seriesField: 'name',

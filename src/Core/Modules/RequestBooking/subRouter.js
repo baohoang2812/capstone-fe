@@ -9,20 +9,19 @@ import intlMessagesEN from "./i18n/localization/en.json";
 import intlMessagesVi from "./i18n/localization/vi.json";
 
 export default {
-  roleName: ["Branch Manager", "System Admin"],
-  name: "Workspace",
-  dir: "Workspace",
-  pathRoot: "workspace",
+  roleName: ["Staff"],
+  name: "RequestBooking",
+  dir: "RequestBooking",
+  pathRoot: "request-booking",
   title: (t) => {
     return (
     <span>
      <Icon type="table" />
-      <span>{t("CORE.WORKSPACE")}</span>
+      <span>{t("REQUEST.BOOKING")}</span>
     </span>
   )},
   showMenu: true,
   routes: [
-   
     {
       url: ":id",
       component: "Pages/WorkspaceDetail",
@@ -34,7 +33,7 @@ export default {
       url: "",
       component: "Pages",
       showMenu: true,
-      title: "CORE.WORKSPACE.MANAGEMENT.TITLE",
+      title: "REQUEST.BOOKING.TITLE",
     },
   ],
   redux: redux,

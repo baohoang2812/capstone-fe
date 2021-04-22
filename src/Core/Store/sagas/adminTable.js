@@ -27,7 +27,8 @@ function* get_indentity_table_data_worker({ payload }) {
     treeKey,
     dynamicKey,
     dataForSelectorKey,
-    options
+    options,
+    hasCheckDeleted
   } = payload;
   console.log(sorter)
 
@@ -46,7 +47,10 @@ function* get_indentity_table_data_worker({ payload }) {
   }
 
   // const opts = { PageIndex: current, Limit: pageSize, where, order: sorter };
-  const opts = { "Filter.IsDeleted":false, PageIndex: current-1, Limit: pageSize, ...where, ...sorter };
+  let opts = { PageIndex: current-1, Limit: pageSize, ...where, ...sorter };
+  if (hasCheckDeleted) {
+    opts["Filter.IsDeleted"] = false
+  }
   if (options) {
     opts[options.key] = options.value
   }

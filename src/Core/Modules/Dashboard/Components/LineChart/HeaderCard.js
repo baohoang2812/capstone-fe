@@ -12,6 +12,7 @@ const HeaderCard = ({ setData }) => {
   /* State */
   const [value, setValue] = useState([moment(moment().startOf('year').format("YYYY-MM-DD"), "YYYY-MM-DD"), moment(moment().endOf('year').format("YYYY-MM"), "YYYY-MM")]);
   const [fromDate, setFromDate] = useState(moment().startOf('year').format("YYYY-MM-DD"));
+  // eslint-disable-next-line no-unused-vars
   const [toDate, setToDate] = useState(moment().endOf('year').format("YYYY-MM-DD"));
   const [mode, setMode] = useState(['month', 'month'])
   const token = localStorage.getItem("token" || "");

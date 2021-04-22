@@ -12,7 +12,9 @@ const DemoLine = () => {
     roleName: role,
   } = jwt_decode(token);
   const [data, setData] = useState([]);
+  // eslint-disable-next-line no-unused-vars
   const [fromDate,setFromDate]= useState(moment().startOf('year').format("YYYY-MM-DD"));
+  // eslint-disable-next-line no-unused-vars
   const [toDate,setToDate] = useState(moment().endOf('year').format("YYYY-MM-DD"));
   useEffect(() => {
     console.log(data,"Data change");

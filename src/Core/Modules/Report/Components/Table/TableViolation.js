@@ -9,7 +9,6 @@ import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 
 /* Components */
 import AdminTable from "~/Core/Components/common/AdminTable";
-import ImageThumbnail from "~/Core/Components/common/ImageThumbnail";
 /* Constants */
 import { violations as identity } from "~/Core/Modules/Report/Configs/Constants";
 import ViolationDetail from "~/Core/Modules/Report/Components/Form/ViolationDetail";

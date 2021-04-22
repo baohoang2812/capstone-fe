@@ -9,7 +9,7 @@ import intlMessagesEN from "./i18n/localization/en.json";
 import intlMessagesVi from "./i18n/localization/vi.json";
 
 export default {
-  roleName: ["admin","Branch Manager","System Admin"],
+  roleName: ["System Admin"],
   name: "Cameras",
   dir: "Cameras",
   pathRoot: "cameras",
