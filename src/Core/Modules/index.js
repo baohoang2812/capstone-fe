@@ -17,4 +17,5 @@ export default [
   { key: "Cameras"},
   { key: "Profile"},
   { key: "RequestBooking"},
+  { key: "TakeAttendance"}
 ];
