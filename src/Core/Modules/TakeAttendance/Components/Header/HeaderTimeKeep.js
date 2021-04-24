@@ -4,15 +4,15 @@ import { Icon, DatePicker } from "antd";
 import NavBreadcrumbContentHeader from "~/Core/Components/common/NavBreadcrumbContentHeader";
 import moment from "moment";
 
-const { MonthPicker } = DatePicker;
+const { RangePicker } = DatePicker;
 
-const Header = ({ breadcrumb, setDate, icon = "plus", text, className }) => {
+const Header = ({ breadcrumb, setDate }) => {
   const handleChange = (date, dateString)=>{
-    setDate(date.format("YYYY-MM-DDTHH:mm:ssZ"))
+    setDate(dateString)
   }
   const disabledMonth = (current) => {
     // Can not select days before today and today
-    return current && current >= moment().endOf("day");
+    return current && current >= moment().endOf("month");
   }
   return (
     <div className="content-header-page">
@@ -27,7 +27,10 @@ const Header = ({ breadcrumb, setDate, icon = "plus", text, className }) => {
                 <NavBreadcrumbContentHeader data={breadcrumb} />
               </div>
               <div className="nav-right btn-group">
-              <MonthPicker onChange={handleChange} disabledDate={disabledMonth} defaultValue={moment()}/>
+              <RangePicker 
+                onChange={handleChange}
+                disabledDate={disabledMonth}
+                defaultValue={[moment().startOf('month'), moment().endOf('month')]} />
               </div>
             </div>
           </div>

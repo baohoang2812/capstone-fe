@@ -85,8 +85,9 @@ const Main = React.forwardRef((props, ref) => {
 
     workScheduleApi.getList(0, 900).then((res) => {
       const listWorkSchedule = res?.data?.result?.map((item) => {
+        const employeeId = item?.executor?.id || item?.employee?.id
         return {
-          resourceId: item?.employee?.id,
+          resourceId: employeeId,
           name: item?.workspace?.name,
           workspaceName: item?.workspace?.id,
           startDate:

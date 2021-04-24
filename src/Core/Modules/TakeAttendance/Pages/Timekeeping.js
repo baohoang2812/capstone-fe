@@ -9,7 +9,8 @@ import moment from "moment";
 
 const TakeAttendance = () => {
   const t = useTranslate();
-  const [date, setDate] = useState(moment().format("YYYY-MM-DDTHH:mm:ssZ"));
+  const [date, setDate] = useState([moment().startOf('month').format("YYYY-MM-DD"), moment().endOf('month').format("YYYY-MM-DD")]);
+
   return (
     <div className="page-header attendance">
       <Header
