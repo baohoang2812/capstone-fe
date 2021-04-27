@@ -1,5 +1,6 @@
 {
     "CORE.WORKSPACE.NAME":"Workspace name",
+    "CORE.WORKSPACE.EMP.NAME":"Employee",
     "CORE.WORKSCHEDULE.CREATE":"Create WorkSchedule",
     "CORE.SHIFT.NAME":"Shift Name",
     "CORE.EMPLOYEE.NAME":"Name",
@@ -8,5 +9,15 @@
     "CORE.WORKSCHEDULE.MANAGEMENT":"WorkSchedule management",
     "CORE.DUPLICATE.SHIFT":"This shift already existed, please choose another shift!",
     "CORE.NO.CERTIFICATE":"Employee can not work in this workspace!",
-    "CORE.VIOLATION.REMOVE":"Remove"
+    "CORE.VIOLATION.REMOVE":"Remove",
+    "REQUEST.BOOKING": "Request booking",
+    "REQUEST.BOOKING.WORKDATE":"Work date",
+    "REQUEST.BOOKING.SHIFT":"Shift",
+    "REQUEST.BOOKING.WORKSPACE":"Workspace",
+    "REQUEST.BOOKING.CREATE":"Created at",
+    "REQUEST.BOOKING.UPDATE":"Updated at",
+    "REQUEST.BOOKING.TITLE": "Manage request booking",
+    "REQUEST.BOOKING.BUTTON.TITLE": "Booking work schedule",
+    "REQUEST.BOOKING.CREATE.SUCCESS": "Booking work schedule success",
+    "REQUEST.BOOKING.UPDATE.SUCCESS": "Update success"
 }

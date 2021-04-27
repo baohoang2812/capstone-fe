@@ -1,0 +1,14 @@
+{
+    "REQUEST.BOOKING": "Đặt lịch làm",
+    "REQUEST.BOOKING.WORKDATE":"Ngày làm việc",
+    "REQUEST.BOOKING.SHIFT":"Ca",
+    "REQUEST.BOOKING.WORKSPACE":"Khu vực làm việc",
+    "REQUEST.BOOKING.CREATE":"Ngày tạo",
+    "REQUEST.BOOKING.UPDATE":"Ngày cập nhật",
+    "REQUEST.BOOKING.CREATE.TITLE":"Đặp lịch làm việc",
+    "REQUEST.BOOKING.UPDATE.TITLE":"Cập nhật đặt lịch",
+    "REQUEST.BOOKING.TITLE": "Quản lý đặt lịch",
+    "REQUEST.BOOKING.BUTTON.TITLE": "Đặt lịch làm việc",
+    "REQUEST.BOOKING.CREATE.SUCCESS": "Đặt lịch làm việc thành công",
+    "REQUEST.BOOKING.UPDATE.SUCCESS": "Cập nhật thành công"
+}

@@ -65,7 +65,8 @@ const AdminTable = ({
   dynamicKey,
   scrollToFirstRowOnChange,
   dataForSelectorKey,
-  options
+  options,
+  hasCheckDeleted,
 }) => {
 
   const history = useHistory();
@@ -141,7 +142,7 @@ const AdminTable = ({
     dispatch(
       get_identity_table_data_action(
         identity, api, current, pageSize, sorter, { whereOr, whereAnd }, filters, method.list,
-        treeMode, treeKey, dynamicKey, dataForSelectorKey, options
+        treeMode, treeKey, dynamicKey, dataForSelectorKey, options, hasCheckDeleted
       )
     )
   }
@@ -430,7 +431,8 @@ AdminTable.defaultProps = {
   expandIconColumnIndex: 1,
   disableClassKey: "is_disable",
   clearTableAfterChangeRoute: true,
-  options: null
+  options: null,
+  hasCheckDeleted: true
 }
 
 export default React.memo(injectIntl(AdminTable));

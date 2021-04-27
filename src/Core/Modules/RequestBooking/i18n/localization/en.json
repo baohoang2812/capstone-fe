@@ -1,0 +1,14 @@
+{
+    "REQUEST.BOOKING": "Request booking",
+    "REQUEST.BOOKING.WORKDATE":"Work date",
+    "REQUEST.BOOKING.SHIFT":"Shift",
+    "REQUEST.BOOKING.WORKSPACE":"Workspace",
+    "REQUEST.BOOKING.CREATE":"Created at",
+    "REQUEST.BOOKING.UPDATE":"Updated at",
+    "REQUEST.BOOKING.CREATE.TITLE":"Booking work schedule",
+    "REQUEST.BOOKING.UPDATE.TITLE":"Update request booking",
+    "REQUEST.BOOKING.TITLE": "Manage request booking",
+    "REQUEST.BOOKING.BUTTON.TITLE": "Booking work schedule",
+    "REQUEST.BOOKING.CREATE.SUCCESS": "Booking work schedule success",
+    "REQUEST.BOOKING.UPDATE.SUCCESS": "Update success"
+}

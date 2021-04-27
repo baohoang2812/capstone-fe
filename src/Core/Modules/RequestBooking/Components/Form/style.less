@@ -1,0 +1,38 @@
+.div_custom {
+  border-radius: 5px;
+  padding: 30px;
+  margin: 30px;
+  background-color: #ffffff;
+  .customs-label {
+    .ant-form-item-label {
+      width: 100%;
+      > label {
+        display: block;
+        width: 100%;
+        text-align: left;
+      }
+      label::after {
+        content: none;
+      }
+      button {
+        border: none;
+        background-color: #ff000000;
+        height: auto;
+        color: #6666ff;
+        padding: 0px 5px;
+        float: right;
+      }
+    }
+  }
+  .upload-image {
+    .ant-form-item-control {
+      line-height: 20px;
+    }
+    .ant-upload-list-picture-card-container {
+      margin: 0;
+    }
+    .ant-upload-list-item {
+      margin: 0 !important;
+    }
+  }
+}

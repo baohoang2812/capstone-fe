@@ -86,15 +86,28 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
 
         if (is_create) {
           let listCamConfig = config.map((item) => {
-            const point1 = JSON.stringify(item?.points?.[0]);
-            const point2 = JSON.stringify(item?.points?.[1]);
-            const point3 = JSON.stringify(item?.points?.[2]);
-            const point4 = JSON.stringify(item?.points?.[3]);
+            const pointX1 = item?.points?.[0]?.[0];
+            const pointY1 = item?.points?.[0]?.[1];
+            const pointX2 = item?.points?.[1]?.[0];
+            const pointY2 = item?.points?.[1]?.[1];
+            const pointX3 = item?.points?.[2]?.[0];
+            const pointY3 = item?.points?.[2]?.[1];
+            const pointX4 = item?.points?.[3]?.[0];
+            const pointY4 = item?.points?.[3]?.[1];
+
+            // const point1 = JSON.stringify(item?.points?.[0]);
+            // const point2 = JSON.stringify(item?.points?.[1]);
+            // const point3 = JSON.stringify(item?.points?.[2]);
+            // const point4 = JSON.stringify(item?.points?.[3]);
             return {
-              point1,
-              point2,
-              point3,
-              point4,
+              pointX1,
+              pointY1,
+              pointX2,
+              pointY2,
+              pointX3,
+              pointY3,
+              pointX4,
+              pointY4,
               cameraId: 1
             };
           });
@@ -125,16 +138,29 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
         } else {
           console.log(values);
           let listCamConfig = config.map((item) => {
-            const point1 = JSON.stringify(item?.points?.[0]);
-            const point2 = JSON.stringify(item?.points?.[1]);
-            const point3 = JSON.stringify(item?.points?.[2]);
-            const point4 = JSON.stringify(item?.points?.[3]);
+            const pointX1 = item?.points?.[0]?.[0];
+            const pointY1 = item?.points?.[0]?.[1];
+            const pointX2 = item?.points?.[1]?.[0];
+            const pointY2 = item?.points?.[1]?.[1];
+            const pointX3 = item?.points?.[2]?.[0];
+            const pointY3 = item?.points?.[2]?.[1];
+            const pointX4 = item?.points?.[3]?.[0];
+            const pointY4 = item?.points?.[3]?.[1];
+
+            // const point1 = JSON.stringify(item?.points?.[0]);
+            // const point2 = JSON.stringify(item?.points?.[1]);
+            // const point3 = JSON.stringify(item?.points?.[2]);
+            // const point4 = JSON.stringify(item?.points?.[3]);
             return {
               id: 0,
-              point1,
-              point2,
-              point3,
-              point4,
+              pointX1,
+              pointY1,
+              pointX2,
+              pointY2,
+              pointX3,
+              pointY3,
+              pointX4,
+              pointY4,
               cameraId: 1
             };
           });
