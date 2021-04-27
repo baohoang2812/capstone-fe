@@ -131,6 +131,16 @@ const UserTable = () => {
       fieldType: "text",
       sorter: true,
       width: 220,
+      render: (_,record) => {
+        if(record?.excuse===null || record?.excuse===""){
+          return(
+            <span>N/A</span>
+          )
+        }
+        else{
+          return( <span>{record?.excuse}</span>)
+        }
+      }
     },
     {
       title: t("CORE.VIOLATION.WORKSPACE"),
@@ -140,9 +150,18 @@ const UserTable = () => {
       fieldType: "text",
       sorter: true,
       width: 220,
-      render:(_,record)=> (
-        <span>{record?.workspace?.[0]?.name}</span>
-      )
+      render:(_,record)=> {
+        if(record?.workspace?.length===0){
+          return(
+            <span>N/A</span>
+          )
+        }
+        else{
+          return(
+            <span>{record?.workspace?.[0]?.name}</span>)
+          }
+        
+    }
     },
     {
       title: t("CORE.VIOLATION.MINUS.POINT"),
@@ -219,7 +238,7 @@ const UserTable = () => {
             </Button>
           </>
         )
-    } else {
+    } else if( role==="Branch Manager") {
       const isDisable = record?.status?.toLocaleLowerCase() === 'opening';
       return (
           <>
@@ -232,6 +251,9 @@ const UserTable = () => {
             </Button>
           </>
         )
+    }
+    else{
+      return(<></>)
     }
   }
 

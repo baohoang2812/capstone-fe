@@ -41,7 +41,8 @@
     "CORE.VIOLATION.ALERT.EXCUSE":"Vui lòng nhập lý do từ chối",
     "CORE.VIOLATION.ALERT.VIOLATOR":"Vui lòng chọn người vi phạm",
     "CORE.VIOLATION.MINUS.POINT":"Điểm trừ",
-    "CORE.VIOLATION.WORKSPACE":"Khu vực vi phạm"
+    "CORE.VIOLATION.WORKSPACE":"Khu vực vi phạm",
+    "CORE.SAVE":"Lưu"
 
 
 

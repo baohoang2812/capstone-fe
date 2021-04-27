@@ -66,7 +66,8 @@
     "CORE.EMPLOYEE.ALERT.CERTIFICATE":"Vui lòng chọn chứng chỉ",
     "CORE.EMPLOYEE.ISSUE.DATE":"Ngày cấp",
     "CORE.EMPLOYEE.ALERT.ISSUE.DATE":"Vui lòng chọn ngày cấp",
-    "CORE.EMPLOYEE.ADD.CERTIFICATION.SUCCESS":"Thêm chứng chỉ thành công"
+    "CORE.EMPLOYEE.ADD.CERTIFICATION.SUCCESS":"Thêm chứng chỉ thành công",
+    "CORE.EMPLOYEE.ALERT.DUPLICATE.CODE":"Mã nhân viên đã tồn tại"
     
     
    

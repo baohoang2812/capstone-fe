@@ -5,14 +5,13 @@ import jwt_decode from "jwt-decode";
 import HeaderCard from "./HeaderCard";
 import moment from "moment";
 
-import violationApi from "~/Core/Modules/Dashboard/Api/ViolationApi";
 import violationTrendingApi from "~/Core/Modules/Dashboard/Api/ViolationTrending";
 const DemoLine = () => {
   const token = localStorage.getItem("token" || "");
   const {
     roleName: role,
   } = jwt_decode(token);
-  const [data, setData] = useState([]);
+  // const [data, setData] = useState([]);
   useEffect(() => {
  
 
@@ -36,12 +35,12 @@ const DemoLine = () => {
        console.log(data);
      }
      else if(role==="Branch Manager"){
-      const listVio = await violationApi.getList(FromDate);
+      const listVio = await violationTrendingApi.getList(FromDate,toDate);
       const data = listVio?.data?.map((item) => (
         {
           name: item?.regulationName,
           point: item?.totalMinusPoint,
-          month: moment(item?.createdAt).format("MM-YYYY")
+          month: moment(item?.month).format("MM-YYYY")
         }
       ))
       setConfig({
@@ -55,7 +54,7 @@ const DemoLine = () => {
   }, []);
   
   const [config, setConfig]= useState({
-    data: data,
+    data: [],
     xField: 'month',
     yField: 'point',
     seriesField: 'name',

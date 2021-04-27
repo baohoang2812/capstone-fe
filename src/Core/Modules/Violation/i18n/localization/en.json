@@ -26,12 +26,12 @@
     "CORE.VIOLATION.EXCUSE":"Excuse",
     "CORE.VIOLATION.CONFIRM":"Do you want to accept ?",
     "CORE.VIOLATION.CONFIRM.CONTENT":"Accept this violation.",
-    "CORE.VIOLATION.CONFIRM.ACCEPT":"OK",
+    "CORE.VIOLATION.CONFIRM.ACCEPT":"Confirm",
     "CORE.VIOLATION.CONFIRM.CANCEL":"Cancel",
     "CORE.VIOLATION.CONFIRMED":"Confirmed",
     "CORE.VIOLATION.OPENING":"Opening",
     "CORE.VIOLATION.DECLINED":"Declined",
-    "CORE.VIOLATION.STATUS.EXCUSE":"Excuse",
+    "CORE.VIOLATION.STATUS.EXCUSE":"Excused",
     "CORE.VIOLATION.CONFIRM.SUCCESS":"Updated success",
     "CORE.VIOLATION.SELECT.VIOLATOR":"Select violator",
     "CORE.VIOLATION.VIOLATOR":"Violator",
@@ -41,6 +41,7 @@
     "CORE.VIOLATION.ALERT.EXCUSE":"Please input excuse",
     "CORE.VIOLATION.ALERT.VIOLATOR":"Please select violator",
     "CORE.VIOLATION.MINUS.POINT":"Minus point",
-    "CORE.VIOLATION.WORKSPACE":"Workspace"
+    "CORE.VIOLATION.WORKSPACE":"Workspace",
+    "CORE.SAVE":"Save"
 
 }

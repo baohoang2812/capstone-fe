@@ -6,7 +6,7 @@ import {
     Col,
     Form,
     Button,
-    Divider,
+  
     message,
     Modal,
     Upload
@@ -160,8 +160,7 @@ const ExcuseDetail = ({ form, isShow = true, action, data }) => {
                             <Col span={4}>
                                 <Form.Item label={t("CORE.VIOLATION.WORKSPACE")}>
                                     {getFieldDecorator("workspace", {
-
-                                    })(<span style={{fontWeight:800}}>{data?.workspace?.[0]?.name}</span>)}
+                                    })(<span style={{fontWeight:800}}>{data?.workspace?.length >0 ? data?.workspace?.[0]?.name : "N/A"}</span>)}
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -230,15 +229,7 @@ const ExcuseDetail = ({ form, isShow = true, action, data }) => {
                         {isShow ? (<div className="btn-group">
                             
                            
-                            <Button
-                                loading={loading}
-                                type="danger"
-                                className="btn-yellow btn-right"
-                                style={{ float: "right" }}
-                                onClick={action}>
-                                {t("CORE.cancel")}
-                            </Button>
-                            <Divider type="vertical" />
+                           
                             <Button
                                 loading={loading}
                                 type="primary"
@@ -246,7 +237,7 @@ const ExcuseDetail = ({ form, isShow = true, action, data }) => {
                                 className="btn-yellow btn-right"
                                 style={{ float: "right" }}
                                 onClick={onConfirm}>
-                                {t("CORE.reject")}
+                                {t("CORE.confirm")}
                             </Button>
                         </div>) : null}
                     </Row>

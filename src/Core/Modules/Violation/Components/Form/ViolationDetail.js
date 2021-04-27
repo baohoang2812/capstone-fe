@@ -162,20 +162,14 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
                         </Row>
 
                         <Row type="flex" justify="center" align="bottom">
-                            <Col span={16}>
+                            <Col span={20}>
                                 <Form.Item label={t("CORE.VIOLATION.DESCRIPTION")}>
                                     {getFieldDecorator("description", {
 
                                     })(<span style={{fontWeight:800}}>{data?.description}</span>)}
                                 </Form.Item>
                             </Col>
-                            <Col span={4}>
-                                <Form.Item label={t("CORE.VIOLATION.WORKSPACE")}>
-                                    {getFieldDecorator("workspace", {
-
-                                    })(<span style={{fontWeight:800}}>{data?.workspace?.[0]?.name}</span>)}
-                                </Form.Item>
-                            </Col>
+                           
                         </Row>
                    
                     <Row type="flex" justify="center" align="bottom">
@@ -206,7 +200,7 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
                     </Row>
                    
                     <Row type="flex" justify="center" align="bottom">
-                        <Col span={20}>
+                        <Col span={16}>
                             <Form.Item label={t("CORE.VIOLATION.VIOLATOR")}>
                                 {getFieldDecorator('select-multiple', {
 
@@ -225,12 +219,15 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
                                 )}
                             </Form.Item>
                         </Col>
-                    </Row>
-                    <Row>
-                        <Col>
+                        <Col span={4}>
+                                <Form.Item label={t("CORE.VIOLATION.WORKSPACE")}>
+                                    {getFieldDecorator("workspace", {
 
-                        </Col>
+                                    })(<span style={{fontWeight:800}}>{data?.workspace?.length >0 ? data?.workspace?.[0]?.name : "N/A"}</span>)}
+                                </Form.Item>
+                            </Col>
                     </Row>
+                  
 
                     <Row type="flex" justify="center" align="bottom">
                         <Col span={20}>

@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Layout } from "antd";
 import { useHistory, useLocation } from "react-router-dom";
+import jwt_decode from "jwt-decode";
 
 /* Components */
 import HeaderMaster from "~/Core/Components/HeaderMaster";
@@ -28,8 +29,22 @@ const RoutesMaster = ({
 
   useEffect(() => {
     if (isAuthenticated) {
+      let role = {};
+      let path = "/dashboard";
+
+      try {
+        role = jwt_decode(token);
+      } catch (e) {
+        role = {}
+      }
+      if(role?.roleName?.toLowerCase() === "system admin") {
+        path = "/cameras"
+      } 
+      else if (role?.roleName?.toLowerCase() === "staff") {
+        path = "/workSchedule"
+      }
       if (location.pathname === "/") {
-        history.push("/dashboard")
+        history.push(path)
       }
     }
   }, [])
