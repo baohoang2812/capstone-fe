@@ -228,6 +228,7 @@ class Rector extends React.Component {
             style={{
               backgroundImage:`url("${image}")`,
               backgroundRepeat: "no-repeat, repeat",
+              backgroundSize: "contain"
             }}
           >
             <Layer>
