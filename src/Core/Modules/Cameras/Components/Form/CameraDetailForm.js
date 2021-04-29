@@ -1,3 +1,4 @@
+/* eslint-disable use-isnan */
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import "./style.less";
@@ -50,7 +51,7 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
       ip: data?.ip,
       customUrl: data?.customUrl,
       workspace: data?.workspace?.name,
-      workspaceId: 1,
+      workspaceId: data?.workspace?.id,
       port: "string",
     });
     setImagePath(data.imagePath);
@@ -86,14 +87,14 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
 
         if (is_create) {
           let listCamConfig = config.map((item) => {
-            const pointX1 = item?.points?.[0]?.[0];
-            const pointY1 = item?.points?.[0]?.[1];
-            const pointX2 = item?.points?.[1]?.[0];
-            const pointY2 = item?.points?.[1]?.[1];
-            const pointX3 = item?.points?.[2]?.[0];
-            const pointY3 = item?.points?.[2]?.[1];
-            const pointX4 = item?.points?.[3]?.[0];
-            const pointY4 = item?.points?.[3]?.[1];
+            const pointX1 = Math.round(item?.points?.[0]?.[0]);
+            const pointY1 = Math.round(item?.points?.[0]?.[1]);
+            const pointX2 = Math.round(item?.points?.[1]?.[0]);
+            const pointY2 = Math.round(item?.points?.[1]?.[1]);
+            const pointX3 = Math.round(item?.points?.[2]?.[0]);
+            const pointY3 = Math.round(item?.points?.[2]?.[1]);
+            const pointX4 = Math.round(item?.points?.[3]?.[0]);
+            const pointY4 = Math.round(item?.points?.[3]?.[1]);
 
             // const point1 = JSON.stringify(item?.points?.[0]);
             // const point2 = JSON.stringify(item?.points?.[1]);
@@ -138,14 +139,14 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
         } else {
           console.log(values);
           let listCamConfig = config.map((item) => {
-            const pointX1 = item?.points?.[0]?.[0];
-            const pointY1 = item?.points?.[0]?.[1];
-            const pointX2 = item?.points?.[1]?.[0];
-            const pointY2 = item?.points?.[1]?.[1];
-            const pointX3 = item?.points?.[2]?.[0];
-            const pointY3 = item?.points?.[2]?.[1];
-            const pointX4 = item?.points?.[3]?.[0];
-            const pointY4 = item?.points?.[3]?.[1];
+            const pointX1 = Math.round(item?.points?.[0]?.[0]);
+            const pointY1 = Math.round(item?.points?.[0]?.[1]);
+            const pointX2 = Math.round(item?.points?.[1]?.[0]);
+            const pointY2 = Math.round(item?.points?.[1]?.[1]);
+            const pointX3 = Math.round(item?.points?.[2]?.[0]);
+            const pointY3 = Math.round(item?.points?.[2]?.[1]);
+            const pointX4 = Math.round(item?.points?.[3]?.[0]);
+            const pointY4 = Math.round(item?.points?.[3]?.[1]);
 
             // const point1 = JSON.stringify(item?.points?.[0]);
             // const point2 = JSON.stringify(item?.points?.[1]);
@@ -164,8 +165,8 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
               cameraId: 1
             };
           });
-          
-          if(listCamConfig?.[listCamConfig.length-1] === {}){
+          // eslint-disable-next-line eqeqeq
+          if(isNaN(listCamConfig?.[listCamConfig.length-1]?.pointX1)){
             listCamConfig.splice(-1,1);
           }
 
@@ -173,7 +174,6 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
             .update(data.id, {
               ...values,
               port: 0,
-              workspaceId: 1,
               imagePath,
               cameraConfig: listCamConfig
             })
