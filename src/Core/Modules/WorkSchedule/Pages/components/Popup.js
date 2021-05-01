@@ -13,12 +13,14 @@ import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 import workspaceApi from "~/Core/Modules/WorkSchedule/Api/WorkspaceApi";
 import shiftApi from "~/Core/Modules/WorkSchedule/Api/ShiftApi";
 import workScheduleApi from "~/Core/Modules/WorkSchedule/Api/WorkScheduleApi";
+import leaveWorkApi from "~/Core/Modules/WorkSchedule/Api/LeaveWorkSchedule";
 // import contactApi from "~/Core/Modules/WorkSchedule/Api";
 import moment from "moment";
-
+import jwt_decode from "jwt-decode";
 const Popup = (props) => {
   const [workspaces, setWorkspaces] = useState([]);
   const [shifts, setShifts] = useState([]);
+  const [staff, setStaff] = useState(false);
   const [disableBtn, setDisableBtn] = useState(false);
   const [state, setState] = useState({
     name: "",
@@ -30,13 +32,29 @@ const Popup = (props) => {
     location: "",
     ...props?.eventRecord?.data,
   });
-
+  
   const t = useTranslate();
   useEffect(() => {
     console.log(moment(new Date(state.startDate)), "LOG BTN");
     if (moment() >= moment(new Date(state.startDate))) {
       setDisableBtn(true);
     }
+    const checkRole = () => {
+      const token = localStorage.getItem("token");
+      let role = {};
+  
+      try {
+        role = jwt_decode(token);
+      } catch (e) {
+        role = {};
+      }
+  
+      if (role?.roleName?.toLowerCase() === "staff") {
+        return true;
+      }
+      return false;
+    };
+    setStaff(checkRole)
   }, []);
 
   useEffect(() => {
@@ -214,6 +232,21 @@ const Popup = (props) => {
       return;
     }
   };
+  const handleLeaveSchedule = async () => {
+    const body = {
+      workScheduleId: state.workScheduleId,
+      workspaceId: state2.workspaceName,
+      employeeId: state2.resourceId,
+    };
+    const res = await leaveWorkApi.create(body);
+    if (res.code === 201 || res.code === 200) {
+      message.success(t("CORE.task_success"));
+      props.closePopup();
+    } else {
+      message.error(t("CORE.task_failure"));
+      return;
+    }
+  };
   return (
     <div className="popup-mask">
       <div className="popup">
@@ -298,7 +331,7 @@ const Popup = (props) => {
         <footer>
           {/* <Button variant="contained" color="secondary" onClick={props.closePopup}>Cancel</Button>
                     <Button variant="contained" color="primary" onClick={saveClickHandler}>Save</Button> */}
-          {state.workScheduleId !== null &&
+          {state.workScheduleId !== null && staff===false &&
           state.workScheduleId !== undefined ? (
             <Button
               type="primary"
@@ -311,7 +344,21 @@ const Popup = (props) => {
               {t("CORE.VIOLATION.REMOVE")}
             </Button>
           ) : null}
-
+          {state.workScheduleId !== null && staff===true&&
+          state.workScheduleId !== undefined ? (
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="btn-yellow btn-right"
+              style={{ float: "right" }}
+              disabled={disableBtn}
+             
+              onClick={handleLeaveSchedule}
+            >
+              {t("CORE.VIOLATION.LEAVE")}
+            </Button>
+          ) : null}
+          {staff===false ? (
           <Button
             type="primary"
             htmlType="submit"
@@ -322,6 +369,7 @@ const Popup = (props) => {
           >
             {t("CORE.VIOLATION.CONFIRM.ACCEPT")}
           </Button>
+          ) : null}
           <Button
             type="danger"
             className="btn-yellow btn-left"

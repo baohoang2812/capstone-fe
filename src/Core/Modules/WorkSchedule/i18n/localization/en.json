@@ -19,5 +19,6 @@
     "REQUEST.BOOKING.TITLE": "Manage request booking",
     "REQUEST.BOOKING.BUTTON.TITLE": "Booking work schedule",
     "REQUEST.BOOKING.CREATE.SUCCESS": "Booking work schedule success",
-    "REQUEST.BOOKING.UPDATE.SUCCESS": "Update success"
+    "REQUEST.BOOKING.UPDATE.SUCCESS": "Update success",
+    "CORE.VIOLATION.LEAVE":"Leave"
 }
