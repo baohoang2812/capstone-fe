@@ -18,6 +18,7 @@
     "REQUEST.BOOKING.TITLE": "Quản lý đặt lịch",
     "REQUEST.BOOKING.BUTTON.TITLE": "Đặt lịch làm việc",
     "REQUEST.BOOKING.CREATE.SUCCESS": "Đặt lịch làm việc thành công",
-    "REQUEST.BOOKING.UPDATE.SUCCESS": "Cập nhật thành công"
+    "REQUEST.BOOKING.UPDATE.SUCCESS": "Cập nhật thành công",
+    "CORE.VIOLATION.LEAVE":"Xin nghỉ"
 }
 
