@@ -15,7 +15,7 @@ import moment from "moment";
 const PositionDetailForm = ({value,data}) => {
     const [dataEmployee,setDataEmployee]=useState();
       useEffect(() => {
-   
+        console.log(value,"LOLOL");
         contactApi.getDetail(moment(value).startOf('month').format("YYYY-MM-DD"),moment(value).endOf('month').format("YYYY-MM-DD"),data)
         .then(res => {
             const result = res.data.result;

@@ -16,7 +16,9 @@
     "CORE.DURATION":"Tổng số giờ",
     "CORE.TIME.KEEPING.MANAGEMENT.TITLE":"Chấm công",
     "CORE.ATTENDANCE.UPDATE.SUCCESS":"Cập nhật thành công",
-    "CORE.TIMEKEEPING.DETAIL":"Chi tiết chấm công"
+    "CORE.TIMEKEEPING.DETAIL":"Chi tiết chấm công",
+    "CORE.CAN.NOT.TAKE":"Chưa đến giờ điểm danh"
+    
 
 
 }

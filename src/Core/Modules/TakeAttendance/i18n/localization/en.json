@@ -17,6 +17,7 @@
     "CORE.ATTENDANCE.UPDATE.SUCCESS":"Updated success",
     "CORE.VIOLATION.SELECT.EXECUTOR":"Executor",
     "CORE.VIOLATION.ALERT.EXECUTOR":"Select executor",
-    "CORE.TIMEKEEPING.DETAIL":"Timekeeping detail"
+    "CORE.TIMEKEEPING.DETAIL":"Timekeeping detail",
+    "CORE.CAN.NOT.TAKE":"It's not time to take attendance !"
 
 }

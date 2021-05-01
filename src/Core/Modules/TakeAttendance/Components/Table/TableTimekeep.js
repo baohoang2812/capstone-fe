@@ -17,7 +17,17 @@ const UserTable = ({ value }) => {
   const t = useTranslate();
   const [visible, setVisible] = useState(false);
   const [data, setData] = useState();
-
+  const serialize = (obj) => {
+    if(obj && obj !== {}) {
+      var  str = [];
+      for(var p in obj)
+        if(obj.hasOwnProperty(p)) {
+           str.push(p + "=" + encodeURIComponent(obj[p]));
+        }
+      return  `${str.join("&")}`;
+    }
+    return  "";
+  };
   const openModel = (record) => {
     setVisible(true);
     setData(record.employee.id);
@@ -26,17 +36,7 @@ const UserTable = ({ value }) => {
     setVisible(false);
   };
 
-  const serialize = (obj) => {
-    if (obj && obj !== {}) {
-      var str = [];
-      for (var p in obj)
-        if (obj.hasOwnProperty(p)) {
-          str.push(p + "=" + encodeURIComponent(obj[p]));
-        }
-      return `${str.join("&")}`;
-    }
-    return "";
-  };
+  
 
   const defs = useMemo(
     () => [
@@ -66,6 +66,8 @@ const UserTable = ({ value }) => {
           </Link>
         ),
       },
+
+
       {
         title: t("CORE.EMPLOYEE.POSITION"),
         dataIndex: "position",
@@ -84,9 +86,11 @@ const UserTable = ({ value }) => {
         fieldType: "text",
         sorter: true,
         render: (text, record) => (
-          <span>{record?.totalWorkingHours} hours</span>
+          <span>{Math.round(record?.totalWorkingHours * 100) / 100} hours</span>
         ),
       },
+      
+      
     ],
     []
   );
@@ -130,7 +134,7 @@ const UserTable = ({ value }) => {
       >
         <TimeKeepDetail
           data={data}
-          value={moment(value).format("YYYY-MM-DD")}
+          value={moment(value[1]).format("YYYY-MM-DD")}
         />
       </Modal>
     </>
