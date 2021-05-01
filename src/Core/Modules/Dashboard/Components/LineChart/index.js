@@ -1,25 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Line } from '@ant-design/charts';
 import { Card } from "antd";
-import jwt_decode from "jwt-decode";
 import HeaderCard from "./HeaderCard";
 import moment from "moment";
 import reportApi from "~/Core/Modules/Dashboard/Api";
-import violationApi from "~/Core/Modules/Dashboard/Api/ViolationApi";
 const DemoLine = () => {
-  const token = localStorage.getItem("token" || "");
-  const {
-    roleName: role,
-  } = jwt_decode(token);
   const [data, setData] = useState([]);
   // eslint-disable-next-line no-unused-vars
   const [fromDate,setFromDate]= useState(moment().startOf('year').format("YYYY-MM-DD"));
   // eslint-disable-next-line no-unused-vars
-  const [toDate,setToDate] = useState(moment().endOf('year').format("YYYY-MM-DD"));
+  const [toDate,setToDate] = useState(moment().format("YYYY-MM-DD"));
   useEffect(() => {
     console.log(data,"Data change");
     (async () => {
-      if(role==="Admin"){
+     
       const list = await reportApi.getList("Done",fromDate,toDate);
       const data = list?.data?.result?.map((item) => (
         {
@@ -32,25 +26,9 @@ const DemoLine = () => {
      setConfig({
        ...config,
        data:data,})
-     
-     }
-     else if(role==="Branch Manager"){
-      const listVio = await violationApi.getList(fromDate);
-      const data = listVio?.data?.map((item) => (
-        {
-          Branch: item?.regulationName,
-          Point: item?.totalMinusPoint,
-          month: moment(item?.createdAt).format("MM-YYYY")
-        }
-      ))
-      setConfig({
-        ...config,
-        data:data,})
-     }
-
     })();
 
-  }, []);
+  }, [fromDate,toDate]);
   useEffect(() => {
     console.log(data,"Data change");
     
