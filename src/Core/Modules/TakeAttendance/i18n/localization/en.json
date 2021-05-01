@@ -7,7 +7,7 @@
     "CORE.WORK.DATE":"Work date",
     "CORE.ATTENDANCE.ACTION":"Action",
     "CORE.ATTENDANCE.ACTION.REJECT":"Absent",
-    "CORE.VIOLATION.ACTION.ACCEPT":"Present",
+    "CORE.ATTENDANCE.ACTION.ACCEPT":"Present",
     "CORE.ATTENDANCE.STATUS":"Status",
     "CORE.EMPLOYEE.POSITION":"Position",
     "CORE.START.DATE":"Start date",
