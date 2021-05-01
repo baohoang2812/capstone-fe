@@ -43,7 +43,7 @@ const UserTable = ({ value }) => {
   };
   function showConfirm(record) {
     confirm({
-      title: 'Are you sure ?',
+      title: 'Do you want to mark present ?',
       onOk() {
         const value = {
           workScheduleId: record?.workSchedule?.id,
@@ -54,6 +54,10 @@ const UserTable = ({ value }) => {
           .create(value)
           .then((res) => {
 
+            if(res.code===3002){
+              message.error(t("CORE.CAN.NOT.TAKE"));
+              return;
+            }
             if (res.code !== 200) {
               message.error(t("CORE.task_failure"));
               return;

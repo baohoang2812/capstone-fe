@@ -67,6 +67,10 @@ const PositionDetailForm = ({ form,data }) => {
                 .create(value)
                 .then((res) => {
                   setLoading(false);
+                  if(res.code===3002){
+                    message.error(t("CORE.CAN.NOT.TAKE"));
+                    return;
+                  }
                   if (res.code !== 200) {
                     message.error(t("CORE.task_failure"));
                     return;
