@@ -158,7 +158,7 @@ const UserTable = ({ value }) => {
           </Button>
           <Divider type="vertical" />
           <Button disabled={isDisable} onClick={() => { showConfirm(record) }} type="primary">
-            {t("CORE.VIOLATION.ACTION.ACCEPT")}
+            {t("CORE.ATTENDANCE.ACTION.ACCEPT")}
           </Button>
         </>
       )

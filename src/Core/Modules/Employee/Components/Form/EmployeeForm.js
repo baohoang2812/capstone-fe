@@ -99,7 +99,11 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
       setIsDisable(false);
     }
   }
-
+  useEffect(() => {
+    if(data?.position?.name.toLowerCase() === "admin" || data?.position?.name.toLowerCase() === "qc manager"){
+      setIsDisable(true);
+    }
+  }, [data]);
 
   useEffect(() => {
     setFieldsValue({

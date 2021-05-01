@@ -83,7 +83,7 @@ const ProfileForm = ({form}) => {
         uid: "-4",
         name: "image.png",
         status: "done",
-        url: data?.employee?.image_path,
+        url: data?.imagePath,
       },
     ]);
   }, [data]);
