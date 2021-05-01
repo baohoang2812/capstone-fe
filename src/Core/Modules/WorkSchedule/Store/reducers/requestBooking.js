@@ -86,7 +86,7 @@ const single_mode = (identity) => {
         let listIds = [];
         
         /* Hash data for find item faster */
-        const hash = dummyList.reduce((prev, current, index) => {
+        const hash = list.reduce((prev, current, index) => {
           listIds.push(current.id);
           current.index = index;
           prev[current.id] = current;
