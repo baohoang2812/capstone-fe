@@ -1,26 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Line } from '@ant-design/charts';
 import { Card } from "antd";
-import jwt_decode from "jwt-decode";
 import HeaderCard from "./HeaderCard";
 import moment from "moment";
 
 import violationTrendingApi from "~/Core/Modules/Dashboard/Api/ViolationTrending";
 const DemoLine = () => {
-  const token = localStorage.getItem("token" || "");
-  const {
-    roleName: role,
-  } = jwt_decode(token);
+  const [data, setData] = useState([]);
+  const [fromDate,setFromDate]= useState(moment().startOf('year').format("YYYY-MM-DD"));
+  // eslint-disable-next-line no-unused-vars
+  const [toDate,setToDate] = useState(moment().endOf('month').format("YYYY-MM-DD"));
   // const [data, setData] = useState([]);
   useEffect(() => {
- 
-
     (async () => {
-      const  FromDate = moment().startOf('year').format("YYYY-MM-DD");
-      const toDate = moment().endOf('year').format("YYYY-MM-DD");
-      if(role==="Admin"){
-     
-      const list = await violationTrendingApi.getList(FromDate,toDate);
+      const list = await violationTrendingApi.getList(fromDate,toDate);
       const data = list?.data?.map((item) => (
         {
           name: item?.regulationName,
@@ -33,26 +26,15 @@ const DemoLine = () => {
        ...config,
        data:data,})
        console.log(data);
-     }
-     else if(role==="Branch Manager"){
-      const listVio = await violationTrendingApi.getList(FromDate,toDate);
-      const data = listVio?.data?.map((item) => (
-        {
-          name: item?.regulationName,
-          point: item?.totalMinusPoint,
-          month: moment(item?.month).format("MM-YYYY")
-        }
-      ))
-      setConfig({
-        ...config,
-        data:data,})
-        console.log(data);
-     }
 
     })();
 
   }, []);
-  
+  useEffect(() => {
+     setConfig({
+       ...config,
+       data:data,})
+  }, [data]);
   const [config, setConfig]= useState({
     data: [],
     xField: 'month',
@@ -71,7 +53,7 @@ const DemoLine = () => {
   });
   return (
     <div className ="card-total-revenue card-default">
-    <Card title={<HeaderCard  />} bordered={false}>
+    <Card title={<HeaderCard  setData={setData}/>}  bordered={false}>
       {/* <Spin spinning={loading}> */}
       <Line {...config} />
       {/* </Spin> */}

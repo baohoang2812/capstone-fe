@@ -17,6 +17,7 @@ import MenuNotify from "./MenuNotify";
 import { logout } from "~/Core/utils/helper/authenticate";
 import ChangePasswordForm from "./Components/ChangePasswordForm";
 import notiApi from "~/Core/Modules/Notification/Api";
+import profileApi from "~/Core/Modules/Profile/Api";
 // import ChangePasswordForm from "./Components/ChangePasswordForm"
 import ExcuseDetail from "~/Core/Components/HeaderMaster/Components/ExcuseDetail";
 
@@ -30,6 +31,7 @@ export const HeaderMaster = ({ url }) => {
   const t = useTranslate();
   const [visibleExcuse, setVisibleExcuse] = useState(false);
   const [data, setData] = useState({});
+  const [imagePath, setImagePath] = useState("");
 
   /* Ref outside */
   const ref = useRef();
@@ -67,6 +69,10 @@ export const HeaderMaster = ({ url }) => {
       }
       const data = res?.data?.totalUnread
       setCountNoti(data);
+
+      const profile = await profileApi.getProfile();
+      const imagePath = profile?.data?.imagePath
+      setImagePath(imagePath)
     })()
 
   }, [])
@@ -166,7 +172,7 @@ export const HeaderMaster = ({ url }) => {
                 style={{ backgroundColor: "white" }}
                 size="middle"
                 className="avatar"
-                src={account_info.image_path}
+                src={imagePath}
                 alt="avatar"
               />
             </span>
