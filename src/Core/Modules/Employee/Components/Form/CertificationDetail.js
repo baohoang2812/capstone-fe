@@ -3,7 +3,7 @@ import "./style.less";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Select, Row, Col, Form, Card, Button, message, Spin, DatePicker } from "antd";
-
+import moment from 'moment';
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 
@@ -50,7 +50,10 @@ const CertificationDetail = ({ form, employeeId, action, data, is_create }) => {
   //     roleId: data?.roleId,
   //   });
   // }, [data]);
-
+  function disabledDate(current) {
+    // Can not select days before today and today
+    return current && current >= moment().endOf('day');
+  }
   const onConfirm = (e) => {
     e.preventDefault();
     validateFields((err, values) => {
@@ -142,6 +145,7 @@ const CertificationDetail = ({ form, employeeId, action, data, is_create }) => {
               hoverable
               style={{ width: 240 }}
               cover={<img alt={itemSelect.name} src={itemSelect.imagePath} />}
+              defaultValue={<img alt={itemSelect.name} src={listCertificationType?.[0]?.imagePath} />}
             >
               <Meta
                 title={itemSelect.name}
@@ -163,7 +167,7 @@ const CertificationDetail = ({ form, employeeId, action, data, is_create }) => {
                     message: (<>{t("CORE.EMPLOYEE.ALERT.ISSUE.DATE")}</>),
                   },
                 ],
-              })(<DatePicker />)}
+              })(<DatePicker disabledDate={disabledDate}/>)}
             </Form.Item>
           </Col>
         </Row>

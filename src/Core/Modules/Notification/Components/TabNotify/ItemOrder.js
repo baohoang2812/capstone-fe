@@ -17,9 +17,9 @@ export const ItemOrder = ({ detail }) => {
   };
   const t = useTranslate();
   const { Meta } = Card;
-  const openModel = () => {
-    setVisible(true);
-  };
+  // const openModel = () => {
+  //   setVisible(true);
+  // };
   const handleCloseModal = () => {
     setVisible(false);
   };
@@ -27,7 +27,7 @@ export const ItemOrder = ({ detail }) => {
 
     if (item?.type === "Report") {
       return (
-        <Link to={`/report/${item?.navigationId}`} className="link-detail">Xem chi tiết</Link>
+        <Link to={`/report/${item?.navigationId}`} className="link-detail">{t("CORE.NOTIFICATION.VIEW.DETAIL")}</Link>
       )
     }
     else if (item?.notification?.type === "Violation") {
@@ -41,7 +41,7 @@ export const ItemOrder = ({ detail }) => {
     <Col className="gutter-row" span={12}>
       <div className={`tab-notify-item ${!dummiesItem.isRead && 'mark-as-read'}`}>
         <div className="item-thumb">
-          <img src="https://cf.shopee.vn/file/db260e324552139ba91c1cb6a04696ce_tn" alt="" />
+          <img src="/mavcalogo.png" alt="" />
         </div>
         <div className="item-content">
           <h4>{dummiesItem.name}</h4>

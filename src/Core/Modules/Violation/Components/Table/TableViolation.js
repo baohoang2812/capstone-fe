@@ -9,7 +9,7 @@ import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 
 /* Components */
 import AdminTable from "~/Core/Components/common/AdminTable";
-import ImageThumbnail from "~/Core/Components/common/ImageThumbnail";
+// import ImageThumbnail from "~/Core/Components/common/ImageThumbnail";
 /* Constants */
 import { violations as identity } from "~/Core/Modules/Violation/Configs/Constants";
 import ViolationDetail from "~/Core/Modules/Violation/Components/Form/ViolationDetail";
@@ -64,7 +64,7 @@ const UserTable = () => {
       title: t("CORE.VIOLATION.NAME"),
       dataIndex: "name",
       className: "header-filter",
-      key: "Filter.name",
+      key: "Filter.Name",
       fieldType: "text",
       sorter: true,
       width: 240,
@@ -79,7 +79,7 @@ const UserTable = () => {
       title: t("CORE.VIOLATION.STATUS"),
       dataIndex: "status",
       className: "header-filter",
-      key: "status",
+      key: "Filter.Status",
       fieldType: "text",
       sorter: true,
       width: 230,
@@ -109,7 +109,7 @@ const UserTable = () => {
       dataIndex: "regulation.name",
       className: "header-filter",
       key: "name_regulation",
-      fieldType: "text",
+      fieldType: "none",
       sorter: true,
       width: 220,
 
@@ -119,7 +119,7 @@ const UserTable = () => {
       dataIndex: "description",
       className: "header-filter",
       key: "description",
-      fieldType: "text",
+      fieldType: "none",
       sorter: true,
       width: 220,
     },
@@ -128,28 +128,47 @@ const UserTable = () => {
       dataIndex: "excuse",
       className: "header-filter",
       key: "excuse",
-      fieldType: "text",
+      fieldType: "none",
       sorter: true,
       width: 220,
+      render: (_,record) => {
+        if(record?.excuse===null || record?.excuse===""){
+          return(
+            <span>N/A</span>
+          )
+        }
+        else{
+          return( <span>{record?.excuse}</span>)
+        }
+      }
     },
     {
       title: t("CORE.VIOLATION.WORKSPACE"),
       dataIndex: "workspace",
       className: "header-filter",
       key: "workspace",
-      fieldType: "text",
+      fieldType: "none",
       sorter: true,
       width: 220,
-      render:(_,record)=> (
-        <span>{record?.workspace?.[0]?.name}</span>
-      )
+      render:(_,record)=> {
+        if(record?.workspace?.length===0){
+          return(
+            <span>N/A</span>
+          )
+        }
+        else{
+          return(
+            <span>{record?.workspace?.[0]?.name}</span>)
+          }
+        
+    }
     },
     {
       title: t("CORE.VIOLATION.MINUS.POINT"),
       dataIndex: "minusPoint",
       className: "header-filter",
       key: "minusPoint",
-      fieldType: "text",
+      fieldType: "none",
       sorter: true,
       width: 150,
     },
@@ -160,7 +179,7 @@ const UserTable = () => {
       dataIndex: "createdAt",
       className: "header-filter",
       key: "contacts.create_at",
-      fieldType: "date",
+      fieldType: "none",
       sorter: true,
       width: 150,
       render: (text) => moment(text).format("DD/MM/YYYY"),
@@ -170,7 +189,7 @@ const UserTable = () => {
       dataIndex: "updatedAt",
       className: "header-filter",
       key: "contacts.updated_at",
-      fieldType: "date",
+      fieldType: "none",
       sorter: true,
       width: 150,
       render: (text,record) => {
@@ -219,7 +238,7 @@ const UserTable = () => {
             </Button>
           </>
         )
-    } else {
+    } else if( role==="Branch Manager") {
       const isDisable = record?.status?.toLocaleLowerCase() === 'opening';
       return (
           <>
@@ -232,6 +251,9 @@ const UserTable = () => {
             </Button>
           </>
         )
+    }
+    else{
+      return(<></>)
     }
   }
 

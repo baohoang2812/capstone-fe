@@ -41,14 +41,21 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
     /* State */
     const [loading, setLoading] = useState(false);
     // const [loadingDropdown, setLoadingDropdown] = useState(false);
-    const { getFieldDecorator, validateFields} = form;
+    const { getFieldDecorator, validateFields,setFieldsValue} = form;
     const [previewVisible, setPreviewVisible] = useState(false);
-    const [previewTitle, setPreviewTitle] = useState("");
+    // const [previewTitle, setPreviewTitle] = useState("");
     const [previewImage, setPreviewImage] = useState(false);
     const [dataEmployee, setDataEmployee] = useState([]);
     const [fileList, setFileList] = useState([]);
     useEffect(() => {
-        console.log(data);
+       
+        const vioID = data?.violator.map((item) =>(
+            item.id
+        ))
+       
+        setFieldsValue({
+           violator:vioID 
+          });
         employeeApi.getList()
             .then(res => {
                 const result = res.data.result;
@@ -64,6 +71,9 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
                 }))
                 setFileList(list);
             }
+            else{
+                setFileList([]);
+            }
 
     }, [data]);
     const { Option } = Select;
@@ -76,7 +86,7 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
 
         setPreviewImage(file.url || file.preview)
         setPreviewVisible(true)
-        setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1))
+        // setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1))
     }
     const onConfirm = (e) => {
         e.preventDefault();
@@ -135,6 +145,22 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
         });
     };
     console.log(dataEmployee);
+    const renderViolation = (description) => {
+        const newDescription = description?.split("__")
+        return (
+            <>
+                {
+                    newDescription?.map(item => (
+                    <p style={{lineHeight: "28px", marginBottom: 0}}>
+                        {
+                            item
+                        }
+                    </p>
+                ))
+                }
+            </>
+        )
+    }
     return (
         <Row type="flex" justify="center">
             <Col span={24}>
@@ -146,40 +172,34 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
                             <Form.Item label={t("CORE.VIOLATION.NAME")}>
                                 {getFieldDecorator("name", {
 
-                                })(<span>{data?.name}</span>)}
+                                })(<span style={{fontWeight:800}}>{data?.name}</span>)}
                             </Form.Item>
                         </Col>
                         <Col span={8}>
                             <Form.Item label={t("CORE.VIOLATION.CREATED.BY")}>
                                 {getFieldDecorator("createdBy", {
 
-                                })(<span>{data?.createdBy?.lastName} {data?.createdBy?.firstName}</span>)}
+                                })(<span style={{fontWeight:800}}>{data?.createdBy?.lastName} {data?.createdBy?.firstName}</span>)}
                             </Form.Item>
                         </Col>
                         <Col span={4}>
                             <Form.Item label={t("CORE.VIOLATION.CHARGE.CREATE")}>
                                 {getFieldDecorator("createdAt", {
 
-                                })(<span>{moment(data?.createdAt).format("DD-MM-YYYY")}</span>)}
+                                })(<span style={{fontWeight:800}}>{moment(data?.createdAt).format("DD-MM-YYYY | HH:mm")}</span>)}
                             </Form.Item>
                         </Col>
                         </Row>
 
                         <Row type="flex" justify="center" align="bottom">
-                            <Col span={16}>
+                            <Col span={20}>
                                 <Form.Item label={t("CORE.VIOLATION.DESCRIPTION")}>
                                     {getFieldDecorator("description", {
 
-                                    })(<span>{data?.description}</span>)}
+                                    })(<span style={{fontWeight:800}}>{renderViolation(data?.description)}</span>)}
                                 </Form.Item>
                             </Col>
-                            <Col span={4}>
-                                <Form.Item label={t("CORE.VIOLATION.WORKSPACE")}>
-                                    {getFieldDecorator("workspace", {
-
-                                    })(<span>{data?.workspace?.[0]?.name}</span>)}
-                                </Form.Item>
-                            </Col>
+                            
                         </Row>
                        
                         <Row type="flex" justify="center" align="bottom">
@@ -209,13 +229,13 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
                         </Row>
                        
                         <Row type="flex" justify="center" align="bottom">
-                            <Col span={20}>
+                            <Col span={14}>
                                 <Form.Item label={t("CORE.VIOLATION.SELECT.VIOLATOR")}>
                                     {getFieldDecorator("violator", {
                                         rules: [
                                             { required: true, message: (<>{t("CORE.VIOLATION.ALERT.VIOLATOR")}</>), type: 'array' },
                                         ],
-                                        
+                                       
                                     })(
                                         <Select mode="multiple" placeholder={t("CORE.VIOLATION.ALERT.VIOLATOR")}>
                                             {dataEmployee.map((item) => (
@@ -227,18 +247,26 @@ const UpdateViolatorDetail = ({ form, isShow = true, action, data }) => {
                                     )}
                                 </Form.Item>
                             </Col>
+                            <Col span={2}></Col>
+                            <Col span={4}>
+                                <Form.Item label={t("CORE.VIOLATION.WORKSPACE")}>
+                                    {getFieldDecorator("workspace", {
+
+                                    })(<span style={{fontWeight:800}}>{data?.workspace?.length >0 ? data?.workspace?.[0]?.name : "N/A"}</span>)}
+                                </Form.Item>
+                            </Col>
                         </Row>
                         <Row type="flex" justify="center">
                             {isShow ? (<div className="btn-group">
 
-                                <Button
+                                {/* <Button
                                     loading={loading}
                                     type="danger"
                                     className="btn-yellow btn-left"
                                     style={{ float: "right" }}
                                     onClick={action}>
                                     {t("CORE.cancel")}
-                                </Button>
+                                </Button> */}
                                 <Divider type="vertical" />
 
                                 <Button

@@ -1,5 +1,4 @@
 import React, { useMemo } from "react";
-import { Link } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 
 /* Hooks */
@@ -43,7 +42,7 @@ const UserTable = ({data}) => {
       sorter: true,
       width: 220,
       render: (text, record) => (
-        <Link to={`/employee/${record?.certificateType?.id}`}>{`${record?.certificateType?.name}`}</Link>
+        <span>{`${record?.certificateType?.name}`}</span>
       ),
     },
     {

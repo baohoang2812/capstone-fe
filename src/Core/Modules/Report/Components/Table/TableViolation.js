@@ -9,7 +9,6 @@ import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 
 /* Components */
 import AdminTable from "~/Core/Components/common/AdminTable";
-import ImageThumbnail from "~/Core/Components/common/ImageThumbnail";
 /* Constants */
 import { violations as identity } from "~/Core/Modules/Report/Configs/Constants";
 import ViolationDetail from "~/Core/Modules/Report/Components/Form/ViolationDetail";
@@ -60,27 +59,12 @@ const UserTable = (props) => {
 
   const defs = useMemo(() => [
 
-    {
-      title: t("CORE.VIOLATION.IMAGE.PATH"),
-      dataIndex: "imagePath",
-      className: "header-filter header-image",
-      key: "imagePath",
-      fieldType: "none",
-
-      sorter: true,
-      width: 200,
-      render: (_, record) => {
-        return (
-          <ImageThumbnail src={record.imagePath} />
-        )
-      }
-    },
 
     {
       title: t("CORE.VIOLATION.NAME"),
       dataIndex: "name",
       className: "header-filter",
-      key: "name",
+      key: "Filter.Name",
       fieldType: "text",
       sorter: true,
       width: 240,
@@ -95,7 +79,7 @@ const UserTable = (props) => {
       title: t("CORE.VIOLATION.STATUS"),
       dataIndex: "status",
       className: "header-filter",
-      key: "status",
+      key: "Filter.Status",
       fieldType: "text",
       sorter: true,
       width: 230,
@@ -125,7 +109,7 @@ const UserTable = (props) => {
       dataIndex: "regulation.name",
       className: "header-filter",
       key: "name_regulation",
-      fieldType: "text",
+      fieldType: "none",
       sorter: true,
       width: 220,
 
@@ -135,7 +119,7 @@ const UserTable = (props) => {
       dataIndex: "description",
       className: "header-filter",
       key: "description",
-      fieldType: "text",
+      fieldType: "none",
       sorter: true,
       width: 220,
     },
@@ -144,7 +128,7 @@ const UserTable = (props) => {
       dataIndex: "excuse",
       className: "header-filter",
       key: "excuse",
-      fieldType: "text",
+      fieldType: "none",
       sorter: true,
       width: 220,
     },
@@ -155,7 +139,7 @@ const UserTable = (props) => {
       dataIndex: "createdAt",
       className: "header-filter",
       key: "contacts.create_at",
-      fieldType: "date",
+      fieldType: "none",
       sorter: true,
       width: 150,
       render: (text) => moment(text).format("DD/MM/YYYY"),
@@ -165,7 +149,7 @@ const UserTable = (props) => {
       dataIndex: "updatedAt",
       className: "header-filter",
       key: "contacts.updated_at",
-      fieldType: "date",
+      fieldType: "none",
       sorter: true,
       width: 150,
       render: (text,record) => {
@@ -233,7 +217,7 @@ const UserTable = (props) => {
   const defaultSorter = useMemo(() => ({ "Sort.Orders": "desc createdAt"}), []);
 
   const scroll = useMemo(() => ({
-    x: 1700,
+    x: 1500,
     y: `calc(100vh - (178px))`
   }), []);
   console.log(props.value)

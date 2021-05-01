@@ -1,0 +1,50 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
+name: Build and deploy container app to Azure Web App - mavca-frontend
+
+on:
+  push:
+    branches:
+      - develop
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: 'ubuntu-latest'
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Log in to registry
+      uses: docker/login-action@v1
+      with:
+        registry: https://mavcafrontend.azurecr.io/
+        username: ${{ secrets.AzureAppService_ContainerUsername_9db703237639496986222d0ddd2b655a }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_109b5177d1c14ff885a1bb85475ee8a6 }}
+
+    - name: Build and push image to ACR	
+      id: build-image	
+      run: |	
+        docker build "$GITHUB_WORKSPACE/" -f  "Dockerfile" -t mavcafrontend.azurecr.io/mavca-fe:${{ github.sha }}	
+        docker push mavcafrontend.azurecr.io/mavca-fe:${{ github.sha }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+    - name: Deploy to Azure Web App
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'mavca-frontend'
+        slot-name: 'production'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_f325f120b5c14a78bed038c727606317 }}
+        images: 'mavcafrontend.azurecr.io/mavca-fe:${{ github.sha }}'

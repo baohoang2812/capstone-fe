@@ -1,11 +1,24 @@
 {
     "CORE.WORKSPACE.NAME":"Tên khu vực",
+    "CORE.WORKSPACE.EMP.NAME":"Nhân viên",
     "CORE.WORKSCHEDULE.CREATE":"Tạo lịch làm việc",
     "CORE.SHIFT.NAME":"Tên ca",
     "CORE.EMPLOYEE.NAME":"Tên nhân viên",
     "CORE.WORKSCHEDULE":"Lịch làm việc",
     "CORE.WORKSCHEDULE.MANAGEMENT":"Quản lý lịch làm việc",
     "CORE.DUPLICATE.SHIFT":"Ca này đã tồn tại, vui lòng chọn ca khác",
-    "CORE.NO.CERTIFICATE":"Nhân viên không thể làm ở khu vực này"
+    "CORE.NO.CERTIFICATE":"Nhân viên không thể làm ở khu vực này",
+    "CORE.VIOLATION.REMOVE":"Xóa",
+    "REQUEST.BOOKING": "Đặt lịch làm",
+    "REQUEST.BOOKING.WORKDATE":"Ngày làm việc",
+    "REQUEST.BOOKING.SHIFT":"Ca",
+    "REQUEST.BOOKING.WORKSPACE":"Khu vực làm việc",
+    "REQUEST.BOOKING.CREATE":"Ngày tạo",
+    "REQUEST.BOOKING.UPDATE":"Ngày cập nhật",
+    "REQUEST.BOOKING.TITLE": "Quản lý đặt lịch",
+    "REQUEST.BOOKING.BUTTON.TITLE": "Đặt lịch làm việc",
+    "REQUEST.BOOKING.CREATE.SUCCESS": "Đặt lịch làm việc thành công",
+    "REQUEST.BOOKING.UPDATE.SUCCESS": "Cập nhật thành công",
+    "CORE.VIOLATION.LEAVE":"Xin nghỉ"
 }
 

@@ -40,10 +40,18 @@ const BranchDetail = ({ match: { params } }) => {
           let data = res?.data?.result?.[0] || {};
           const listBoxObj = data?.cameraConfig
           const listBox = listBoxObj.map(item => {
-            const point_1 = JSON.parse(item?.point1)
-            const point_2 = JSON.parse(item?.point2)
-            const point_3 = JSON.parse(item?.point3)
-            const point_4 = JSON.parse(item?.point4)
+            const pointX1 = Math.round(item?.pointX1);
+            const pointY1 = Math.round(item?.pointY1);
+            const pointX2 = Math.round(item?.pointX2);
+            const pointY2 = Math.round(item?.pointY2);
+            const pointX3 = Math.round(item?.pointX3);
+            const pointY3 = Math.round(item?.pointY3);
+            const pointX4 = Math.round(item?.pointX4);
+            const pointY4 = Math.round(item?.pointY4);
+            const point_1 = [pointX1, pointY1]
+            const point_2 = [pointX2, pointY2]
+            const point_3 = [pointX3, pointY3]
+            const point_4 = [pointX4, pointY4]
 
             return {
               points: [point_1, point_2, point_3, point_4],
@@ -77,7 +85,7 @@ const BranchDetail = ({ match: { params } }) => {
           breadcrumb={[
             {
               title: t("CORE.CAMERA.MANAGEMENT.TITLE"),
-              link: "/branch",
+              link: "/cameras",
             },
             {
               title:

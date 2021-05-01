@@ -2,12 +2,11 @@ import React, { useState, useEffect } from "react";
 import {
   Avatar,
   List,
-  Modal
 } from "antd";
 import { Link } from "react-router-dom";
 import notiApi from "~/Core/Modules/Notification/Api";
 import moment from "moment";
-import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
+// import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
 
 /* Actions */
 // import { updateListNotification } from "~/Core/Store/actions/notification";
@@ -26,7 +25,7 @@ export default ({
     // dispatch(updateListNotification("all"));
   }
   const [listNoti, setListNoti] = useState([]);
-  const t = useTranslate();
+  // const t = useTranslate();
   useEffect(() => {
     (async () => {
       const res = await notiApi.getList(0, 5);
@@ -101,7 +100,7 @@ export default ({
           >
             <List.Item className={!item.isRead && "unread"}>
               <List.Item.Meta
-                avatar={<Avatar shape="square" size="large" />}
+                avatar={<Avatar src="/mavcalogo.png" shape="square" size="large" />}
                 title={
                   renderLink(item)
                 }

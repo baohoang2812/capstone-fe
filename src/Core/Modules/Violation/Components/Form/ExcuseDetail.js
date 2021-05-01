@@ -40,7 +40,7 @@ const ExcuseDetail = ({ form, isShow = true, action, data }) => {
     const [loading, setLoading] = useState(false);
     const [fileList, setFileList] = useState([]);
     const [previewVisible, setPreviewVisible] = useState(false);
-    const [previewTitle, setPreviewTitle] = useState("");
+    // const [previewTitle, setPreviewTitle] = useState("");
     const [previewImage, setPreviewImage] = useState(false);
     // const [loadingDropdown, setLoadingDropdown] = useState(false);
     const { getFieldDecorator, validateFields } = form;
@@ -66,6 +66,9 @@ const ExcuseDetail = ({ form, isShow = true, action, data }) => {
             }))
             setFileList(list);
         }
+        else{
+            setFileList([]);
+        }
 
     }, [data]);
     const handleCancel = () => setPreviewVisible(false);
@@ -77,7 +80,7 @@ const ExcuseDetail = ({ form, isShow = true, action, data }) => {
 
         setPreviewImage(file.url || file.preview)
         setPreviewVisible(true)
-        setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1))
+        // setPreviewTitle(file.name || file.url.substring(file .url.lastIndexOf('/') + 1))
     }
     const onConfirm = (e) => {
         e.preventDefault();
@@ -115,6 +118,22 @@ const ExcuseDetail = ({ form, isShow = true, action, data }) => {
             }
         });
     };
+    const renderViolation = (description) => {
+        const newDescription = description?.split("__")
+        return (
+            <>
+                {
+                    newDescription?.map(item => (
+                    <p style={{lineHeight: "28px", marginBottom: 0}}>
+                        {
+                            item
+                        }
+                    </p>
+                ))
+                }
+            </>
+        )
+    }
     return (
         <Row type="flex" justify="center">
             <Col span={24}>
@@ -126,40 +145,34 @@ const ExcuseDetail = ({ form, isShow = true, action, data }) => {
                             <Form.Item label={t("CORE.VIOLATION.NAME")}>
                                 {getFieldDecorator("name", {
 
-                                })(<span>{data?.name}</span>)}
+                                })(<span style={{fontWeight:800}}>{data?.name}</span>)}
                             </Form.Item>
                         </Col>
                         <Col span={8}>
                             <Form.Item label={t("CORE.VIOLATION.CREATED.BY")}>
                                 {getFieldDecorator("createdBy", {
 
-                                })(<span>{data?.createdBy?.lastName} {data?.createdBy?.firstName}</span>)}
+                                })(<span style={{fontWeight:800}}>{data?.createdBy?.lastName} {data?.createdBy?.firstName}</span>)}
                             </Form.Item>
                         </Col>
                         <Col span={4}>
                             <Form.Item label={t("CORE.VIOLATION.CHARGE.CREATE")}>
                                 {getFieldDecorator("createdAt", {
 
-                                })(<span>{moment(data?.createdAt).format("DD-MM-YYYY")}</span>)}
+                                })(<span style={{fontWeight:800}}>{moment(data?.createdAt).format("DD-MM-YYYY | HH:mm")}</span>)}
                             </Form.Item>
                         </Col>
                         </Row>
 
                         <Row type="flex" justify="center" align="bottom">
-                            <Col span={16}>
+                            <Col span={20}>
                                 <Form.Item label={t("CORE.VIOLATION.DESCRIPTION")}>
                                     {getFieldDecorator("description", {
 
-                                    })(<span>{data?.description}</span>)}
+                                    })(<span style={{fontWeight:800}}>{renderViolation(data?.description)}</span>)}
                                 </Form.Item>
                             </Col>
-                            <Col span={4}>
-                                <Form.Item label={t("CORE.VIOLATION.WORKSPACE")}>
-                                    {getFieldDecorator("workspace", {
-
-                                    })(<span>{data?.workspace?.[0]?.name}</span>)}
-                                </Form.Item>
-                            </Col>
+                           
                         </Row>
                        
                         <Row type="flex" justify="center" align="bottom">
@@ -188,24 +201,32 @@ const ExcuseDetail = ({ form, isShow = true, action, data }) => {
                             </Col>
                         </Row>
                        
-                        <Row type="flex" justify="center" align="bottom">
-                            <Col span={20}>
+                        <Row justify="center" align="bottom">
+                            <Col span={16} offset={2}>
                                 <Form.Item label={t("CORE.VIOLATION.VIOLATOR")}>
                                     {getFieldDecorator('select-multiple', {
 
                                     })(
                                         <>
                                             {
-                                                dataEmployee.map(item => {
+                                               dataEmployee?.length>0 ? dataEmployee.map(item => {
                                                     return (
                                                         <div>
-                                                            {`${item.lastName} ${item.firstName}`}
+                                                            <span style={{fontWeight:800}}>{`${item.lastName} ${item.firstName}`}</span>
                                                         </div>
                                                     )
                                                 })
+                                                : <span style={{fontWeight:800}}>N/A</span>
                                             }
                                         </>
                                     )}
+                                </Form.Item>
+                            </Col>
+                            <Col span={4}>
+                                <Form.Item label={t("CORE.VIOLATION.WORKSPACE")}>
+                                    {getFieldDecorator("workspace", {
+
+                                    })(<span style={{fontWeight:800}}>{data?.workspace?.length >0 ? data?.workspace?.[0]?.name : "N/A"}</span>)}
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -216,7 +237,7 @@ const ExcuseDetail = ({ form, isShow = true, action, data }) => {
                                     <Form.Item label={t("CORE.VIOLATION.EXCUSE")}>
                                         {getFieldDecorator("excuse", {
 
-                                        })(<span>{data.excuse}</span>)}
+                                        })(<span style={{fontWeight:800}}>{data.excuse}</span>)}
                                     </Form.Item>
                                 </Col>) : null
                             }

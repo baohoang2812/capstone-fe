@@ -7,53 +7,56 @@ const serialize = (obj) => {
     var str = [];
     for (var p in obj)
       if (obj.hasOwnProperty(p)) {
-        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+        str.push(p + "=" + encodeURIComponent(obj[p]));
       }
     return `?${str.join("&")}`;
   }
   return "";
-}
+};
 const generate_options = (opts = {}) => {
   let headers = {
-    Authorization: `Bearer ${localStorage.getItem("token")}`
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
   };
-  console.log(opts)
+  console.log(opts);
   if (opts.headers) {
     headers = {
       ...headers,
-      ...opts.headers
+      ...opts.headers,
     };
   }
-  
+
   delete opts.headers;
 
   return {
     headers,
-    ...opts
+    ...opts,
   };
 };
 
-axios.interceptors.response.use((config) => {
-  return config;
-}, (error) => {
-  const { response } = error;
+axios.interceptors.response.use(
+  (config) => {
+    return config;
+  },
+  (error) => {
+    const { response } = error;
 
-  if (response?.status === 401 || response?.statusCode === 401) {
-    // logout();
-    return error;
-  } else {
-    throw error;
+    if (response?.status === 401 || response?.statusCode === 401) {
+      // logout();
+      return error;
+    } else {
+      throw error;
+    }
   }
-});
+);
 
 const get_prefix = (apiVersion, customPrefix, path) => {
   let prefix = customPrefix || currentEnv.REST_FULL_API_URL;
 
   return `${prefix}${path}`;
-}
+};
 
 const get = (apiVersion, customPrefix) => async (path, params, opts) => {
-  console.log(opts)
+  console.log(opts);
   try {
     const response = await axios.get(
       get_prefix(apiVersion, customPrefix, path) + serialize(params),
@@ -98,19 +101,33 @@ const put = (apiVersion, customPrefix) => async (path, body, opts) => {
 };
 
 const del = (apiVersion, customPrefix) => async (path, body, opts) => {
-  let listIds = "?"
-  body.ids.forEach(id => {
-      listIds += `ids=${id}&`
-    })
-    if (body.ids.length > 0) {
-      listIds = listIds.slice(0, -1)
-    } else {
-      listIds = ""
-    }
+  let listIds = "?";
+  body.ids.forEach((id) => {
+    listIds += `ids=${id}&`;
+  });
+  if (body.ids.length > 0) {
+    listIds = listIds.slice(0, -1);
+  } else {
+    listIds = "";
+  }
   try {
     const response = await axios.delete(
       get_prefix(apiVersion, customPrefix, path) + listIds,
       generate_options(opts)
+    );
+
+    const { data } = response;
+    return data;
+  } catch (e) {
+    return Promise.reject(e);
+  }
+};
+
+const delelte = (apiVersion, customPrefix) => async (path, body, opts) => {
+  try {
+    const response = await axios.delete(
+      get_prefix(apiVersion, customPrefix, path),
+      { ...generate_options(opts), data: body }
     );
 
     const { data } = response;
@@ -126,16 +143,14 @@ const upload_image = (apiVersion, customPrefix) => async (file) => {
   formData.append("file", file, `${+new Date()}_${file.name}`);
 
   try {
-    const { data } = await axios.post(
-      `${prefix}/file/upload`,
-      formData,
-      { headers: { "Content-Type": "multipart/form-data" } }
-    );
+    const { data } = await axios.post(`${prefix}/file/upload`, formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
 
     return {
       id: data[0]?.id,
-      url: data[0]?.relative_url
-    }
+      url: data[0]?.relative_url,
+    };
   } catch (e) {
     return Promise.reject(e);
   }
@@ -146,13 +161,13 @@ function initBaseApi(apiVersion, customPrefix) {
     get: get(apiVersion, customPrefix),
     post: post(apiVersion, customPrefix),
     del: del(apiVersion, customPrefix),
+    delelte: delelte(apiVersion, customPrefix),
     put: put(apiVersion, customPrefix),
-    upload_image: upload_image(apiVersion, customPrefix)
+    upload_image: upload_image(apiVersion, customPrefix),
   };
 }
 
 export default class BaseAPI {
-
   constructor(apiVersion, customPrefix) {
     this.initApi = initBaseApi(apiVersion, customPrefix);
     this.onInit();
@@ -180,28 +195,32 @@ export default class BaseAPI {
   };
 
   deleteByIds = (ids, options = {}, opts) => {
-    let listIds = "?"
-    ids.forEach(id => {
-      listIds += `ids=${id}&`
-    })
+    let listIds = "?";
+    ids.forEach((id) => {
+      listIds += `ids=${id}&`;
+    });
     if (ids.length > 0) {
-      listIds = listIds.slice(0, -1)
+      listIds = listIds.slice(0, -1);
     } else {
-      listIds = ""
+      listIds = "";
     }
 
-    return this.initApi.del(`${this.baseUrl}${listIds}`, {}, generate_options(opts));
+    return this.initApi.del(
+      `${this.baseUrl}${listIds}`,
+      {},
+      generate_options(opts)
+    );
   };
 
   getOne = (filter, opts) => {
     return this.initApi.post(`${this.baseUrl}/list`, filter, opts);
-  }
-    
+  };
+
   getList = (filter, opts) => {
     return this.initApi.post(`${this.baseUrl}/list`, filter, opts);
-  }
+  };
 
   uploadImage = (file) => {
-    return this.initApi.upload_image(file)
-  }
+    return this.initApi.upload_image(file);
+  };
 }

@@ -317,7 +317,7 @@
     "AUTHENTICATE.LOGIN.FORM_LOGINBTN": "Login",
     "AUTHENTICATE.LOGIN.FORM_FORGETPASS": "Forget your password ?",
     "AUTHENTICATE.LOGIN.FORM_REGISTER": "Register",
-    "AUTHENTICATE.LOGIN.FORM_EMAILORPASSINVALID": "User name or password not correct.",
+    "AUTHENTICATE.LOGIN.FORM_EMAILORPASSINVALID": "User name or password is not correct.",
     "AUTHENTICATE.FORGETPASSWORD.FORM_TITLE": "Forget password",
     "AUTHENTICATE.FORGETPASSWORD.FIELD_EMAIL": "Email address",
     "AUTHENTICATE.FORGETPASSWORD.FORM_FORGETBTN": "Reset Password",
@@ -345,5 +345,6 @@
     "AUTHENTICATE.LOGIN.HAVE_NOT_ACCOUNT": "Create an account?",
     "AUTHENTICATE.ACTIVE.USER.LINK.TIMEOUT.CONTENT": "This link was voided or timeout. Please try again!",
     "CORE.VIEW.ALL":"View all",
-    "CORE.TASK.INVALID.PASSWORD":"Invalid username or password"
+    "CORE.TASK.INVALID.PASSWORD":"Invalid username or password",
+    "CORE.EMPLOYEE.PROFILE.TITLE":"Profile"
 }

@@ -16,7 +16,8 @@
     "CORE.CAMERA.CREATE.SUCCESS":"Tạo mới thành công",
     "CORE.CAMERA.UPDATE.SUCCESS":"Cập nhật thành công",
     "CORE.CAMERA":"Camera",
-    "CORE.CAMERA.DETAIL":"Chi tiết camera"
+    "CORE.CAMERA.DETAIL":"Chi tiết camera",
+    "CORE.CAMERA.WORKSPACE":"Khu vực"
 
     
 }

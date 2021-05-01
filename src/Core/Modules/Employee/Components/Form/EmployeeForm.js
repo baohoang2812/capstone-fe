@@ -99,7 +99,11 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
       setIsDisable(false);
     }
   }
-
+  useEffect(() => {
+    if(data?.position?.name.toLowerCase() === "admin" || data?.position?.name.toLowerCase() === "qc manager"){
+      setIsDisable(true);
+    }
+  }, [data]);
 
   useEffect(() => {
     setFieldsValue({
@@ -153,13 +157,19 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
                 .create(newValues2)
                 .then((res) => {
                   setLoading(false);
-                  if (res.code !== 201) {
+                  if(res.code===3000){
+                    message.error(t("CORE.EMPLOYEE.ALERT.DUPLICATE.CODE"));
+                    return;
+                  }
+                   else if (res.code !== 201) {
                     message.error(t("CORE.task_failure"));
                     return;
                   }
+                  else{
                   dispatch(update_identity_table_data_success(identity, res.data));
                   message.success(t("CORE.EMPLOYEE.CREATE.SUCCESS"));
                   action();
+                  }
                 })
                 .catch(() => {
                   message.error(t("CORE.error.system"));
@@ -287,7 +297,7 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
                   >
                     {t("CORE.EMPLOYEE.CODE")}
                   </label>
-                  <Button onClick={randomCode}>{t("CORE.EMPLOYEE.GENERATE.CODE")}</Button>
+                  <Button disabled={!is_create} onClick={randomCode}>{t("CORE.EMPLOYEE.GENERATE.CODE")}</Button>
                 </>
               }
             >
@@ -297,7 +307,7 @@ const EmployeeForm = ({ form, action, data, is_create }) => {
                   whitespace: true,
                   message: (<>{t("CORE.EMPLOYEE.ALERT.CODE")}</>) 
                 }],
-              })(<Input />)}
+              })(<Input disabled={!is_create}/>)}
             </Form.Item>
           </Col>
           <Col span={13}>

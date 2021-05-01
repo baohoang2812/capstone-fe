@@ -219,15 +219,16 @@ class Rector extends React.Component {
           Undo
         </Button>
         <Button onClick={getNewImage}>Get new image</Button>
-        <div style={{ width: 642, height: 482, border: "solid 1px black" }}>
+        <div style={{ width: 722, height: 540, border: "solid 1px black" }}>
           <Stage
-            width={642}
-            height={482}
+            width={722}
+            height={540}
             onMouseDown={handleClick}
             onMouseMove={handleMouseMove}
             style={{
               backgroundImage:`url("${image}")`,
               backgroundRepeat: "no-repeat, repeat",
+              backgroundSize: "contain"
             }}
           >
             <Layer>

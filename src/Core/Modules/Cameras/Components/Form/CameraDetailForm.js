@@ -1,7 +1,8 @@
+/* eslint-disable use-isnan */
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import "./style.less";
-import { Row, Col, Form, Input, Button, message } from "antd";
+import { Row, Col, Form, Input, Button, message,Select } from "antd";
 import axios from "axios";
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
@@ -14,16 +15,17 @@ import { cameras as identity } from "~/Core/Modules/Cameras/Configs/constants";
 
 /* Api */
 import camerasApi from "~/Core/Modules/Cameras/Api/";
-
+import workspaceApi from "~/Core/Modules/Cameras/Api/WorkspaceApi";
 /* Components */
 import Rector from "~/Core/Modules/Cameras/Components/Form/Rector";
-
+const { Option } = Select;
 const BranchDetailForm = ({ form, data, action, is_create }) => {
   const t = useTranslate();
   /* Redux */
   const dispatch = useDispatch();
   /* State */
   const [loading, setLoading] = useState(false);
+  const [listWorkspace,setListWorkspace]= useState([]);
   const { getFieldDecorator, validateFields, setFieldsValue } = form;
   const [config, setConfig] = useState([
     {
@@ -37,12 +39,19 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
   const [imagePath, setImagePath] = useState([]);
 
   useEffect(() => {
+    (async () => {
+      const Workspace= await workspaceApi.getList();
+      setListWorkspace(Workspace?.data?.result);
+    })();
+ 
+  }, []);
+  useEffect(() => {
     setFieldsValue({
       name: data?.name,
       ip: data?.ip,
       customUrl: data?.customUrl,
       workspace: data?.workspace?.name,
-      workspaceId: 1,
+      workspaceId: data?.workspace?.id,
       port: "string",
     });
     setImagePath(data.imagePath);
@@ -78,15 +87,28 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
 
         if (is_create) {
           let listCamConfig = config.map((item) => {
-            const point1 = JSON.stringify(item?.points?.[0]);
-            const point2 = JSON.stringify(item?.points?.[1]);
-            const point3 = JSON.stringify(item?.points?.[2]);
-            const point4 = JSON.stringify(item?.points?.[3]);
+            const pointX1 = Math.round(item?.points?.[0]?.[0]);
+            const pointY1 = Math.round(item?.points?.[0]?.[1]);
+            const pointX2 = Math.round(item?.points?.[1]?.[0]);
+            const pointY2 = Math.round(item?.points?.[1]?.[1]);
+            const pointX3 = Math.round(item?.points?.[2]?.[0]);
+            const pointY3 = Math.round(item?.points?.[2]?.[1]);
+            const pointX4 = Math.round(item?.points?.[3]?.[0]);
+            const pointY4 = Math.round(item?.points?.[3]?.[1]);
+
+            // const point1 = JSON.stringify(item?.points?.[0]);
+            // const point2 = JSON.stringify(item?.points?.[1]);
+            // const point3 = JSON.stringify(item?.points?.[2]);
+            // const point4 = JSON.stringify(item?.points?.[3]);
             return {
-              point1,
-              point2,
-              point3,
-              point4,
+              pointX1,
+              pointY1,
+              pointX2,
+              pointY2,
+              pointX3,
+              pointY3,
+              pointX4,
+              pointY4,
               cameraId: 1
             };
           });
@@ -117,21 +139,34 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
         } else {
           console.log(values);
           let listCamConfig = config.map((item) => {
-            const point1 = JSON.stringify(item?.points?.[0]);
-            const point2 = JSON.stringify(item?.points?.[1]);
-            const point3 = JSON.stringify(item?.points?.[2]);
-            const point4 = JSON.stringify(item?.points?.[3]);
+            const pointX1 = Math.round(item?.points?.[0]?.[0]);
+            const pointY1 = Math.round(item?.points?.[0]?.[1]);
+            const pointX2 = Math.round(item?.points?.[1]?.[0]);
+            const pointY2 = Math.round(item?.points?.[1]?.[1]);
+            const pointX3 = Math.round(item?.points?.[2]?.[0]);
+            const pointY3 = Math.round(item?.points?.[2]?.[1]);
+            const pointX4 = Math.round(item?.points?.[3]?.[0]);
+            const pointY4 = Math.round(item?.points?.[3]?.[1]);
+
+            // const point1 = JSON.stringify(item?.points?.[0]);
+            // const point2 = JSON.stringify(item?.points?.[1]);
+            // const point3 = JSON.stringify(item?.points?.[2]);
+            // const point4 = JSON.stringify(item?.points?.[3]);
             return {
               id: 0,
-              point1,
-              point2,
-              point3,
-              point4,
+              pointX1,
+              pointY1,
+              pointX2,
+              pointY2,
+              pointX3,
+              pointY3,
+              pointX4,
+              pointY4,
               cameraId: 1
             };
           });
-          
-          if(listCamConfig?.[listCamConfig.length-1] === {}){
+          // eslint-disable-next-line eqeqeq
+          if(isNaN(listCamConfig?.[listCamConfig.length-1]?.pointX1)){
             listCamConfig.splice(-1,1);
           }
 
@@ -139,7 +174,6 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
             .update(data.id, {
               ...values,
               port: 0,
-              workspaceId: 1,
               imagePath,
               cameraConfig: listCamConfig
             })
@@ -219,6 +253,29 @@ const BranchDetailForm = ({ form, data, action, is_create }) => {
                       },
                     ],
                   })(<Input />)}
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row type="flex" justify="center" align="bottom">
+              <Col span={15}>
+                <Form.Item label={t("CORE.CAMERA.WORKSPACE")}>
+                  {getFieldDecorator("workspaceId", {
+                    rules: [
+                      {
+                        required: true,
+                        message: "Please select workspace!",
+                      },
+                     
+                    ],
+                  })(
+                    <Select>
+                  {listWorkspace.map((item) => (
+                    <Option key={item.id} value={item.id}>
+                      {item.name}
+                    </Option>
+                  ))}
+                </Select>
+                )}
                 </Form.Item>
               </Col>
             </Row>

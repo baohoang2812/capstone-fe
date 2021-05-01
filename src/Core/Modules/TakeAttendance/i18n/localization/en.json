@@ -1,0 +1,23 @@
+{
+    "CORE.ATTENDANCE":"Attendance",
+    "CORE.ATTENDANCE.MANAGEMENT.TITLE":"Take Attendance",
+    "CORE.EMPLOYEE.NAME":"Name",
+    "CORE.SHIFT.NAME":"Shift",
+    "CORE.WORKSPACE.NAME":"Workspace",
+    "CORE.WORK.DATE":"Work date",
+    "CORE.ATTENDANCE.ACTION":"Action",
+    "CORE.ATTENDANCE.ACTION.REJECT":"Absent",
+    "CORE.ATTENDANCE.ACTION.ACCEPT":"Present",
+    "CORE.ATTENDANCE.STATUS":"Status",
+    "CORE.EMPLOYEE.POSITION":"Position",
+    "CORE.START.DATE":"Start date",
+    "CORE.END.DATE":"End date",
+    "CORE.DURATION":"Duration",
+    "CORE.TIME.KEEPING.MANAGEMENT.TITLE":"Timekeeping",
+    "CORE.ATTENDANCE.UPDATE.SUCCESS":"Updated success",
+    "CORE.VIOLATION.SELECT.EXECUTOR":"Executor",
+    "CORE.VIOLATION.ALERT.EXECUTOR":"Select executor",
+    "CORE.TIMEKEEPING.DETAIL":"Timekeeping detail",
+    "CORE.CAN.NOT.TAKE":"It's not time to take attendance !"
+
+}

@@ -16,5 +16,6 @@ export default [
   { key: "Notification"},
   { key: "Cameras"},
   { key: "Profile"},
-  
+  { key: "RequestBooking"},
+  { key: "TakeAttendance"}
 ];

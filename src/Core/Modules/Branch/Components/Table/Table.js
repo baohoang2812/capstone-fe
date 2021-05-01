@@ -37,7 +37,7 @@ const UserTable = () => {
       title: t("CORE.BRANCH.ADDRESS"),
       dataIndex: "address",
       className: "header-filter",
-      key: "address",
+      key: "Filter.Address",
       fieldType: "text",
       sorter: true,
       width: 220,
@@ -49,7 +49,7 @@ const UserTable = () => {
       dataIndex: "phoneNumber",
       className: "header-filter",
       key: "phoneNumber",
-      fieldType: "number",
+      fieldType: "none",
       sorter: true,
       width: 200,
     },
@@ -58,7 +58,7 @@ const UserTable = () => {
       dataIndex: "manager",
       className: "header-filter",
       key: "managerName",
-      fieldType: "text",
+      fieldType: "none",
       sorter: true,
       width: 220,
       render: (_,record) => {
@@ -81,7 +81,7 @@ const UserTable = () => {
       dataIndex: "created_at",
       className: "header-filter",
       key: "contacts.create_at",
-      fieldType: "date",
+      fieldType: "none",
       sorter: true,
       width: 150,
       render: (text) => moment(text).format("DD/MM/YYYY"),
@@ -91,10 +91,19 @@ const UserTable = () => {
       dataIndex: "updated_at",
       className: "header-filter",
       key: "contacts.updated_at",
-      fieldType: "date",
+      fieldType: "none",
       sorter: true,
       width: 150,
-      render: (text) => moment(text).format("DD/MM/YYYY"),
+      render: (text,record) => {
+        if(record?.updatedAt===null){
+          return(
+            <span></span>
+          )
+        }
+        else{
+          return(moment(text).format("DD/MM/YYYY"))
+        }
+      }
     },
     {
         title: t("CORE.BRANCH.STATUS"),

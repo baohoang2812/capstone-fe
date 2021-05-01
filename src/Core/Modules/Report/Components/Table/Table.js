@@ -78,7 +78,7 @@ const UserTable = () => {
       title: t("CORE.REPORT.STATUS"),
       dataIndex: "status",
       className: "header-filter",
-      key: "status",
+      key: "Filter.Status",
       fieldType: "text",
       sorter: true,
       width: 220,
@@ -93,7 +93,12 @@ const UserTable = () => {
             <Tag color="blue">{t("CORE.REPORT.STATUS.DONE")}</Tag>
           )
         }
-        else {
+        else if(record.status.toLocaleLowerCase() === 'time to submit') {
+          return (
+            <Tag color="yellow">{t("CORE.REPORT.STATUS.TIME")}</Tag>
+          )
+        }
+        else if(record.status.toLocaleLowerCase() === 'submitted') {
           return (
             <Tag color="green">{t("CORE.VIOLATION.SUBMITTED")}</Tag>
           )
@@ -105,7 +110,7 @@ const UserTable = () => {
       dataIndex: "totalMinusPoint",
       className: "header-filter",
       key: "totalMinusPoint",
-      fieldType: "text",
+      fieldType: "none",
       sorter: true,
       width: 150,
 
@@ -115,7 +120,7 @@ const UserTable = () => {
       dataIndex: "description",
       className: "header-filter",
       key: "description",
-      fieldType: "text",
+      fieldType: "none",
       sorter: true,
       width: 220,
     },
@@ -124,7 +129,7 @@ const UserTable = () => {
       dataIndex: "adminNote",
       className: "header-filter",
       key: "adminNote",
-      fieldType: "text",
+      fieldType: "none",
       sorter: true,
       width: 220,
     },
@@ -133,7 +138,7 @@ const UserTable = () => {
       dataIndex: "qcNote",
       className: "header-filter",
       key: "qcNote",
-      fieldType: "text",
+      fieldType: "none",
       sorter: true,
       width: 220,
     },
@@ -142,7 +147,7 @@ const UserTable = () => {
       dataIndex: "branch.name",
       className: "header-filter",
       key: "branchId",
-      fieldType: "text",
+      fieldType: "none",
       sorter: true,
       width: 220,
 
@@ -153,7 +158,7 @@ const UserTable = () => {
       dataIndex: "submittedBySystem",
       className: "header-filter",
       key: "type",
-      fieldType: "text",
+      fieldType: "none",
       sorter: true,
       width: 220,
       render: (_, record) => {
@@ -184,8 +189,8 @@ const UserTable = () => {
       title: t("CORE.REPORT.CHARGE.CREATE"),
       dataIndex: "createdAt",
       className: "header-filter",
-      key: "contacts.create_at",
-      fieldType: "date",
+      key: "Filter.FromDate",
+      fieldType: "none",
       sorter: true,
       width: 150,
       render: (text) => moment(text).format("DD/MM/YYYY"),
@@ -194,8 +199,8 @@ const UserTable = () => {
       title: t("CORE.REPORT.CHARGE.UPDATE"),
       dataIndex: "updatedAt",
       className: "header-filter",
-      key: "contacts.updated_at",
-      fieldType: "date",
+      key: "Filter.ToDate",
+      fieldType: "none",
       sorter: true,
       width: 150,
       render: (text,record) => {

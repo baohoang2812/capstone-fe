@@ -13,7 +13,7 @@
     "CORE.VIOLATION.ID":"ID",
     "CORE.VIOLATION.IMAGE.PATH":"Image",
     "CORE.VIOLATION.NAME":"Name",
-    "CORE.REGULATION.NAME":"Regulation Type",
+    "CORE.REGULATION.NAME":"Regulation name",
     "CORE.VIOLATION.DESCRIPTION":"Description",
     "CORE.VIOLATION.STATUS":"Status",
     "CORE.VIOLATION.CHARGE.CREATE":"Created at",
@@ -31,7 +31,7 @@
     "CORE.VIOLATION.CONFIRMED":"Confirmed",
     "CORE.VIOLATION.OPENING":"Opening",
     "CORE.VIOLATION.REJECTED":"Rejected",
-    "CORE.VIOLATION.STATUS.EXCUSE":"Excuse",
+    "CORE.VIOLATION.STATUS.EXCUSE":"Excused",
     "CORE.VIOLATION.CONFIRM.SUCCESS":"Updated success",
     "CORE.VIOLATION.SELECT.VIOLATOR":"Select violator",
     "CORE.VIOLATION.VIOLATOR":"Violator",
@@ -44,7 +44,8 @@
     "CORE.VIOLATION.CREATED.BY":"Created by",
     "CORE.REPORT.STATUS.DONE":"Done",
     "CORE.REPORT.MINUS.POINT":"Minus point",
-    "CORE.VIOLATION.WORKSPACE":"Workspace"
+    "CORE.VIOLATION.WORKSPACE":"Workspace",
+    "CORE.REPORT.STATUS.TIME":"Time to submit"
    
 
 }

@@ -1,8 +1,8 @@
 {
-    "CORE.CERTIFICATION.MANAGEMENT.TITLE": "Certification",
+    "CORE.CERTIFICATION.MANAGEMENT.TITLE": "Certificate",
     "CORE.CERTIFICATION.NAME": "Name",
     "CORE.CERTIFICATION.DESCRIPTION": "Description",
-    "CORE.CERTIFICATION.MANAGEMENT.CREATE": "Create certification",
+    "CORE.CERTIFICATION.MANAGEMENT.CREATE": "Create certificate",
     "CORE.EMPLOYEE.TITLE": "Employee",
     "CORE.EMPLOYEE.TITLE.DETAIL": "Employee detail",
     "CORE.EMPLOYEE.TITLE.ACCOUNT": "Account",
@@ -30,8 +30,8 @@
     "CORE.EMPLOYEE.BRANCH.NAME":"Branch name",
     "CORE.EMPLOYEE.POSITION.NAME":"Position name",
     "CORE.EMPLOYEE.IMAGE.PATH":"Image",
-    "CORE.EMPLOYEE.MANAGEMENT.TITLE":"Employee manager",
-    "CORE.EMPLOYEE.CREATE.ACCOUNT":"Create employee",
+    "CORE.EMPLOYEE.MANAGEMENT.TITLE":"Employee management",
+    "CORE.EMPLOYEE.CREATE.ACCOUNT":"Create new",
     "CORE.EMPLOYEE.JOB.TYPE":"Job type",
     "CORE.EMPLOYEE.POSITION":"Position",
     "CORE.EMPLOYEE.ROLE":"Role",
@@ -63,9 +63,10 @@
     "CORE.ACCOUNT.CREATE.SUCCESS":"Updated account success",
     "CORE.ACCOUNT.UPDATE.SUCCESS":"Created account success",
     "CORE.EMPLOYEE.NEW.PASSWORD":"New password",
-    "CORE.EMPLOYEE.ALERT.CERTIFICATE":"Please select certification",
+    "CORE.EMPLOYEE.ALERT.CERTIFICATE":"Please select certificate",
     "CORE.EMPLOYEE.ISSUE.DATE":"Issue date",
     "CORE.EMPLOYEE.ALERT.ISSUE.DATE":"Please select issue date",
-    "CORE.EMPLOYEE.ADD.CERTIFICATION.SUCCESS":"Added certification success"
+    "CORE.EMPLOYEE.ADD.CERTIFICATION.SUCCESS":"Added certificate success",
+    "CORE.EMPLOYEE.ALERT.DUPLICATE.CODE":"This code is existed"
     
 }
