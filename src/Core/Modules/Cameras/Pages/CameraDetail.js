@@ -85,7 +85,7 @@ const BranchDetail = ({ match: { params } }) => {
           breadcrumb={[
             {
               title: t("CORE.CAMERA.MANAGEMENT.TITLE"),
-              link: "/branch",
+              link: "/cameras",
             },
             {
               title:
