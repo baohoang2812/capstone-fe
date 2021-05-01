@@ -130,7 +130,22 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
             }
         });
     };
-
+    const renderViolation = (description) => {
+        const newDescription = description?.split("__")
+        return (
+            <>
+                {
+                    newDescription?.map(item => (
+                    <p style={{lineHeight: "28px", marginBottom: 0}}>
+                        {
+                            item
+                        }
+                    </p>
+                ))
+                }
+            </>
+        )
+    }
     return (
         <Row type="flex" justify="center">
             <Col span={24}>
@@ -166,7 +181,7 @@ const ViolationDetail = ({ form, is_create, action, data }) => {
                                 <Form.Item label={t("CORE.VIOLATION.DESCRIPTION")}>
                                     {getFieldDecorator("description", {
 
-                                    })(<span style={{fontWeight:800}}>{data?.description}</span>)}
+                                    })(<span style={{fontWeight:800}}>{renderViolation(data?.description)}</span>)}
                                 </Form.Item>
                             </Col>
                            
