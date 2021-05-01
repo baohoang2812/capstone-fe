@@ -76,7 +76,12 @@ const SignIn = ({ form }) => {
         <div className="login-form">
           <div className="logo">
             <Link to="/">
-              <h1 className="text-logo">{t("AUTH.TITLE")}</h1>
+            <img
+                className="logo-image"
+                src="/Component 2.png"
+                alt="logo"
+              />
+              {/* <h1 className="text-logo">{t("AUTH.TITLE")}</h1> */}
             </Link>
             {error && (
               <Alert
@@ -113,7 +118,7 @@ const SignIn = ({ form }) => {
                               style={{ color: "rgba(0,0,0,.25)" }}
                             />
                           }
-                          placeholder="Email"
+                          placeholder="User name"
                           onChange={onChange}
                         />
                       )}
