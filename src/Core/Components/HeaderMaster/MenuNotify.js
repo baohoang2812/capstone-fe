@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   Avatar,
   List,
@@ -17,27 +17,27 @@ import moment from "moment";
 
 export default ({
   setData,
-  openModelExcuse
+  openModelExcuse,
+  listNoti
 }) => {
   // const listNotification = useSelector(state => state.NotificationCore.listNotificationHeader)
 
   const onMarkAllAsRead = () => {
     // dispatch(updateListNotification("all"));
   }
-  const [listNoti, setListNoti] = useState([]);
+  // const [listNoti, setListNoti] = useState([]);
   // const t = useTranslate();
-  useEffect(() => {
-    (async () => {
-      const res = await notiApi.getList(0, 5);
-      if (res.code !== 200) {
+  // useEffect(() => {
+  //   (async () => {
+  //     const res = await notiApi.getList(0, 5);
+  //     if (res.code !== 200) {
+  //       return;
+  //     }
+  //     const data = res?.data?.result || [];
+  //     setListNoti(data);
+  //   })()
+  // }, [])
 
-        return;
-      }
-      const data = res?.data?.result || [];
-      setListNoti(data);
-    })()
-
-  }, [])
 
   const onClick = (item) => {
    changeStatus(item?.notification?.id)
@@ -59,7 +59,7 @@ export default ({
     }
     else if (item?.notification?.type === "Violation") {
       return (
-        <Link onClick={() => openModelExcuse(item?.notification?.navigationId)}>{item?.notification?.name}</Link>
+        <Link onClick={() => openModelExcuse(item?.notification?.navigationId, item?.notification?.id)}>{item?.notification?.name}</Link>
       )
     }
     else if (item?.notification?.type === "Workschedule") {

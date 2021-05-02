@@ -9,7 +9,9 @@ const HeaderCard = ({ setData }) => {
   const t = useTranslate();
   /* State */
   const [value, setValue] = useState([moment(moment().startOf('year').format("YYYY-MM-DD"), "YYYY-MM-DD"), moment(moment().format("YYYY-MM"), "YYYY-MM")]);
+  // eslint-disable-next-line no-unused-vars
   const [fromDate, setFromDate] = useState(moment().startOf('year').format("YYYY-MM-DD"));
+  // eslint-disable-next-line no-unused-vars
   const [toDate, setToDate] = useState(moment().format("YYYY-MM-DD"));
   const [mode, setMode] = useState(['month', 'month'])
   const handleChange = (value) => {

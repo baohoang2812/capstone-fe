@@ -7,7 +7,8 @@ import moment from "moment";
 import violationTrendingApi from "~/Core/Modules/Dashboard/Api/ViolationTrending";
 const DemoLine = () => {
   const [data, setData] = useState([]);
-  const [fromDate,setFromDate]= useState(moment().startOf('year').format("YYYY-MM-DD"));
+  // eslint-disable-next-line no-unused-vars
+  const [fromDate, setFromDate]= useState(moment().startOf('year').format("YYYY-MM-DD"));
   // eslint-disable-next-line no-unused-vars
   const [toDate,setToDate] = useState(moment().endOf('month').format("YYYY-MM-DD"));
   // const [data, setData] = useState([]);
