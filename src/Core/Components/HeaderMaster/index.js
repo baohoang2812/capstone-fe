@@ -17,6 +17,7 @@ import MenuNotify from "./MenuNotify";
 import { logout } from "~/Core/utils/helper/authenticate";
 import ChangePasswordForm from "./Components/ChangePasswordForm";
 import notiApi from "~/Core/Modules/Notification/Api";
+import readNotiApi from "~/Core/Modules/Notification/Api/ReadAllApi";
 import notiAccountNotifications from "~/Core/Api/AccountNotifications";
 import profileApi from "~/Core/Modules/Profile/Api";
 // import ChangePasswordForm from "./Components/ChangePasswordForm"
@@ -62,7 +63,7 @@ export const HeaderMaster = ({ url }) => {
         return;
       }
       const data = res?.data?.result || [];
-      
+
       listNoti?.length > 0 && data.forEach(item => {
         const is_new = checkNewNoti(item);
         if (is_new) {
@@ -153,11 +154,10 @@ export const HeaderMaster = ({ url }) => {
     setData(data);
     reactNoti(id)
   };
-
-  const reactNoti = async (id) => {
-    const res = await notiAccountNotifications.readNoti(id);
-    if(res?.code === 200){
-      setCountNoti(countNoti-1);
+  const onMarkAllAsRead = async () => {
+    const res = await readNotiApi.readAll();
+    if (res.code === 200) {
+      setCountNoti(0);
       const newList = listNoti?.map(item => {
         let object = item;
         if (object) {
@@ -166,6 +166,23 @@ export const HeaderMaster = ({ url }) => {
         return object
       })
       setListNoti(newList);
+    }
+  }
+
+  const reactNoti = async (id) => {
+    if (countNoti !== 0) {
+      const res = await notiAccountNotifications.readNoti(id);
+      if (res?.code === 200) {
+        setCountNoti(countNoti - 1);
+        const newList = listNoti?.map(item => {
+          let object = item;
+          if (object && object?.notification?.id === id) {
+            object.isRead = true
+          }
+          return object
+        })
+        setListNoti(newList);
+      }
     }
   }
   const handleCloseModalExcuse = () => {
@@ -200,7 +217,7 @@ export const HeaderMaster = ({ url }) => {
         <div className="header-right">
           <Dropdown
             overlay={
-              <MenuNotify listNoti={listNoti} setData={setData} openModelExcuse={openModelExcuse} />
+              <MenuNotify onMarkAllAsRead={onMarkAllAsRead} listNoti={listNoti} setData={setData} openModelExcuse={openModelExcuse} />
             }
             trigger={["hover"]}
           >

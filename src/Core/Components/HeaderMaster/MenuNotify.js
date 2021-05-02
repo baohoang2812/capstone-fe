@@ -18,13 +18,12 @@ import moment from "moment";
 export default ({
   setData,
   openModelExcuse,
-  listNoti
+  listNoti,
+  onMarkAllAsRead
 }) => {
   // const listNotification = useSelector(state => state.NotificationCore.listNotificationHeader)
 
-  const onMarkAllAsRead = () => {
-    // dispatch(updateListNotification("all"));
-  }
+ 
   // const [listNoti, setListNoti] = useState([]);
   // const t = useTranslate();
   // useEffect(() => {
@@ -81,7 +80,7 @@ export default ({
     <div className="dropdown-menu-notify">
       <h4 className="title" style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <span>
-          Thông báo mới nhận
+          Notification
         </span>
         <div style={{ padding: "0 10px" }} onClick={onMarkAllAsRead}>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
