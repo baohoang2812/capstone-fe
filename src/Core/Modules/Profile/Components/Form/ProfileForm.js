@@ -185,6 +185,9 @@ const ProfileForm = ({form}) => {
                         fileList={fileList}
                         onPreview={handlePreview}
                         onChange={handleChange}
+                        showUploadList={{
+                                        showRemoveIcon: false
+                                    }}
                       >
                         {fileList.length >= 1 ? null : (
                           <div>

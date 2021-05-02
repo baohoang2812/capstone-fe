@@ -52,7 +52,7 @@ const ExcuseDetail = ({ form, action, ID }) => {
 
         (async () => {
             if (data?.data?.result?.[0]?.employeeIds?.length > 0) {
-                const res = await employeeApi.getListFilter(data.employeeIds)
+                const res = await employeeApi.getListFilter(data?.data?.result?.[0]?.employeeIds)
                 const result = res.data.result;
                 setDataEmployee(result);
             } else {
@@ -81,6 +81,22 @@ const ExcuseDetail = ({ form, action, ID }) => {
         setPreviewVisible(true)
         // setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1))
     }
+    const renderViolation = (description) => {
+        const newDescription = description?.split("__")
+        return (
+            <>
+                {
+                    newDescription?.map(item => (
+                    <p style={{lineHeight: "28px", marginBottom: 0}}>
+                        {
+                            item
+                        }
+                    </p>
+                ))
+                }
+            </>
+        )
+    }
    
     return (
         <Row type="flex" justify="center">
@@ -91,40 +107,34 @@ const ExcuseDetail = ({ form, action, ID }) => {
                             <Form.Item label={t("CORE.VIOLATION.NAME")}>
                                 {getFieldDecorator("name", {
 
-                                })(<span>{data?.data?.result?.[0]?.name}</span>)}
+                                })(<span style={{fontWeight:800}}>{data?.data?.result?.[0]?.name}</span>)}
                             </Form.Item>
                         </Col>
                         <Col span={8}>
                             <Form.Item label={t("CORE.VIOLATION.CREATED.BY")}>
                                 {getFieldDecorator("createdBy", {
 
-                                })(<span>{data?.data?.result?.[0]?.createdBy?.lastName} {data?.data?.result?.[0]?.createdBy?.firstName}</span>)}
+                                })(<span style={{fontWeight:800}}>{data?.data?.result?.[0]?.createdBy?.lastName} {data?.data?.result?.[0]?.createdBy?.firstName}</span>)}
                             </Form.Item>
                         </Col>
                         <Col span={4}>
                             <Form.Item label={t("CORE.VIOLATION.CHARGE.CREATE")}>
                                 {getFieldDecorator("createdAt", {
 
-                                })(<span>{moment(data?.data?.result?.[0]?.createdAt).format("DD-MM-YYYY")}</span>)}
+                                })(<span style={{fontWeight:800}}>{moment(data?.data?.result?.[0]?.createdAt).format("DD-MM-YYYY")}</span>)}
                             </Form.Item>
                         </Col>
                     </Row>
 
                     <Row type="flex" justify="center" align="bottom">
-                            <Col span={16}>
+                            <Col span={20}>
                                 <Form.Item label={t("CORE.VIOLATION.DESCRIPTION")}>
                                     {getFieldDecorator("description", {
 
-                                    })(<span>{data?.data?.result?.[0]?.description}</span>)}
+                                    })(<span style={{fontWeight:800}}>{renderViolation(data?.data?.result?.[0]?.description)}</span>)}
                                 </Form.Item>
                             </Col>
-                            <Col span={4}>
-                                <Form.Item label={t("CORE.VIOLATION.WORKSPACE")}>
-                                    {getFieldDecorator("workspace", {
-
-                                    })(<span>{data?.data?.result?.[0]?.workspace?.[0]?.name}</span>)}
-                                </Form.Item>
-                            </Col>
+                           
                         </Row>
 
                     <Row type="flex" justify="center" align="bottom">
@@ -135,6 +145,7 @@ const ExcuseDetail = ({ form, action, ID }) => {
                                     listType="picture-card"
                                     fileList={fileList}
                                     onPreview={handlePreview}
+                                    width="700px"
                                     showUploadList={{
                                         showRemoveIcon: false
                                     }}
@@ -154,25 +165,35 @@ const ExcuseDetail = ({ form, action, ID }) => {
                     </Row>
 
                     <Row type="flex" justify="center" align="bottom">
-                        <Col span={20}>
+                        <Col span={16}>
                             <Form.Item label={t("CORE.VIOLATION.VIOLATOR")}>
                                 {getFieldDecorator('select-multiple', {
 
                                 })(
+                                    
                                     <>
-                                        {
-                                            dataEmployee.map(item => {
-                                                return (
-                                                    <div>
-                                                        {`${item?.lastName} ${item?.firstName}`}
-                                                    </div>
-                                                )
-                                            })
-                                        }
-                                    </>
+                                            {
+                                               dataEmployee?.length>0 ? dataEmployee.map(item => {
+                                                    return (
+                                                        <div>
+                                                            <span style={{fontWeight:800}}>{`${item.lastName} ${item.firstName}`}</span>
+                                                        </div>
+                                                    )
+                                                })
+                                                : <span style={{fontWeight:800}}>N/A</span>
+                                            }
+                                        </>
+                                    
                                 )}
                             </Form.Item>
                         </Col>
+                        <Col span={4}>
+                                <Form.Item label={t("CORE.VIOLATION.WORKSPACE")}>
+                                    {getFieldDecorator("workspace", {
+
+                                    })(<span style={{fontWeight:800}}>{data?.data?.result?.[0]?.workspace?.[0]?.name}</span>)}
+                                </Form.Item>
+                            </Col>
                     </Row>
 
                     <Row type="flex" justify="center" align="bottom">
@@ -181,7 +202,7 @@ const ExcuseDetail = ({ form, action, ID }) => {
                                 <Form.Item label={t("CORE.VIOLATION.EXCUSE")}>
                                     {getFieldDecorator("excuse", {
 
-                                    })(<span>{data?.data?.result?.[0].excuse}</span>)}
+                                    })(<span style={{fontWeight:800}}>{data?.data?.result?.[0].excuse}</span>)}
                                 </Form.Item>
                             </Col>) : null
                         }
