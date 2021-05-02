@@ -1,0 +1,22 @@
+{
+    "CORE.SIMULATOR.TYPE":"Loại ca",
+    "CORE.SIMULATOR.ACTION":"Hoạt động",
+    "CORE.SIMULATOR.NAME":"Số bàn",
+    "CORE.SIMULATOR.START.TIME":"Thời gian bắt đầu",
+    "CORE.SIMULATOR.END.TIME":"Thời gian kết thúc",
+    "CORE.SIMULATOR.CHARGE.CREATE":"Ngày tạo",
+    "CORE.SIMULATOR.CHARGE.UPDATE":"Ngày cập nhật",
+    "CORE.SIMULATOR.MANAGEMENT.TITLE":"Quản lý bàn ăn",
+    "CORE.SIMULATOR.CREATE.ACCOUNT":"Tạo mới",
+    "CORE.SIMULATOR.FULL.SHIFT":"Ca đủ",
+    "CORE.SIMULATOR.BREAK.SHIFT":"Ca gãy",
+    "CORE.SIMULATOR.UPDATE.ACCOUNT":"Cập nhật ca",
+    "CORE.SIMULATOR.CREATE.SUCCESS":"Tạo mới ca thành công!",
+    "CORE.SIMULATOR.UPDATE.SUCCESS":"Cập nhật ca thành công!",
+    "CORE.SIMULATOR":"Giả lập",
+    "CORE.SIMULATOR.DETAIL":"Chi tiết ca",
+    "CORE.SIMULATOR.CHECKIN":"Check-in",
+    "CORE.SIMULATOR.CHECKOUT":"Check-out",
+    "CORE.SIMULATOR.ALERT.START.TIME":"Thời gian bắt đầu phải nhỏ hơn thời gian kết thúc",
+    "CORE.SIMULATOR.ALERT.END.TIME":"Thời gian kết thúc phải lớn hơn thời gian bắt đầu"
+}

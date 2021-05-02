@@ -1,0 +1,24 @@
+{   "CORE.SIMULATOR.TYPE":"Type",
+    "CORE.SIMULATOR.NAME":"Table number",
+    "CORE.SIMULATOR.START.TIME":"Start time",
+    "CORE.SIMULATOR.END.TIME":"End time",
+    "CORE.SIMULATOR.CHARGE.CREATE":"Created at",
+    "CORE.SIMULATOR.CHARGE.UPDATE":"Updated at",
+    "CORE.SIMULATOR.MANAGEMENT.TITLE":"Table check-in management",
+    "CORE.SIMULATOR.CREATE.ACCOUNT":"Create shift",
+    "CORE.SIMULATOR.FULL.SHIFT":"Full shift",
+    "CORE.SIMULATOR.BREAK.SHIFT":"Break shift",
+    "CORE.SIMULATOR.UPDATE.ACCOUNT":"Update shift",
+    "CORE.SIMULATOR.CREATE.SUCCESS":"Create shift success!",
+    "CORE.SIMULATOR.UPDATE.SUCCESS":"Update shift success!",
+    "CORE.SIMULATOR":"Simulator",
+    "CORE.SIMULATOR.ACTION":"Action",
+    "CORE.SIMULATOR.CHECKIN":"Check-in",
+    "CORE.SIMULATOR.CHECKOUT":"Check-out",
+    "CORE.SIMULATOR.DETAIL":"Shift detail",
+    "CORE.SIMULATOR.ALERT.START.TIME":"Start time must be less than the end time",
+    "CORE.SIMULATOR.ALERT.END.TIME":"End time must be greater than start time"
+
+
+
+}
