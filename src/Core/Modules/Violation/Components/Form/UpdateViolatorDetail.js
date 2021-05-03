@@ -24,7 +24,7 @@ import { violations as identity } from "~/Core/Modules/Violation/Configs/Constan
 
 /* Api */
 import ViolationEmployeeApi from "~/Core/Modules/Violation/Api/ViolationEmployee";
-import employeeApi from "~/Core/Modules/Employee/Api";
+import employeeApi from "~/Core/Modules/WorkSchedule/Api/EmployeeApi";
 import violationApi from "~/Core/Modules/Violation/Api/Violation";
 function getBase64(file) {
     return new Promise((resolve, reject) => {
