@@ -4,6 +4,8 @@ import "./style.less";
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Layout, Icon, Dropdown, Avatar, Menu, Badge, Modal, notification } from "antd";
+import { useDispatch } from "react-redux";
+import useSocket from "~/Core/Components/common/Hooks/useSocket";
 
 /* Hooks */
 import useTranslate from "~/Core/Components/common/Hooks/useTranslate";
@@ -28,13 +30,24 @@ import ExcuseDetail from "~/Core/Components/HeaderMaster/Components/ExcuseDetail
 const { Header } = Layout;
 // const { SubMenu } = Menu;
 export const HeaderMaster = ({ url }) => {
+  const firebase = useSocket();
+  const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const t = useTranslate();
   const [visibleExcuse, setVisibleExcuse] = useState(false);
   const [data, setData] = useState({});
   const [imagePath, setImagePath] = useState("");
+  const [countNoti, setCountNoti] = useState(0);
+  const [listNoti, setListNoti] = useState([]);
 
+  const [count, setCount] = React.useState(0);
   /* Ref outside */
+  const getListNotificationHeader = () => {
+
+  }
+  const countNotification = () => {
+
+  }
   const ref = useRef();
   const handleClick = (e) => {
     if (ref?.current && !ref?.current?.contains(e.target)) {
@@ -51,10 +64,31 @@ export const HeaderMaster = ({ url }) => {
   const clickMenuHover = () => {
     // setHover(true);
   };
-  const [countNoti, setCountNoti] = useState(0);
-  const [listNoti, setListNoti] = useState([]);
 
-  const [count, setCount] = React.useState(0);
+  useEffect(() => {
+    const filter = {
+      pageIndex: 1,
+      pageSize: 5,
+      where: [],
+      order: { created_at: "desc" },
+    };
+
+    if (firebase) {
+      firebase.on("newNotif", (response) => {
+        if (response) {
+          dispatch(getListNotificationHeader(filter));
+          dispatch(countNotification(false));
+
+          if (response.payload) {
+            notification["error"]({
+              message: <span style={{cursor: "pointer"}} onClick={() => openModelExcuse(response.payload?.notification?.navigationId, response.payload?.notification?.id)}>{response.payload?.notification?.name}</span>,
+              description: <span style={{cursor: "pointer"}} onClick={() => openModelExcuse(response.payload?.notification?.navigationId, response.payload?.notification?.id)}>{response.payload?.notification?.description}</span>,
+            });
+          }
+        }
+      });
+    }
+  }, [dispatch, firebase]);
 
   const callApi = () => {
     (async () => {
