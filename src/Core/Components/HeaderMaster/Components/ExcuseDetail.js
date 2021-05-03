@@ -121,7 +121,7 @@ const ExcuseDetail = ({ form, action, ID }) => {
                             <Form.Item label={t("CORE.VIOLATION.CHARGE.CREATE")}>
                                 {getFieldDecorator("createdAt", {
 
-                                })(<span style={{fontWeight:800}}>{moment(data?.data?.result?.[0]?.createdAt).format("DD-MM-YYYY")}</span>)}
+                                })(<span style={{fontWeight:800}}>{moment(data?.data?.result?.[0]?.createdAt).format("DD-MM-YYYY | HH:mm")}</span>)}
                             </Form.Item>
                         </Col>
                     </Row>

@@ -68,8 +68,8 @@ export const HeaderMaster = ({ url }) => {
         const is_new = checkNewNoti(item);
         if (is_new) {
           notification["error"]({
-            message: <span onClick={() => openModelExcuse(item?.notification?.navigationId, item?.notification?.id)}>{item?.notification?.name}</span>,
-            description: item?.notification?.description,
+            message: <span style={{cursor: "pointer"}} onClick={() => openModelExcuse(item?.notification?.navigationId, item?.notification?.id)}>{item?.notification?.name}</span>,
+            description: <span style={{cursor: "pointer"}} onClick={() => openModelExcuse(item?.notification?.navigationId, item?.notification?.id)}>{item?.notification?.description}</span>,
           });
         }
       })
